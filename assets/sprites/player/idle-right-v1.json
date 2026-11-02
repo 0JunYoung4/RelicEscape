@@ -1,0 +1,29 @@
+{
+  "image": "idle-right-v1.png",
+  "frame_size": [
+    64,
+    64
+  ],
+  "frame_count": 1,
+  "facing": "right",
+  "pose": "idle",
+  "style": "SD",
+  "expression": "neutral; eyes only; no nose or mouth",
+  "opaque_bounds": {
+    "left": 20,
+    "top": 10,
+    "right": 43,
+    "bottom": 57
+  },
+  "foot_anchor": [
+    32,
+    58
+  ],
+  "anchor_coordinates": "image top-left",
+  "opaque_color_count": 15,
+  "export": {
+    "resize": "nearest-neighbor",
+    "alpha": "binary",
+    "palette_max_colors": 16
+  }
+}

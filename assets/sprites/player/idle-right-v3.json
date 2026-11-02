@@ -1,0 +1,39 @@
+{
+  "image": "idle-right-v3.png",
+  "frame_size": [
+    64,
+    64
+  ],
+  "frame_count": 1,
+  "facing": "right",
+  "pose": "idle",
+  "style": "intermediate SD; teen proportions",
+  "expression": "neutral; eyes only; no nose or mouth",
+  "opaque_bounds": {
+    "left": 23,
+    "top": 10,
+    "right": 39,
+    "bottom": 57
+  },
+  "foot_anchor": [
+    32,
+    58
+  ],
+  "anchor_coordinates": "image top-left",
+  "opaque_color_count": 14,
+  "export": {
+    "resize": "nearest-neighbor",
+    "alpha": "binary",
+    "palette_max_colors": 16
+  },
+  "edit": {
+    "base": "idle-right-v2.png",
+    "removed_pixels": [
+      [
+        36,
+        22
+      ]
+    ],
+    "scope": "nose protrusion only; all other pixels identical"
+  }
+}

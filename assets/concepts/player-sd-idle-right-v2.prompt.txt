@@ -1,0 +1,11 @@
+Use case: precise-object-edit / production pixel game sprite.
+The user wants a midpoint between the two provided images.
+REFERENCE 1: the taller neutral teenage explorer. It is slightly too tall and anatomically detailed for the target.
+REFERENCE 2: the short SD explorer. Its head is too large and its body too short, making it look like a small child.
+Make ONE new right-facing idle game sprite that is exactly BETWEEN those two body proportions. Aim for approximately 3.5 to 3.75 heads tall. The result should clearly read as a stylized 16–19-year-old teen explorer, not a toddler or little child. Make the head moderately smaller than image 2, lengthen the torso and legs moderately, add a little shoulder width and a visible short neck. Keep simplified SD/game proportions; do not go back to the tall detailed LD reference.
+
+Maintain the shared character design: short dark brown tousled hair, sky-blue exploration jacket over off-white shirt, diagonal brown strap, dark navy trousers, brown boots and small belt pocket. Anatomical RIGHT hand holds a modest steel machete lowered diagonally forward. Left hand empty, relic hidden. Face is neutral and extremely minimal: just one tiny dark vertical eye in the right-facing profile, no mouth, no smile, no nose mark, no eyebrows, no blush, no eye whites or highlights. Simple skin-colored face plane. Do not age the character with wrinkles, beard or harsh expression.
+
+True small-game pixel art, a single consistent square-pixel grid, simple large clusters, approximately 16 colors, two-tone shading per material. Target body about 48–52 logical pixels high inside a 64x64 logical canvas, head about 13–14 pixels high. Strong blue jacket silhouette, visibly longer legs than image 2 and a less oversized head. No fabric textures, tiny laces, detailed buckles, smooth painting, gradients, antialiasing or mixed-resolution face. Display the logical pixels enlarged with nearest-neighbor square edges.
+
+One full character only in relaxed standing idle, facing right in a clean side/near-side three-quarter view consistent with the references. Whole head, boots, hand and machete fit inside the square with clear padding. Genuine transparent background, no shadow, ground, text, grid, labels, swatches or additional poses. Preserve transparency. This is for export as a real 64x64 PNG for a pico2D game.

@@ -1,0 +1,15 @@
+Use case: stylized-concept / compact production game sprite.
+REFERENCE ROLES:
+Image 1 is the APPROVED CHARACTER DESIGN reference: the sky-blue-jacket short-dark-haired teenage explorer holding a machete.
+Image 2 is ONLY a PIXEL-SIMPLIFICATION AND SD-PROPORTION reference. Look at the tiny SD figures and how their faces have almost only small eyes and no facial drawing. Do not reproduce either existing character, clothing, hat, colors or giant arm from image 2.
+
+Create ONE NEW SMALL SD IN-GAME CHARACTER based on image 1 in the highly simplified pixel language of image 2.
+Important: this must be genuinely SD, about 2.75 HEADS TALL with a relatively large roundish blocky head, very short compact body and short legs. Do not retain the long legs or detailed LD anatomy from image 1. Total body height around 44–48 logical pixels; head about 16 logical pixels tall. It should look like a tiny readable side-scrolling game sprite, not a painted concept portrait.
+
+Identity: short dark brown hair, sky-blue exploration jacket over warm off-white shirt, dark navy pants, brown short boots, one small brown belt pocket. Anatomical RIGHT hand holds a small ordinary steel jungle machete lowered diagonally forward. Left hand empty; relic hidden. Neutral, expressionless face. FACE: two tiny dark vertical rectangular eyes at most 1x2 logical pixels each (or one visible eye in profile), a flat light-peach face region. ABSOLUTELY NO MOUTH, no smile, no nose line, no nose shading, no eyebrows or anime eye whites, no cheek blush, no sparkles or pupil highlights. Facial detail should be as minimal as image 2.
+
+Pose: a single relaxed RIGHT-FACING three-quarter/side idle pose, feet planted, body at rest, ready for a 2D side-scroller. Keep machete right-handed. Entire character, hair, boots and blade visible inside one square canvas with transparent margin.
+
+True coarse pixel art with a consistent logical pixel size everywhere. About 12–16 colors, two shades per material, large hard-edged blocks and staircase contours, dark outline as necessary. Simplify hair to a few blocks and jacket to a few shapes. No individual hair strands, buckles, laces, cloth texture, fine folds or painted curved outlines. Render as if created on a 64x64 logical canvas and enlarged with nearest-neighbor pixels. Uniform coarse square pixel unit on eyes, head, clothes, hands and blade. No gradients, antialiasing, blurry lighting or mixed-resolution illustration.
+
+Output: ONE sprite only on true TRANSPARENT background. No scenery, shadow, floor, text, labels, grid, extra poses, palette strip, child companion or concept sheet. This will be exported as a 64x64 transparent PNG for use in an actual pico2D game.
