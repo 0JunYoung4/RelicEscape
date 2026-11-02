@@ -4,10 +4,11 @@
 
 ## 프로젝트 상태
 
-- 기획 버전: v1.0 (2026-11-02)
+- 기획 버전: v1.1 (2026-11-03)
 - 제목: RelicEscape (가칭)
 - 개발 환경: Python, pico2D
-- 개발 기간: 약 3주
+- 개발 기간: 약 4주 (11월 3~30일), 12월 1~6일 최종 검증
+- 발표 예정: 12월 둘째 주, 정확한 날짜 미정
 - 구성: 동굴 오프닝 → 작은 튜토리얼 스테이지 1개 → 메인 스테이지 1개 → 마지막 보스전 → 종료
 - 목표 실행 환경: 데스크톱과 노트북
 - 현재 단계: 기획 정리. 실행 가능한 게임 코드는 아직 없습니다.
@@ -32,11 +33,16 @@
 - 정글도의 일반 공격·점프 공격·내려찍기를 유물과 조합합니다.
 - 소모성 투척 순간이동 아이템은 사용하지 않습니다.
 
+
+## 체력과 성장
+
+기본 체력은 100이며, 체력 강화용 유물 3개를 모으면 최대 체력이 20 증가한다. 낙하 피해는 없다. 가시에 닿으면 체력 25가 감소하고 최근에 밟은 안전한 발판에서 다시 진행한다. 체력 0 처리와 강화 시 현재 체력 회복 여부 등은 추가로 정한다.
+
 ## 기획 문서
 
-[초기 기획서 v0.9](docs/INITIAL_DESIGN.md)
+[초기 기획서 v1.1](docs/INITIAL_DESIGN.md)
 
-확정한 규칙, 제작 범위, 제안 중인 세부 사항과 3주 개발 계획을 기록합니다. 끼임 복구 방식, 벽 이동 조작, 순간이동 직후 공격 상태는 추가로 결정할 항목입니다.
+확정한 규칙, 제작 범위, 제안 중인 세부 사항과 4주 개발 계획을 기록합니다. 끼임 복구 방식, 벽 이동 조작, 순간이동 직후 공격 상태는 추가로 결정할 항목입니다.
 
 ## 개발 및 실행 준비
 
@@ -56,16 +62,16 @@
 
 처음 A안의 [LD 네 방향 이미지](docs/CHARACTER_TURNAROUND.md)는 승인된 캐릭터 콘셉트로 보관한다. 실제 게임 캐릭터는 [concepts의 SD source 이미지](assets/concepts/player-sd-idle-right-source-v3.png)를 수정·변형하며 제작한다. [64×64 투명 대기 스프라이트](docs/PLAYER_SPRITES.md)는 이전 내보내기 참고 자료이며 최종 제작 해상도를 고정하지 않는다. 게임용 얼굴은 작은 눈만 표현하고 코·입은 생략한 무표정이다. 현재 게임용 이미지는 오른쪽을 보는 기본 대기 1프레임이며, 이동·공격 애니메이션은 추후 제작한다.
 
-게임용 캐릭터는 어린 인상을 줄이기 위해 머리 비중을 줄이고 몸통·다리를 늘린 [중간 체형 v3: 코 돌출 제거](assets/concepts/player-sd-idle-right-preview-v3.png)를 추가했다. 실제 PNG는 [64×64 대기 프레임 v3](assets/sprites/player/idle-right-v3.png)이며 v1은 비교용으로 유지한다.
+게임용 캐릭터는 어린 인상을 줄이기 위해 머리 비중을 줄이고 몸통·다리를 늘린 [중간 체형 v3: 코 돌출 제거](assets/concepts/player-sd-idle-right-preview-v3.png)를 추가했다. 이전 참고 내보내기는 [64×64 대기 프레임 v3](assets/sprites/player/idle-right-v3.png)이며 v1은 비교용으로 유지한다.
 
 ## 발표 자료
 
 캐릭터 제작 기준 원본은 [player-sd-idle-right-source-v3.png](assets/concepts/player-sd-idle-right-source-v3.png)다. 이를 변형해 게임용 동작을 제작한다. 기존 [64×64 내보내기 PNG](assets/sprites/player/idle-right.png)도 참고용으로 보관한다.
 
 - [캐릭터 소개 이미지](deliverables/2026-11-03/Character_Introduction.png)
-- [90초 발표용 PPT 7장](deliverables/2026-11-03/RelicEscape_Presentation.pptx)
-- [상세 기획 PPT 15장](deliverables/2026-11-03/RelicEscape_Game_Design.pptx)
-- [발표 대본과 장별 시간](deliverables/2026-11-03/Presentation_Script.md)
+- [90초 발표용 PPT 7장](deliverables/2026-11-03/RelicEscape_Presentation_4Week.pptx)
+- [상세 기획 PPT 17장](deliverables/2026-11-03/RelicEscape_Game_Design_4Week.pptx)
+- [발표 대본과 장별 시간](deliverables/2026-11-03/Presentation_Script_4Week.md)
 - [녹화·제출 안내](deliverables/2026-11-03/README.md)
 
 발표용 PPT의 자동 전환 시간 합계는 90초다. 실제 녹화 길이는 별도로 확인한다. 자료의 배경과 지도는 분위기·플레이 예시이며 구현 화면이 아니다.
