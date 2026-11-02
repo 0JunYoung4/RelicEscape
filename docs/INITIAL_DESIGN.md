@@ -332,6 +332,8 @@
 
 ### LD 콘셉트와 SD 게임용 표현
 
+- 게임 캐릭터 제작 기준 원본은 [player-sd-idle-right-source-v3.png](../assets/concepts/player-sd-idle-right-source-v3.png)다. concepts의 source 이미지를 수정·변형해 이동·점프·공격 등 게임용 동작을 만든다.
+- 기존 64×64 PNG는 참고용 내보내기 자료이며, 실제 해상도와 프레임 크기는 제작 과정에서 정한다.
 - 처음 A안의 LD 형태와 부드러운 표정은 사용자가 승인한 캐릭터 콘셉트로 보관한다. [LD 네 방향 콘셉트](CHARACTER_TURNAROUND.md)를 참고한다.
 - 실제 게임에서는 같은 복장과 색상을 간결한 게임용 비율로 단순화한다. 2.5~3등신 SD 초안은 어린 느낌이 강해, 머리 비중을 줄이고 몸통·다리를 늘린 약 3.5등신 내외의 중간 체형을 거쳐 코 돌출을 제거한 v3를 게임용 기본 이미지로 확정했다.
 - 게임용 얼굴은 무표정으로, 작은 눈만 표현하고 코·입은 생략한다.
@@ -348,7 +350,7 @@
 
 ## 14. 확정 이미지와 발표 산출물
 
-- 캐릭터 기본 이미지: [64×64 투명 PNG](../assets/sprites/player/idle-right.png). 코 돌출 제거 v3를 원본으로 사용자 승인했다.
+- 캐릭터 제작 기준: [concepts의 source v3](../assets/concepts/player-sd-idle-right-source-v3.png). 이를 변형하며 게임용 이미지를 제작한다. [기존 64×64 내보내기](../assets/sprites/player/idle-right.png)는 참고 자료로 보관한다.
 - [캐릭터 소개 이미지](../deliverables/2026-11-03/Character_Introduction.png)
 - [1분 30초 발표용 PPT 7장](../deliverables/2026-11-03/RelicEscape_Presentation.pptx)
 - [상세 기획 PPT 15장](../deliverables/2026-11-03/RelicEscape_Game_Design.pptx)

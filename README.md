@@ -54,13 +54,13 @@
 
 선택한 A안을 더 굵고 단순한 도트로 정리한 [A안 보완 시안](assets/concepts/character-a-coarse-v1.png)을 추가했다. 산나비를 그래픽 참고 방향으로 두며, 보스는 주인공보다 세밀하게 표현할 예정이다. 보스의 구체적인 디자인과 실제 게임용 원본 해상도는 미정이다. 이 이미지는 콘셉트 검토용이며, [내장 이미지 생성 프롬프트](assets/concepts/character-a-coarse-v1.prompt.txt)를 함께 보관한다.
 
-처음 A안의 [LD 네 방향 이미지](docs/CHARACTER_TURNAROUND.md)는 승인된 캐릭터 콘셉트로 보관한다. 실제 게임에는 같은 디자인을 SD 비율로 단순화한 [64×64 투명 대기 스프라이트](docs/PLAYER_SPRITES.md)를 사용한다. 게임용 얼굴은 작은 눈만 표현하고 코·입은 생략한 무표정이다. 현재 게임용 이미지는 오른쪽을 보는 기본 대기 1프레임이며, 이동·공격 애니메이션은 추후 제작한다.
+처음 A안의 [LD 네 방향 이미지](docs/CHARACTER_TURNAROUND.md)는 승인된 캐릭터 콘셉트로 보관한다. 실제 게임 캐릭터는 [concepts의 SD source 이미지](assets/concepts/player-sd-idle-right-source-v3.png)를 수정·변형하며 제작한다. [64×64 투명 대기 스프라이트](docs/PLAYER_SPRITES.md)는 이전 내보내기 참고 자료이며 최종 제작 해상도를 고정하지 않는다. 게임용 얼굴은 작은 눈만 표현하고 코·입은 생략한 무표정이다. 현재 게임용 이미지는 오른쪽을 보는 기본 대기 1프레임이며, 이동·공격 애니메이션은 추후 제작한다.
 
 게임용 캐릭터는 어린 인상을 줄이기 위해 머리 비중을 줄이고 몸통·다리를 늘린 [중간 체형 v3: 코 돌출 제거](assets/concepts/player-sd-idle-right-preview-v3.png)를 추가했다. 실제 PNG는 [64×64 대기 프레임 v3](assets/sprites/player/idle-right-v3.png)이며 v1은 비교용으로 유지한다.
 
 ## 발표 자료
 
-캐릭터 기본 이미지는 [확정 PNG](assets/sprites/player/idle-right.png)로 보관한다.
+캐릭터 제작 기준 원본은 [player-sd-idle-right-source-v3.png](assets/concepts/player-sd-idle-right-source-v3.png)다. 이를 변형해 게임용 동작을 제작한다. 기존 [64×64 내보내기 PNG](assets/sprites/player/idle-right.png)도 참고용으로 보관한다.
 
 - [캐릭터 소개 이미지](deliverables/2026-11-03/Character_Introduction.png)
 - [90초 발표용 PPT 7장](deliverables/2026-11-03/RelicEscape_Presentation.pptx)

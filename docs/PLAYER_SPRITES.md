@@ -5,6 +5,12 @@
 - 상태: 사용자 승인으로 확정한 게임용 기본 이미지, 대기 프레임 1장
 - 제작: 내장 이미지 생성 도구로 SD 캐릭터 생성 후 게임용 크기로 내보내기
 
+## 게임 제작 기준 원본
+
+게임에서 사용할 캐릭터는 [player-sd-idle-right-source-v3.png](../assets/concepts/player-sd-idle-right-source-v3.png)를 기준으로 수정·변형하며 제작한다. 이 원본에서 이동·점프·공격 등 필요한 자세와 애니메이션을 확장한다.
+
+`assets/sprites/player/`의 64×64 PNG는 이전에 크기를 줄여 내보낸 참고 자료다. 제작 출발점은 `assets/concepts/`의 source 이미지이며, 실제 게임용 해상도와 프레임 크기는 제작 과정에서 정한다. 64×64를 필수 규격으로 고정하지 않는다. LD 네 방향 이미지는 별도의 콘셉트 참고 자료로 유지한다.
+
 ## LD 콘셉트와 게임용 표현
 
 [승인된 LD 네 방향 이미지](CHARACTER_TURNAROUND.md)는 캐릭터의 외형과 복장을 보여주는 콘셉트 자료로 유지한다. 게임 안에서는 같은 짧은 머리·하늘색 재킷·남색 바지·갈색 부츠·오른손 정글도를 SD 비율로 단순화한다.
@@ -19,11 +25,11 @@ SD 방향은 사용자가 제공한 산나비 참고 이미지의 작은 캐릭�
 
 v2의 체형과 복장을 유지하고 옆얼굴의 코가 튀어나온 한 픽셀만 제거했다. 내장 이미지 생성 도구의 국소 수정 결과를 게임용 원본에 반영했으며, v2와 디코딩한 픽셀을 비교해 (36, 22)의 한 픽셀만 투명해지고 나머지는 동일함을 확인했다.
 
-## 게임에서 사용할 파일
+## 기존 64×64 내보내기 자료
 
 [오른쪽을 보는 대기 PNG](../assets/sprites/player/idle-right.png)
 
-![64×64 게임용 원본](../assets/sprites/player/idle-right.png)
+![64×64 참고 내보내기](../assets/sprites/player/idle-right.png)
 
 | 항목 | 값 |
 | --- | --- |
@@ -64,4 +70,4 @@ v2의 체형과 복장을 유지하고 옆얼굴의 코가 튀어나온 한 픽�
 
 ## 기본 이미지 확정
 
-2026-11-02 사용자 승인으로 v3를 기본 이미지로 확정했다. 고정 경로 idle-right.png는 v3와 바이트 단위로 동일하며, 승인 메타데이터에 원본 버전과 SHA-256을 기록했다. [캐릭터 소개 이미지](../assets/concepts/character-introduction-v1.png)와 [발표 자료](../deliverables/2026-11-03/README.md)를 함께 보관한다.
+2026-11-02 사용자 승인으로 v3를 기본 이미지로 확정했다. 기존 내보내기 경로 idle-right.png는 64×64 v3와 바이트 단위로 동일하며, 승인 메타데이터에 버전과 SHA-256을 기록했다. 실제 캐릭터 제작의 기준 원본은 assets/concepts/player-sd-idle-right-source-v3.png다. [캐릭터 소개 이미지](../assets/concepts/character-introduction-v1.png)와 [발표 자료](../deliverables/2026-11-03/README.md)를 함께 보관한다.
