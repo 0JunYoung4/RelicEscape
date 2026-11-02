@@ -2,12 +2,12 @@
 
 ## 최신 파일
 
-- RelicEscape_Presentation_4Week.pptx: 1차 발표용 7장. 90초 자동 전환과 장별 발표자 노트를 포함한다.
-- RelicEscape_Game_Design_4Week.pptx: 상세 기획서 17장. 캐릭터, 유물, 특수장치, 이동과 전투, 체력과 가시 복귀, 스테이지, 4주 개발 계획을 정리했다.
+- RelicEscape_1차_발표자료.pptx: 1차 발표용 7장. 90초 자동 전환과 장별 발표자 노트를 포함한다.
+- RelicEscape_1차_기획안.pptx: 상세 기획서 17장. 캐릭터, 유물, 특수장치, 이동과 전투, 체력과 가시 복귀, 스테이지, 4주 개발 계획을 정리했다.
 - Presentation_Script_4Week.md: 수정된 장별 시간과 낭독 대본.
 - Character_Introduction.png: 기존 LD 콘셉트와 SD 참고 이미지를 함께 보여주는 캐릭터 소개 자료.
 
-이전 원본과 _Updated.pptx는 보관용이다. 현재 발표에는 _4Week.pptx를 사용한다.
+현재 사용할 PPT는 위의 RelicEscape_1차_발표자료.pptx와 RelicEscape_1차_기획안.pptx다. 앞으로 이 폴더에서 해당 파일을 수정한다. 이후 발표 자료도 프로젝트의 발표&기획서/ 아래에서 관리한다. 대본은 Presentation_Script_4Week.md를 사용한다.
 
 ## 개발 일정과 발표
 

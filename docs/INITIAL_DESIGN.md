@@ -383,10 +383,10 @@
 ## 14. 확정 이미지와 발표 산출물
 
 - 캐릭터 제작 기준: [concepts의 source v3](../assets/concepts/player-sd-idle-right-source-v3.png). 이를 변형하며 게임용 이미지를 제작한다. [기존 64×64 내보내기](../assets/sprites/player/idle-right.png)는 참고 자료로 보관한다.
-- [캐릭터 소개 이미지](../deliverables/2026-11-03/Character_Introduction.png)
-- [1분 30초 발표용 PPT 7장](../deliverables/2026-11-03/RelicEscape_Presentation_4Week.pptx)
-- [상세 기획 PPT 17장](../deliverables/2026-11-03/RelicEscape_Game_Design_4Week.pptx)
-- [발표 대본](../deliverables/2026-11-03/Presentation_Script_4Week.md)
+- [캐릭터 소개 이미지](<../발표&기획서/1차 발표 및 기획/Character_Introduction.png>)
+- [1분 30초 발표용 PPT 7장](<../발표&기획서/1차 발표 및 기획/RelicEscape_1차_발표자료.pptx>)
+- [상세 기획 PPT 17장](<../발표&기획서/1차 발표 및 기획/RelicEscape_1차_기획안.pptx>)
+- [발표 대본](<../발표&기획서/1차 발표 및 기획/Presentation_Script_4Week.md>)
 - 발표용 전환 시간은 8, 12, 22, 14, 14, 14, 6초로 합계 90초다. 실제 음성 녹화 길이는 별도로 확인한다.
 - 배경과 발사·레일 이미지는 분위기와 플레이 방식의 예시이며 게임 구현 화면이 아니다.
 - 보스 외형과 세부 패턴, 조작 키 등 미정 사항은 기존 기록을 유지한다.

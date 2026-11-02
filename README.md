@@ -66,16 +66,18 @@
 
 ## 발표 자료
 
+앞으로 발표용·기획용 PPT는 `발표&기획서/` 아래에서 제작하고 수정한다. 현재 1차 자료는 `발표&기획서/1차 발표 및 기획/`에 보관한다.
+
 캐릭터 제작 기준 원본은 [player-sd-idle-right-source-v3.png](assets/concepts/player-sd-idle-right-source-v3.png)다. 이를 변형해 게임용 동작을 제작한다. 기존 [64×64 내보내기 PNG](assets/sprites/player/idle-right.png)도 참고용으로 보관한다.
 
-- [캐릭터 소개 이미지](deliverables/2026-11-03/Character_Introduction.png)
-- [90초 발표용 PPT 7장](deliverables/2026-11-03/RelicEscape_Presentation_4Week.pptx)
-- [상세 기획 PPT 17장](deliverables/2026-11-03/RelicEscape_Game_Design_4Week.pptx)
-- [발표 대본과 장별 시간](deliverables/2026-11-03/Presentation_Script_4Week.md)
-- [녹화·제출 안내](deliverables/2026-11-03/README.md)
+- [캐릭터 소개 이미지](<발표&기획서/1차 발표 및 기획/Character_Introduction.png>)
+- [90초 발표용 PPT 7장](<발표&기획서/1차 발표 및 기획/RelicEscape_1차_발표자료.pptx>)
+- [상세 기획 PPT 17장](<발표&기획서/1차 발표 및 기획/RelicEscape_1차_기획안.pptx>)
+- [발표 대본과 장별 시간](<발표&기획서/1차 발표 및 기획/Presentation_Script_4Week.md>)
+- [녹화·제출 안내](<발표&기획서/1차 발표 및 기획/README.md>)
 
 발표용 PPT의 자동 전환 시간 합계는 90초다. 실제 녹화 길이는 별도로 확인한다. 자료의 배경과 지도는 분위기·플레이 예시이며 구현 화면이 아니다.
 
 ## 파일 작성 규칙
 
-파일명과 폴더명은 영어로 작성한다. 기획서와 README의 설명은 한국어로 작성한다. 커밋 메시지는 영어 작성 규칙에서 제외한다. 자세한 지침은 [AGENTS.md](AGENTS.md)를 따른다.
+파일명과 폴더명은 기본적으로 영어로 작성한다. 사용자가 지정한 `발표&기획서/` 하위 폴더와 PPT 파일명은 한글 이름을 유지한다. 기획서와 README의 설명은 한국어로 작성한다. 커밋 메시지는 영어 작성 규칙에서 제외한다. 자세한 지침은 [AGENTS.md](AGENTS.md)를 따른다.

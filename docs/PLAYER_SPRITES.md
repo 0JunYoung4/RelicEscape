@@ -70,4 +70,4 @@ v2의 체형과 복장을 유지하고 옆얼굴의 코가 튀어나온 한 픽�
 
 ## 기본 이미지 확정
 
-2026-11-02 사용자 승인으로 v3를 기본 이미지로 확정했다. 기존 내보내기 경로 idle-right.png는 64×64 v3와 바이트 단위로 동일하며, 승인 메타데이터에 버전과 SHA-256을 기록했다. 실제 캐릭터 제작의 기준 원본은 assets/concepts/player-sd-idle-right-source-v3.png다. [캐릭터 소개 이미지](../assets/concepts/character-introduction-v1.png)와 [발표 자료](../deliverables/2026-11-03/README.md)를 함께 보관한다.
+2026-11-02 사용자 승인으로 v3를 기본 이미지로 확정했다. 기존 내보내기 경로 idle-right.png는 64×64 v3와 바이트 단위로 동일하며, 승인 메타데이터에 버전과 SHA-256을 기록했다. 실제 캐릭터 제작의 기준 원본은 assets/concepts/player-sd-idle-right-source-v3.png다. [캐릭터 소개 이미지](../assets/concepts/character-introduction-v1.png)와 [발표 자료](<../발표&기획서/1차 발표 및 기획/README.md>)를 함께 보관한다.
