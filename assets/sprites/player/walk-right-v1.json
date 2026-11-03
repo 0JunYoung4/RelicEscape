@@ -1,0 +1,76 @@
+{
+  "image": "walk-right-v1.png",
+  "frame_size": [
+    96,
+    104
+  ],
+  "frame_count": 8,
+  "columns": 4,
+  "fps": 10,
+  "loop": true,
+  "facing": "right",
+  "pose": "walk",
+  "foot_anchor": [
+    48,
+    98
+  ],
+  "anchor_coordinates": "frame top-left",
+  "frames": [
+    {
+      "y": 0,
+      "x": 0,
+      "width": 96,
+      "height": 104,
+      "duration_ms": 100
+    },
+    {
+      "y": 0,
+      "x": 96,
+      "width": 96,
+      "height": 104,
+      "duration_ms": 100
+    },
+    {
+      "y": 0,
+      "x": 192,
+      "width": 96,
+      "height": 104,
+      "duration_ms": 100
+    },
+    {
+      "y": 0,
+      "x": 288,
+      "width": 96,
+      "height": 104,
+      "duration_ms": 100
+    },
+    {
+      "y": 104,
+      "x": 0,
+      "width": 96,
+      "height": 104,
+      "duration_ms": 100
+    },
+    {
+      "y": 104,
+      "x": 96,
+      "width": 96,
+      "height": 104,
+      "duration_ms": 100
+    },
+    {
+      "y": 104,
+      "x": 192,
+      "width": 96,
+      "height": 104,
+      "duration_ms": 100
+    },
+    {
+      "y": 104,
+      "x": 288,
+      "width": 96,
+      "height": 104,
+      "duration_ms": 100
+    }
+  ]
+}
