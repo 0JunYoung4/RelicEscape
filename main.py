@@ -82,7 +82,11 @@ def main():
                 break
 
             direction, running = read_movement()
-            player.update(direction, running, delta_time)
+            jump_pressed = bool(pico.SDL_GetKeyboardFocus()) and any(
+                event.type == pico.SDL_KEYDOWN and event.key == pico.SDLK_SPACE
+                for event in events
+            )
+            player.update(direction, running, delta_time, jump_pressed)
             camera.follow(player.x)
             draw_scene(player, camera)
             pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")

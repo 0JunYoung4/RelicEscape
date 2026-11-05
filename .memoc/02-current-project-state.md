@@ -21,6 +21,9 @@ Last synced: 2026-11-05T03:23:05
 - 자동 입력·이동 검사 및 50가지 프레임/방향 렌더링 검사 통과. 실제 데스크톱 창 표시 확인.
 - 횡스크롤 적용: 960×540 창, 카메라 0.5배(1920×1080 월드 범위), 캐릭터 약 70px, 시험 맵 가로 6400. 화면 중앙 추적 및 맵 양 끝 제한.
 - 왼쪽 위 조작·상태 텍스트 제거. 새 카메라의 추적·경계·배율·텍스트 부재 및 50종 렌더 검사 통과.
+- 추가 이동 체감 피드백을 반영해 걷기 240→300, 달리기 420→525 월드 단위/s로 각각 25% 높였다.
+- 승인한 다리 분리·팔 상승 점프 초안을 `assets/sprites/player/jump-right-draft-v1.png`로 원본 그대로 저장하고 프레임별 JSON을 추가했다.
+- Space 점프·중력·평평한 바닥 착지·공중 이동을 구현했다. 8프레임은 물리 단계에 맞춰 선택하며 공중 재점프는 없다. 자동 검사 6개 통과 및 게임 렌더 결과 시각 확인.
 
 ## Project Snapshot
 
@@ -38,7 +41,7 @@ Last synced: 2026-11-05T03:23:05
 
 ## Open Tasks
 
-- 1주차(11/3~9) 남은 구현: 점프·중력·지형 충돌·벽 슬라이드·벽점프·유물 설치와 순간이동.
+- 1주차(11/3~9) 남은 구현: 발판·벽 지형 충돌·벽 슬라이드·벽점프·유물 설치와 순간이동.
 - 실제 키를 길게 누르는 플레이 감각·카메라 배율 체감과 노트북 실행 확인. 왼쪽 전용 이미지는 미제작이며 현재 좌우 반전으로 표시한다.
 
 ## Completed Tasks
@@ -52,6 +55,7 @@ See `.memoc/worklog/` for full shared activity history.
 - 설치: `python -m venv .venv`, `.\.venv\Scripts\python.exe -m pip install -r requirements.txt`
 - 게임 실행: `.\.venv\Scripts\python.exe main.py`
 - 기본 검사: `.\.venv\Scripts\python.exe -m py_compile main.py player.py`, `.\.venv\Scripts\python.exe -m pip check`
+- 점프·렌더링 회귀 검사: `.\.venv\Scripts\python.exe -m unittest discover -s tests -v`
 
 ## Notes
 

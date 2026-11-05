@@ -34,9 +34,9 @@ This is the shortest project summary for a fresh agent. Keep it factual and easy
 
 ## Next Useful Work
 
-- 1주차(11/3~9): 첫 이동 구현에 이어 점프·충돌·벽 이동·유물 설치와 순간이동 구현.
+- 1주차(11/3~9): 이동·점프 구현에 이어 발판·벽 충돌·벽 이동·유물 설치와 순간이동 구현.
 
 ## Important Notes
 
-- 2026-11-05: `main.py` 이동 프로토타입에서 대기·걷기·Shift 달리기를 실행할 수 있다.
+- 2026-11-05: `main.py`에서 대기·걷기·Shift 달리기·Space 점프와 평평한 바닥 착지를 실행할 수 있다. 점프 이미지는 승인한 8프레임 초안이다.
 - 실행 환경: Windows, Python 3.13.15, pico2D 1.5.1. 설치 의존성은 `requirements.txt` 참조.
