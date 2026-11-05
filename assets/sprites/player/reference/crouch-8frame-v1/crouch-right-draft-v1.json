@@ -1,0 +1,24 @@
+{
+  "image": "crouch-right-draft-v1.png",
+  "source_size": [1774, 887],
+  "frame_count": 8,
+  "columns": 4,
+  "fps": 20,
+  "loop": false,
+  "facing": "right",
+  "pose": "crouch",
+  "status": "approved for draft integration",
+  "foot_anchor": [220, 427],
+  "anchor_coordinates": "frame top-left",
+  "notes": "Approved left-hand-supported crouch draft saved unchanged. Play forward into a held low pose and backward to stand. This sheet is a transition, not a crawling locomotion cycle.",
+  "frames": [
+    {"x": 0, "y": 0, "width": 444, "height": 444, "foot_anchor": [220, 426]},
+    {"x": 444, "y": 0, "width": 443, "height": 444, "foot_anchor": [220, 427]},
+    {"x": 887, "y": 0, "width": 443, "height": 444, "foot_anchor": [220, 427]},
+    {"x": 1330, "y": 0, "width": 444, "height": 444, "foot_anchor": [220, 427]},
+    {"x": 0, "y": 444, "width": 444, "height": 443, "foot_anchor": [220, 407]},
+    {"x": 444, "y": 444, "width": 443, "height": 443, "foot_anchor": [220, 401]},
+    {"x": 887, "y": 444, "width": 443, "height": 443, "foot_anchor": [220, 402]},
+    {"x": 1330, "y": 444, "width": 444, "height": 443, "foot_anchor": [220, 402]}
+  ]
+}

@@ -1,7 +1,8 @@
-"""Check jump physics and actual sprite rendering with SDL's software driver."""
+"""Check movement, jump/crouch transitions, and SDL software rendering."""
 
 import os
 import unittest
+from unittest.mock import patch
 
 os.environ["SDL_VIDEODRIVER"] = "dummy"
 os.environ["SDL_AUDIODRIVER"] = "dummy"
@@ -9,11 +10,11 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 
 from pico2d import pico2d as pico
 
-from main import CAMERA_ZOOM, GROUND_Y, SCREEN_WIDTH, WORLD_WIDTH, Camera, draw_scene
-from player import GRAVITY, JUMP_SPEED, RUN_SPEED, TAKEOFF_DURATION, WALK_SPEED, Player
+from main import CAMERA_ZOOM, GROUND_Y, SCREEN_WIDTH, WORLD_WIDTH, Camera, draw_scene, read_movement
+from player import CROUCH_DURATION, CROUCH_SPEED, GRAVITY, JUMP_SPEED, RUN_SPEED, TAKEOFF_DURATION, WALK_SPEED, Player
 
 
-class PlayerJumpTests(unittest.TestCase):
+class PlayerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         pico.open_canvas(960, 540)
@@ -112,6 +113,102 @@ class PlayerJumpTests(unittest.TestCase):
         for _ in range(90):
             draw_scene(self.player, camera)
             self.player.update(0, False, 1 / 60)
+        self.assertEqual(self.player.state, "idle")
+
+    def test_crouch_plays_forward_holds_and_reverses_at_different_frame_rates(self):
+        for rate in (30, 60, 144):
+            with self.subTest(rate=rate):
+                self.player.update(0, False, 0, crouch_held=True)
+                forward = [self.player.get_crouch_frame()]
+                for _ in range(rate):
+                    self.player.update(0, False, 1 / rate, crouch_held=True)
+                    frame = self.player.get_crouch_frame()
+                    if forward[-1] != frame:
+                        forward.append(frame)
+                self.assertEqual(forward, list(range(4)))
+                self.assertEqual(self.player.state, "crouch")
+                self.assertEqual(self.player.y, GROUND_Y)
+                backward = [3]
+                for _ in range(rate):
+                    self.player.update(0, False, 1 / rate)
+                    frame = self.player.get_crouch_frame()
+                    if backward[-1] != frame:
+                        backward.append(frame)
+                self.assertEqual(backward, list(range(3, -1, -1)))
+                self.assertEqual(self.player.state, "idle")
+
+    def test_reversing_a_partial_crouch_does_not_restart_it(self):
+        self.player.update(0, False, CROUCH_DURATION * 0.6, crouch_held=True)
+        self.player.update(0, False, CROUCH_DURATION * 0.2)
+        self.assertAlmostEqual(self.player.crouch_time, CROUCH_DURATION * 0.4)
+        self.player.update(0, False, CROUCH_DURATION * 0.2, crouch_held=True)
+        self.assertAlmostEqual(self.player.crouch_time, CROUCH_DURATION * 0.6)
+
+    def test_fast_crouch_and_stand_each_finish_in_fifteen_hundredths(self):
+        self.player.update(0, False, 0.15, crouch_held=True)
+        self.assertEqual(self.player.get_crouch_frame(), 3)
+        self.assertEqual(self.player.state, "crouch")
+        self.player.update(0, False, 0.15)
+        self.assertEqual(self.player.state, "idle")
+
+    def test_crouch_movement_is_slow_even_with_shift(self):
+        self.player.update(1, True, 0.5, crouch_held=True)
+        self.assertAlmostEqual(self.player.x, 400 + CROUCH_SPEED * 0.5)
+        self.assertEqual(self.player.state, "crouch")
+        self.player.update(-1, False, 0.1, crouch_held=True)
+        self.assertEqual(self.player.facing, -1)
+        self.assertAlmostEqual(self.player.x, 400 + CROUCH_SPEED * 0.4)
+        self.player.update(1, True, 100, crouch_held=True)
+        self.assertEqual(self.player.x, WORLD_WIDTH - 64)
+        self.assertEqual(self.player.y, GROUND_Y)
+
+    def test_jump_is_blocked_until_fully_standing(self):
+        self.player.update(0, False, 0.2, jump_pressed=True, crouch_held=True)
+        self.assertEqual(self.player.state, "crouch")
+        self.player.update(0, False, 0.05, jump_pressed=True)
+        self.assertEqual(self.player.state, "crouch")
+        self.assertEqual(self.player.y, GROUND_Y)
+        self.player.update(0, False, CROUCH_DURATION)
+        self.player.update(0, False, 0.15, jump_pressed=True)
+        self.assertEqual(self.player.state, "jump")
+        self.assertGreater(self.player.y, GROUND_Y)
+
+    def test_crouch_held_in_air_starts_after_landing(self):
+        self.player.update(0, False, 0.2, jump_pressed=True)
+        self.player.update(0, False, 0.1, crouch_held=True)
+        self.assertEqual(self.player.state, "jump")
+        self.assertEqual(self.player.crouch_time, 0)
+        for _ in range(90):
+            self.player.update(0, False, 1 / 60, crouch_held=True)
+        self.assertEqual(self.player.state, "crouch")
+        self.assertEqual(self.player.get_crouch_frame(), 3)
+        self.assertEqual(self.player.y, GROUND_Y)
+
+    def test_crouch_keys_and_focus_loss(self):
+        keys = [0] * 512
+        with patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), patch.object(pico, "SDL_GetKeyboardState", return_value=keys):
+            for key in (pico.SDL_SCANCODE_S, pico.SDL_SCANCODE_DOWN):
+                keys[key] = 1
+                self.assertEqual(read_movement(), (0, False, True))
+                keys[key] = 0
+        with patch.object(pico, "SDL_GetKeyboardFocus", return_value=None):
+            self.assertEqual(read_movement(), (0, False, False))
+
+    def test_crouch_frame_bounds_and_both_directions_render(self):
+        animation = self.player.animations["crouch"]
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        self.assertEqual(len(animation.frames), 4)
+        for index, frame in enumerate(animation.frames):
+            self.assertLessEqual(frame["x"] + frame["width"], animation.image.w)
+            self.assertLessEqual(frame["y"] + frame["height"], animation.image.h)
+            for facing in (-1, 1):
+                pico.SDL_ClearError()
+                animation.draw(400, GROUND_Y, facing, 0, camera, index)
+                self.assertFalse(pico.SDL_GetError())
+        for crouch_held in (True, False):
+            for _ in range(30):
+                self.player.update(0, False, 1 / 60, crouch_held=crouch_held)
+                draw_scene(self.player, camera)
         self.assertEqual(self.player.state, "idle")
 
 

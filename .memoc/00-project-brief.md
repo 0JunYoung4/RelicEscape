@@ -38,5 +38,5 @@ This is the shortest project summary for a fresh agent. Keep it factual and easy
 
 ## Important Notes
 
-- 2026-11-05: `main.py`에서 대기·걷기·Shift 달리기·Space 점프와 평평한 바닥 착지를 실행할 수 있다. 점프 이미지는 승인한 8프레임 초안이다.
+- 2026-11-05: `main.py`에서 걷기·Shift 달리기·Space 점프·바닥 착지·S/↓ 숙이기와 일어서기를 실행할 수 있다. 점프는 8프레임, 숙이기는 빠른 4프레임이며 원래 8프레임 숙이기는 별도 보관했다.
 - 실행 환경: Windows, Python 3.13.15, pico2D 1.5.1. 설치 의존성은 `requirements.txt` 참조.

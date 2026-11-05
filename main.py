@@ -35,12 +35,13 @@ class Camera:
 def read_movement():
     # Read held keys after pumping events. Losing focus immediately stops movement.
     if not pico.SDL_GetKeyboardFocus():
-        return 0, False
+        return 0, False, False
     keys = pico.SDL_GetKeyboardState(None)
     left = bool(keys[pico.SDL_SCANCODE_A] or keys[pico.SDL_SCANCODE_LEFT])
     right = bool(keys[pico.SDL_SCANCODE_D] or keys[pico.SDL_SCANCODE_RIGHT])
     running = bool(keys[pico.SDL_SCANCODE_LSHIFT] or keys[pico.SDL_SCANCODE_RSHIFT])
-    return int(right) - int(left), running
+    crouching = bool(keys[pico.SDL_SCANCODE_S] or keys[pico.SDL_SCANCODE_DOWN])
+    return int(right) - int(left), running, crouching
 
 
 def draw_scene(player, camera):
@@ -81,12 +82,12 @@ def main():
             ):
                 break
 
-            direction, running = read_movement()
+            direction, running, crouching = read_movement()
             jump_pressed = bool(pico.SDL_GetKeyboardFocus()) and any(
                 event.type == pico.SDL_KEYDOWN and event.key == pico.SDLK_SPACE
                 for event in events
             )
-            player.update(direction, running, delta_time, jump_pressed)
+            player.update(direction, running, delta_time, jump_pressed, crouching)
             camera.follow(player.x)
             draw_scene(player, camera)
             pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")

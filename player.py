@@ -1,4 +1,4 @@
-"""Player movement and the existing idle, walk, and run artwork."""
+"""Player movement, jumping, crouching, and the approved character artwork."""
 
 import json
 from pathlib import Path
@@ -9,6 +9,8 @@ from pico2d import load_image
 ASSET_ROOT = Path(__file__).resolve().parent / "assets"
 WALK_SPEED = 300.0
 RUN_SPEED = 525.0
+CROUCH_SPEED = 90.0
+CROUCH_DURATION = 0.15
 WORLD_MARGIN = 64
 JUMP_SPEED = 900.0
 GRAVITY = 2000.0
@@ -53,6 +55,7 @@ class Player:
         self.facing = 1
         self.state = "idle"
         self.animation_time = 0.0
+        self.crouch_time = 0.0
 
         # Use the approved source directly, rather than the old 64x64 export.
         idle_frame = {"x": 472, "y": 202, "width": 355, "height": 1011}
@@ -66,6 +69,7 @@ class Player:
             ("walk", "walk-right-v1", 1.5),
             ("run", "run-right-v1", 0.5),
             ("jump", "jump-right-draft-v1", 140 / 388),
+            ("crouch", "crouch-right-fast-v1", 140 / 411),
         ):
             metadata_path = ASSET_ROOT / "sprites/player" / f"{filename}.json"
             metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
@@ -74,16 +78,17 @@ class Player:
                 metadata["foot_anchor"], scale, metadata["fps"],
             )
 
-    def update(self, direction, running, delta_time, jump_pressed=False):
+    def update(self, direction, running, delta_time, jump_pressed=False, crouch_held=False):
         next_state = "idle"
+        crouching = self.state not in ("jump", "land") and (crouch_held or self.crouch_time > 0)
         if direction:
             self.facing = direction
             next_state = "run" if running else "walk"
-            speed = RUN_SPEED if running else WALK_SPEED
+            speed = CROUCH_SPEED if crouching else (RUN_SPEED if running else WALK_SPEED)
             self.x += direction * speed * delta_time
             self.x = max(WORLD_MARGIN, min(self.world_width - WORLD_MARGIN, self.x))
 
-        if jump_pressed and self.state not in ("jump", "land"):
+        if jump_pressed and not crouching and self.state not in ("jump", "land"):
             self.state = "jump"
             self.animation_time = 0.0
 
@@ -109,6 +114,16 @@ class Player:
             if self.animation_time < LAND_DURATION:
                 return
 
+        # Preserve transition progress when the key is released or pressed again.
+        self.crouch_time = max(0.0, min(
+            CROUCH_DURATION, self.crouch_time + (delta_time if crouch_held else -delta_time),
+        ))
+        if crouch_held or self.crouch_time > 0:
+            if self.state != "crouch":
+                self.animation_time = 0.0
+            self.state = "crouch"
+            return
+
         if self.state != next_state:
             self.state = next_state
             self.animation_time = 0.0
@@ -130,10 +145,17 @@ class Player:
             return 4
         return 5
 
+    def get_crouch_frame(self):
+        last_frame = len(self.animations["crouch"].frames) - 1
+        return min(last_frame, int(self.crouch_time / CROUCH_DURATION * last_frame))
+
     def draw(self, camera):
         jumping = self.state in ("jump", "land")
         animation = self.animations["jump" if jumping else self.state]
+        frame_index = self.get_jump_frame() if jumping else None
+        if self.state == "crouch":
+            frame_index = self.get_crouch_frame()
         animation.draw(
             self.x, self.y, self.facing, self.animation_time, camera,
-            self.get_jump_frame() if jumping else None,
+            frame_index,
         )
