@@ -32,3 +32,4 @@ Durable user and project preferences live here. Update when the user gives a rul
 - memoc 프로젝트 루트는 실제 게임 저장소 `RelicEscape`이다. 상위 `2DGP`는 두 프로젝트를 담는 폴더다.
 - 기존 `AGENTS.md`의 언어, 캐릭터 원본, 발표 파일 위치와 이름 규칙을 따른다.
 - 계획과 구현 완료를 구분하고, 확정 규칙과 제안·미정 항목을 구분한다.
+- 게임은 횡스크롤을 기본으로 하고, 넓은 카메라 구도로 캐릭터를 작게 보여준다. 왼쪽 위 조작·상태 디버그 텍스트는 최종 화면에 표시하지 않는다. 현재 프로토타입에서도 제거했다.

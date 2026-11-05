@@ -16,8 +16,11 @@ Last synced: 2026-11-05T03:23:05
 ## Current Status
 
 - 2026-11-05: 실제 Git 프로젝트인 `RelicEscape`에 memoc 초기화 완료. 기존 `AGENTS.md` 지침을 보존했다.
-- 기획·캐릭터 기본 이미지·1차 발표 자료 준비 상태이며 실행 가능한 게임 코드는 아직 없다.
-- 개발 환경은 Python·pico2D 예정이며 자동 스택 감지는 되지 않았다.
+- 2026-11-05: `main.py`와 `player.py`에 기본 캐릭터 표시, 좌우 걷기·Shift 달리기, 화면 경계, 포커스 해제 시 정지를 구현했다.
+- Windows/Python 3.13.15/pico2D 1.5.1에서 실행 확인. 걷기 8프레임·달리기 16프레임과 source-v3 대기 원본을 사용한다.
+- 자동 입력·이동 검사 및 50가지 프레임/방향 렌더링 검사 통과. 실제 데스크톱 창 표시 확인.
+- 횡스크롤 적용: 960×540 창, 카메라 0.5배(1920×1080 월드 범위), 캐릭터 약 70px, 시험 맵 가로 6400. 화면 중앙 추적 및 맵 양 끝 제한.
+- 왼쪽 위 조작·상태 텍스트 제거. 새 카메라의 추적·경계·배율·텍스트 부재 및 50종 렌더 검사 통과.
 
 ## Project Snapshot
 
@@ -35,8 +38,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Open Tasks
 
-- 1주차(11/3~9) 목표: 이동·점프·충돌·벽 슬라이드·벽점프·유물 설치와 순간이동.
-- 오늘 작업 제안: 실행 환경과 시험 방 → 이동·점프·충돌 → 시간이 남으면 유물 복귀. 일별 일정은 확정된 기획이 아닌 제안이다.
+- 1주차(11/3~9) 남은 구현: 점프·중력·지형 충돌·벽 슬라이드·벽점프·유물 설치와 순간이동.
+- 실제 키를 길게 누르는 플레이 감각·카메라 배율 체감과 노트북 실행 확인. 왼쪽 전용 이미지는 미제작이며 현재 좌우 반전으로 표시한다.
 
 ## Completed Tasks
 
@@ -46,6 +49,9 @@ See `.memoc/worklog/` for full shared activity history.
 
 - PowerShell: 프로젝트 폴더에서 `. .\.memoc\env.ps1`
 - 메모리 조회: `.\.memoc\bin\memoc.cmd summary`
+- 설치: `python -m venv .venv`, `.\.venv\Scripts\python.exe -m pip install -r requirements.txt`
+- 게임 실행: `.\.venv\Scripts\python.exe main.py`
+- 기본 검사: `.\.venv\Scripts\python.exe -m py_compile main.py player.py`, `.\.venv\Scripts\python.exe -m pip check`
 
 ## Notes
 

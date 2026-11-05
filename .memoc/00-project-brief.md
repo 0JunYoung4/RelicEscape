@@ -34,9 +34,9 @@ This is the shortest project summary for a fresh agent. Keep it factual and easy
 
 ## Next Useful Work
 
-- 1주차(11/3~9): 방 하나에서 이동·점프·충돌·벽 이동·유물 설치와 순간이동 구현.
+- 1주차(11/3~9): 첫 이동 구현에 이어 점프·충돌·벽 이동·유물 설치와 순간이동 구현.
 
 ## Important Notes
 
-- 2026-11-05 현재 기획·이미지·발표 자료가 준비되어 있으며 실행 가능한 게임 코드는 아직 없다.
-- 자동 스택 감지는 실패했지만 기획상 개발 환경은 Python과 pico2D이다. 버전은 첫 구현에서 정한다.
+- 2026-11-05: `main.py` 이동 프로토타입에서 대기·걷기·Shift 달리기를 실행할 수 있다.
+- 실행 환경: Windows, Python 3.13.15, pico2D 1.5.1. 설치 의존성은 `requirements.txt` 참조.

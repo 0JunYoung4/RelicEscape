@@ -1,0 +1,31 @@
+{
+  "image": "run-right-v1.png",
+  "frame_size": [208, 288],
+  "frame_count": 16,
+  "columns": 4,
+  "fps": 16,
+  "loop": true,
+  "facing": "right",
+  "pose": "run",
+  "foot_anchor": [99, 284],
+  "anchor_coordinates": "frame top-left",
+  "notes": "Clip the existing 1302x1208 sheet without rewriting the PNG. Column origins use rounded quarter-width positions; row height is 302 pixels.",
+  "frames": [
+    {"x": 64, "y": 8, "width": 208, "height": 288},
+    {"x": 390, "y": 8, "width": 208, "height": 288},
+    {"x": 715, "y": 8, "width": 208, "height": 288},
+    {"x": 1040, "y": 8, "width": 208, "height": 288},
+    {"x": 64, "y": 310, "width": 208, "height": 288},
+    {"x": 390, "y": 310, "width": 208, "height": 288},
+    {"x": 715, "y": 310, "width": 208, "height": 288},
+    {"x": 1040, "y": 310, "width": 208, "height": 288},
+    {"x": 64, "y": 612, "width": 208, "height": 288},
+    {"x": 390, "y": 612, "width": 208, "height": 288},
+    {"x": 715, "y": 612, "width": 208, "height": 288},
+    {"x": 1040, "y": 612, "width": 208, "height": 288},
+    {"x": 64, "y": 914, "width": 208, "height": 288},
+    {"x": 390, "y": 914, "width": 208, "height": 288},
+    {"x": 715, "y": 914, "width": 208, "height": 288},
+    {"x": 1040, "y": 914, "width": 208, "height": 288}
+  ]
+}

@@ -13,13 +13,13 @@ tags:
 Last: 2026-11-05T03:23:05
 
 ## Status
-- RelicEscape: Python·pico2D 기획 단계. 게임 코드 없음.
+- Python 3.13/pico2D 1.5.1 이동 프로토타입 실행 가능.
 
 ## Changed
-- 실제 저장소에 memoc 초기화. 기존 AGENTS 지침 보존.
+- 0.5배 횡스크롤 카메라와 약 70px 캐릭터. 조작·상태 텍스트 제거.
 
 ## Open Tasks
-- 1주차: 이동·점프·충돌·벽 이동·유물 설치와 순간이동.
+- 점프·충돌·벽 이동·유물 구현. 카메라·크기 체감과 노트북 확인.
 
 ## Resume
-- `docs/INITIAL_DESIGN.md` 8절과 `02-current-project-state.md` 참조.
+- 실행: `.\.venv\Scripts\python.exe main.py`; `wiki/project/player.md` 참조.

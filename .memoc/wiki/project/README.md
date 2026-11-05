@@ -18,7 +18,7 @@ Implementation docs for this repository.
 
 ## Project Pages
 
-_None yet. Add pages like `architecture.md`, `auth.md`, `gateway.md`, `deployment.md`, or `ui-dashboard.md`._
+- [기본 이동 프로토타입](player.md): 입력, 이동 속도, 캐릭터 프레임과 실행·검증 상태.
 
 ## How To Use
 
