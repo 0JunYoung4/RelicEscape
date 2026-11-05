@@ -70,6 +70,7 @@ class Player:
             ("run", "run-right-v1", 0.5),
             ("jump", "jump-right-draft-v1", 140 / 388),
             ("crouch", "crouch-right-fast-v1", 140 / 411),
+            ("crawl", "crawl-right-draft-v2", 140 / 466),
         ):
             metadata_path = ASSET_ROOT / "sprites/player" / f"{filename}.json"
             metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
@@ -80,6 +81,7 @@ class Player:
 
     def update(self, direction, running, delta_time, jump_pressed=False, crouch_held=False):
         next_state = "idle"
+        previous_x = self.x
         crouching = self.state not in ("jump", "land") and (crouch_held or self.crouch_time > 0)
         if direction:
             self.facing = direction
@@ -119,9 +121,15 @@ class Player:
             CROUCH_DURATION, self.crouch_time + (delta_time if crouch_held else -delta_time),
         ))
         if crouch_held or self.crouch_time > 0:
-            if self.state != "crouch":
+            # Keep the transition/hold pose unless the body is fully lowered and moving.
+            next_crouch_state = "crouch"
+            if crouch_held and self.crouch_time >= CROUCH_DURATION and self.x != previous_x:
+                next_crouch_state = "crawl"
+            if self.state != next_crouch_state:
                 self.animation_time = 0.0
-            self.state = "crouch"
+            elif next_crouch_state == "crawl":
+                self.animation_time += delta_time
+            self.state = next_crouch_state
             return
 
         if self.state != next_state:

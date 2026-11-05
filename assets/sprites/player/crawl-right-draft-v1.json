@@ -1,0 +1,24 @@
+{
+  "image": "crawl-right-draft-v1.png",
+  "source_size": [1774, 887],
+  "frame_count": 8,
+  "columns": 4,
+  "fps": 8,
+  "loop": true,
+  "facing": "right",
+  "pose": "crawl",
+  "status": "approved for draft integration",
+  "foot_anchor": [220, 375],
+  "anchor_coordinates": "frame top-left",
+  "notes": "Approved low left-hand-supported locomotion cycle saved unchanged. Play only while fully crouched and actually moving; use the crouch hold pose when stopped.",
+  "frames": [
+    {"x": 0, "y": 0, "width": 444, "height": 444},
+    {"x": 444, "y": 0, "width": 443, "height": 444},
+    {"x": 887, "y": 0, "width": 443, "height": 444},
+    {"x": 1330, "y": 0, "width": 444, "height": 444},
+    {"x": 0, "y": 444, "width": 444, "height": 443, "foot_anchor": [220, 374]},
+    {"x": 444, "y": 444, "width": 443, "height": 443, "foot_anchor": [220, 374]},
+    {"x": 887, "y": 444, "width": 443, "height": 443, "foot_anchor": [220, 374]},
+    {"x": 1330, "y": 444, "width": 444, "height": 443, "foot_anchor": [220, 374]}
+  ]
+}

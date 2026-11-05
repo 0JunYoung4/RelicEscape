@@ -154,13 +154,66 @@ class PlayerTests(unittest.TestCase):
     def test_crouch_movement_is_slow_even_with_shift(self):
         self.player.update(1, True, 0.5, crouch_held=True)
         self.assertAlmostEqual(self.player.x, 400 + CROUCH_SPEED * 0.5)
-        self.assertEqual(self.player.state, "crouch")
+        self.assertEqual(self.player.state, "crawl")
         self.player.update(-1, False, 0.1, crouch_held=True)
         self.assertEqual(self.player.facing, -1)
         self.assertAlmostEqual(self.player.x, 400 + CROUCH_SPEED * 0.4)
         self.player.update(1, True, 100, crouch_held=True)
         self.assertEqual(self.player.x, WORLD_WIDTH - 64)
         self.assertEqual(self.player.y, GROUND_Y)
+
+    def test_crawl_waits_for_full_crouch_and_stops_when_movement_stops(self):
+        self.player.update(1, False, CROUCH_DURATION / 2, crouch_held=True)
+        self.assertEqual(self.player.state, "crouch")
+        self.player.update(1, False, CROUCH_DURATION / 2, crouch_held=True)
+        self.assertEqual(self.player.state, "crawl")
+        for _ in range(30):
+            self.player.update(1, True, 1 / 60, crouch_held=True)
+        self.assertGreater(self.player.animation_time, 0)
+        self.player.update(0, False, 1 / 60, crouch_held=True)
+        self.assertEqual(self.player.state, "crouch")
+        self.assertEqual(self.player.get_crouch_frame(), 3)
+        self.assertEqual(self.player.animation_time, 0)
+
+    def test_crawl_reverses_and_stands_when_crouch_is_released(self):
+        self.player.update(1, False, CROUCH_DURATION, crouch_held=True)
+        self.player.update(-1, True, 0.1, crouch_held=True)
+        self.assertEqual(self.player.state, "crawl")
+        self.assertEqual(self.player.facing, -1)
+        self.player.update(-1, False, 0.05)
+        self.assertEqual(self.player.state, "crouch")
+        self.player.update(0, False, CROUCH_DURATION)
+        self.assertEqual(self.player.state, "idle")
+
+    def test_crawl_returns_to_hold_at_world_edges(self):
+        for x, direction in ((64, -1), (WORLD_WIDTH - 64, 1)):
+            with self.subTest(direction=direction):
+                self.player.x = x
+                self.player.update(direction, True, CROUCH_DURATION, crouch_held=True)
+                self.assertEqual(self.player.state, "crouch")
+                self.assertEqual(self.player.x, x)
+                self.assertEqual(self.player.animation_time, 0)
+
+    def test_crawl_cycle_loops_and_renders_all_frames_in_both_directions(self):
+        animation = self.player.animations["crawl"]
+        self.assertEqual(len(animation.frames), 8)
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        self.player.update(1, False, CROUCH_DURATION, crouch_held=True)
+        frames = []
+        for _ in range(16):
+            frames.append(int(self.player.animation_time * animation.fps) % 8)
+            for facing in (-1, 1):
+                self.player.facing = facing
+                pico.SDL_ClearError()
+                draw_scene(self.player, camera)
+                self.assertFalse(pico.SDL_GetError())
+            self.player.update(1, False, 1 / animation.fps, crouch_held=True)
+        self.assertEqual(frames, list(range(8)) * 2)
+        for frame in animation.frames:
+            self.assertGreaterEqual(frame["x"], 0)
+            self.assertGreaterEqual(frame["y"], 0)
+            self.assertLessEqual(frame["x"] + frame["width"], animation.image.w)
+            self.assertLessEqual(frame["y"] + frame["height"], animation.image.h)
 
     def test_jump_is_blocked_until_fully_standing(self):
         self.player.update(0, False, 0.2, jump_pressed=True, crouch_held=True)
