@@ -12,6 +12,13 @@ SCREEN_HEIGHT = 540
 GROUND_Y = 200
 WORLD_WIDTH = 6400
 CAMERA_ZOOM = 0.5
+# Starter step, two tall walls for repeated wall jumps, and an exit platform.
+TEST_TERRAIN = (
+    (620, 200, 780, 320),
+    (920, 200, 1000, 620),
+    (1260, 200, 1340, 700),
+    (1480, 460, 1740, 500),
+)
 
 
 class Camera:
@@ -82,6 +89,15 @@ def draw_scene(player, camera, show_hitboxes=False):
     for world_x in range(first_seam, min(WORLD_WIDTH, int(camera.x + camera.view_width)) + 1, 200):
         screen_x, _ = camera.world_to_screen(world_x, 0)
         pico.draw_line(screen_x, 0, screen_x, ground_screen_y - 1, 53, 61, 70)
+    for left, bottom, right, top in player.terrain:
+        if right < camera.x or left > camera.x + camera.view_width:
+            continue
+        x1, y1 = camera.world_to_screen(left, bottom)
+        x2, y2 = camera.world_to_screen(right, top)
+        pico.draw_rectangle(x1, y1, x2, y2, 66, 75, 85, filled=True)
+        pico.draw_line(x1, y2, x2, y2, 124, 157, 164)
+        if show_hitboxes:
+            pico.draw_rectangle(x1, y1, x2, y2, 76, 220, 220)
     player.draw(camera)
     if show_hitboxes:
         player.draw_hitbox(camera)
@@ -91,7 +107,7 @@ def main():
     pico.SDL_SetHint(pico.SDL_HINT_RENDER_SCALE_QUALITY, b"0")
     pico.open_canvas(SCREEN_WIDTH, SCREEN_HEIGHT)
     try:
-        player = Player(400, GROUND_Y, WORLD_WIDTH)
+        player = Player(400, GROUND_Y, WORLD_WIDTH, terrain=TEST_TERRAIN)
         camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
         camera.follow(player.x)
         show_hitboxes = False
