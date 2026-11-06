@@ -9,9 +9,11 @@ from player import Player
 
 SCREEN_WIDTH = 960
 SCREEN_HEIGHT = 540
+WINDOW_WIDTH = 1280
+WINDOW_HEIGHT = 720
 GROUND_Y = 200
 WORLD_WIDTH = 6400
-CAMERA_ZOOM = 0.5
+CAMERA_ZOOM = 1 / 3
 # Starter step, two tall walls for repeated wall jumps, and an exit platform.
 TEST_TERRAIN = (
     (620, 200, 780, 320),
@@ -76,6 +78,9 @@ def update_hitbox_visibility(events, visible):
 
 
 def draw_scene(player, camera, show_hitboxes=False):
+    # Clear the full output, including letterbox bars on non-16:9 monitors.
+    pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
+    pico.SDL_RenderClear(pico.renderer)
     ground_screen_y = GROUND_Y * camera.zoom
     pico.draw_rectangle(
         0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1, 22, 26, 34, filled=True,
@@ -103,10 +108,29 @@ def draw_scene(player, camera, show_hitboxes=False):
         player.draw_hitbox(camera)
 
 
+def set_fullscreen(enabled):
+    flags = pico.SDL_WINDOW_FULLSCREEN_DESKTOP if enabled else 0
+    if pico.SDL_SetWindowFullscreen(pico.window, flags) != 0:
+        print("Display mode change failed:", pico.SDL_GetError())
+    if not enabled:
+        pico.SDL_SetWindowSize(pico.window, WINDOW_WIDTH, WINDOW_HEIGHT)
+        pico.SDL_SetWindowPosition(pico.window, pico.SDL_WINDOWPOS_CENTERED, pico.SDL_WINDOWPOS_CENTERED)
+    return bool(pico.SDL_GetWindowFlags(pico.window) & pico.SDL_WINDOW_FULLSCREEN)
+
+
+def configure_display():
+    # Keep the camera composition consistent across monitor sizes and modes.
+    if pico.SDL_RenderSetLogicalSize(pico.renderer, SCREEN_WIDTH, SCREEN_HEIGHT) != 0:
+        raise RuntimeError(pico.SDL_GetError())
+    pico.SDL_SetWindowSize(pico.window, WINDOW_WIDTH, WINDOW_HEIGHT)
+    return set_fullscreen(True)
+
+
 def main():
     pico.SDL_SetHint(pico.SDL_HINT_RENDER_SCALE_QUALITY, b"0")
     pico.open_canvas(SCREEN_WIDTH, SCREEN_HEIGHT)
     try:
+        fullscreen = configure_display()
         player = Player(400, GROUND_Y, WORLD_WIDTH, terrain=TEST_TERRAIN)
         camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
         camera.follow(player.x)
@@ -125,6 +149,8 @@ def main():
             ):
                 break
 
+            if any(event.type == pico.SDL_KEYDOWN and event.key == pico.SDLK_F11 for event in events):
+                fullscreen = set_fullscreen(not fullscreen)
             show_hitboxes = update_hitbox_visibility(events, show_hitboxes)
             direction, running, crouching = read_movement()
             jump_pressed = bool(pico.SDL_GetKeyboardFocus()) and any(

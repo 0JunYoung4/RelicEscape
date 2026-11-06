@@ -1,0 +1,19 @@
+{
+  "image": "wall-slide-right-draft-v4.png",
+  "source_size": [2172, 724],
+  "frame_count": 3,
+  "columns": 3,
+  "fps": 24,
+  "loop": false,
+  "facing": "right",
+  "pose": "wall_slide",
+  "status": "approved for draft integration",
+  "foot_anchor": [458, 701],
+  "anchor_coordinates": "frame top-left",
+  "notes": "Play once at 24fps, then hold. Clip each frame at its raised-hand contact plane so the hand touches the wall and the boots cannot protrude into it. That plane is 20 world units right of the anchor at 140/665 scale. Mirror for a left wall. Only slide when the wall supports the full standing height, including the raised hand. Source PNG is unchanged.",
+  "frames": [
+    {"x": 0, "y": 0, "width": 553, "height": 724, "foot_anchor": [458, 701]},
+    {"x": 724, "y": 0, "width": 535, "height": 724, "foot_anchor": [440, 704]},
+    {"x": 1448, "y": 0, "width": 531, "height": 724, "foot_anchor": [436, 704]}
+  ]
+}

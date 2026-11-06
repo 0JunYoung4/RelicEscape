@@ -86,6 +86,7 @@ class Player:
             ("jump", "jump-right-draft-v1", 140 / 388),
             ("crouch", "crouch-right-fast-v1", 140 / 411),
             ("crawl", "crawl-right-draft-v2", 140 / 466),
+            ("wall_slide", "wall-slide-right-draft-v4", 140 / 665),
         ):
             metadata_path = ASSET_ROOT / "sprites/player" / f"{filename}.json"
             metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
@@ -197,6 +198,18 @@ class Player:
             for x1, y1, x2, y2 in self.terrain
         )
 
+    def _can_wall_slide(self, direction):
+        if not direction or self.wall_direction != direction:
+            return False
+        left, bottom, right, _ = self.get_hitbox()
+        # The raised hand and the lower foot both need solid wall behind them.
+        return any(
+            bottom >= y1 - CONTACT_EPSILON
+            and bottom + STANDING_HITBOX_HEIGHT <= y2 + CONTACT_EPSILON
+            and abs((right - x1) if direction > 0 else (left - x2)) <= CONTACT_EPSILON
+            for x1, y1, x2, y2 in self.terrain
+        )
+
     def _move_horizontal(self, distance):
         left, bottom, right, top = self.get_hitbox()
         for x1, y1, x2, y2 in self.terrain:
@@ -260,7 +273,7 @@ class Player:
         if air_delta <= 0:
             return
 
-        sliding = self.wall_direction and direction == self.wall_direction and self.vertical_speed <= 0
+        sliding = self._can_wall_slide(direction) and self.vertical_speed <= 0
         if sliding:
             self.vertical_speed = max(self.vertical_speed, -WALL_SLIDE_SPEED)
             acceleration_time = min(air_delta, (self.vertical_speed + WALL_SLIDE_SPEED) / GRAVITY)
@@ -277,16 +290,19 @@ class Player:
             self.wall_jump_remaining = 0.0
             return
         self.wall_direction = self._touching_wall()
-        if self.wall_direction and direction == self.wall_direction and self.vertical_speed <= 0:
+        if self._can_wall_slide(direction) and self.vertical_speed <= 0:
+            if self.state != "wall_slide":
+                self.animation_time = 0.0
             self.state = "wall_slide"
             self.vertical_speed = max(self.vertical_speed, -WALL_SLIDE_SPEED)
             self.facing = self.wall_direction
         else:
+            if self.state == "wall_slide":
+                # Leaving the wall resumes falling, without ground takeoff frames.
+                self.animation_time = TAKEOFF_DURATION + 0.06
             self.state = "jump"
 
     def get_jump_frame(self):
-        if self.state == "wall_slide":
-            return 5
         if self.state == "land":
             return 6 if self.animation_time < 0.08 else 7
         if self.animation_time < TAKEOFF_DURATION:
@@ -300,6 +316,10 @@ class Player:
         if self.vertical_speed > -JUMP_SPEED * 0.65:
             return 4
         return 5
+
+    def get_wall_slide_frame(self):
+        animation = self.animations["wall_slide"]
+        return min(len(animation.frames) - 1, int(self.animation_time * animation.fps))
 
     def get_crouch_frame(self):
         last_frame = len(self.animations["crouch"].frames) - 1
@@ -319,12 +339,14 @@ class Player:
         draw_rectangle(screen_left, screen_bottom, screen_right, screen_top, 255, 96, 80)
 
     def draw(self, camera):
-        jumping = self.state in ("jump", "land", "wall_slide")
+        jumping = self.state in ("jump", "land")
         animation = self.animations["jump" if jumping else self.state]
         frame_index = self.get_jump_frame() if jumping else None
-        if self.state == "crouch":
+        if self.state == "wall_slide":
+            frame_index = self.get_wall_slide_frame()
+        elif self.state == "crouch":
             frame_index = self.get_crouch_frame()
-        elif jumping and self.crouch_time > 0:
+        if (jumping or self.state == "wall_slide") and self.crouch_time > 0:
             animation = self.animations["crouch"]
             frame_index = self.get_crouch_frame()
         animation.draw(

@@ -295,7 +295,12 @@ class PlayerTests(unittest.TestCase):
             draw_hitbox.assert_called_once_with(camera)
         with patch("player.draw_rectangle") as rectangle:
             self.player.draw_hitbox(camera)
-            rectangle.assert_called_once_with(470, 100, 490, 170, 255, 96, 80)
+            rectangle.assert_called_once()
+            expected = (480 - 20 * CAMERA_ZOOM, 200 * CAMERA_ZOOM,
+                        480 + 20 * CAMERA_ZOOM, 340 * CAMERA_ZOOM)
+            for actual, coordinate in zip(rectangle.call_args.args[:4], expected):
+                self.assertAlmostEqual(actual, coordinate)
+            self.assertEqual(rectangle.call_args.args[4:], (255, 96, 80))
         for crouch_held in (True, False):
             self.player.update(0, False, CROUCH_DURATION, crouch_held=crouch_held)
             pico.SDL_ClearError()

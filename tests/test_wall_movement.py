@@ -2,6 +2,7 @@
 
 import os
 import unittest
+from unittest.mock import patch
 
 os.environ["SDL_VIDEODRIVER"] = "dummy"
 os.environ["SDL_AUDIODRIVER"] = "dummy"
@@ -60,6 +61,75 @@ class WallMovementTests(unittest.TestCase):
                 self.player.update(direction, False, 0.1)
                 self.assertEqual(self.player.state, "jump")
                 self.assertLess(self.player.vertical_speed, -WALL_SLIDE_SPEED)
+
+    def test_wall_slide_plays_three_frames_once_then_holds_and_restarts_on_contact(self):
+        self.put_on_wall(1)
+        self.player.animation_time = 3.0
+        self.player.update(1, False, 1 / 60)
+        self.assertEqual(self.player.get_wall_slide_frame(), 0)
+        self.player.update(1, False, 1 / 24)
+        self.assertEqual(self.player.get_wall_slide_frame(), 1)
+        self.player.update(1, False, 1 / 24)
+        self.assertEqual(self.player.get_wall_slide_frame(), 2)
+        self.player.update(1, False, 0.3)
+        self.assertEqual(self.player.get_wall_slide_frame(), 2)
+        self.player.update(0, False, 1 / 60)
+        self.assertEqual(self.player.state, "jump")
+        self.assertGreaterEqual(self.player.get_jump_frame(), 4)
+        self.player.update(1, False, 1 / 60)
+        self.assertEqual(self.player.get_wall_slide_frame(), 0)
+
+    def test_wall_slide_uses_approved_art_and_mirrors_for_both_walls(self):
+        animation = self.player.animations["wall_slide"]
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        self.assertEqual(len(animation.frames), 3)
+        self.assertEqual((animation.image.w, animation.image.h), (2172, 724))
+        for side in (-1, 1):
+            self.put_on_wall(side)
+            self.player.state = "jump"
+            self.player.update(side, False, 1 / 60)
+            for index in range(3):
+                self.player.animation_time = index / animation.fps
+                with patch.object(animation, "draw", wraps=animation.draw) as draw:
+                    pico.SDL_ClearError()
+                    self.player.draw(camera)
+                    self.assertFalse(pico.SDL_GetError())
+                    self.assertEqual(draw.call_count, 1)
+                    self.assertEqual(draw.call_args.args[2], side)
+                    self.assertEqual(draw.call_args.args[-1], index)
+
+    def test_wall_slide_hand_contact_and_clipped_boots_align_with_body_hitbox(self):
+        animation = self.player.animations["wall_slide"]
+        for side in (-1, 1):
+            self.put_on_wall(side)
+            contact_x = self.player.get_hitbox()[2 if side == 1 else 0]
+            for frame in animation.frames:
+                anchor_x, _ = frame["foot_anchor"]
+                art_contact_x = self.player.x + side * (frame["width"] - anchor_x) * animation.scale
+                self.assertAlmostEqual(art_contact_x, contact_x)
+
+    def test_top_of_wall_requires_support_at_hand_height_but_still_allows_wall_jump(self):
+        for side in (-1, 1):
+            with self.subTest(side=side):
+                self.player.wall_jump_remaining = 0
+                self.put_on_wall(side, speed=-120)
+                self.player.y = 650
+                self.player.state = "jump"
+                self.player.update(side, False, 1 / 60)
+                self.assertNotEqual(self.player.state, "wall_slide")
+                self.assertLess(self.player.vertical_speed, -WALL_SLIDE_SPEED)
+                self.assertEqual(self.player.wall_direction, side)
+                self.player.update(side, False, 1 / 60, jump_pressed=True)
+                self.assertGreater(self.player.vertical_speed, 0)
+                self.put_on_wall(side)
+                self.player.wall_jump_remaining = 0
+                self.player.y = 575
+                self.player.update(side, False, 1 / 60)
+                self.assertNotEqual(self.player.state, "wall_slide")
+                for _ in range(20):
+                    self.player.update(side, False, 1 / 60)
+                self.assertEqual(self.player.state, "wall_slide")
+                self.assertLessEqual(self.player.get_hitbox()[3], 700)
 
     def test_rising_along_wall_is_not_stopped_before_apex(self):
         self.put_on_wall(1, speed=400)
