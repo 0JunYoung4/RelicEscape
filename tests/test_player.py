@@ -10,7 +10,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 
 from pico2d import pico2d as pico
 
-from main import CAMERA_ZOOM, GROUND_Y, SCREEN_WIDTH, WORLD_WIDTH, Camera, draw_scene, read_movement
+from main import CAMERA_ZOOM, GROUND_Y, SCREEN_WIDTH, WORLD_WIDTH, Camera, draw_scene, read_movement, update_hitbox_visibility
 from player import CROUCH_DURATION, CROUCH_SPEED, GRAVITY, JUMP_SPEED, RUN_SPEED, TAKEOFF_DURATION, WALK_SPEED, Player
 
 
@@ -263,6 +263,78 @@ class PlayerTests(unittest.TestCase):
                 self.player.update(0, False, 1 / 60, crouch_held=crouch_held)
                 draw_scene(self.player, camera)
         self.assertEqual(self.player.state, "idle")
+
+    def test_hitbox_follows_position_and_changes_with_crouch(self):
+        standing = self.player.get_hitbox()
+        self.assertEqual(standing, (380, GROUND_Y, 420, GROUND_Y + 140))
+        self.player.update(0, False, CROUCH_DURATION / 2, crouch_held=True)
+        middle = self.player.get_hitbox()
+        self.assertEqual(middle[1], GROUND_Y)
+        self.assertGreater(middle[2] - middle[0], standing[2] - standing[0])
+        self.assertLess(middle[3], standing[3])
+        self.player.update(0, False, CROUCH_DURATION, crouch_held=True)
+        self.assertEqual(self.player.get_hitbox(), (350, GROUND_Y, 450, GROUND_Y + 80))
+        self.player.facing = -1
+        self.assertEqual(self.player.get_hitbox(), (350, GROUND_Y, 450, GROUND_Y + 80))
+        self.player.update(0, False, CROUCH_DURATION)
+        self.player.update(1, False, 0.2, jump_pressed=True)
+        left, bottom, right, top = self.player.get_hitbox()
+        self.assertAlmostEqual((left + right) / 2, self.player.x)
+        self.assertEqual(bottom, self.player.y)
+        self.assertGreater(bottom, GROUND_Y)
+        self.assertEqual(top - bottom, 140)
+
+    def test_hitbox_overlay_is_hidden_by_default_and_projects_with_camera(self):
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        self.player.x = 3200
+        camera.follow(self.player.x)
+        with patch.object(self.player, "draw_hitbox") as draw_hitbox:
+            draw_scene(self.player, camera)
+            draw_hitbox.assert_not_called()
+            draw_scene(self.player, camera, show_hitboxes=True)
+            draw_hitbox.assert_called_once_with(camera)
+        with patch("player.draw_rectangle") as rectangle:
+            self.player.draw_hitbox(camera)
+            rectangle.assert_called_once_with(470, 100, 490, 170, 255, 96, 80)
+        for crouch_held in (True, False):
+            self.player.update(0, False, CROUCH_DURATION, crouch_held=crouch_held)
+            pico.SDL_ClearError()
+            draw_scene(self.player, camera, show_hitboxes=True)
+            self.assertFalse(pico.SDL_GetError())
+
+    def test_hitbox_shortcut_requires_control_and_keydown(self):
+        press = pico.Event(pico.SDL_KEYDOWN)
+        press.key = pico.SDLK_h
+        release = pico.Event(pico.SDL_KEYUP)
+        release.key = pico.SDLK_h
+        with patch.object(pico, "SDL_GetKeyboardFocus", return_value=True):
+            for modifier in (pico.KMOD_LCTRL, pico.KMOD_RCTRL):
+                with patch.object(pico, "SDL_GetModState", return_value=modifier):
+                    self.assertTrue(update_hitbox_visibility([press], False))
+                    self.assertFalse(update_hitbox_visibility([press], True))
+                    self.assertTrue(update_hitbox_visibility([], True))
+                    self.assertTrue(update_hitbox_visibility([release], True))
+                    self.assertFalse(update_hitbox_visibility([press, press], False))
+            with patch.object(pico, "SDL_GetModState", return_value=0):
+                self.assertFalse(update_hitbox_visibility([press], False))
+        with patch.object(pico, "SDL_GetKeyboardFocus", return_value=None):
+            self.assertFalse(update_hitbox_visibility([press], False))
+
+    def test_hitbox_shortcut_handles_quick_control_release_in_same_batch(self):
+        def event(event_type, key):
+            result = pico.Event(event_type)
+            result.key = key
+            return result
+
+        for control in (pico.SDLK_LCTRL, pico.SDLK_RCTRL):
+            press_control = event(pico.SDL_KEYDOWN, control)
+            press_h = event(pico.SDL_KEYDOWN, pico.SDLK_h)
+            release_h = event(pico.SDL_KEYUP, pico.SDLK_h)
+            release_control = event(pico.SDL_KEYUP, control)
+            with patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), patch.object(pico, "SDL_GetModState", return_value=0):
+                self.assertTrue(update_hitbox_visibility([press_control, press_h, release_h, release_control], False))
+                self.assertTrue(update_hitbox_visibility([press_h, release_control], False))
+                self.assertFalse(update_hitbox_visibility([press_control, release_control, press_h], False))
 
 
 if __name__ == "__main__":

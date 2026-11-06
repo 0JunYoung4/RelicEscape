@@ -44,7 +44,31 @@ def read_movement():
     return int(right) - int(left), running, crouching
 
 
-def draw_scene(player, camera):
+def update_hitbox_visibility(events, visible):
+    if not pico.SDL_GetKeyboardFocus():
+        return visible
+    control_keys = {pico.SDLK_LCTRL: pico.KMOD_LCTRL, pico.SDLK_RCTRL: pico.KMOD_RCTRL}
+    control_mask = pico.SDL_GetModState() & pico.KMOD_CTRL
+    # SDL's modifier query reflects the end of the event batch. Rewind Ctrl
+    # events so a quick Ctrl+H release in the same frame still counts.
+    for event in reversed(events):
+        flag = control_keys.get(event.key, 0)
+        if event.type == pico.SDL_KEYDOWN:
+            control_mask &= ~flag
+        elif event.type == pico.SDL_KEYUP:
+            control_mask |= flag
+    for event in events:
+        flag = control_keys.get(event.key, 0)
+        if event.type == pico.SDL_KEYDOWN:
+            control_mask |= flag
+            if event.key == pico.SDLK_h and control_mask:
+                visible = not visible
+        elif event.type == pico.SDL_KEYUP:
+            control_mask &= ~flag
+    return visible
+
+
+def draw_scene(player, camera, show_hitboxes=False):
     ground_screen_y = GROUND_Y * camera.zoom
     pico.draw_rectangle(
         0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1, 22, 26, 34, filled=True,
@@ -59,6 +83,8 @@ def draw_scene(player, camera):
         screen_x, _ = camera.world_to_screen(world_x, 0)
         pico.draw_line(screen_x, 0, screen_x, ground_screen_y - 1, 53, 61, 70)
     player.draw(camera)
+    if show_hitboxes:
+        player.draw_hitbox(camera)
 
 
 def main():
@@ -68,6 +94,7 @@ def main():
         player = Player(400, GROUND_Y, WORLD_WIDTH)
         camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
         camera.follow(player.x)
+        show_hitboxes = False
         previous_time = perf_counter()
 
         while True:
@@ -82,6 +109,7 @@ def main():
             ):
                 break
 
+            show_hitboxes = update_hitbox_visibility(events, show_hitboxes)
             direction, running, crouching = read_movement()
             jump_pressed = bool(pico.SDL_GetKeyboardFocus()) and any(
                 event.type == pico.SDL_KEYDOWN and event.key == pico.SDLK_SPACE
@@ -89,7 +117,7 @@ def main():
             )
             player.update(direction, running, delta_time, jump_pressed, crouching)
             camera.follow(player.x)
-            draw_scene(player, camera)
+            draw_scene(player, camera, show_hitboxes)
             pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
             pico.update_canvas()
             sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))

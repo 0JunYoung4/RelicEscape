@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from pico2d import load_image
+from pico2d import draw_rectangle, load_image
 
 
 ASSET_ROOT = Path(__file__).resolve().parent / "assets"
@@ -16,6 +16,10 @@ JUMP_SPEED = 900.0
 GRAVITY = 2000.0
 TAKEOFF_DURATION = 0.06
 LAND_DURATION = 0.12
+STANDING_HITBOX_WIDTH = 40.0
+STANDING_HITBOX_HEIGHT = 140.0
+CROUCH_HITBOX_WIDTH = 100.0
+CROUCH_HITBOX_HEIGHT = 80.0
 
 
 class Animation:
@@ -156,6 +160,19 @@ class Player:
     def get_crouch_frame(self):
         last_frame = len(self.animations["crouch"].frames) - 1
         return min(last_frame, int(self.crouch_time / CROUCH_DURATION * last_frame))
+
+    def get_hitbox(self):
+        # Use body dimensions, independent of the weapon and animation frame.
+        crouch_ratio = self.crouch_time / CROUCH_DURATION
+        width = STANDING_HITBOX_WIDTH + (CROUCH_HITBOX_WIDTH - STANDING_HITBOX_WIDTH) * crouch_ratio
+        height = STANDING_HITBOX_HEIGHT + (CROUCH_HITBOX_HEIGHT - STANDING_HITBOX_HEIGHT) * crouch_ratio
+        return self.x - width / 2, self.y, self.x + width / 2, self.y + height
+
+    def draw_hitbox(self, camera):
+        left, bottom, right, top = self.get_hitbox()
+        screen_left, screen_bottom = camera.world_to_screen(left, bottom)
+        screen_right, screen_top = camera.world_to_screen(right, top)
+        draw_rectangle(screen_left, screen_bottom, screen_right, screen_top, 255, 96, 80)
 
     def draw(self, camera):
         jumping = self.state in ("jump", "land")
