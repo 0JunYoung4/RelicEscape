@@ -60,6 +60,39 @@ class PlayerTests(unittest.TestCase):
                 self.assertEqual(self.player.y, GROUND_Y)
                 self.assertEqual(self.player.state, "idle")
 
+    def test_space_hold_selects_three_distinct_jump_heights(self):
+        for rate in (30, 60, 144):
+            for hold, height in ((0, 90), (0.06, 90), (0.13, 145), (0.17, 145), (0.24, 202.5)):
+                with self.subTest(rate=rate, hold=hold):
+                    player = Player(400, GROUND_Y, WORLD_WIDTH)
+                    player.update(0, False, 0, jump_pressed=True, jump_held=hold > 0)
+                    elapsed = 0.0
+                    peak = player.y
+                    while elapsed < hold:
+                        step = min(1 / rate, hold - elapsed)
+                        player.update(0, False, step, jump_held=True)
+                        elapsed += step
+                        peak = max(peak, player.y)
+                    for _ in range(rate):
+                        player.update(0, False, 1 / rate, jump_held=False)
+                        peak = max(peak, player.y)
+                    self.assertAlmostEqual(peak - GROUND_Y, height, delta=0.3)
+                    self.assertEqual(player.y, GROUND_Y)
+
+    def test_tap_buffered_before_landing_rebounds_as_short_jump(self):
+        self.player.y = GROUND_Y + 5
+        self.player.vertical_speed = -200
+        self.player.state = "jump"
+        self.player.update(0, False, 1 / 60, jump_pressed=True, jump_held=False)
+        self.player.update(0, False, 1 / 60, jump_held=False)
+        self.assertEqual(self.player.state, "jump")
+        self.assertEqual(self.player.y, GROUND_Y)
+        peak = self.player.y
+        for _ in range(60):
+            self.player.update(0, False, 1 / 60, jump_held=False)
+            peak = max(peak, self.player.y)
+        self.assertAlmostEqual(peak - GROUND_Y, 90, delta=0.3)
+
     def test_an_airborne_jump_request_does_not_restart_the_jump(self):
         self.player.update(0, False, 0.25, jump_pressed=True)
         previous_y = self.player.y
@@ -108,14 +141,25 @@ class PlayerTests(unittest.TestCase):
         self.assertEqual(self.player.state, "run")
         self.assertAlmostEqual(self.player.x, 400 + RUN_SPEED * 0.1)
         self.assertEqual(self.player.attack_time, 0)
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        with patch.object(self.player.animations["run"], "draw") as draw:
+            self.player.draw(camera)
+            draw.assert_called_once_with(self.player.x, GROUND_Y, 1, 0, camera, None)
         self.player.update(-1, True, 0.125, attack_pressed=True)
         self.assertAlmostEqual(self.player.x, 400 + RUN_SPEED * (0.1 - 0.125))
         self.assertEqual(self.player.attack_time, 0.125)
-        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
-        with patch.object(self.player.animations["attack"], "draw") as draw:
+        with patch.object(self.player.animations["attack"], "draw") as draw, patch("player.draw_slash") as trail:
             self.player.draw(camera)
-            draw.assert_called_once_with(self.player.x, GROUND_Y, 1, 0.125, camera)
-        self.player.update(-1, True, 0.2)
+            draw.assert_called_once_with(self.player.x, GROUND_Y, 1, 0.125, camera, 3)
+            trail.assert_called_once()
+            self.assertEqual(trail.call_args.args[:3], (self.player.x, GROUND_Y, 1))
+            self.assertAlmostEqual(trail.call_args.args[3], 0.025)
+        self.player.update(-1, True, 0.06)
+        with patch.object(self.player.animations["run"], "draw") as draw, patch("player.draw_slash") as trail:
+            self.player.draw(camera)
+            draw.assert_called_once_with(self.player.x, GROUND_Y, 1, self.player.animation_time, camera, None)
+            trail.assert_not_called()
+        self.player.update(-1, True, 0.05)
         self.assertIsNone(self.player.attack_time)
         self.assertEqual(self.player.state, "run")
 
@@ -124,8 +168,15 @@ class PlayerTests(unittest.TestCase):
         self.assertEqual(self.player.state, "jump")
         self.assertEqual(self.player.attack_time, 0)
         self.assertGreater(self.player.y, GROUND_Y)
-        self.player.update(1, False, 0.35)
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        with patch.object(self.player.animations["jump"], "draw") as draw:
+            self.player.draw(camera)
+            draw.assert_called_once_with(self.player.x, self.player.y, 1, self.player.animation_time, camera, 2)
+        self.player.update(1, False, 0.18)
+        self.assertAlmostEqual(self.player.attack_time, 0.18)
+        self.player.update(1, False, 0.04)
         self.assertIsNone(self.player.attack_time)
+        self.player.update(1, False, 0.17)
         previous_y = self.player.y
         previous_x = self.player.x
         self.player.update(1, False, 0.03, attack_pressed=True)
@@ -133,6 +184,86 @@ class PlayerTests(unittest.TestCase):
         self.assertEqual(self.player.state, "jump")
         self.assertLess(self.player.y, previous_y)
         self.assertAlmostEqual(self.player.x, previous_x + WALK_SPEED * 0.03)
+        self.player.update(1, False, 0.03)
+        with patch.object(self.player.animations["air_attack"], "draw") as draw:
+            self.player.draw(camera)
+            draw.assert_called_once_with(self.player.x, self.player.y, 1, 0.03, camera, 1)
+
+    def test_late_attack_input_chains_once_and_keeps_the_down_modifier(self):
+        self.player.update(0, False, 0.1, jump_pressed=True, attack_pressed=True)
+        self.player.update(0, False, 0.15, crouch_held=True, attack_pressed=True)
+        self.assertEqual(self.player.attack_animation_key, "air_attack")
+        self.assertAlmostEqual(self.player.attack_time, 0.15)
+        self.player.update(0, False, 0.041)
+        self.assertEqual(self.player.attack_animation_key, "air_down_attack")
+        self.assertEqual(self.player.attack_time, 0)
+        self.player.update(0, False, 0.17)
+        self.assertIsNone(self.player.attack_time)
+
+    def test_down_attack_plays_while_falling_and_then_resumes_jump_animation(self):
+        self.player.update(0, False, 0.47, jump_pressed=True)
+        previous_y = self.player.y
+        self.player.update(-1, False, 0.01, crouch_held=True, attack_pressed=True)
+        self.assertEqual(self.player.attack_animation_key, "air_down_attack")
+        self.assertEqual(self.player.state, "jump")
+        self.assertEqual(self.player.crouch_time, 0)
+        self.assertLess(self.player.y, previous_y)
+        self.assertAlmostEqual(self.player.x, 400 - WALK_SPEED * 0.01)
+        animation = self.player.animations["air_down_attack"]
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        for index, delta_time in enumerate((0, 0.08, 0.06)):
+            self.player.update(1, False, delta_time)
+            with patch.object(animation.image, "clip_composite_draw", wraps=animation.image.clip_composite_draw) as draw:
+                pico.SDL_ClearError()
+                self.player.draw(camera)
+                self.assertFalse(pico.SDL_GetError())
+                draw.assert_called_once()
+                self.assertEqual(draw.call_args.args[0], animation.frames[index]["x"])
+                self.assertEqual(draw.call_args.args[5], "h")
+        self.player.update(1, False, 0.1)
+        self.assertIsNone(self.player.attack_time)
+        self.assertEqual(self.player.state, "jump")
+        with patch.object(self.player.animations["jump_look_down"], "draw") as draw:
+            self.player.draw(camera)
+            draw.assert_called_once()
+
+    def test_look_down_uses_air_input_and_descent_until_landing(self):
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        normal = self.player.animations["jump"]
+        look_down = self.player.animations["jump_look_down"]
+        self.player.update(0, False, 0.1, jump_pressed=True)
+        self.player.update(-1, False, 0.05, crouch_held=True)
+        self.assertGreater(self.player.vertical_speed, 0)
+        with patch.object(look_down, "draw", wraps=look_down.draw) as draw:
+            self.player.draw(camera)
+            draw.assert_called_once_with(self.player.x, self.player.y, -1, self.player.animation_time, camera, 2)
+        self.player.update(0, False, 0.03)
+        with patch.object(normal, "draw") as draw:
+            self.player.draw(camera)
+            draw.assert_called_once()
+        self.player.update(0, False, 0.35)
+        self.assertLess(self.player.vertical_speed, 0)
+        with patch.object(look_down, "draw", wraps=look_down.draw) as draw:
+            self.player.draw(camera)
+            draw.assert_called_once()
+        self.player.update(0, False, 0.42)
+        self.assertEqual(self.player.state, "land")
+        with patch.object(normal, "draw") as draw:
+            self.player.draw(camera)
+            draw.assert_called_once()
+
+    def test_grounded_down_and_attack_starts_crouch(self):
+        self.player.update(0, False, 0.05, crouch_held=True, attack_pressed=True)
+        self.assertEqual(self.player.state, "crouch")
+        self.assertIsNone(self.player.attack_time)
+
+    def test_air_attack_draws_frames_at_their_configured_times(self):
+        animation = self.player.animations["air_attack"]
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        for elapsed, index in ((0.024, 0), (0.025, 1), (0.065, 2), (0.105, 3), (0.160, 4), (0.189, 4)):
+            with self.subTest(elapsed=elapsed), patch.object(animation.image, "clip_composite_draw") as draw:
+                animation.draw(self.player.x, self.player.y, 1, elapsed, camera)
+                self.assertEqual(draw.call_args.args[0], animation.frames[index]["x"])
 
     def test_walk_run_and_camera_follow_work_during_a_jump(self):
         self.player.x = 2000

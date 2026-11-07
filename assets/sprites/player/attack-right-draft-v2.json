@@ -4,17 +4,19 @@
   "frame_count": 5,
   "columns": 5,
   "fps": 16,
+  "frame_durations_ms": [25, 40, 35, 55, 35],
+  "slash_frame": 3,
   "loop": false,
   "facing": "right",
   "pose": "attack",
-  "foot_anchor": [228, 651],
+  "foot_anchor": [228, 652],
   "anchor_coordinates": "frame top-left",
   "notes": "Frame four has a wider crop for the forward lean and longer blade. Each anchor is centered between the feet. Play once and mirror for left attacks.",
   "frames": [
-    {"x": 0, "y": 0, "width": 420, "height": 724, "foot_anchor": [228, 651]},
-    {"x": 420, "y": 0, "width": 400, "height": 724, "foot_anchor": [202, 651]},
-    {"x": 820, "y": 0, "width": 434, "height": 724, "foot_anchor": [220, 651]},
-    {"x": 1254, "y": 0, "width": 600, "height": 724, "foot_anchor": [186, 651]},
-    {"x": 1854, "y": 0, "width": 318, "height": 724, "foot_anchor": [136, 651]}
+    {"x": 0, "y": 0, "width": 420, "height": 724, "foot_anchor": [228, 652], "movement_pose": true},
+    {"x": 420, "y": 0, "width": 400, "height": 724, "foot_anchor": [202, 652]},
+    {"x": 820, "y": 0, "width": 434, "height": 724, "foot_anchor": [220, 652]},
+    {"x": 1254, "y": 0, "width": 600, "height": 724, "foot_anchor": [186, 652]},
+    {"x": 1854, "y": 0, "width": 318, "height": 724, "foot_anchor": [136, 652], "movement_pose": true}
   ]
 }

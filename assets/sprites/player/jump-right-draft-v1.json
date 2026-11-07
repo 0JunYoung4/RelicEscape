@@ -1,5 +1,6 @@
 {
   "image": "jump-right-draft-v1.png",
+  "look_down_image": "jump-look-down-right-v1.png",
   "source_size": [1774, 887],
   "frame_count": 8,
   "columns": 4,
@@ -10,15 +11,15 @@
   "status": "approved for draft integration",
   "foot_anchor": [220, 408],
   "anchor_coordinates": "frame top-left",
-  "notes": "Approved generated draft saved unchanged. Frames are selected by takeoff, vertical velocity and landing, not by looping the sheet. Per-frame anchors remove the preview sheet's vertical pose offsets.",
+  "notes": "Takeoff and landing use ground contact. Airborne frames use virtual foot anchors to keep the pelvis aligned as the knees tuck or extend.",
   "frames": [
     {"x": 0, "y": 0, "width": 444, "height": 444, "foot_anchor": [250, 411], "phase": "anticipation"},
     {"x": 444, "y": 0, "width": 443, "height": 444, "foot_anchor": [225, 408], "phase": "takeoff"},
-    {"x": 887, "y": 0, "width": 443, "height": 444, "foot_anchor": [220, 371], "phase": "rise"},
-    {"x": 1330, "y": 0, "width": 444, "height": 444, "foot_anchor": [210, 340], "phase": "apex"},
-    {"x": 0, "y": 444, "width": 444, "height": 443, "foot_anchor": [220, 360], "phase": "fall"},
-    {"x": 444, "y": 444, "width": 443, "height": 443, "foot_anchor": [210, 396], "phase": "landing_prepare"},
+    {"x": 887, "y": 0, "width": 443, "height": 444, "foot_anchor": [220, 387], "phase": "rise"},
+    {"x": 1330, "y": 0, "width": 444, "height": 444, "foot_anchor": [210, 365], "phase": "apex"},
+    {"x": 0, "y": 444, "width": 444, "height": 443, "foot_anchor": [220, 385], "phase": "fall"},
+    {"x": 444, "y": 444, "width": 443, "height": 443, "foot_anchor": [210, 403], "phase": "landing_prepare"},
     {"x": 887, "y": 444, "width": 443, "height": 443, "foot_anchor": [204, 407], "phase": "landing"},
-    {"x": 1330, "y": 444, "width": 444, "height": 443, "foot_anchor": [205, 408], "phase": "recover"}
+    {"x": 1330, "y": 444, "width": 444, "height": 443, "foot_anchor": [205, 407], "phase": "recover"}
   ]
 }

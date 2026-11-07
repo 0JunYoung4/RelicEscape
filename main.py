@@ -170,11 +170,15 @@ def main():
             show_hitboxes = update_hitbox_visibility(events, show_hitboxes)
             direction, running, crouching = read_movement()
             pressed_keys = {event.key for event in events if event.type == pico.SDL_KEYDOWN}
-            if not pico.SDL_GetKeyboardFocus():
+            jump_held = False
+            if pico.SDL_GetKeyboardFocus():
+                jump_held = bool(pico.SDL_GetKeyboardState(None)[pico.SDL_SCANCODE_SPACE])
+            else:
                 pressed_keys.clear()
             player.update(
                 direction, running, delta_time,
                 jump_pressed=pico.SDLK_SPACE in pressed_keys,
+                jump_held=jump_held,
                 crouch_held=crouching,
                 attack_pressed=pico.SDLK_x in pressed_keys,
             )

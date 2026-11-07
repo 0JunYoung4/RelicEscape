@@ -1,9 +1,14 @@
 """Player movement, jumping, crouching, and the approved character artwork."""
 
 import json
+from bisect import bisect_right
+from itertools import accumulate
+from math import sqrt
 from pathlib import Path
 
 from pico2d import draw_rectangle, load_image
+
+from slash_effect import SLASH_DURATION, draw_slash
 
 
 ASSET_ROOT = Path(__file__).resolve().parent / "assets"
@@ -14,9 +19,14 @@ CROUCH_DURATION = 0.15
 WORLD_MARGIN = 64
 JUMP_SPEED = 900.0
 GRAVITY = 2000.0
+MEDIUM_JUMP_HOLD = 0.09
+LONG_JUMP_HOLD = 0.18
+SHORT_JUMP_HEIGHT = 90.0
+MEDIUM_JUMP_HEIGHT = 145.0
 TAKEOFF_FRAME_DURATION = 0.06
 LAND_DURATION = 0.12
 JUMP_BUFFER_DURATION = 0.10
+ATTACK_BUFFER_WINDOW = 0.05
 STANDING_HITBOX_WIDTH = 40.0
 STANDING_HITBOX_HEIGHT = 140.0
 CROUCH_HITBOX_WIDTH = 100.0
@@ -29,20 +39,29 @@ CONTACT_EPSILON = 0.000001
 
 
 class Animation:
-    def __init__(self, image_path, frames, foot_anchor, scale, fps):
+    def __init__(self, image_path, frames, foot_anchor, scale, fps, frame_durations_ms=()):
         self.image = load_image(str(image_path))
         self.frames = frames
         self.foot_anchor = foot_anchor
         self.scale = scale
         self.fps = fps
+        self.frame_ends_ms = tuple(accumulate(frame_durations_ms))
+        self.duration = len(frames) / fps if fps else float("inf")
+        if self.frame_ends_ms:
+            self.duration = self.frame_ends_ms[-1] / 1000
+
+    def frame_at(self, elapsed):
+        if self.frame_ends_ms:
+            return min(bisect_right(self.frame_ends_ms, elapsed * 1000), len(self.frames) - 1)
+        return int(elapsed * self.fps) % len(self.frames)
 
     def draw(self, x, y, facing, elapsed, camera, frame_index=None):
         if frame_index is None:
-            frame_index = int(elapsed * self.fps) % len(self.frames)
+            frame_index = self.frame_at(elapsed)
         frame = self.frames[frame_index]
         width, height = frame["width"], frame["height"]
         anchor_x, anchor_y = frame.get("foot_anchor", self.foot_anchor)
-        # Keep the feet at the same world position across differently sized art.
+        # Anchor ground contact or the projected foot position of an airborne pose.
         center_x = x + facing * (width / 2 - anchor_x) * self.scale
         center_y = y + (anchor_y - height / 2) * self.scale
         screen_x, screen_y = camera.world_to_screen(center_x, center_y)
@@ -66,12 +85,17 @@ class Player:
         self.state = "idle"
         self.animation_time = 0.0
         self.attack_time = None
+        self.buffered_attack_down = None
+        self.attack_animation_key = "attack"
         self.attack_facing = self.facing
+        self.slash_starts = {}
         self.crouch_time = 0.0
+        self.look_down_held = False
         self.terrain = tuple(terrain)
         self.grounded = True
         self.wall_direction = 0
         self.jump_buffer_remaining = 0.0
+        self.jump_origin_y = None
         self.wall_jump_remaining = 0.0
         self.wall_jump_speed = 0.0
 
@@ -88,29 +112,52 @@ class Player:
             ("run", "run-right-v1", 0.5),
             ("jump", "jump-right-draft-v1", 140 / 388),
             ("crouch", "crouch-right-fast-v1", 140 / 411),
-            ("crawl", "crawl-right-draft-v2", 140 / 466),
+            ("crawl", "crawl-right-draft-v2", 0.29),
             ("wall_slide", "wall-slide-right-draft-v4", 140 / 665),
             ("attack", "attack-right-draft-v2", 140 / 582),
+            ("air_attack", "air-attack-right-draft-v3", 140 / 582),
+            ("air_down_attack", "air-down-attack-right-draft-v4", 140 / 620),
         ):
             metadata_path = ASSET_ROOT / "sprites/player" / f"{filename}.json"
             metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
             self.animations[state] = Animation(
                 metadata_path.parent / metadata["image"], metadata["frames"],
                 metadata["foot_anchor"], scale, metadata["fps"],
+                metadata.get("frame_durations_ms", ()),
             )
+            if "look_down_image" in metadata:
+                self.animations["jump_look_down"] = Animation(
+                    metadata_path.parent / metadata["look_down_image"], metadata["frames"],
+                    metadata["foot_anchor"], scale, metadata["fps"],
+                )
+            if "slash_frame" in metadata:
+                windup = metadata["frame_durations_ms"][:metadata["slash_frame"]]
+                self.slash_starts[state] = sum(windup) / 1000
 
-    def update(self, direction, running, delta_time, jump_pressed=False, crouch_held=False, *, attack_pressed=False):
+    def update(
+        self, direction, running, delta_time, jump_pressed=False, crouch_held=False,
+        *, attack_pressed=False, jump_held=True,
+    ):
         next_state = "idle"
         previous_x = self.x
+        self.look_down_held = crouch_held
+        attack_down = crouch_held
         self.grounded = self.vertical_speed <= 0 and self._has_support()
         self.wall_direction = 0 if self.grounded else self._touching_wall()
 
         if self.attack_time is not None:
-            attack = self.animations["attack"]
+            attack = self.animations[self.attack_animation_key]
             self.attack_time += delta_time
-            if self.attack_time >= len(attack.frames) / attack.fps:
+            if self.attack_time >= attack.duration:
                 self.attack_time = None
-            attack_pressed = False
+                if not attack_pressed and self.buffered_attack_down is not None:
+                    attack_pressed = True
+                    attack_down = self.buffered_attack_down
+                self.buffered_attack_down = None
+            else:
+                if attack_pressed and attack.duration - self.attack_time <= ATTACK_BUFFER_WINDOW:
+                    self.buffered_attack_down = attack_down
+                attack_pressed = False
 
         crouching = self.state not in ("jump", "land", "wall_slide") and (crouch_held or self.crouch_time > 0)
         if crouching or (self.grounded and crouch_held):
@@ -120,12 +167,12 @@ class Player:
 
         if self.jump_buffer_remaining > 0:
             if self.grounded:
-                self._start_jump(JUMP_SPEED)
+                self._start_jump()
             elif jump_pressed and self.wall_direction:
                 self.wall_jump_speed = -self.wall_direction * WALL_JUMP_SPEED_X
                 self.wall_jump_remaining = WALL_JUMP_PUSH_TIME
                 self.facing = -self.wall_direction
-                self._start_jump(WALL_JUMP_SPEED_Y)
+                self._start_jump(from_wall=True)
         self.jump_buffer_remaining = max(0.0, self.jump_buffer_remaining - delta_time)
 
         speed = CROUCH_SPEED if crouching else (RUN_SPEED if running else WALK_SPEED)
@@ -141,9 +188,16 @@ class Player:
         self._move_horizontal(horizontal_delta)
         self.grounded = self.vertical_speed <= 0 and self._has_support()
         self.wall_direction = 0 if self.grounded else self._touching_wall()
-        if attack_pressed and not crouching and self.crouch_time == 0 and self.state != "wall_slide":
-            # Keep the swing direction fixed while movement and gravity continue.
+        if (
+            attack_pressed and self.crouch_time == 0 and self.state != "wall_slide"
+            and not (self.grounded and crouch_held)
+        ):
+            # Keep the swing pose and direction fixed while movement and gravity continue.
             self.attack_time = 0.0
+            if self.grounded:
+                self.attack_animation_key = "attack"
+            else:
+                self.attack_animation_key = "air_down_attack" if attack_down else "air_attack"
             self.attack_facing = self.facing
 
         if not self.grounded and self.state not in ("jump", "wall_slide"):
@@ -151,9 +205,10 @@ class Player:
             self.state = "jump"
             self.animation_time = TAKEOFF_FRAME_DURATION
         if self.state in ("jump", "wall_slide"):
-            self._advance_air(delta_time, direction, crouch_held)
+            self._advance_air(delta_time, direction, crouch_held, jump_held)
             if self.state == "wall_slide":
                 self.attack_time = None
+                self.buffered_attack_down = None
             return
 
         if self.state == "land":
@@ -170,6 +225,7 @@ class Player:
             self.crouch_time = previous_crouch_time
         if crouch_held or self.crouch_time > 0:
             self.attack_time = None
+            self.buffered_attack_down = None
             # Keep the transition/hold pose unless the body is fully lowered and moving.
             next_crouch_state = "crouch"
             if crouch_held and self.crouch_time >= CROUCH_DURATION and self.x != previous_x:
@@ -268,20 +324,30 @@ class Player:
         self.grounded = landed
         return landed
 
-    def _start_jump(self, speed):
+    def _start_jump(self, *, from_wall=False):
         self.state = "jump"
         self.animation_time = 0.0
-        self.vertical_speed = speed
+        self.vertical_speed = WALL_JUMP_SPEED_Y if from_wall else JUMP_SPEED
+        self.jump_origin_y = None if from_wall else self.y
         self.grounded = False
         self.jump_buffer_remaining = 0.0
 
-    def _advance_air(self, delta_time, direction, crouch_held):
+    def _advance_air(self, delta_time, direction, crouch_held, jump_held):
         if self.crouch_time > 0:
             previous_crouch_time = self.crouch_time
             self.crouch_time = 0.0
             if self._overlaps_terrain():
                 self.crouch_time = previous_crouch_time
             self.wall_direction = 0 if self.grounded else self._touching_wall()
+        if self.jump_origin_y is not None:
+            if self.vertical_speed <= 0 or self.animation_time >= LONG_JUMP_HOLD:
+                self.jump_origin_y = None
+            elif not jump_held:
+                # Match the chosen apex even when Space is released later within the same tier.
+                height = SHORT_JUMP_HEIGHT if self.animation_time < MEDIUM_JUMP_HOLD else MEDIUM_JUMP_HEIGHT
+                remaining_height = max(0.0, self.jump_origin_y + height - self.y)
+                self.vertical_speed = min(self.vertical_speed, sqrt(2 * GRAVITY * remaining_height))
+                self.jump_origin_y = None
         self.animation_time += delta_time
         if delta_time <= 0:
             return
@@ -300,7 +366,7 @@ class Player:
             self.wall_direction = 0
             self.wall_jump_remaining = 0.0
             if self.jump_buffer_remaining > 0 and not crouch_held and self.crouch_time == 0:
-                self._start_jump(JUMP_SPEED)
+                self._start_jump()
             else:
                 self.state = "land"
                 self.animation_time = 0.0
@@ -355,12 +421,26 @@ class Player:
 
     def draw(self, camera):
         if self.attack_time is not None:
-            self.animations["attack"].draw(self.x, self.y, self.attack_facing, self.attack_time, camera)
-            return
+            attack = self.animations[self.attack_animation_key]
+            slash_start = self.slash_starts.get(self.attack_animation_key, attack.duration)
+            slash_age = self.attack_time - slash_start
+            if 0 <= slash_age < SLASH_DURATION:
+                draw_slash(
+                    self.x, self.y, self.attack_facing, slash_age, camera,
+                    downward=self.attack_animation_key == "air_down_attack",
+                )
+            frame_index = attack.frame_at(self.attack_time)
+            if self.state == "idle" or not attack.frames[frame_index].get("movement_pose"):
+                attack.draw(
+                    self.x, self.y, self.attack_facing, self.attack_time, camera, frame_index,
+                )
+                return
 
         jumping = self.state in ("jump", "land")
         animation = self.animations["jump" if jumping else self.state]
         frame_index = self.get_jump_frame() if jumping else None
+        if self.state == "jump" and (self.look_down_held or self.vertical_speed < 0):
+            animation = self.animations.get("jump_look_down", animation)
         if self.state == "wall_slide":
             frame_index = self.get_wall_slide_frame()
         elif self.state == "crouch":
@@ -368,7 +448,8 @@ class Player:
         if (jumping or self.state == "wall_slide") and self.crouch_time > 0:
             animation = self.animations["crouch"]
             frame_index = self.get_crouch_frame()
+        facing = self.facing if self.attack_time is None else self.attack_facing
         animation.draw(
-            self.x, self.y, self.facing, self.animation_time, camera,
+            self.x, self.y, facing, self.animation_time, camera,
             frame_index,
         )

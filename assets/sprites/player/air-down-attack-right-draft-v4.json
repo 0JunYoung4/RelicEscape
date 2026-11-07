@@ -1,0 +1,20 @@
+{
+  "image": "air-down-attack-right-draft-v4.png",
+  "source_size": [2172, 724],
+  "frame_count": 3,
+  "columns": 3,
+  "fps": 16,
+  "frame_durations_ms": [50, 40, 75],
+  "slash_frame": 2,
+  "loop": false,
+  "facing": "right",
+  "pose": "air_down_attack",
+  "foot_anchor": [380, 635],
+  "anchor_coordinates": "frame top-left",
+  "notes": "Virtual foot anchors align the hips with the regular airborne poses. The final blade extends below the boot line. Play once and mirror for left attacks.",
+  "frames": [
+    {"x": 0, "y": 0, "width": 724, "height": 724, "foot_anchor": [380, 635]},
+    {"x": 724, "y": 0, "width": 724, "height": 724, "foot_anchor": [284, 652]},
+    {"x": 1448, "y": 0, "width": 724, "height": 724, "foot_anchor": [262, 667]}
+  ]
+}

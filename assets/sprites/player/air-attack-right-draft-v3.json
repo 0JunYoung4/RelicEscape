@@ -1,0 +1,22 @@
+{
+  "image": "air-attack-right-draft-v3.png",
+  "source_size": [2238, 724],
+  "frame_count": 5,
+  "columns": 5,
+  "fps": 16,
+  "frame_durations_ms": [25, 40, 40, 55, 30],
+  "slash_frame": 3,
+  "loop": false,
+  "facing": "right",
+  "pose": "air_attack",
+  "foot_anchor": [190, 660],
+  "anchor_coordinates": "frame top-left",
+  "notes": "Virtual foot anchors align the hips with the jump and fall poses while the legs tuck and extend. Frame four has a wider crop for the blade. Play once and mirror for left attacks.",
+  "frames": [
+    {"x": 0, "y": 0, "width": 418, "height": 724, "foot_anchor": [190, 660], "movement_pose": true},
+    {"x": 418, "y": 0, "width": 376, "height": 724, "foot_anchor": [182, 677]},
+    {"x": 794, "y": 0, "width": 462, "height": 724, "foot_anchor": [211, 670]},
+    {"x": 1256, "y": 0, "width": 601, "height": 724, "foot_anchor": [199, 680]},
+    {"x": 1857, "y": 0, "width": 381, "height": 724, "foot_anchor": [131, 678]}
+  ]
+}

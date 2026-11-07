@@ -8,17 +8,17 @@
   "facing": "right",
   "pose": "crawl",
   "status": "approved corrected draft",
-  "foot_anchor": [220, 405],
+  "foot_anchor": [250, 404],
   "anchor_coordinates": "frame top-left",
-  "notes": "Approved leg-passing revision saved unchanged. Keep v1 for comparison. The new artwork is displayed at 140/466 scale to match the prior crawl height; only play while fully crouched and actually moving.",
+  "notes": "Align the grounded boot and supporting hand with the crouch hold pose. Play only while fully crouched and moving.",
   "frames": [
     {"x": 0, "y": 0, "width": 444, "height": 444},
     {"x": 444, "y": 0, "width": 443, "height": 444},
     {"x": 887, "y": 0, "width": 443, "height": 444},
     {"x": 1330, "y": 0, "width": 444, "height": 444},
-    {"x": 0, "y": 444, "width": 444, "height": 443, "foot_anchor": [220, 404]},
-    {"x": 444, "y": 444, "width": 443, "height": 443, "foot_anchor": [220, 404]},
-    {"x": 887, "y": 444, "width": 443, "height": 443, "foot_anchor": [220, 404]},
-    {"x": 1330, "y": 444, "width": 444, "height": 443, "foot_anchor": [220, 404]}
+    {"x": 0, "y": 444, "width": 444, "height": 443},
+    {"x": 444, "y": 444, "width": 443, "height": 443},
+    {"x": 887, "y": 444, "width": 443, "height": 443},
+    {"x": 1330, "y": 444, "width": 444, "height": 443}
   ]
 }
