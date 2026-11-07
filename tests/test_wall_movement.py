@@ -196,11 +196,19 @@ class WallMovementTests(unittest.TestCase):
         self.assertLess(self.player.get_hitbox()[3], 420)
         self.assertFalse(self.player._overlaps_terrain())
 
-    def test_low_ceiling_prevents_standing_until_clear(self):
+    def test_crouch_jump_stops_at_low_ceiling_and_stays_low_until_clear(self):
         self.player.terrain = ((500, 300, 800, 340),)
         self.player.x = 600
         self.player.crouch_time = CROUCH_DURATION
         self.player.state = "crouch"
+        self.player.update(0, False, 0.05, jump_pressed=True, crouch_held=True)
+        self.assertEqual(self.player.state, "jump")
+        self.assertGreater(self.player.y, self.player.ground_y)
+        self.assertEqual(self.player.get_hitbox()[3], 300)
+        self.assertEqual(self.player.vertical_speed, 0)
+        self.player.update(0, False, 1 / 60)
+        self.assertEqual(self.player.crouch_time, CROUCH_DURATION)
+        self.assertFalse(self.player._overlaps_terrain())
         for _ in range(30):
             self.player.update(0, False, 1 / 60)
         self.assertGreater(self.player.crouch_time, 0)

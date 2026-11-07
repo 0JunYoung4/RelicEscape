@@ -1,0 +1,191 @@
+{
+  "image": "idle-sword-dust-right-draft-v3.png",
+  "source_size": [
+    2040,
+    1328
+  ],
+  "frame_count": 24,
+  "columns": 6,
+  "fps": 12,
+  "frame_durations_ms": [
+    90,
+    80,
+    80,
+    80,
+    80,
+    110,
+    110,
+    90,
+    80,
+    60,
+    60,
+    70,
+    160,
+    100,
+    90,
+    80,
+    70,
+    60,
+    60,
+    80,
+    90,
+    90,
+    90,
+    140
+  ],
+  "loop": false,
+  "facing": "right",
+  "pose": "idle_sword_dust",
+  "foot_anchor": [
+    150,
+    306
+  ],
+  "anchor_coordinates": "frame top-left",
+  "notes": "The left hand brushes the blade twice, with a brief pullback between wipes.",
+  "frames": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 340,
+      "y": 0,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 680,
+      "y": 0,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1020,
+      "y": 0,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1360,
+      "y": 0,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1700,
+      "y": 0,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 0,
+      "y": 332,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 340,
+      "y": 332,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 680,
+      "y": 332,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1020,
+      "y": 332,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1360,
+      "y": 332,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1700,
+      "y": 332,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 0,
+      "y": 664,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 340,
+      "y": 664,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 680,
+      "y": 664,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1020,
+      "y": 664,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1360,
+      "y": 664,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1700,
+      "y": 664,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 0,
+      "y": 996,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 340,
+      "y": 996,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 680,
+      "y": 996,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1020,
+      "y": 996,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1360,
+      "y": 996,
+      "width": 340,
+      "height": 332
+    },
+    {
+      "x": 1700,
+      "y": 996,
+      "width": 340,
+      "height": 332
+    }
+  ]
+}

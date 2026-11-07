@@ -12,6 +12,7 @@ from slash_effect import SLASH_DURATION, draw_slash
 
 
 ASSET_ROOT = Path(__file__).resolve().parent / "assets"
+IDLE_FLOURISH_DELAY = 5.0
 WALK_SPEED = 300.0
 RUN_SPEED = 525.0
 CROUCH_SPEED = 90.0
@@ -89,6 +90,7 @@ class Player:
         self.attack_animation_key = "attack"
         self.attack_facing = self.facing
         self.slash_starts = {}
+        self.slash = None
         self.crouch_time = 0.0
         self.look_down_held = False
         self.terrain = tuple(terrain)
@@ -108,6 +110,7 @@ class Player:
             ),
         }
         for state, filename, scale in (
+            ("idle_sword_dust", "idle-sword-dust-right-draft-v3", 140 / 288),
             ("walk", "walk-right-v1", 1.5),
             ("run", "run-right-v1", 0.5),
             ("jump", "jump-right-draft-v1", 140 / 388),
@@ -145,9 +148,21 @@ class Player:
         self.grounded = self.vertical_speed <= 0 and self._has_support()
         self.wall_direction = 0 if self.grounded else self._touching_wall()
 
+        if self.slash is not None:
+            age, facing, downward = self.slash
+            age += delta_time
+            self.slash = (age, facing, downward) if age < SLASH_DURATION else None
+
         if self.attack_time is not None:
             attack = self.animations[self.attack_animation_key]
+            previous_attack_time = self.attack_time
             self.attack_time += delta_time
+            slash_start = self.slash_starts.get(self.attack_animation_key)
+            if slash_start is not None and previous_attack_time < slash_start <= self.attack_time:
+                slash_age = self.attack_time - slash_start
+                if slash_age < SLASH_DURATION:
+                    downward = self.attack_animation_key == "air_down_attack"
+                    self.slash = (slash_age, self.attack_facing, downward)
             if self.attack_time >= attack.duration:
                 self.attack_time = None
                 if not attack_pressed and self.buffered_attack_down is not None:
@@ -159,10 +174,7 @@ class Player:
                     self.buffered_attack_down = attack_down
                 attack_pressed = False
 
-        crouching = self.state not in ("jump", "land", "wall_slide") and (crouch_held or self.crouch_time > 0)
-        if crouching or (self.grounded and crouch_held):
-            self.jump_buffer_remaining = 0.0
-        elif jump_pressed:
+        if jump_pressed:
             self.jump_buffer_remaining = JUMP_BUFFER_DURATION
 
         if self.jump_buffer_remaining > 0:
@@ -175,6 +187,7 @@ class Player:
                 self._start_jump(from_wall=True)
         self.jump_buffer_remaining = max(0.0, self.jump_buffer_remaining - delta_time)
 
+        crouching = self.state not in ("jump", "land", "wall_slide") and (crouch_held or self.crouch_time > 0)
         speed = CROUCH_SPEED if crouching else (RUN_SPEED if running else WALK_SPEED)
         horizontal_delta = direction * speed * delta_time
         if direction:
@@ -205,7 +218,7 @@ class Player:
             self.state = "jump"
             self.animation_time = TAKEOFF_FRAME_DURATION
         if self.state in ("jump", "wall_slide"):
-            self._advance_air(delta_time, direction, crouch_held, jump_held)
+            self._advance_air(delta_time, direction, jump_held)
             if self.state == "wall_slide":
                 self.attack_time = None
                 self.buffered_attack_down = None
@@ -237,11 +250,16 @@ class Player:
             self.state = next_crouch_state
             return
 
-        if self.state != next_state:
+        if self.state != next_state or (next_state == "idle" and self.attack_time is not None):
             self.state = next_state
             self.animation_time = 0.0
         else:
             self.animation_time += delta_time
+
+        if self.state == "idle":
+            idle_cycle = IDLE_FLOURISH_DELAY + self.animations["idle_sword_dust"].duration
+            if self.animation_time >= idle_cycle:
+                self.animation_time = 0.0
 
     def _has_support(self):
         left, bottom, right, _ = self.get_hitbox()
@@ -273,7 +291,7 @@ class Player:
         )
 
     def _can_wall_slide(self, direction):
-        if not direction or self.wall_direction != direction:
+        if self.crouch_time > 0 or not direction or self.wall_direction != direction:
             return False
         left, bottom, right, _ = self.get_hitbox()
         # The raised hand and the lower foot both need solid wall behind them.
@@ -325,6 +343,8 @@ class Player:
         return landed
 
     def _start_jump(self, *, from_wall=False):
+        if self.crouch_time > 0:
+            self._try_stand()
         self.state = "jump"
         self.animation_time = 0.0
         self.vertical_speed = WALL_JUMP_SPEED_Y if from_wall else JUMP_SPEED
@@ -332,12 +352,15 @@ class Player:
         self.grounded = False
         self.jump_buffer_remaining = 0.0
 
-    def _advance_air(self, delta_time, direction, crouch_held, jump_held):
+    def _try_stand(self):
+        previous_crouch_time = self.crouch_time
+        self.crouch_time = 0.0
+        if self._overlaps_terrain():
+            self.crouch_time = previous_crouch_time
+
+    def _advance_air(self, delta_time, direction, jump_held):
         if self.crouch_time > 0:
-            previous_crouch_time = self.crouch_time
-            self.crouch_time = 0.0
-            if self._overlaps_terrain():
-                self.crouch_time = previous_crouch_time
+            self._try_stand()
             self.wall_direction = 0 if self.grounded else self._touching_wall()
         if self.jump_origin_y is not None:
             if self.vertical_speed <= 0 or self.animation_time >= LONG_JUMP_HOLD:
@@ -365,7 +388,7 @@ class Player:
         if self._move_vertical(distance):
             self.wall_direction = 0
             self.wall_jump_remaining = 0.0
-            if self.jump_buffer_remaining > 0 and not crouch_held and self.crouch_time == 0:
+            if self.jump_buffer_remaining > 0:
                 self._start_jump()
             else:
                 self.state = "land"
@@ -420,15 +443,12 @@ class Player:
         draw_rectangle(screen_left, screen_bottom, screen_right, screen_top, 255, 96, 80)
 
     def draw(self, camera):
+        if self.slash is not None:
+            age, facing, downward = self.slash
+            draw_slash(self.x, self.y, facing, age, camera, downward=downward)
+
         if self.attack_time is not None:
             attack = self.animations[self.attack_animation_key]
-            slash_start = self.slash_starts.get(self.attack_animation_key, attack.duration)
-            slash_age = self.attack_time - slash_start
-            if 0 <= slash_age < SLASH_DURATION:
-                draw_slash(
-                    self.x, self.y, self.attack_facing, slash_age, camera,
-                    downward=self.attack_animation_key == "air_down_attack",
-                )
             frame_index = attack.frame_at(self.attack_time)
             if self.state == "idle" or not attack.frames[frame_index].get("movement_pose"):
                 attack.draw(
@@ -438,18 +458,20 @@ class Player:
 
         jumping = self.state in ("jump", "land")
         animation = self.animations["jump" if jumping else self.state]
+        elapsed = self.animation_time
+        if self.state == "idle" and elapsed >= IDLE_FLOURISH_DELAY:
+            animation = self.animations["idle_sword_dust"]
+            elapsed -= IDLE_FLOURISH_DELAY
         frame_index = self.get_jump_frame() if jumping else None
         if self.state == "jump" and (self.look_down_held or self.vertical_speed < 0):
             animation = self.animations.get("jump_look_down", animation)
         if self.state == "wall_slide":
             frame_index = self.get_wall_slide_frame()
-        elif self.state == "crouch":
-            frame_index = self.get_crouch_frame()
-        if (jumping or self.state == "wall_slide") and self.crouch_time > 0:
+        elif self.state == "crouch" or (self.state == "land" and self.crouch_time > 0):
             animation = self.animations["crouch"]
             frame_index = self.get_crouch_frame()
         facing = self.facing if self.attack_time is None else self.attack_facing
         animation.draw(
-            self.x, self.y, facing, self.animation_time, camera,
+            self.x, self.y, facing, elapsed, camera,
             frame_index,
         )

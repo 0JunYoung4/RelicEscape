@@ -11,7 +11,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 from pico2d import pico2d as pico
 
 from main import CAMERA_ZOOM, GROUND_Y, SCREEN_WIDTH, WORLD_WIDTH, Camera, draw_scene, read_movement, update_hitbox_visibility
-from player import CROUCH_DURATION, CROUCH_SPEED, GRAVITY, JUMP_SPEED, RUN_SPEED, WALK_SPEED, Player
+from player import CROUCH_DURATION, CROUCH_SPEED, GRAVITY, IDLE_FLOURISH_DELAY, JUMP_SPEED, RUN_SPEED, WALK_SPEED, Player
 
 
 class PlayerTests(unittest.TestCase):
@@ -28,6 +28,51 @@ class PlayerTests(unittest.TestCase):
 
     def tearDown(self):
         del self.player
+
+    def test_sword_dust_plays_after_standing_still_and_returns_to_idle(self):
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        idle = self.player.animations["idle"]
+        dust = self.player.animations["idle_sword_dust"]
+        self.player.update(0, False, IDLE_FLOURISH_DELAY - 0.01)
+        with patch.object(idle, "draw", wraps=idle.draw) as draw_idle:
+            self.player.draw(camera)
+            draw_idle.assert_called_once()
+
+        self.player.update(0, False, 0.02)
+        with patch.object(dust, "draw", wraps=dust.draw) as draw_dust:
+            self.player.draw(camera)
+            draw_dust.assert_called_once()
+            self.assertEqual(dust.frame_at(draw_dust.call_args.args[3]), 0)
+            self.player.update(0, False, dust.duration - 0.02)
+            self.player.draw(camera)
+            self.assertEqual(dust.frame_at(draw_dust.call_args.args[3]), 23)
+
+        self.player.update(0, False, 0.02)
+        with patch.object(idle, "draw", wraps=idle.draw) as draw_idle:
+            self.player.draw(camera)
+            draw_idle.assert_called_once()
+            self.assertEqual(draw_idle.call_args.args[3], 0.0)
+
+    def test_sword_dust_yields_to_player_input(self):
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        for direction, action, pose in (
+            (-1, {}, "walk"),
+            (0, {"jump_pressed": True}, "jump"),
+            (0, {"attack_pressed": True}, "attack"),
+            (0, {"crouch_held": True}, "crouch"),
+        ):
+            with self.subTest(pose=pose):
+                player = Player(400, GROUND_Y, WORLD_WIDTH)
+                player.update(0, False, IDLE_FLOURISH_DELAY + 0.5)
+                player.update(direction, False, 1 / 60, **action)
+                with patch.object(player.animations[pose], "draw") as draw:
+                    player.draw(camera)
+                    draw.assert_called_once()
+                if pose == "attack":
+                    player.update(0, False, player.animations["attack"].duration)
+                    with patch.object(player.animations["idle"], "draw") as draw:
+                        player.draw(camera)
+                        draw.assert_called_once()
 
     def test_jump_ascends_on_the_input_frame_and_lands(self):
         self.player.update(0, False, 1 / 60, jump_pressed=True)
@@ -158,10 +203,19 @@ class PlayerTests(unittest.TestCase):
         with patch.object(self.player.animations["run"], "draw") as draw, patch("player.draw_slash") as trail:
             self.player.draw(camera)
             draw.assert_called_once_with(self.player.x, GROUND_Y, 1, self.player.animation_time, camera, None)
-            trail.assert_not_called()
+            trail.assert_called_once()
         self.player.update(-1, True, 0.05)
         self.assertIsNone(self.player.attack_time)
         self.assertEqual(self.player.state, "run")
+        with patch("player.draw_slash") as trail:
+            self.player.draw(camera)
+            trail.assert_called_once()
+            self.assertEqual(trail.call_args.args[2], 1)
+            self.assertAlmostEqual(trail.call_args.args[3], 0.135)
+        self.player.update(-1, True, 0.01)
+        with patch("player.draw_slash") as trail:
+            self.player.draw(camera)
+            trail.assert_not_called()
 
     def test_jump_and_air_attack_do_not_interrupt_motion(self):
         self.player.update(1, False, 0.1, jump_pressed=True, attack_pressed=True)
@@ -407,16 +461,24 @@ class PlayerTests(unittest.TestCase):
             self.assertLessEqual(frame["x"] + frame["width"], animation.image.w)
             self.assertLessEqual(frame["y"] + frame["height"], animation.image.h)
 
-    def test_jump_is_blocked_until_fully_standing(self):
-        self.player.update(0, False, 0.2, jump_pressed=True, crouch_held=True)
+    def test_crouch_jump_uses_the_jump_animation_while_down_is_held(self):
+        self.player.update(0, False, CROUCH_DURATION, crouch_held=True)
         self.assertEqual(self.player.state, "crouch")
-        self.player.update(0, False, 0.05, jump_pressed=True)
-        self.assertEqual(self.player.state, "crouch")
-        self.assertEqual(self.player.y, GROUND_Y)
-        self.player.update(0, False, CROUCH_DURATION)
-        self.player.update(0, False, 0.15, jump_pressed=True)
+        start_x = self.player.x
+        self.player.update(1, False, 0.05, jump_pressed=True, crouch_held=True)
         self.assertEqual(self.player.state, "jump")
         self.assertGreater(self.player.y, GROUND_Y)
+        self.assertEqual(self.player.crouch_time, 0)
+        self.assertAlmostEqual(self.player.x, start_x + WALK_SPEED * 0.05)
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        with patch.object(self.player.animations["jump_look_down"], "draw") as draw:
+            self.player.draw(camera)
+            draw.assert_called_once_with(self.player.x, self.player.y, 1, 0.05, camera, 1)
+
+        self.player.update(0, False, 0.05)
+        with patch.object(self.player.animations["jump"], "draw") as draw:
+            self.player.draw(camera)
+            draw.assert_called_once()
 
     def test_crouch_held_in_air_starts_after_landing(self):
         self.player.update(0, False, 0.2, jump_pressed=True)
