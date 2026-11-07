@@ -1,10 +1,11 @@
 """Run the first RelicEscape movement prototype."""
 
+from math import ceil
 from time import perf_counter, sleep
 
 from pico2d import pico2d as pico
 
-from player import Player
+from player import ASSET_ROOT, Player
 
 
 SCREEN_WIDTH = 960
@@ -14,6 +15,8 @@ WINDOW_HEIGHT = 720
 GROUND_Y = 200
 WORLD_WIDTH = 6400
 CAMERA_ZOOM = 1 / 3
+GROUND_IMAGE = ASSET_ROOT / "terrain/ruins-floor-blue-fissures-v1.png"
+GROUND_ART_HEIGHT = 362  # The lower half of the source is stone.
 # Starter step, two tall walls for repeated wall jumps, and an exit platform.
 TEST_TERRAIN = (
     (620, 200, 780, 320),
@@ -77,23 +80,35 @@ def update_hitbox_visibility(events, visible):
     return visible
 
 
-def draw_scene(player, camera, show_hitboxes=False):
+def draw_ground(ground_image, camera, screen_height):
+    tile_width = ground_image.w * GROUND_Y / GROUND_ART_HEIGHT
+    first_tile = int(camera.x // tile_width)
+    view_right = min(camera.x + camera.view_width, camera.world_width)
+    for index in range(first_tile, ceil(view_right / tile_width)):
+        # Round shared tile edges so adjacent copies stay flush as the camera moves.
+        left = round((index * tile_width - camera.x) * camera.zoom)
+        right = round(((index + 1) * tile_width - camera.x) * camera.zoom)
+        ground_image.clip_draw(
+            0, 0, ground_image.w, GROUND_ART_HEIGHT,
+            (left + right) / 2, screen_height / 2, right - left, screen_height,
+        )
+
+
+def draw_scene(player, camera, show_hitboxes=False, *, ground_image=None):
     # Clear the full output, including letterbox bars on non-16:9 monitors.
     pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
     pico.SDL_RenderClear(pico.renderer)
-    ground_screen_y = GROUND_Y * camera.zoom
+    ground_screen_y = round(GROUND_Y * camera.zoom)
     pico.draw_rectangle(
         0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1, 22, 26, 34, filled=True,
     )
     pico.draw_rectangle(
         0, 0, SCREEN_WIDTH - 1, ground_screen_y - 1, 38, 44, 52, filled=True,
     )
-    pico.draw_line(0, ground_screen_y, SCREEN_WIDTH - 1, ground_screen_y, 94, 137, 142)
-    # World-anchored floor seams make scrolling visible in the temporary test room.
-    first_seam = int(camera.x // 200) * 200
-    for world_x in range(first_seam, min(WORLD_WIDTH, int(camera.x + camera.view_width)) + 1, 200):
-        screen_x, _ = camera.world_to_screen(world_x, 0)
-        pico.draw_line(screen_x, 0, screen_x, ground_screen_y - 1, 53, 61, 70)
+    if ground_image is not None:
+        draw_ground(ground_image, camera, ground_screen_y)
+    if show_hitboxes:
+        pico.draw_line(0, ground_screen_y, SCREEN_WIDTH - 1, ground_screen_y, 76, 220, 220)
     for left, bottom, right, top in player.terrain:
         if right < camera.x or left > camera.x + camera.view_width:
             continue
@@ -131,6 +146,7 @@ def main():
     pico.open_canvas(SCREEN_WIDTH, SCREEN_HEIGHT)
     try:
         fullscreen = configure_display()
+        ground_image = pico.load_image(str(GROUND_IMAGE))
         player = Player(400, GROUND_Y, WORLD_WIDTH, terrain=TEST_TERRAIN)
         camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
         camera.follow(player.x)
@@ -159,7 +175,7 @@ def main():
             )
             player.update(direction, running, delta_time, jump_pressed, crouching)
             camera.follow(player.x)
-            draw_scene(player, camera, show_hitboxes)
+            draw_scene(player, camera, show_hitboxes, ground_image=ground_image)
             pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
             pico.update_canvas()
             sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
