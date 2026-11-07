@@ -11,7 +11,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 from pico2d import pico2d as pico
 
 from main import CAMERA_ZOOM, GROUND_Y, SCREEN_WIDTH, WORLD_WIDTH, Camera, draw_scene, read_movement, update_hitbox_visibility
-from player import CROUCH_DURATION, CROUCH_SPEED, GRAVITY, JUMP_SPEED, RUN_SPEED, TAKEOFF_DURATION, WALK_SPEED, Player
+from player import CROUCH_DURATION, CROUCH_SPEED, GRAVITY, JUMP_SPEED, RUN_SPEED, WALK_SPEED, Player
 
 
 class PlayerTests(unittest.TestCase):
@@ -29,12 +29,9 @@ class PlayerTests(unittest.TestCase):
     def tearDown(self):
         del self.player
 
-    def test_anticipation_then_ascent_and_ground_contact(self):
-        self.player.update(0, False, 0, jump_pressed=True)
-        self.assertEqual(self.player.get_jump_frame(), 0)
-        self.player.update(0, False, TAKEOFF_DURATION / 2)
-        self.assertEqual(self.player.y, GROUND_Y)
-        self.player.update(0, False, TAKEOFF_DURATION)
+    def test_jump_ascends_on_the_input_frame_and_lands(self):
+        self.player.update(0, False, 1 / 60, jump_pressed=True)
+        self.assertEqual(self.player.get_jump_frame(), 1)
         self.assertGreater(self.player.y, GROUND_Y)
         self.assertGreater(self.player.vertical_speed, 0)
         for _ in range(120):
@@ -44,7 +41,7 @@ class PlayerTests(unittest.TestCase):
         self.assertEqual(self.player.vertical_speed, 0)
         self.assertEqual(self.player.state, "idle")
 
-    def test_all_eight_frames_play_once_in_order_at_different_frame_rates(self):
+    def test_jump_frames_play_once_in_order_at_different_frame_rates(self):
         expected_peak = GROUND_Y + JUMP_SPEED ** 2 / (2 * GRAVITY)
         for rate in (30, 60, 144):
             with self.subTest(rate=rate):
@@ -58,7 +55,7 @@ class PlayerTests(unittest.TestCase):
                             frames.append(frame)
                     self.player.update(0, False, 1 / rate)
                     peak = max(peak, self.player.y)
-                self.assertEqual(frames, list(range(8)))
+                self.assertEqual(frames, list(range(1, 8)))
                 self.assertAlmostEqual(peak, expected_peak, delta=0.3)
                 self.assertEqual(self.player.y, GROUND_Y)
                 self.assertEqual(self.player.state, "idle")
@@ -72,6 +69,70 @@ class PlayerTests(unittest.TestCase):
         self.assertGreater(self.player.y, previous_y)
         self.assertLess(self.player.vertical_speed, previous_speed)
         self.assertAlmostEqual(self.player.animation_time, previous_time + 0.01)
+        for _ in range(45):
+            self.player.update(0, False, 1 / 60)
+        self.assertEqual(self.player.y, GROUND_Y)
+        self.assertEqual(self.player.vertical_speed, 0)
+
+    def test_jump_can_interrupt_the_landing_animation(self):
+        self.player.update(0, False, 0, jump_pressed=True)
+        for _ in range(60):
+            self.player.update(0, False, 1 / 60)
+            if self.player.state == "land":
+                break
+        self.assertEqual(self.player.state, "land")
+        self.player.update(0, False, 1 / 60, jump_pressed=True)
+        self.assertEqual(self.player.state, "jump")
+        self.assertGreater(self.player.y, GROUND_Y)
+        self.assertGreater(self.player.vertical_speed, 0)
+
+    def test_jump_pressed_just_before_landing_launches_from_floor_or_platform(self):
+        for surface in (GROUND_Y, GROUND_Y + 60):
+            with self.subTest(surface=surface):
+                self.player.terrain = () if surface == GROUND_Y else ((320, GROUND_Y, 500, surface),)
+                self.player.y = surface + 5
+                self.player.vertical_speed = -200
+                self.player.state = "jump"
+                self.player.update(0, False, 1 / 60, jump_pressed=True)
+                self.assertGreater(self.player.y, surface)
+                self.assertLess(self.player.vertical_speed, 0)
+                self.player.update(0, False, 1 / 60)
+                self.assertEqual(self.player.y, surface)
+                self.assertEqual(self.player.state, "jump")
+                self.assertEqual(self.player.vertical_speed, JUMP_SPEED)
+                self.player.update(0, False, 1 / 60)
+                self.assertGreater(self.player.y, surface)
+
+    def test_attack_continues_while_running_and_preserves_its_facing(self):
+        self.player.update(1, True, 0.1, attack_pressed=True)
+        self.assertEqual(self.player.state, "run")
+        self.assertAlmostEqual(self.player.x, 400 + RUN_SPEED * 0.1)
+        self.assertEqual(self.player.attack_time, 0)
+        self.player.update(-1, True, 0.125, attack_pressed=True)
+        self.assertAlmostEqual(self.player.x, 400 + RUN_SPEED * (0.1 - 0.125))
+        self.assertEqual(self.player.attack_time, 0.125)
+        camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+        with patch.object(self.player.animations["attack"], "draw") as draw:
+            self.player.draw(camera)
+            draw.assert_called_once_with(self.player.x, GROUND_Y, 1, 0.125, camera)
+        self.player.update(-1, True, 0.2)
+        self.assertIsNone(self.player.attack_time)
+        self.assertEqual(self.player.state, "run")
+
+    def test_jump_and_air_attack_do_not_interrupt_motion(self):
+        self.player.update(1, False, 0.1, jump_pressed=True, attack_pressed=True)
+        self.assertEqual(self.player.state, "jump")
+        self.assertEqual(self.player.attack_time, 0)
+        self.assertGreater(self.player.y, GROUND_Y)
+        self.player.update(1, False, 0.35)
+        self.assertIsNone(self.player.attack_time)
+        previous_y = self.player.y
+        previous_x = self.player.x
+        self.player.update(1, False, 0.03, attack_pressed=True)
+        self.assertEqual(self.player.attack_time, 0)
+        self.assertEqual(self.player.state, "jump")
+        self.assertLess(self.player.y, previous_y)
+        self.assertAlmostEqual(self.player.x, previous_x + WALK_SPEED * 0.03)
 
     def test_walk_run_and_camera_follow_work_during_a_jump(self):
         self.player.x = 2000

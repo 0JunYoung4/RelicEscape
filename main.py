@@ -169,11 +169,15 @@ def main():
                 fullscreen = set_fullscreen(not fullscreen)
             show_hitboxes = update_hitbox_visibility(events, show_hitboxes)
             direction, running, crouching = read_movement()
-            jump_pressed = bool(pico.SDL_GetKeyboardFocus()) and any(
-                event.type == pico.SDL_KEYDOWN and event.key == pico.SDLK_SPACE
-                for event in events
+            pressed_keys = {event.key for event in events if event.type == pico.SDL_KEYDOWN}
+            if not pico.SDL_GetKeyboardFocus():
+                pressed_keys.clear()
+            player.update(
+                direction, running, delta_time,
+                jump_pressed=pico.SDLK_SPACE in pressed_keys,
+                crouch_held=crouching,
+                attack_pressed=pico.SDLK_x in pressed_keys,
             )
-            player.update(direction, running, delta_time, jump_pressed, crouching)
             camera.follow(player.x)
             draw_scene(player, camera, show_hitboxes, ground_image=ground_image)
             pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")

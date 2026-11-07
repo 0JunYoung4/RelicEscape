@@ -14,8 +14,9 @@ CROUCH_DURATION = 0.15
 WORLD_MARGIN = 64
 JUMP_SPEED = 900.0
 GRAVITY = 2000.0
-TAKEOFF_DURATION = 0.06
+TAKEOFF_FRAME_DURATION = 0.06
 LAND_DURATION = 0.12
+JUMP_BUFFER_DURATION = 0.10
 STANDING_HITBOX_WIDTH = 40.0
 STANDING_HITBOX_HEIGHT = 140.0
 CROUCH_HITBOX_WIDTH = 100.0
@@ -64,11 +65,13 @@ class Player:
         self.facing = 1
         self.state = "idle"
         self.animation_time = 0.0
+        self.attack_time = None
+        self.attack_facing = self.facing
         self.crouch_time = 0.0
         self.terrain = tuple(terrain)
         self.grounded = True
         self.wall_direction = 0
-        self.takeoff_remaining = 0.0
+        self.jump_buffer_remaining = 0.0
         self.wall_jump_remaining = 0.0
         self.wall_jump_speed = 0.0
 
@@ -87,6 +90,7 @@ class Player:
             ("crouch", "crouch-right-fast-v1", 140 / 411),
             ("crawl", "crawl-right-draft-v2", 140 / 466),
             ("wall_slide", "wall-slide-right-draft-v4", 140 / 665),
+            ("attack", "attack-right-draft-v2", 140 / 582),
         ):
             metadata_path = ASSET_ROOT / "sprites/player" / f"{filename}.json"
             metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
@@ -95,26 +99,34 @@ class Player:
                 metadata["foot_anchor"], scale, metadata["fps"],
             )
 
-    def update(self, direction, running, delta_time, jump_pressed=False, crouch_held=False):
+    def update(self, direction, running, delta_time, jump_pressed=False, crouch_held=False, *, attack_pressed=False):
         next_state = "idle"
         previous_x = self.x
         self.grounded = self.vertical_speed <= 0 and self._has_support()
         self.wall_direction = 0 if self.grounded else self._touching_wall()
-        crouching = self.state not in ("jump", "land", "wall_slide") and (crouch_held or self.crouch_time > 0)
 
-        if jump_pressed and not crouching:
-            if self.grounded and self.state not in ("jump", "land"):
-                self.state = "jump"
-                self.animation_time = 0.0
-                self.takeoff_remaining = TAKEOFF_DURATION
-            elif not self.grounded and self.wall_direction:
-                self.vertical_speed = WALL_JUMP_SPEED_Y
+        if self.attack_time is not None:
+            attack = self.animations["attack"]
+            self.attack_time += delta_time
+            if self.attack_time >= len(attack.frames) / attack.fps:
+                self.attack_time = None
+            attack_pressed = False
+
+        crouching = self.state not in ("jump", "land", "wall_slide") and (crouch_held or self.crouch_time > 0)
+        if crouching or (self.grounded and crouch_held):
+            self.jump_buffer_remaining = 0.0
+        elif jump_pressed:
+            self.jump_buffer_remaining = JUMP_BUFFER_DURATION
+
+        if self.jump_buffer_remaining > 0:
+            if self.grounded:
+                self._start_jump(JUMP_SPEED)
+            elif jump_pressed and self.wall_direction:
                 self.wall_jump_speed = -self.wall_direction * WALL_JUMP_SPEED_X
                 self.wall_jump_remaining = WALL_JUMP_PUSH_TIME
-                self.takeoff_remaining = 0.0
                 self.facing = -self.wall_direction
-                self.state = "jump"
-                self.animation_time = TAKEOFF_DURATION
+                self._start_jump(WALL_JUMP_SPEED_Y)
+        self.jump_buffer_remaining = max(0.0, self.jump_buffer_remaining - delta_time)
 
         speed = CROUCH_SPEED if crouching else (RUN_SPEED if running else WALK_SPEED)
         horizontal_delta = direction * speed * delta_time
@@ -129,14 +141,19 @@ class Player:
         self._move_horizontal(horizontal_delta)
         self.grounded = self.vertical_speed <= 0 and self._has_support()
         self.wall_direction = 0 if self.grounded else self._touching_wall()
+        if attack_pressed and not crouching and self.crouch_time == 0 and self.state != "wall_slide":
+            # Keep the swing direction fixed while movement and gravity continue.
+            self.attack_time = 0.0
+            self.attack_facing = self.facing
 
         if not self.grounded and self.state not in ("jump", "wall_slide"):
             # Walking off a platform begins falling immediately, without jump anticipation.
             self.state = "jump"
-            self.animation_time = TAKEOFF_DURATION + 0.06
-            self.takeoff_remaining = 0.0
+            self.animation_time = TAKEOFF_FRAME_DURATION
         if self.state in ("jump", "wall_slide"):
-            self._advance_air(delta_time, direction)
+            self._advance_air(delta_time, direction, crouch_held)
+            if self.state == "wall_slide":
+                self.attack_time = None
             return
 
         if self.state == "land":
@@ -152,6 +169,7 @@ class Player:
         if self._overlaps_terrain():
             self.crouch_time = previous_crouch_time
         if crouch_held or self.crouch_time > 0:
+            self.attack_time = None
             # Keep the transition/hold pose unless the body is fully lowered and moving.
             next_crouch_state = "crouch"
             if crouch_held and self.crouch_time >= CROUCH_DURATION and self.x != previous_x:
@@ -250,7 +268,14 @@ class Player:
         self.grounded = landed
         return landed
 
-    def _advance_air(self, delta_time, direction):
+    def _start_jump(self, speed):
+        self.state = "jump"
+        self.animation_time = 0.0
+        self.vertical_speed = speed
+        self.grounded = False
+        self.jump_buffer_remaining = 0.0
+
+    def _advance_air(self, delta_time, direction, crouch_held):
         if self.crouch_time > 0:
             previous_crouch_time = self.crouch_time
             self.crouch_time = 0.0
@@ -258,36 +283,28 @@ class Player:
                 self.crouch_time = previous_crouch_time
             self.wall_direction = 0 if self.grounded else self._touching_wall()
         self.animation_time += delta_time
-        air_delta = delta_time
-        if self.takeoff_remaining > 0:
-            if self.grounded:
-                preparation = min(delta_time, self.takeoff_remaining)
-                self.takeoff_remaining -= preparation
-                air_delta -= preparation
-            else:
-                self.takeoff_remaining = 0.0
-            if self.takeoff_remaining <= CONTACT_EPSILON:
-                self.takeoff_remaining = 0.0
-                self.vertical_speed = JUMP_SPEED
-                self.grounded = False
-        if air_delta <= 0:
+        if delta_time <= 0:
             return
 
         sliding = self._can_wall_slide(direction) and self.vertical_speed <= 0
         if sliding:
             self.vertical_speed = max(self.vertical_speed, -WALL_SLIDE_SPEED)
-            acceleration_time = min(air_delta, (self.vertical_speed + WALL_SLIDE_SPEED) / GRAVITY)
+            acceleration_time = min(delta_time, (self.vertical_speed + WALL_SLIDE_SPEED) / GRAVITY)
             distance = self.vertical_speed * acceleration_time - 0.5 * GRAVITY * acceleration_time ** 2
-            distance -= WALL_SLIDE_SPEED * (air_delta - acceleration_time)
-            self.vertical_speed = max(-WALL_SLIDE_SPEED, self.vertical_speed - GRAVITY * air_delta)
+            distance -= WALL_SLIDE_SPEED * (delta_time - acceleration_time)
+            self.vertical_speed = max(-WALL_SLIDE_SPEED, self.vertical_speed - GRAVITY * delta_time)
         else:
-            distance = self.vertical_speed * air_delta - 0.5 * GRAVITY * air_delta ** 2
-            self.vertical_speed -= GRAVITY * air_delta
+            distance = self.vertical_speed * delta_time - 0.5 * GRAVITY * delta_time ** 2
+            self.vertical_speed -= GRAVITY * delta_time
         if self._move_vertical(distance):
-            self.state = "land"
-            self.animation_time = 0.0
             self.wall_direction = 0
             self.wall_jump_remaining = 0.0
+            if self.jump_buffer_remaining > 0 and not crouch_held and self.crouch_time == 0:
+                self._start_jump(JUMP_SPEED)
+            else:
+                self.state = "land"
+                self.animation_time = 0.0
+                self.jump_buffer_remaining = 0.0
             return
         self.wall_direction = self._touching_wall()
         if self._can_wall_slide(direction) and self.vertical_speed <= 0:
@@ -299,15 +316,13 @@ class Player:
         else:
             if self.state == "wall_slide":
                 # Leaving the wall resumes falling, without ground takeoff frames.
-                self.animation_time = TAKEOFF_DURATION + 0.06
+                self.animation_time = TAKEOFF_FRAME_DURATION
             self.state = "jump"
 
     def get_jump_frame(self):
         if self.state == "land":
             return 6 if self.animation_time < 0.08 else 7
-        if self.animation_time < TAKEOFF_DURATION:
-            return 0
-        if self.animation_time < TAKEOFF_DURATION + 0.06:
+        if self.animation_time < TAKEOFF_FRAME_DURATION:
             return 1
         if self.vertical_speed > JUMP_SPEED * 0.25:
             return 2
@@ -339,6 +354,10 @@ class Player:
         draw_rectangle(screen_left, screen_bottom, screen_right, screen_top, 255, 96, 80)
 
     def draw(self, camera):
+        if self.attack_time is not None:
+            self.animations["attack"].draw(self.x, self.y, self.attack_facing, self.attack_time, camera)
+            return
+
         jumping = self.state in ("jump", "land")
         animation = self.animations["jump" if jumping else self.state]
         frame_index = self.get_jump_frame() if jumping else None
