@@ -261,6 +261,28 @@ class Player:
             if self.animation_time >= idle_cycle:
                 self.animation_time = 0.0
 
+    def teleport_to(self, x, y, crouch_time):
+        previous_pose = self.x, self.y, self.crouch_time
+        self.x, self.y, self.crouch_time = x, y, crouch_time
+        if self._overlaps_terrain():
+            self.x, self.y, self.crouch_time = previous_pose
+            return False
+
+        self.vertical_speed = 0.0
+        self.wall_jump_speed = 0.0
+        self.wall_jump_remaining = 0.0
+        self.jump_buffer_remaining = 0.0
+        self.jump_origin_y = None
+        self.grounded = self._has_support()
+        self.wall_direction = 0 if self.grounded else self._touching_wall()
+        if self.grounded:
+            self.state = "crouch" if self.crouch_time > 0 else "idle"
+            self.animation_time = 0.0
+        else:
+            self.state = "jump"
+            self.animation_time = TAKEOFF_FRAME_DURATION
+        return True
+
     def _has_support(self):
         left, bottom, right, _ = self.get_hitbox()
         if abs(bottom - self.ground_y) <= CONTACT_EPSILON:

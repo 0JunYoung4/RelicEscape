@@ -1,6 +1,6 @@
 """Run the first RelicEscape movement prototype."""
 
-from math import ceil
+from math import ceil, cos, tau
 from time import perf_counter, sleep
 
 from pico2d import pico2d as pico
@@ -17,6 +17,9 @@ WORLD_WIDTH = 6400
 CAMERA_ZOOM = 1 / 3
 GROUND_IMAGE = ASSET_ROOT / "terrain/ruins-floor-blue-fissures-v1.png"
 GROUND_ART_HEIGHT = 362  # The lower half of the source is stone.
+RELIC_IMAGE = ASSET_ROOT / "sprites/relic/teleport-relic-v1.png"
+RELIC_HOVER_FRAMES = 24
+RELIC_HOVER_FPS = 20
 # Starter step, two tall walls for repeated wall jumps, and an exit platform.
 TEST_TERRAIN = (
     (620, 200, 780, 320),
@@ -123,6 +126,18 @@ def draw_scene(player, camera, show_hitboxes=False, *, ground_image=None):
         player.draw_hitbox(camera)
 
 
+def draw_relic(image, camera, x, y, elapsed):
+    screen_x, screen_y = camera.world_to_screen(x, y)
+    frame = int(elapsed * RELIC_HOVER_FPS) % RELIC_HOVER_FRAMES
+    hover = 1 - cos(tau * frame / RELIC_HOVER_FRAMES)
+    # Center the sprite at the saved torso height and bob above it.
+    bounds = pico.SDL_FRect(
+        screen_x - image.w / 2, SCREEN_HEIGHT - screen_y - image.h / 2 - hover,
+        image.w, image.h,
+    )
+    pico.SDL_RenderCopyF(pico.renderer, image.texture, None, bounds)
+
+
 def set_fullscreen(enabled):
     flags = pico.SDL_WINDOW_FULLSCREEN_DESKTOP if enabled else 0
     if pico.SDL_SetWindowFullscreen(pico.window, flags) != 0:
@@ -147,6 +162,10 @@ def main():
     try:
         fullscreen = configure_display()
         ground_image = pico.load_image(str(GROUND_IMAGE))
+        relic_image = pico.load_image(str(RELIC_IMAGE))
+        relic_anchor = None
+        relic_display_y = 0.0
+        relic_placed_at = 0.0
         player = Player(400, GROUND_Y, WORLD_WIDTH, terrain=TEST_TERRAIN)
         camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
         camera.follow(player.x)
@@ -175,15 +194,31 @@ def main():
                 jump_held = bool(pico.SDL_GetKeyboardState(None)[pico.SDL_SCANCODE_SPACE])
             else:
                 pressed_keys.clear()
-            player.update(
-                direction, running, delta_time,
-                jump_pressed=pico.SDLK_SPACE in pressed_keys,
-                jump_held=jump_held,
-                crouch_held=crouching,
-                attack_pressed=pico.SDLK_x in pressed_keys,
-            )
+            teleported = False
+            if pico.SDLK_e in pressed_keys:
+                if relic_anchor is None:
+                    relic_anchor = (player.x, player.y, player.crouch_time)
+                    _, bottom, _, top = player.get_hitbox()
+                    relic_display_y = (bottom + top) / 2
+                    relic_placed_at = frame_start
+                elif player.teleport_to(*relic_anchor):
+                    relic_anchor = None
+                    teleported = True
+            if not teleported:
+                player.update(
+                    direction, running, delta_time,
+                    jump_pressed=pico.SDLK_SPACE in pressed_keys,
+                    jump_held=jump_held,
+                    crouch_held=crouching,
+                    attack_pressed=pico.SDLK_x in pressed_keys,
+                )
             camera.follow(player.x)
             draw_scene(player, camera, show_hitboxes, ground_image=ground_image)
+            if relic_anchor is not None:
+                draw_relic(
+                    relic_image, camera, relic_anchor[0], relic_display_y,
+                    frame_start - relic_placed_at,
+                )
             pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
             pico.update_canvas()
             sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
