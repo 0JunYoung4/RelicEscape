@@ -25,16 +25,25 @@ class RelicTests(unittest.TestCase):
         events = [
             [keydown(pico.SDLK_e)], [], [keydown(pico.SDLK_e)],
             [keydown(pico.SDLK_SPACE)], [keydown(pico.SDLK_e)], [],
-            [keydown(pico.SDLK_e)], [], [keydown(pico.SDLK_ESCAPE)],
+            [keydown(pico.SDLK_e)], [],
+            *([] for _ in range(36)), [keydown(pico.SDLK_ESCAPE)],
         ]
         player_frames = []
         relic_frames = []
+        effect_starts = []
+        effect_active = []
         draw_scene = main.draw_scene
         draw_relic = main.draw_relic
 
         def record_player(player, *args, **kwargs):
             player_frames.append((player.x, player.y, player.vertical_speed))
             draw_scene(player, *args, **kwargs)
+            effect = kwargs["return_effect"]
+            effect_active.append(effect.started_at is not None)
+            if effect.started_at == kwargs["frame_start"]:
+                self.assertTrue(effect.departure)
+                self.assertTrue(effect.arrival)
+                effect_starts.append((len(player_frames) - 1, effect.origin))
 
         def record_relic(image, camera, x, y, elapsed):
             relic_frames.append((len(player_frames) - 1, x, y, elapsed))
@@ -69,6 +78,9 @@ class RelicTests(unittest.TestCase):
             ],
         )
         self.assertEqual([elapsed for _, _, _, elapsed in relic_frames[::2]], [0.0, 0.0])
+        self.assertEqual(effect_starts, [(2, player_frames[1][:2]), (6, player_frames[5][:2])])
+        self.assertTrue(effect_active[7])
+        self.assertFalse(effect_active[-1])
 
     def test_return_restores_a_safe_crouch_and_rejects_an_overlap(self):
         pico.open_canvas(main.SCREEN_WIDTH, main.SCREEN_HEIGHT)

@@ -34,7 +34,7 @@ class Lighting:
             pico.SDL_SetRenderDrawColor(pico.renderer, *AMBIENT_COLOR, 255)
             pico.SDL_RenderClear(pico.renderer)
             if relic_center is not None:
-                self._draw_glow(relic_center, RELIC_LIGHT_DIAMETER, RELIC_LIGHT_DIAMETER)
+                self.draw_glow(relic_center, RELIC_LIGHT_DIAMETER, RELIC_LIGHT_DIAMETER)
         finally:
             if pico.SDL_SetRenderTarget(pico.renderer, previous_target) != 0:
                 raise RuntimeError(pico.SDL_GetError())
@@ -42,9 +42,17 @@ class Lighting:
         # Multiply map colors by the light map, then add the compact visible halo.
         pico.SDL_RenderCopy(pico.renderer, self.light_map.texture, None, None)
         if relic_center is not None:
-            self._draw_glow(relic_center, self.glow.w, self.glow.h)
+            self.draw_glow(relic_center, self.glow.w, self.glow.h)
 
-    def _draw_glow(self, center, width, height):
+    def draw_glow(self, center, width, height, *, alpha=255):
+        if alpha == 0:
+            return
         x, y = center
         bounds = pico.SDL_FRect(x - width / 2, self.height - y - height / 2, width, height)
-        pico.SDL_RenderCopyF(pico.renderer, self.glow.texture, None, bounds)
+        if alpha != 255:
+            pico.SDL_SetTextureAlphaMod(self.glow.texture, alpha)
+        try:
+            pico.SDL_RenderCopyF(pico.renderer, self.glow.texture, None, bounds)
+        finally:
+            if alpha != 255:
+                pico.SDL_SetTextureAlphaMod(self.glow.texture, 255)

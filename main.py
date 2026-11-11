@@ -1,5 +1,6 @@
 """Run the first RelicEscape movement prototype."""
 
+from copy import copy
 from math import ceil, cos, tau
 from time import perf_counter, sleep
 
@@ -7,6 +8,7 @@ from pico2d import pico2d as pico
 
 from lighting import Lighting
 from player import ASSET_ROOT, Player
+from return_effect import ReturnEffect
 
 
 SCREEN_WIDTH = 960
@@ -101,6 +103,7 @@ def draw_ground(ground_image, camera, screen_height):
 
 def draw_scene(
     player, camera, show_hitboxes=False, *, ground_image=None, lighting=None, relic_center=None,
+    return_effect=None, frame_start=0.0,
 ):
     # Clear the full output, including letterbox bars on non-16:9 monitors.
     pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
@@ -127,7 +130,8 @@ def draw_scene(
             pico.draw_rectangle(x1, y1, x2, y2, 76, 220, 220)
     if lighting is not None:
         lighting.apply(relic_center)
-    player.draw(camera)
+    if return_effect is None or not return_effect.draw(player, camera, frame_start, lighting):
+        player.draw(camera)
     if show_hitboxes:
         player.draw_hitbox(camera)
 
@@ -179,6 +183,7 @@ def main():
         relic_anchor = None
         relic_display_y = 0.0
         relic_placed_at = 0.0
+        return_effect = ReturnEffect()
         player = Player(400, GROUND_Y, WORLD_WIDTH, terrain=TEST_TERRAIN)
         camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
         camera.follow(player.x)
@@ -214,9 +219,12 @@ def main():
                     _, bottom, _, top = player.get_hitbox()
                     relic_display_y = (bottom + top) / 2
                     relic_placed_at = frame_start
-                elif player.teleport_to(*relic_anchor):
-                    relic_anchor = None
-                    teleported = True
+                else:
+                    departure = copy(player)
+                    if player.teleport_to(*relic_anchor):
+                        relic_anchor = None
+                        teleported = True
+                        return_effect.start(departure, player, camera, frame_start)
             if not teleported:
                 player.update(
                     direction, running, delta_time,
@@ -233,6 +241,7 @@ def main():
             draw_scene(
                 player, camera, show_hitboxes, ground_image=ground_image,
                 lighting=lighting, relic_center=relic_center,
+                return_effect=return_effect, frame_start=frame_start,
             )
             if relic_anchor is not None:
                 draw_relic(relic_image, camera, relic_anchor[0], relic_display_y, relic_elapsed)

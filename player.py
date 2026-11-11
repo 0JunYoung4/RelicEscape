@@ -14,7 +14,7 @@ from slash_effect import SLASH_DURATION, draw_slash
 ASSET_ROOT = Path(__file__).resolve().parent / "assets"
 IDLE_FLOURISH_DELAY = 5.0
 WALK_SPEED = 300.0
-RUN_SPEED = 525.0
+RUN_SPEED = 575.0
 CROUCH_SPEED = 90.0
 CROUCH_DURATION = 0.15
 WORLD_MARGIN = 64
@@ -464,11 +464,14 @@ class Player:
         screen_right, screen_top = camera.world_to_screen(right, top)
         draw_rectangle(screen_left, screen_bottom, screen_right, screen_top, 255, 96, 80)
 
-    def draw(self, camera):
+    def draw(self, camera, *, show_body=True):
         if self.slash is not None:
             age, facing, downward = self.slash
             draw_slash(self.x, self.y, facing, age, camera, downward=downward)
+        if show_body:
+            self.draw_body(camera)
 
+    def draw_body(self, camera):
         if self.attack_time is not None:
             attack = self.animations[self.attack_animation_key]
             frame_index = attack.frame_at(self.attack_time)
