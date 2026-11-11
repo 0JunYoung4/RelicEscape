@@ -4,7 +4,7 @@
   "frame_count": 4,
   "columns": 4,
   "fps": 12,
-  "frame_durations_ms": [60, 120, 80, 70],
+  "frame_durations_ms": [60, 160, 80, 70],
   "loop": false,
   "facing": "right",
   "pose": "hard_landing",

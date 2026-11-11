@@ -66,7 +66,7 @@ v2의 체형과 복장을 유지하고 옆얼굴의 코가 튀어나온 한 픽�
 - 달리기는 기존 `run-right-v1.png`의 16개 자세를 동명의 JSON 영역으로 잘라 초당 16프레임으로 재생한다. 원본 PNG는 변경하지 않았다.
 - 점프는 [jump-right-draft-v1.png](../assets/sprites/player/jump-right-draft-v1.png)에 승인한 4×2 배열 초안을 원본 그대로 보존했다. 참조 이미지의 점프 동작을 바탕으로 팔을 올리고 다리의 앞뒤 위치와 굽힘을 다르게 한 버전이다.
 - 점프의 [JSON 메타데이터](../assets/sprites/player/jump-right-draft-v1.json)는 프레임별 영역·발 기준점·동작 단계를 기록한다. 프레임은 경과 시간·상승 및 하강 속도·착지 상태에 따라 선택하며 공중 반복 재생하지 않는다.
-- 높은 낙하용 [착지 스프라이트](../assets/sprites/player/hard-landing-right-v1.png)는 발 접지, 왼손 짚기, 손을 떼고 일어나기, 자세 회복을 4프레임에 담았다. [JSON](../assets/sprites/player/hard-landing-right-v1.json)에 발 기준점과 총 330ms의 재생 시간을 기록했다.
+- 높은 낙하용 [착지 스프라이트](../assets/sprites/player/hard-landing-right-v1.png)는 발 접지, 왼손 짚기, 손을 떼고 일어나기, 자세 회복을 4프레임에 담았다. [JSON](../assets/sprites/player/hard-landing-right-v1.json)에 발 기준점과 총 370ms의 재생 시간을 기록했다. 왼손을 짚은 자세는 160ms 유지한다.
 - 숙이기는 [빠른 4프레임 정의](../assets/sprites/player/crouch-right-fast-v1.json)로 0.15초 동안 재생한다. 기존 1·3·5·8번째 자세와 지면 기준점을 사용한다. 마지막 왼손 지지 자세를 유지하며, 해제 시 역방향으로 일어난다. 실제 기어가기 이동 주기를 담은 시트는 아니다.
 - 기존 8프레임 [PNG](../assets/sprites/player/reference/crouch-8frame-v1/crouch-right-draft-v1.png)와 [JSON](../assets/sprites/player/reference/crouch-8frame-v1/crouch-right-draft-v1.json)은 보관 폴더로 분리했으며 바이트를 변경하지 않았다. 빠른 버전은 보관된 원본 PNG에서 선택한 4개 영역만 읽는다.
 - 기어가기는 다리 교차 자세를 수정한 [crawl-right-draft-v2.png](../assets/sprites/player/crawl-right-draft-v2.png)로 교체했다. [JSON](../assets/sprites/player/crawl-right-draft-v2.json)의 8프레임과 지면 기준점으로 초당 8프레임 반복 재생한다. 표시 배율은 140/466으로 기존 화면 높이에 맞췄다. 완전히 숙여 실제로 움직일 때만 사용하고, 멈추면 숙인 대기 자세로 돌아간다. 기존 v1은 비교용으로 유지한다.
