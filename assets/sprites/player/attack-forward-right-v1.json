@@ -1,0 +1,22 @@
+{
+  "image": "attack-forward-right-v1.png",
+  "source_size": [3400, 724],
+  "frame_count": 5,
+  "columns": 5,
+  "fps": 16,
+  "frame_durations_ms": [30, 30, 35, 40, 55],
+  "slash_frame": 3,
+  "loop": false,
+  "facing": "right",
+  "pose": "attack",
+  "foot_anchor": [250, 652],
+  "anchor_coordinates": "frame top-left",
+  "standing_reference_height": 582,
+  "frames": [
+    {"x": 0, "y": 0, "width": 680, "height": 724, "phase": "swing_start"},
+    {"x": 680, "y": 0, "width": 680, "height": 724, "phase": "blade_emerges"},
+    {"x": 1360, "y": 0, "width": 680, "height": 724, "phase": "mid_swing"},
+    {"x": 2040, "y": 0, "width": 680, "height": 724, "phase": "reach"},
+    {"x": 2720, "y": 0, "width": 680, "height": 724, "phase": "full_extension"}
+  ]
+}
