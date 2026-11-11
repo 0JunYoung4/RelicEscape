@@ -10,10 +10,42 @@ os.environ["SDL_AUDIODRIVER"] = "dummy"
 os.environ["SDL_RENDER_DRIVER"] = "software"
 
 import main
+from lighting import Lighting
 from pico2d import pico2d as pico
 
 
 class DisplayTests(unittest.TestCase):
+    def test_relic_lights_nearby_terrain_and_ambient_returns_after_recovery(self):
+        pico.open_canvas(main.SCREEN_WIDTH, main.SCREEN_HEIGHT)
+        self.addCleanup(pico.close_canvas)
+        terrain = ((270, 200, 480, 500), (900, 200, 1110, 500))
+        player = main.Player(2000, main.GROUND_Y, main.WORLD_WIDTH, terrain=terrain)
+        camera = main.Camera(main.SCREEN_WIDTH, main.WORLD_WIDTH, main.CAMERA_ZOOM)
+        lighting = Lighting(main.SCREEN_WIDTH, main.SCREEN_HEIGHT, main.RELIC_GLOW_IMAGE)
+
+        def terrain_pixel(x):
+            pixel = ctypes.c_uint32()
+            result = pico.SDL_RenderReadPixels(
+                pico.renderer, pico.SDL_Rect(x, 440, 1, 1),
+                pico.SDL_PIXELFORMAT_ARGB8888, ctypes.byref(pixel), 4,
+            )
+            self.assertEqual(result, 0, pico.SDL_GetError())
+            return tuple((pixel.value >> shift) & 255 for shift in (16, 8, 0))
+
+        main.draw_scene(player, camera)
+        original = terrain_pixel(135)
+        main.draw_scene(player, camera, lighting=lighting)
+        ambient = terrain_pixel(135)
+        self.assertLess(sum(ambient), sum(original))
+
+        main.draw_scene(player, camera, lighting=lighting, relic_center=(135, 125))
+        nearby = terrain_pixel(135)
+        self.assertGreater(nearby[2], ambient[2])
+        self.assertEqual(terrain_pixel(335), ambient)
+
+        main.draw_scene(player, camera, lighting=lighting)
+        self.assertEqual(terrain_pixel(135), ambient)
+
     def test_modes_preserve_camera_and_textures_and_restore_larger_window(self):
         pico.open_canvas(main.SCREEN_WIDTH, main.SCREEN_HEIGHT)
         try:

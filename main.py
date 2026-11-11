@@ -5,6 +5,7 @@ from time import perf_counter, sleep
 
 from pico2d import pico2d as pico
 
+from lighting import Lighting
 from player import ASSET_ROOT, Player
 
 
@@ -18,6 +19,7 @@ CAMERA_ZOOM = 1 / 3
 GROUND_IMAGE = ASSET_ROOT / "terrain/ruins-floor-blue-fissures-v1.png"
 GROUND_ART_HEIGHT = 362  # The lower half of the source is stone.
 RELIC_IMAGE = ASSET_ROOT / "sprites/relic/teleport-relic-v1.png"
+RELIC_GLOW_IMAGE = ASSET_ROOT / "sprites/relic/relic-blue-glow-v1.png"
 RELIC_HOVER_FRAMES = 24
 RELIC_HOVER_FPS = 20
 # Starter step, two tall walls for repeated wall jumps, and an exit platform.
@@ -97,7 +99,9 @@ def draw_ground(ground_image, camera, screen_height):
         )
 
 
-def draw_scene(player, camera, show_hitboxes=False, *, ground_image=None):
+def draw_scene(
+    player, camera, show_hitboxes=False, *, ground_image=None, lighting=None, relic_center=None,
+):
     # Clear the full output, including letterbox bars on non-16:9 monitors.
     pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
     pico.SDL_RenderClear(pico.renderer)
@@ -121,18 +125,25 @@ def draw_scene(player, camera, show_hitboxes=False, *, ground_image=None):
         pico.draw_line(x1, y2, x2, y2, 124, 157, 164)
         if show_hitboxes:
             pico.draw_rectangle(x1, y1, x2, y2, 76, 220, 220)
+    if lighting is not None:
+        lighting.apply(relic_center)
     player.draw(camera)
     if show_hitboxes:
         player.draw_hitbox(camera)
 
 
-def draw_relic(image, camera, x, y, elapsed):
+def relic_screen_center(camera, x, y, elapsed):
     screen_x, screen_y = camera.world_to_screen(x, y)
     frame = int(elapsed * RELIC_HOVER_FPS) % RELIC_HOVER_FRAMES
     hover = 1 - cos(tau * frame / RELIC_HOVER_FRAMES)
+    return screen_x, screen_y + hover
+
+
+def draw_relic(image, camera, x, y, elapsed):
+    screen_x, screen_y = relic_screen_center(camera, x, y, elapsed)
     # Center the sprite at the saved torso height and bob above it.
     bounds = pico.SDL_FRect(
-        screen_x - image.w / 2, SCREEN_HEIGHT - screen_y - image.h / 2 - hover,
+        screen_x - image.w / 2, SCREEN_HEIGHT - screen_y - image.h / 2,
         image.w, image.h,
     )
     pico.SDL_RenderCopyF(pico.renderer, image.texture, None, bounds)
@@ -159,10 +170,12 @@ def configure_display():
 def main():
     pico.SDL_SetHint(pico.SDL_HINT_RENDER_SCALE_QUALITY, b"0")
     pico.open_canvas(SCREEN_WIDTH, SCREEN_HEIGHT)
+    lighting = None
     try:
         fullscreen = configure_display()
         ground_image = pico.load_image(str(GROUND_IMAGE))
         relic_image = pico.load_image(str(RELIC_IMAGE))
+        lighting = Lighting(SCREEN_WIDTH, SCREEN_HEIGHT, RELIC_GLOW_IMAGE)
         relic_anchor = None
         relic_display_y = 0.0
         relic_placed_at = 0.0
@@ -213,16 +226,21 @@ def main():
                     attack_pressed=pico.SDLK_x in pressed_keys,
                 )
             camera.follow(player.x)
-            draw_scene(player, camera, show_hitboxes, ground_image=ground_image)
+            relic_center = None
             if relic_anchor is not None:
-                draw_relic(
-                    relic_image, camera, relic_anchor[0], relic_display_y,
-                    frame_start - relic_placed_at,
-                )
+                relic_elapsed = frame_start - relic_placed_at
+                relic_center = relic_screen_center(camera, relic_anchor[0], relic_display_y, relic_elapsed)
+            draw_scene(
+                player, camera, show_hitboxes, ground_image=ground_image,
+                lighting=lighting, relic_center=relic_center,
+            )
+            if relic_anchor is not None:
+                draw_relic(relic_image, camera, relic_anchor[0], relic_display_y, relic_elapsed)
             pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
             pico.update_canvas()
             sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
     finally:
+        del lighting
         pico.close_canvas()
 
 
