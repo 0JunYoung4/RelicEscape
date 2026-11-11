@@ -1,0 +1,22 @@
+{
+  "image": "attack-semicircle-right-v1.png",
+  "source_size": [2800, 550],
+  "frame_count": 5,
+  "columns": 5,
+  "fps": 16,
+  "frame_durations_ms": [33, 33, 34, 42, 48],
+  "slash_frame": 3,
+  "loop": false,
+  "facing": "right",
+  "pose": "attack",
+  "foot_anchor": [200, 540],
+  "anchor_coordinates": "frame top-left",
+  "standing_reference_height": 418,
+  "frames": [
+    {"x": 0, "y": 0, "width": 560, "height": 550, "phase": "swing_from_behind"},
+    {"x": 560, "y": 0, "width": 560, "height": 550, "phase": "overhead"},
+    {"x": 1120, "y": 0, "width": 560, "height": 550, "phase": "swing_forward"},
+    {"x": 1680, "y": 0, "width": 560, "height": 550, "phase": "full_extension"},
+    {"x": 2240, "y": 0, "width": 560, "height": 550, "phase": "low_follow_through"}
+  ]
+}

@@ -8,18 +8,33 @@ from pico2d import pico2d as pico
 
 SLASH_DURATION = 0.14
 ARC_SEGMENTS = 20
+FORWARD_SLASH_CENTER = (31, 82)
+FORWARD_SLASH_RADIUS = (150, 78)
+FORWARD_SLASH_HALF_ANGLE = 102
+SLASH_FADE_EXPANSION = (6, 3)
+
+
+def forward_slash_bounds(x, y, facing):
+    """Return the world-space bounds of the full forward swing."""
+    center_x, center_y = FORWARD_SLASH_CENTER
+    radius_x, radius_y = FORWARD_SLASH_RADIUS
+    radius_x += SLASH_FADE_EXPANSION[0]
+    radius_y += SLASH_FADE_EXPANSION[1]
+    near_x = x + facing * (center_x + radius_x * cos(radians(FORWARD_SLASH_HALF_ANGLE)))
+    far_x = x + facing * (center_x + radius_x)
+    return min(near_x, far_x), y + center_y - radius_y, max(near_x, far_x), y + center_y + radius_y
 
 
 def draw_slash(x, y, facing, age, camera, *, downward=False):
     if downward:
         center_x, center_y = 8, 42
         radius_x, radius_y = 128, 66
-        half_arc = 82
+        start_angle, end_angle = 82, -82
         rotation = radians(-55)
     else:
-        center_x, center_y = 31, 82
-        radius_x, radius_y = 150, 78
-        half_arc = 102
+        center_x, center_y = FORWARD_SLASH_CENTER
+        radius_x, radius_y = FORWARD_SLASH_RADIUS
+        start_angle, end_angle = FORWARD_SLASH_HALF_ANGLE, -FORWARD_SLASH_HALF_ANGLE
         rotation = 0
 
     progress = age / SLASH_DURATION
@@ -28,15 +43,15 @@ def draw_slash(x, y, facing, age, camera, *, downward=False):
     head = 0.32 + 0.68 * buildup
     tail = decay ** 1.5
     opacity = (0.72 + 0.28 * buildup) * (1 - decay ** 1.35)
-    radius_x += 6 * decay - 18 * (1 - buildup)
-    radius_y += 3 * decay
+    radius_x += SLASH_FADE_EXPANSION[0] * decay - 18 * (1 - buildup)
+    radius_y += SLASH_FADE_EXPANSION[1] * decay
     rotation_cos, rotation_sin = cos(rotation), sin(rotation)
     vertices = []
     indices = []
     for step in range(ARC_SEGMENTS + 1):
         span = step / ARC_SEGMENTS
         arc_progress = tail + (head - tail) * span
-        angle = radians(half_arc * (1 - 2 * arc_progress))
+        angle = radians(start_angle + (end_angle - start_angle) * arc_progress)
         taper = min(1.0, 5 * span, 8 * (1 - span))
         thickness = 50 * sin(pi * arc_progress) * taper * (1 - 0.55 * decay)
         alpha = opacity * min(1.0, 3 * span)

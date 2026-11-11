@@ -2,8 +2,8 @@
 memoc: true
 type: wiki
 scope: project-memory
-created: 2026-11-07T12:02:43
-updated: 2026-11-07T12:02:43
+created: 2026-11-11T16:42:31
+updated: 2026-11-11T16:42:31
 status: generated
 confidence: medium
 tags:
@@ -14,7 +14,7 @@ tags:
 ---
 # Wiki Lint
 
-Last checked: 2026-11-07T12:02:43
+Last checked: 2026-11-11T16:42:31
 
 ## Graph Checks
 

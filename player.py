@@ -8,7 +8,7 @@ from pathlib import Path
 
 from pico2d import draw_rectangle, load_image
 
-from slash_effect import SLASH_DURATION, draw_slash
+from slash_effect import SLASH_DURATION, draw_slash, forward_slash_bounds
 
 
 ASSET_ROOT = Path(__file__).resolve().parent / "assets"
@@ -117,7 +117,7 @@ class Player:
             ("crouch", "crouch-right-fast-v1", 140 / 411),
             ("crawl", "crawl-right-draft-v2", 0.29),
             ("wall_slide", "wall-slide-right-draft-v4", 140 / 665),
-            ("attack", "attack-right-draft-v2", 140 / 582),
+            ("attack", "attack-sweep-right-v2", 140 / 578),
             ("air_attack", "air-attack-right-draft-v3", 140 / 582),
             ("air_down_attack", "air-down-attack-right-draft-v4", 140 / 620),
         ):
@@ -149,9 +149,9 @@ class Player:
         self.wall_direction = 0 if self.grounded else self._touching_wall()
 
         if self.slash is not None:
-            age, facing, downward = self.slash
+            age, facing, attack_key = self.slash
             age += delta_time
-            self.slash = (age, facing, downward) if age < SLASH_DURATION else None
+            self.slash = (age, facing, attack_key) if age < SLASH_DURATION else None
 
         if self.attack_time is not None:
             attack = self.animations[self.attack_animation_key]
@@ -161,8 +161,7 @@ class Player:
             if slash_start is not None and previous_attack_time < slash_start <= self.attack_time:
                 slash_age = self.attack_time - slash_start
                 if slash_age < SLASH_DURATION:
-                    downward = self.attack_animation_key == "air_down_attack"
-                    self.slash = (slash_age, self.attack_facing, downward)
+                    self.slash = (slash_age, self.attack_facing, self.attack_animation_key)
             if self.attack_time >= attack.duration:
                 self.attack_time = None
                 if not attack_pressed and self.buffered_attack_down is not None:
@@ -458,16 +457,35 @@ class Player:
         height = STANDING_HITBOX_HEIGHT + (CROUCH_HITBOX_HEIGHT - STANDING_HITBOX_HEIGHT) * crouch_ratio
         return self.x - width / 2, self.y, self.x + width / 2, self.y + height
 
+    def get_attack_hitbox(self):
+        if self.attack_time is None or self.attack_animation_key not in ("attack", "air_attack"):
+            return None
+        slash_start = self.slash_starts.get(self.attack_animation_key)
+        if slash_start is None or self.attack_time < slash_start:
+            return None
+        return forward_slash_bounds(self.x, self.y, self.attack_facing)
+
     def draw_hitbox(self, camera):
         left, bottom, right, top = self.get_hitbox()
         screen_left, screen_bottom = camera.world_to_screen(left, bottom)
         screen_right, screen_top = camera.world_to_screen(right, top)
         draw_rectangle(screen_left, screen_bottom, screen_right, screen_top, 255, 96, 80)
 
+        attack_hitbox = self.get_attack_hitbox()
+        if attack_hitbox is not None:
+            left, bottom, right, top = attack_hitbox
+            draw_rectangle(
+                *camera.world_to_screen(left, bottom), *camera.world_to_screen(right, top),
+                90, 210, 255,
+            )
+
     def draw(self, camera, *, show_body=True):
         if self.slash is not None:
-            age, facing, downward = self.slash
-            draw_slash(self.x, self.y, facing, age, camera, downward=downward)
+            age, facing, attack_key = self.slash
+            draw_slash(
+                self.x, self.y, facing, age, camera,
+                downward=attack_key == "air_down_attack",
+            )
         if show_body:
             self.draw_body(camera)
 

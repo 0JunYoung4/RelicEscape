@@ -187,9 +187,9 @@ class PlayerTests(unittest.TestCase):
         self.assertAlmostEqual(self.player.x, 400 + RUN_SPEED * 0.1)
         self.assertEqual(self.player.attack_time, 0)
         camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
-        with patch.object(self.player.animations["run"], "draw") as draw:
+        with patch.object(self.player.animations["attack"], "draw") as draw:
             self.player.draw(camera)
-            draw.assert_called_once_with(self.player.x, GROUND_Y, 1, 0, camera, None)
+            draw.assert_called_once_with(self.player.x, GROUND_Y, 1, 0, camera, 0)
         self.player.update(-1, True, 0.125, attack_pressed=True)
         self.assertAlmostEqual(self.player.x, 400 + RUN_SPEED * (0.1 - 0.125))
         self.assertEqual(self.player.attack_time, 0.125)
@@ -198,24 +198,50 @@ class PlayerTests(unittest.TestCase):
             draw.assert_called_once_with(self.player.x, GROUND_Y, 1, 0.125, camera, 3)
             trail.assert_called_once()
             self.assertEqual(trail.call_args.args[:3], (self.player.x, GROUND_Y, 1))
-            self.assertAlmostEqual(trail.call_args.args[3], 0.025)
+            self.assertAlmostEqual(trail.call_args.args[3], 0.059)
+            self.assertFalse(trail.call_args.kwargs["downward"])
         self.player.update(-1, True, 0.06)
-        with patch.object(self.player.animations["run"], "draw") as draw, patch("player.draw_slash") as trail:
+        with patch.object(self.player.animations["attack"], "draw") as draw, patch("player.draw_slash") as trail:
             self.player.draw(camera)
-            draw.assert_called_once_with(self.player.x, GROUND_Y, 1, self.player.animation_time, camera, None)
+            draw.assert_called_once_with(self.player.x, GROUND_Y, 1, self.player.attack_time, camera, 4)
             trail.assert_called_once()
-        self.player.update(-1, True, 0.05)
+        self.player.update(-1, True, 0.02)
         self.assertIsNone(self.player.attack_time)
         self.assertEqual(self.player.state, "run")
         with patch("player.draw_slash") as trail:
             self.player.draw(camera)
             trail.assert_called_once()
             self.assertEqual(trail.call_args.args[2], 1)
-            self.assertAlmostEqual(trail.call_args.args[3], 0.135)
+            self.assertAlmostEqual(trail.call_args.args[3], 0.139)
         self.player.update(-1, True, 0.01)
         with patch("player.draw_slash") as trail:
             self.player.draw(camera)
             trail.assert_not_called()
+
+    def test_forward_attacks_share_active_bounds_and_mirror(self):
+        bounds = {}
+        for facing in (-1, 1):
+            for airborne in (False, True):
+                with self.subTest(facing=facing, airborne=airborne):
+                    player = Player(400, GROUND_Y, WORLD_WIDTH)
+                    player.facing = facing
+                    player.update(0, False, 0.01, jump_pressed=airborne, attack_pressed=True)
+                    self.assertEqual(player.attack_animation_key, "air_attack" if airborne else "attack")
+                    player.update(0, False, 0.05)
+                    self.assertIsNone(player.get_attack_hitbox())
+                    player.update(0, False, 0.06)
+                    left, bottom, right, top = player.get_attack_hitbox()
+                    bounds[facing, airborne] = (left - player.x, bottom - player.y, right - player.x, top - player.y)
+                    player.update(0, False, 0.09)
+                    self.assertIsNone(player.get_attack_hitbox())
+
+        for facing in (-1, 1):
+            for ground, air in zip(bounds[facing, False], bounds[facing, True]):
+                self.assertAlmostEqual(ground, air)
+        left, bottom, right, top = bounds[1, False]
+        self.assertGreater(right, 0)
+        for mirrored, expected in zip(bounds[-1, False], (-right, bottom, -left, top)):
+            self.assertAlmostEqual(mirrored, expected)
 
     def test_jump_and_air_attack_do_not_interrupt_motion(self):
         self.player.update(1, False, 0.1, jump_pressed=True, attack_pressed=True)

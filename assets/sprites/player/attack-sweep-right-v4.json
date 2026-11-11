@@ -1,0 +1,22 @@
+{
+  "image": "attack-sweep-right-v4.png",
+  "source_size": [3100, 620],
+  "frame_count": 5,
+  "columns": 5,
+  "fps": 16,
+  "frame_durations_ms": [33, 33, 34, 42, 48],
+  "slash_frame": 2,
+  "loop": false,
+  "facing": "right",
+  "pose": "attack",
+  "foot_anchor": [268, 598],
+  "anchor_coordinates": "frame top-left",
+  "standing_reference_height": 578,
+  "frames": [
+    {"x": 0, "y": 0, "width": 620, "height": 620, "phase": "cross_body_windup"},
+    {"x": 620, "y": 0, "width": 620, "height": 620, "phase": "blade_emerges"},
+    {"x": 1240, "y": 0, "width": 620, "height": 620, "phase": "extended_horizontal_cut"},
+    {"x": 1860, "y": 0, "width": 620, "height": 620, "phase": "sweep_past_hip"},
+    {"x": 2480, "y": 0, "width": 620, "height": 620, "phase": "follow_through"}
+  ]
+}
