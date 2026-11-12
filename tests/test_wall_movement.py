@@ -232,7 +232,8 @@ class WallMovementTests(unittest.TestCase):
 
     def test_test_map_first_wall_can_be_climbed_with_repeated_wall_jumps(self):
         self.player.terrain = TEST_TERRAIN
-        self.player.x = 900
+        wall_left, _, _, wall_top = TEST_TERRAIN[1]
+        self.player.x = wall_left - 20
         self.player.update(1, False, 1 / 60, jump_pressed=True)
         wall_jumps = 0
         for _ in range(600):
@@ -240,12 +241,12 @@ class WallMovementTests(unittest.TestCase):
             wall_jumps += int(pressed)
             self.player.update(1, False, 1 / 60, jump_pressed=pressed)
             self.assertFalse(self.player._overlaps_terrain())
-            if self.player.grounded and self.player.y == 620:
+            if self.player.grounded and self.player.y == wall_top:
                 break
         self.assertGreaterEqual(wall_jumps, 2)
         self.assertTrue(self.player.grounded)
-        self.assertEqual(self.player.y, 620)
-        self.assertGreater(self.player.x, 920)
+        self.assertEqual(self.player.y, wall_top)
+        self.assertGreater(self.player.x, wall_left)
 
     def test_slide_lands_and_terrain_renders_with_hitboxes(self):
         self.put_on_wall(1)
