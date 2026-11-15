@@ -1,7 +1,7 @@
 """Aim a mounted crossbow and trace the relic's ballistic path."""
 
 from dataclasses import dataclass
-from math import atan2, ceil, cos, degrees, hypot, radians, sin
+from math import ceil, cos, degrees, hypot, radians, sin
 
 from pico2d import pico2d as pico
 
@@ -10,6 +10,7 @@ from player import STANDING_HITBOX_HEIGHT, STANDING_HITBOX_WIDTH, WORLD_MARGIN
 
 AIM_RADIUS = 90
 MAX_ELEVATION = radians(55)
+AIM_SPEED = radians(60)
 LAUNCH_SPEED = 1500
 FLIGHT_GRAVITY = 950
 FLIGHT_RADIUS = STANDING_HITBOX_WIDTH / 2
@@ -117,11 +118,10 @@ class Crossbow:
         _, bottom, _, top = player.get_hitbox()
         return player.grounded and hypot(x - player.x, y - (bottom + top) / 2) <= AIM_RADIUS
 
-    def aim_toward(self, x, y):
-        dx = x - self.x
-        if dx:
-            self.facing = 1 if dx > 0 else -1
-        self.angle = max(0.0, min(MAX_ELEVATION, atan2(y - self.y, abs(dx))))
+    def adjust_aim(self, direction, elevation, delta_time):
+        if direction:
+            self.facing = direction
+        self.angle = max(0.0, min(MAX_ELEVATION, self.angle + elevation * AIM_SPEED * delta_time))
 
     def _new_flight(self):
         x, y = self._body_point(MUZZLE)

@@ -11,7 +11,7 @@ os.environ["SDL_AUDIODRIVER"] = "dummy"
 os.environ["SDL_RENDER_DRIVER"] = "software"
 
 import main
-from launcher import Crossbow, FLIGHT_GRAVITY, FLIGHT_RADIUS, RelicFlight
+from launcher import Crossbow, FLIGHT_GRAVITY, FLIGHT_RADIUS, MAX_ELEVATION, RelicFlight
 from pico2d import pico2d as pico
 from player import Player
 
@@ -23,13 +23,30 @@ def keydown(key):
 
 
 class LauncherTests(unittest.TestCase):
-    def test_f_mouse_aim_click_and_midflight_return_through_game_loop(self):
-        click = pico.Event(pico.SDL_MOUSEBUTTONDOWN)
-        click.button = pico.SDL_BUTTON_LEFT
+    def test_f_arrow_aim_x_and_midflight_return_through_game_loop(self):
         f, e = keydown(pico.SDLK_f), keydown(pico.SDLK_e)
-        events = iter(([f], [], [f], [f], [click], *([] for _ in range(8)), [e], [keydown(pico.SDLK_ESCAPE)]))
+        inputs = iter((
+            ([f], ()),
+            *(([], (pico.SDL_SCANCODE_LEFT, pico.SDL_SCANCODE_UP)) for _ in range(30)),
+            ([], (pico.SDL_SCANCODE_DOWN,)),
+            ([], ()),
+            ([f], ()),
+            ([f], ()),
+            ([keydown(pico.SDLK_x)], (pico.SDL_SCANCODE_RIGHT,)),
+            *(([], ()) for _ in range(8)),
+            ([e], ()),
+            ([keydown(pico.SDLK_ESCAPE)], ()),
+        ))
+        keys = [0] * pico.SDL_NUM_SCANCODES
         frames = []
         scene = main.draw_scene
+
+        def get_events():
+            events, held = next(inputs)
+            keys[:] = [0] * len(keys)
+            for key in held:
+                keys[key] = 1
+            return events
 
         def create_player(x, y, world_width, terrain):
             return Player(main.TEST_CROSSBOW_X - 40, y, world_width, terrain=terrain)
@@ -40,34 +57,42 @@ class LauncherTests(unittest.TestCase):
             frames.append((
                 crossbow.aiming, crossbow.angle, crossbow.relic_position,
                 flight.return_pose(main.GROUND_Y)[:2] if flight is not None else None,
-                (player.x, player.y), kwargs["show_crossbow_prompt"],
+                (player.x, player.y), kwargs["show_crossbow_prompt"], crossbow.facing,
             ))
+            self.assertIsNone(player.attack_time)
             if crossbow.relic_position is not None:
                 self.assertEqual(kwargs["relic_center"], camera.world_to_screen(*crossbow.relic_position))
             scene(player, camera, *args, **kwargs)
 
-        low_target = (main.TEST_CROSSBOW_X + 400, main.GROUND_Y)
-        high_target = (main.TEST_CROSSBOW_X + 400, main.GROUND_Y + 350)
         with patch.object(main, "Player", new=create_player), \
-                patch.object(pico, "get_events", new=lambda: next(events)), \
+                patch.object(pico, "get_events", new=get_events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
-                patch.object(main, "read_movement", return_value=(1, True, False)), \
-                patch.object(main, "mouse_world_position", side_effect=(low_target, high_target, high_target, high_target)), \
+                patch.object(pico, "SDL_GetKeyboardState", return_value=keys), \
                 patch.object(main, "perf_counter", side_effect=count(step=1 / 120)), \
                 patch.object(main, "sleep"), \
                 patch.object(main, "draw_scene", new=record):
             main.main()
 
-        self.assertEqual([frame[0] for frame in frames[:5]], [True, True, False, True, False])
+        self.assertTrue(all(frame[0] for frame in frames[:33]))
         self.assertEqual(frames[0][1], 0)
-        self.assertGreater(frames[1][1], radians(30))
-        self.assertEqual(frames[0][4], frames[1][4])
-        self.assertIsNone(frames[2][2])
-        self.assertTrue(frames[2][5])
-        self.assertGreater(frames[12][2][0], frames[4][2][0])
-        self.assertGreater(frames[12][2][1], frames[4][2][1])
-        self.assertEqual(frames[13][4], frames[12][3])
-        self.assertIsNone(frames[13][2])
+        self.assertAlmostEqual(frames[30][1], radians(30))
+        self.assertAlmostEqual(frames[31][1], radians(29))
+        self.assertEqual(frames[31][1], frames[32][1])
+        self.assertEqual(frames[30][6], -1)
+        self.assertEqual(frames[0][4], frames[30][4])
+        canceled, resumed, fired = frames[33:36]
+        self.assertFalse(canceled[0])
+        self.assertIsNone(canceled[2])
+        self.assertTrue(canceled[5])
+        self.assertTrue(resumed[0])
+        self.assertFalse(fired[0])
+        self.assertEqual(fired[6], 1)
+        self.assertEqual(resumed[4], fired[4])
+        last_flight, returned = frames[-2:]
+        self.assertGreater(last_flight[2][0], fired[2][0])
+        self.assertGreater(last_flight[2][1], fired[2][1])
+        self.assertEqual(returned[4], last_flight[3])
+        self.assertIsNone(returned[2])
 
     def test_flight_follows_a_parabola_and_lands_on_a_platform(self):
         ground = main.GROUND_Y
@@ -87,12 +112,13 @@ class LauncherTests(unittest.TestCase):
         self.assertEqual(flight.y, platform_top + FLIGHT_RADIUS)
         self.assertEqual(flight.return_pose(ground)[1], platform_top)
 
-    def test_mouse_direction_mirrors_the_crossbow_and_its_trajectory(self):
+    def test_aim_direction_mirrors_the_crossbow_and_its_trajectory(self):
         ground = main.GROUND_Y
         crossbow = Crossbow(1400, ground, None, None)
+        crossbow.adjust_aim(0, 1, 0.75)
         positions = []
         for direction in (1, -1):
-            crossbow.aim_toward(crossbow.x + 200 * direction, crossbow.y + 200)
+            crossbow.adjust_aim(direction, 0, 1 / 60)
             self.assertEqual(crossbow.facing, direction)
             first_preview_point = next(crossbow.trajectory((), main.WORLD_WIDTH))
             crossbow.fire()
@@ -105,8 +131,11 @@ class LauncherTests(unittest.TestCase):
     def test_long_shot_preview_reaches_the_landing_point(self):
         ground = main.GROUND_Y
         crossbow = Crossbow(main.TEST_CROSSBOW_X, ground, None, None)
-        for slope in (1, 2):
-            crossbow.aim_toward(crossbow.x + 400, crossbow.y + 400 * slope)
+        for aim_time, angle in ((0.75, radians(45)), (1, MAX_ELEVATION)):
+            crossbow.adjust_aim(1, -1, 1)
+            self.assertEqual(crossbow.angle, 0)
+            crossbow.adjust_aim(0, 1, aim_time)
+            self.assertAlmostEqual(crossbow.angle, angle)
             preview = list(crossbow.trajectory((), main.WORLD_WIDTH))
             crossbow.fire()
             crossbow.flight.update(3, (), ground, main.WORLD_WIDTH)

@@ -1,7 +1,7 @@
 """Run the first RelicEscape movement prototype."""
 
 from copy import copy
-from ctypes import byref, c_float, c_int
+from ctypes import byref, c_int
 from dataclasses import dataclass
 from math import ceil, cos, exp, inf, tau
 from time import perf_counter, sleep
@@ -136,16 +136,6 @@ def read_movement():
     running = bool(keys[pico.SDL_SCANCODE_LSHIFT] or keys[pico.SDL_SCANCODE_RSHIFT])
     crouching = bool(keys[pico.SDL_SCANCODE_S] or keys[pico.SDL_SCANCODE_DOWN])
     return int(right) - int(left), running, crouching
-
-
-def mouse_world_position(camera):
-    window_x, window_y = c_int(), c_int()
-    pico.SDL_GetMouseState(byref(window_x), byref(window_y))
-    logical_x, logical_y = c_float(), c_float()
-    pico.SDL_RenderWindowToLogical(
-        pico.renderer, window_x.value, window_y.value, byref(logical_x), byref(logical_y),
-    )
-    return camera.x + logical_x.value / camera.zoom, (SCREEN_HEIGHT - logical_y.value) / camera.zoom
 
 
 def update_hitbox_visibility(events, visible):
@@ -414,7 +404,8 @@ def main():
             jump_held = False
             has_focus = bool(pico.SDL_GetKeyboardFocus())
             if has_focus:
-                jump_held = bool(pico.SDL_GetKeyboardState(None)[pico.SDL_SCANCODE_SPACE])
+                keys = pico.SDL_GetKeyboardState(None)
+                jump_held = bool(keys[pico.SDL_SCANCODE_SPACE])
             else:
                 pressed_keys.clear()
             teleported = False
@@ -426,13 +417,13 @@ def main():
                 if interact:
                     crossbow.aiming = False
                 elif has_focus:
-                    crossbow.aim_toward(*mouse_world_position(camera))
-                    if any(event.type == pico.SDL_MOUSEBUTTONDOWN and event.button == pico.SDL_BUTTON_LEFT
-                           for event in events):
+                    aim_direction = keys[pico.SDL_SCANCODE_RIGHT] - keys[pico.SDL_SCANCODE_LEFT]
+                    aim_elevation = keys[pico.SDL_SCANCODE_UP] - keys[pico.SDL_SCANCODE_DOWN]
+                    crossbow.adjust_aim(aim_direction, aim_elevation, delta_time)
+                    if pico.SDLK_x in pressed_keys:
                         crossbow.fire()
             elif interact and carrying_relic and crossbow.can_aim(player):
                 crossbow.aiming = True
-                crossbow.aim_toward(*mouse_world_position(camera))
             elif interact and carriage.can_mount(player, relic_elsewhere):
                 carriage.relic_mounted = True
             elif pico.SDLK_e in pressed_keys:
