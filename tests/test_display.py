@@ -109,8 +109,12 @@ class DisplayTests(unittest.TestCase):
                 player.assert_not_called()
             present()
 
-        half_blink = main.TITLE_BLINK_PERIOD / 2
-        times = (0, 0, 0, half_blink, half_blink, 2 * half_blink, 2 * half_blink, 1.8, 1.9, 1.95, 1.95, 2)
+        period = main.TITLE_BLINK_PERIOD
+        half_blink = period / 2
+        times = (
+            0, 0, 0, half_blink, half_blink, period, period,
+            period + 0.1, period + 0.2, period + 0.25, period + 0.25, period + 0.3,
+        )
         with patch.object(main, "configure_display", return_value=False), \
                 patch.object(main, "perf_counter", side_effect=times), \
                 patch.object(main, "sleep"), \
