@@ -79,6 +79,55 @@ class DisplayTests(unittest.TestCase):
             main.main()
             self.assertEqual([call.args[0] for call in switch.call_args_list], [True, False])
 
+    def test_title_animates_and_blinks_until_enter_starts_play(self):
+        space, enter = (pico.Event(pico.SDL_KEYDOWN) for _ in range(2))
+        space.key, enter.key = pico.SDLK_SPACE, pico.SDLK_RETURN
+        events = iter(([], [space], [], [enter], [], [pico.Event(pico.SDL_QUIT)]))
+        batches_read = 0
+        title_frames = []
+        present = pico.update_canvas
+
+        def get_events():
+            nonlocal batches_read
+            batches_read += 1
+            return next(events)
+
+        def read_rect(x, y, width, height):
+            pixels = (ctypes.c_ubyte * (width * height * 4))()
+            result = pico.SDL_RenderReadPixels(
+                pico.renderer, pico.SDL_Rect(x, y, width, height),
+                pico.SDL_PIXELFORMAT_RGBA32, pixels, width * 4,
+            )
+            self.assertEqual(result, 0, pico.SDL_GetError())
+            return bytes(pixels)
+
+        def record_canvas():
+            if 1 <= batches_read <= 3:
+                prompt_rows = read_rect(350, 470, 260, 40)
+                crack = read_rect(460, 245, 45, 40)
+                title_frames.append((max(prompt_rows[::4]), crack))
+                player.assert_not_called()
+            present()
+
+        half_blink = main.TITLE_BLINK_PERIOD / 2
+        times = (0, 0, 0, half_blink, half_blink, 2 * half_blink, 2 * half_blink, 1.8, 1.9, 1.95, 1.95, 2)
+        with patch.object(main, "configure_display", return_value=False), \
+                patch.object(main, "perf_counter", side_effect=times), \
+                patch.object(main, "sleep"), \
+                patch.object(main, "Player", wraps=main.Player) as player, \
+                patch.object(main, "draw_scene", wraps=main.draw_scene) as game_scene, \
+                patch.object(pico, "get_events", new=get_events), \
+                patch.object(pico, "update_canvas", new=record_canvas):
+            main.main()
+
+        visible, hidden, visible_again = title_frames
+        self.assertGreater(visible[0], 160)
+        self.assertLess(hidden[0], 80)
+        self.assertGreater(visible_again[0], 160)
+        self.assertNotEqual(visible[1], hidden[1])
+        player.assert_called_once()
+        game_scene.assert_called_once()
+
 
 if __name__ == "__main__":
     unittest.main()

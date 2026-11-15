@@ -53,7 +53,8 @@ class RelicTests(unittest.TestCase):
             draw_relic(image, camera, x, y, elapsed)
             self.assertFalse(pico.SDL_GetError())
 
-        with patch.object(pico, "get_events", side_effect=events), \
+        with patch.object(main, "run_title", return_value=True), \
+                patch.object(pico, "get_events", side_effect=events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(main, "read_movement", return_value=(1, False, False)), \
                 patch.object(main, "perf_counter", side_effect=count(step=1 / 60)), \
@@ -148,6 +149,7 @@ class RelicTests(unittest.TestCase):
             self.assertEqual(carriage_draws, [(*camera.world_to_screen(*position), 24, 21)])
 
         with patch.object(main, "Player", new=create_player), \
+                patch.object(main, "run_title", return_value=True), \
                 patch.object(pico, "get_events", new=frame_events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(main, "read_movement", return_value=(0, False, False)), \

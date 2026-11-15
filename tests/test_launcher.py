@@ -65,6 +65,7 @@ class LauncherTests(unittest.TestCase):
             scene(player, camera, *args, **kwargs)
 
         with patch.object(main, "Player", new=create_player), \
+                patch.object(main, "run_title", return_value=True), \
                 patch.object(pico, "get_events", new=get_events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(pico, "SDL_GetKeyboardState", return_value=keys), \

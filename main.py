@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from math import ceil, cos, exp, inf, tau
 from time import perf_counter, sleep
 
+from PIL import Image
 from pico2d import pico2d as pico
 
 from launcher import Crossbow
@@ -19,6 +20,10 @@ SCREEN_WIDTH = 960
 SCREEN_HEIGHT = 540
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
+TITLE_ANIMATION = ASSET_ROOT / "concepts/opening-cave-rune-loop-v4.png"
+TITLE_PROMPT = ASSET_ROOT / "ui/title-enter-prompt.png"
+TITLE_PROMPT_Y = 52
+TITLE_BLINK_PERIOD = 1.7
 GROUND_Y = 200
 WORLD_WIDTH = 6400
 CAMERA_ZOOM = 1 / 3
@@ -356,12 +361,72 @@ def configure_display():
     return set_fullscreen(True)
 
 
+def quit_requested(events):
+    return any(
+        event.type == pico.SDL_QUIT
+        or (event.type == pico.SDL_KEYDOWN and event.key == pico.SDLK_ESCAPE)
+        for event in events
+    )
+
+
+def run_title(fullscreen):
+    prompt = pico.load_image(str(TITLE_PROMPT))
+    with Image.open(TITLE_ANIMATION) as animation:
+        width, height = animation.size
+        texture = pico.SDL_CreateTexture(
+            pico.renderer, pico.SDL_PIXELFORMAT_RGBA32, pico.SDL_TEXTUREACCESS_STREAMING, width, height,
+        )
+        if not texture:
+            raise RuntimeError(pico.SDL_GetError())
+        try:
+            if pico.SDL_SetTextureScaleMode(texture, pico.SDL_ScaleModeLinear) != 0:
+                raise RuntimeError(pico.SDL_GetError())
+            # The exported APNG has a constant frame duration. Decode on demand and reuse one texture.
+            frame_duration = animation.info["duration"] / 1000
+            frame_count = animation.n_frames
+            started_at = perf_counter()
+            previous_frame = -1
+            while True:
+                frame_start = perf_counter()
+                events = pico.get_events()
+                if quit_requested(events):
+                    return None
+                keys = {event.key for event in events if event.type == pico.SDL_KEYDOWN}
+                if pico.SDLK_F11 in keys:
+                    fullscreen = set_fullscreen(not fullscreen)
+                if pico.SDLK_RETURN in keys or pico.SDLK_KP_ENTER in keys:
+                    return fullscreen
+
+                elapsed = frame_start - started_at
+                frame = int(elapsed / frame_duration) % frame_count
+                if frame != previous_frame:
+                    animation.seek(frame)
+                    pixels = animation.convert("RGBA").tobytes()
+                    if pico.SDL_UpdateTexture(texture, None, pixels, width * 4) != 0:
+                        raise RuntimeError(pico.SDL_GetError())
+                    previous_frame = frame
+
+                pico.SDL_RenderCopy(pico.renderer, texture, None, None)
+                pulse = cos(tau * elapsed / TITLE_BLINK_PERIOD)
+                alpha = round(255 * max(0, (pulse + 0.55) / 1.55))
+                if alpha:
+                    pico.SDL_SetTextureAlphaMod(prompt.texture, alpha)
+                    prompt.draw(SCREEN_WIDTH / 2, TITLE_PROMPT_Y)
+                pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
+                pico.update_canvas()
+                sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
+        finally:
+            pico.SDL_DestroyTexture(texture)
+
+
 def main():
     pico.SDL_SetHint(pico.SDL_HINT_RENDER_SCALE_QUALITY, b"0")
     pico.open_canvas(SCREEN_WIDTH, SCREEN_HEIGHT)
     lighting = None
     try:
-        fullscreen = configure_display()
+        fullscreen = run_title(configure_display())
+        if fullscreen is None:
+            return
         ground_image = pico.load_image(str(GROUND_IMAGE))
         background_wall = pico.load_image(str(BACKGROUND_WALL_IMAGE))
         rail_image = pico.load_image(str(RAIL_IMAGE))
@@ -389,11 +454,7 @@ def main():
             delta_time = min(frame_start - previous_time, 0.05)
             previous_time = frame_start
             events = pico.get_events()
-            if any(
-                event.type == pico.SDL_QUIT
-                or (event.type == pico.SDL_KEYDOWN and event.key == pico.SDLK_ESCAPE)
-                for event in events
-            ):
+            if quit_requested(events):
                 break
 
             if any(event.type == pico.SDL_KEYDOWN and event.key == pico.SDLK_F11 for event in events):
