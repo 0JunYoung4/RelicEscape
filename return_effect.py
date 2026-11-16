@@ -5,6 +5,7 @@ from math import pi, sin
 from random import Random
 from typing import NamedTuple
 
+from PIL import Image
 from pico2d import pico2d as pico
 
 
@@ -19,42 +20,37 @@ CAPTURE_FEET_Y = 76
 FRAGMENT_SIZE = 2
 RETURN_MARK_DURATION = 3.0
 RETURN_MARK_ABSORB_DURATION = 0.85
-MARK_PIXEL_SIZE = 4.5
-MARK_PATTERN = (
-    ".....######.....",
-    "...##......##...",
-    "..#..........#..",
-    ".#.....++.....#.",
-    ".#....+..+....#.",
-    ".#...+....+...#.",
-    ".#..+..##..+..#.",
-    ".#...+....+...#.",
-    ".#....+..+....#.",
-    ".#.....++.....#.",
-    "..#..........#..",
-    "...##......##...",
-    ".....######.....",
-)
-MARK_COLORS = {"#": (69, 178, 228), "+": (146, 235, 252)}
+MARK_WORLD_SIZE = 42  # 14 px at the normal camera zoom.
+MARK_SAMPLE_SIZE = 14
 
 
-def make_mark_pixels():
+def sample_mark_pixels(image_path):
+    with Image.open(image_path) as image:
+        sample = image.convert("RGBA").resize((MARK_SAMPLE_SIZE, MARK_SAMPLE_SIZE), Image.Resampling.BOX)
+    pixels = sample.load()
+    center = (MARK_SAMPLE_SIZE - 1) / 2
     rng = Random(81)
-    for row, line in enumerate(MARK_PATTERN):
-        for column, symbol in enumerate(line):
-            if symbol in MARK_COLORS:
+    for row in range(MARK_SAMPLE_SIZE):
+        for column in range(MARK_SAMPLE_SIZE):
+            red, green, blue, alpha = pixels[column, row]
+            if alpha > 16:
                 yield (
-                    column - (len(line) - 1) / 2, (len(MARK_PATTERN) - 1) / 2 - row,
-                    MARK_COLORS[symbol], rng.uniform(0, 0.27),
+                    column - center, center - row, (red, green, blue), alpha, rng.uniform(0, 0.27),
                     rng.uniform(-62, 62), rng.uniform(-34, 68),
                 )
 
 
-MARK_PIXELS = tuple(make_mark_pixels())
+class ReturnMarkArt:
+    def __init__(self, image_path):
+        self.image = pico.load_image(str(image_path))
+        if pico.SDL_SetTextureScaleMode(self.image.texture, pico.SDL_ScaleModeLinear) != 0:
+            raise RuntimeError(pico.SDL_GetError())
+        self.pixels = tuple(sample_mark_pixels(image_path))
 
 
 class ReturnMark:
-    def __init__(self, departure, now):
+    def __init__(self, departure, now, art):
+        self.art = art
         self.pose = departure.x, departure.y, departure.crouch_time
         _, bottom, _, top = departure.get_hitbox()
         self.position = departure.x, (bottom + top) / 2
@@ -72,18 +68,24 @@ class ReturnMark:
 
     def draw(self, camera, target, now):
         center_x, center_y = camera.world_to_screen(*self.position)
-        target_x, target_y = target
-        pixel_size = MARK_PIXEL_SIZE * camera.zoom
-        size = max(1, round(pixel_size))
-        absorption = max(0.0, (now - self.absorbs_at) / RETURN_MARK_ABSORB_DURATION)
-        # The mark appears quickly and pulses softly until its pixels are released.
+        width = MARK_WORLD_SIZE * camera.zoom
         age = now - self.created_at
         pulse = (0.88 + 0.12 * sin(age * 6)) * min(1.0, 0.4 + age / 0.15)
+        opacity = 0.88 * pulse
+        if self.can_return(now):
+            self.art.image.opacify(opacity)
+            self.art.image.draw(center_x, center_y, width, width)
+            return
+
+        target_x, target_y = target
+        pixel_size = width / MARK_SAMPLE_SIZE
+        size = max(1, round(pixel_size))
+        absorption = (now - self.absorbs_at) / RETURN_MARK_ABSORB_DURATION
         previous_blend_mode = pico.SDL_BlendMode()
         pico.SDL_GetRenderDrawBlendMode(pico.renderer, byref(previous_blend_mode))
         pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)
         try:
-            for column, row, color, delay, drift_x, drift_y in MARK_PIXELS:
+            for column, row, color, alpha, delay, drift_x, drift_y in self.art.pixels:
                 flight = max(0.0, (absorption - delay) / (1 - delay))
                 travel = flight ** 2
                 scatter = sin(pi * flight) * camera.zoom
@@ -91,8 +93,8 @@ class ReturnMark:
                 origin_y = center_y + row * pixel_size
                 x = round(origin_x + (target_x - origin_x) * travel + drift_x * scatter)
                 y = round(origin_y + (target_y - origin_y) * travel + drift_y * scatter)
-                alpha = round(225 * pulse * (1 - flight ** 3))
-                pico.draw_rectangle(x, y, x + size - 1, y + size - 1, *color, alpha, filled=True)
+                fade = round(alpha * opacity * (1 - flight ** 3))
+                pico.draw_rectangle(x, y, x + size - 1, y + size - 1, *color, fade, filled=True)
         finally:
             pico.SDL_SetRenderDrawBlendMode(pico.renderer, previous_blend_mode)
 

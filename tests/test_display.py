@@ -113,6 +113,30 @@ class DisplayTests(unittest.TestCase):
             main.main()
             self.assertEqual([call.args[0] for call in switch.call_args_list], [True, False])
 
+    def test_escape_returns_to_title_and_enter_starts_a_fresh_run(self):
+        enter, mount, toggle, escape = (pico.Event(pico.SDL_KEYDOWN) for _ in range(4))
+        enter.key, mount.key, toggle.key, escape.key = (
+            pico.SDLK_RETURN, pico.SDLK_e, pico.SDLK_F11, pico.SDLK_ESCAPE,
+        )
+        events = ([], [enter], [mount], [toggle], [escape], [], [enter], [], [escape], [], [escape])
+        game_frames = []
+
+        def record_scene(player, camera, *args, **kwargs):
+            game_frames.append((player.x, kwargs["rail_relic_image"] is not None))
+
+        with patch.object(pico, "get_events", side_effect=events), \
+                patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
+                patch.object(pico, "close_canvas", wraps=pico.close_canvas) as close, \
+                patch.object(main, "read_movement", return_value=(0, False, False)), \
+                patch.object(main, "sleep"), \
+                patch.object(main, "run_title", wraps=main.run_title) as title, \
+                patch.object(main, "draw_scene", new=record_scene):
+            main.main()
+
+        self.assertEqual([call.args for call in title.call_args_list], [(True,), (False,), (False,)])
+        self.assertEqual(game_frames, [(main.TEST_SPAWN[0], mounted) for mounted in (True, True, False)])
+        close.assert_called_once_with()
+
     def test_title_animates_and_blinks_until_enter_starts_play(self):
         space, enter = (pico.Event(pico.SDL_KEYDOWN) for _ in range(2))
         space.key, enter.key = pico.SDLK_SPACE, pico.SDLK_RETURN

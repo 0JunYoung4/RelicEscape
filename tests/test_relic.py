@@ -33,14 +33,17 @@ class RelicTests(unittest.TestCase):
             (8.40, None, 1), (8.45, q, 0), (9.10, None, 0),
         )
         clock = chain((0,), chain.from_iterable((time, time) for time, _, _ in commands), (10,))
-        inputs = iter((*commands, (10, pico.SDLK_ESCAPE, 0)))
+        inputs = iter(commands)
         positions, marks = {}, {}
         direction = 0
         draw_mark = main.ReturnMark.draw
 
         def events():
             nonlocal direction
-            _, key, direction = next(inputs)
+            command = next(inputs, None)
+            if command is None:
+                return [pico.Event(pico.SDL_QUIT)]
+            _, key, direction = command
             return [] if key is None else [keydown(key)]
 
         def record_scene(player, camera, *args, **kwargs):
@@ -85,7 +88,7 @@ class RelicTests(unittest.TestCase):
             [keydown(pico.SDLK_e)], [], [keydown(pico.SDLK_e)],
             [keydown(pico.SDLK_SPACE)], [keydown(pico.SDLK_e)], [],
             [keydown(pico.SDLK_e)], [],
-            *([] for _ in range(36)), [keydown(pico.SDLK_ESCAPE)],
+            *([] for _ in range(36)), [pico.Event(pico.SDL_QUIT)],
         ]
         player_frames = []
         relic_frames = []
@@ -160,7 +163,6 @@ class RelicTests(unittest.TestCase):
             (None, (e,)),
             ("carriage", (e,)),
             (None, (e,)),
-            (None, (pico.SDLK_ESCAPE,)),
         ))
         player = None
         player_frames = []
@@ -175,7 +177,10 @@ class RelicTests(unittest.TestCase):
             return player
 
         def frame_events():
-            player_x, keys = next(commands)
+            command = next(commands, None)
+            if command is None:
+                return [pico.Event(pico.SDL_QUIT)]
+            player_x, keys = command
             player_y = ground
             if player_x == "carriage":
                 player_x, rail_y = carriage_frames[-1]

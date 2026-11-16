@@ -79,12 +79,14 @@ class HealthTests(unittest.TestCase):
 
         def read_events():
             frame = next(event_frame)
+            if frame == 201:
+                return [pico.Event(pico.SDL_QUIT)]
             if frame == 0:
                 player.teleport_to(safe_x, main.GROUND_Y, 0.0)
             if frame in (1, 37, 73, 109, 196):
                 player.teleport_to(spike.left + 30, main.GROUND_Y, 0.0)
             key = {
-                0: pico.SDLK_e, 195: pico.SDLK_e, 199: pico.SDLK_r, 201: pico.SDLK_ESCAPE,
+                0: pico.SDLK_e, 195: pico.SDLK_e, 199: pico.SDLK_r,
             }.get(frame)
             if key is None:
                 return []

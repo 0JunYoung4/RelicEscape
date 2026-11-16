@@ -35,7 +35,7 @@ class LauncherTests(unittest.TestCase):
             ([keydown(pico.SDLK_x)], (pico.SDL_SCANCODE_RIGHT,)),
             *(([], ()) for _ in range(8)),
             ([e], ()),
-            ([keydown(pico.SDLK_ESCAPE)], ()),
+            ([pico.Event(pico.SDL_QUIT)], ()),
         ))
         keys = [0] * pico.SDL_NUM_SCANCODES
         frames = []
