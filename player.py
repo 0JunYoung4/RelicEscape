@@ -7,6 +7,7 @@ from math import sqrt
 from pathlib import Path
 
 from pico2d import draw_rectangle, load_image
+from pico2d import pico2d as pico
 
 from slash_effect import SLASH_DURATION, draw_slash, forward_slash_bounds
 
@@ -56,7 +57,7 @@ class Animation:
             return min(bisect_right(self.frame_ends_ms, elapsed * 1000), len(self.frames) - 1)
         return int(elapsed * self.fps) % len(self.frames)
 
-    def draw(self, x, y, facing, elapsed, camera, frame_index=None):
+    def draw(self, x, y, facing, elapsed, camera, frame_index=None, *, tint=None):
         if frame_index is None:
             frame_index = self.frame_at(elapsed)
         frame = self.frames[frame_index]
@@ -68,17 +69,23 @@ class Animation:
         screen_x, screen_y = camera.world_to_screen(center_x, center_y)
         display_scale = self.scale * camera.zoom
         # Asset metadata uses top-left coordinates; pico2D clips from bottom-left.
-        self.image.clip_composite_draw(
-            frame["x"], self.image.h - frame["y"] - height,
-            width, height, 0, "h" if facing < 0 else "",
-            screen_x, screen_y, width * display_scale, height * display_scale,
-        )
+        if tint is not None:
+            pico.SDL_SetTextureColorMod(self.image.texture, *tint)
+        try:
+            self.image.clip_composite_draw(
+                frame["x"], self.image.h - frame["y"] - height,
+                width, height, 0, "h" if facing < 0 else "",
+                screen_x, screen_y, width * display_scale, height * display_scale,
+            )
+        finally:
+            if tint is not None:
+                pico.SDL_SetTextureColorMod(self.image.texture, 255, 255, 255)
 
 
 class Player:
-    def __init__(self, x, ground_y, world_width, terrain=()):
+    def __init__(self, x, ground_y, world_width, terrain=(), *, spawn_y=None):
         self.x = x
-        self.y = ground_y
+        self.y = ground_y if spawn_y is None else spawn_y
         self.ground_y = ground_y
         self.vertical_speed = 0.0
         self.world_width = world_width
@@ -94,7 +101,7 @@ class Player:
         self.crouch_time = 0.0
         self.look_down_held = False
         self.terrain = tuple(terrain)
-        self.grounded = True
+        self.grounded = self._has_support()
         self.wall_direction = 0
         self.jump_buffer_remaining = 0.0
         self.jump_origin_y = None
@@ -488,7 +495,7 @@ class Player:
                 90, 210, 255,
             )
 
-    def draw(self, camera, *, show_body=True):
+    def draw(self, camera, *, show_body=True, tint=None):
         if self.slash is not None:
             age, facing, attack_key = self.slash
             draw_slash(
@@ -496,15 +503,16 @@ class Player:
                 downward=attack_key == "air_down_attack",
             )
         if show_body:
-            self.draw_body(camera)
+            self.draw_body(camera, tint=tint)
 
-    def draw_body(self, camera):
+    def draw_body(self, camera, *, tint=None):
+        draw_options = {} if tint is None else {"tint": tint}
         if self.attack_time is not None:
             attack = self.animations[self.attack_animation_key]
             frame_index = attack.frame_at(self.attack_time)
             if self.state == "idle" or not attack.frames[frame_index].get("movement_pose"):
                 attack.draw(
-                    self.x, self.y, self.attack_facing, self.attack_time, camera, frame_index,
+                    self.x, self.y, self.attack_facing, self.attack_time, camera, frame_index, **draw_options,
                 )
                 return
 
@@ -525,5 +533,5 @@ class Player:
         facing = self.facing if self.attack_time is None else self.attack_facing
         animation.draw(
             self.x, self.y, facing, elapsed, camera,
-            frame_index,
+            frame_index, **draw_options,
         )

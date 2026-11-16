@@ -131,10 +131,11 @@ class Crossbow:
         self.flight = self._new_flight()
         self.aiming = False
 
-    def trajectory(self, terrain, world_width):
+    def trajectory(self, terrain, world_width, *, ground_y=None):
         preview = self._new_flight()
+        ground_y = self.ground_y if ground_y is None else ground_y
         for _ in range(34):
-            preview.update(0.085, terrain, self.ground_y, world_width)
+            preview.update(0.085, terrain, ground_y, world_width)
             yield preview.position
             if preview.landed:
                 break

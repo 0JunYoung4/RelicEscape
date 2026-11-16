@@ -13,15 +13,14 @@ tags:
 Last: 2026-11-16 (Asia/Seoul)
 
 ## Status
-- 촬영용 테스트룸 준비. Enter로 시작하고 R로 즉시 초기화한다.
+- 촬영용 테스트룸. Enter 시작, R 초기화.
 
 ## Changed
-- 가시 피격 시 체력 25 감소. 암전 중 안전 복귀하며, 체력 0이면 게이지 파편 연출 후 방을 재시작한다.
-- 유물 설치·귀환, 레일 장착, 석궁 조작 키를 E로 통합했다.
-- 끝의 낮은 석재 통로는 입구 전에 S/↓를 눌러 숙인 채 통과한다.
+- 가시 피격 시 접촉점 도트와 주홍빛을 0.12초 표시하고 암전 중 복귀한다.
+- 가시 표시 폭 196, 충돌 폭 160, 단차 18. Python 3.10용 .venv 구성.
 
 ## Open Tasks
-- 11월 17일 촬영. 속도 유지 워프는 후속 테스트.
+- 11월 17일 촬영. 속도 유지 워프 후속 테스트.
 
 ## Resume
-- 실행: `.\.venv\Scripts\python.exe main.py`; `wiki/project/player.md` 참조.
+- 실행: `.\.venv\Scripts\python.exe main.py`. memoc는 Node/npx 부재로 사용 불가.

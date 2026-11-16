@@ -48,7 +48,7 @@
 
 ## 개발 및 실행
 
-Windows, Python 3.13과 pico2D 1.5.1을 기준으로 준비했습니다. `RelicEscape` 폴더에서 PowerShell로 실행합니다.
+Windows, Python 3.10 이상과 pico2D 1.5.1을 사용합니다. Python 3.10에서는 Pillow 12.3.0, Python 3.11 이상에서는 Pillow 13.0.0을 자동으로 설치합니다. `RelicEscape` 폴더에서 PowerShell로 실행합니다.
 
 ```powershell
 python -m venv .venv
@@ -56,7 +56,7 @@ python -m venv .venv
 .\.venv\Scripts\python.exe main.py
 ```
 
-가상환경 활성화 없이 위 명령으로 실행할 수 있습니다. 실행하면 동굴 타이틀 애니메이션이 반복되고 화면 하단의 “Press Enter” 문구가 천천히 깜빡입니다. Enter를 누르면 게임이 시작됩니다. 자산은 코드 파일 기준 경로로 읽으며, 가상환경은 컴퓨터마다 생성합니다.
+가상환경 활성화 없이 위 명령으로 실행할 수 있습니다. VS Code에서 실행할 때는 `Python: Select Interpreter`에서 `.venv\Scripts\python.exe`를 선택합니다. `No module named 'PIL'` 오류가 나면 실행에 사용한 Python에 Pillow가 설치되지 않은 것이므로 위 설치 명령과 인터프리터 선택을 확인합니다. 실행하면 동굴 타이틀 애니메이션이 반복되고 화면 하단의 “Press Enter” 문구가 천천히 깜빡입니다. Enter를 누르면 게임이 시작됩니다. 자산은 코드 파일 기준 경로로 읽으며, 가상환경은 컴퓨터마다 생성합니다.
 
 | 입력 | 동작 |
 | --- | --- |

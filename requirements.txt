@@ -1,4 +1,5 @@
 pico2d==1.5.1
 PySDL2==0.9.17
 PySDL2-DLL==2.32.10
-Pillow==13.0.0
+Pillow==12.3.0; python_version < "3.11"
+Pillow==13.0.0; python_version >= "3.11"

@@ -48,8 +48,8 @@ class LauncherTests(unittest.TestCase):
                 keys[key] = 1
             return events
 
-        def create_player(x, y, world_width, terrain):
-            return Player(main.TEST_CROSSBOW_X - 40, y, world_width, terrain=terrain)
+        def create_player(x, y, world_width, **kwargs):
+            return Player(main.TEST_CROSSBOW_X - 40, y, world_width, **kwargs)
 
         def record(player, camera, *args, **kwargs):
             crossbow = kwargs["crossbow"]

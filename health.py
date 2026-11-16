@@ -2,7 +2,6 @@
 
 from ctypes import byref
 from dataclasses import dataclass
-from math import cos, pi, sin
 
 from pico2d import pico2d as pico
 
@@ -10,8 +9,9 @@ from pico2d import pico2d as pico
 MAX_HEALTH = 100
 SPIKE_DAMAGE = 25
 SPIKE_HEIGHT = 44
+SPIKE_ROOT_DEPTH = 6
 SAFE_CLEARANCE = 108
-HIT_FLASH_DURATION = 0.36
+HIT_FLASH_DURATION = 0.12
 FADE_OUT = 0.18
 BLACKOUT_HOLD = 0.08
 FADE_IN = 0.22
@@ -21,6 +21,17 @@ STONE = (62, 79, 92)
 STONE_EDGE = (107, 130, 144)
 RECESS = (22, 33, 45)
 HEALTH_BLUE = (60, 161, 185)
+HIT_CORAL = (214, 117, 88)
+HIT_OLIVE = (154, 159, 83)
+# Horizontal travel, rise, release time (fraction of the burst), size, and color.
+HIT_PARTICLES = (
+    (-12, 5, 0.15, 2, HIT_OLIVE),
+    (-7, 10, 0.00, 2, HIT_CORAL),
+    (-3, 6, 0.26, 1, HIT_CORAL),
+    (4, 12, 0.06, 2, HIT_CORAL),
+    (8, 7, 0.18, 2, HIT_OLIVE),
+    (13, 4, 0.28, 1, HIT_OLIVE),
+)
 
 
 @dataclass(frozen=True)
@@ -28,6 +39,7 @@ class SpikeBed:
     left: int
     right: int
     y: int
+    art_margin: int = 0
 
     def overlaps(self, hitbox, clearance=0):
         left, bottom, right, top = hitbox
@@ -36,32 +48,18 @@ class SpikeBed:
             and bottom < self.y + SPIKE_HEIGHT and top > self.y
         )
 
-    def draw(self, camera, screen_height, show_hitboxes):
-        if self.right < camera.x or self.left > camera.x + camera.view_width:
+    def draw(self, image, camera, show_hitboxes):
+        art_left = self.left - self.art_margin
+        art_right = self.right + self.art_margin
+        if art_right < camera.x or art_left > camera.x + camera.view_width:
             return
-        left, base = camera.world_to_screen(self.left, self.y)
-        right, tip = camera.world_to_screen(self.right, self.y + SPIKE_HEIGHT)
-        teeth = max(1, round((self.right - self.left) / 24))
-        tooth_width = (right - left) / teeth
-        vertices = []
-        for tooth in range(teeth):
-            x = left + tooth * tooth_width
-            foot_left = (x, screen_height - base)
-            foot_right = (x + tooth_width, screen_height - base)
-            middle = (x + tooth_width / 2, screen_height - base)
-            peak = (middle[0], screen_height - tip)
-            vertices.extend((
-                pico.SDL_Vertex(foot_left, (94, 101, 110, 255)),
-                pico.SDL_Vertex(peak, (189, 199, 207, 255)),
-                pico.SDL_Vertex(middle, (98, 110, 122, 255)),
-                pico.SDL_Vertex(middle, (50, 59, 71, 255)),
-                pico.SDL_Vertex(peak, (141, 156, 171, 255)),
-                pico.SDL_Vertex(foot_right, (54, 62, 73, 255)),
-            ))
-        geometry = (pico.SDL_Vertex * len(vertices))(*vertices)
-        pico.SDL_RenderGeometry(pico.renderer, None, geometry, len(geometry), None, 0)
-        pico.draw_line(left, base, right, base, 122, 89, 78)
+        if image is not None:
+            left, root = map(round, camera.world_to_screen(art_left, self.y - SPIKE_ROOT_DEPTH))
+            right, tip = map(round, camera.world_to_screen(art_right, self.y + SPIKE_HEIGHT))
+            image.draw_to_origin(left, root, right - left, tip - root)
         if show_hitboxes:
+            left, base = map(round, camera.world_to_screen(self.left, self.y))
+            right, tip = map(round, camera.world_to_screen(self.right, self.y + SPIKE_HEIGHT))
             pico.draw_rectangle(left, base, right, tip, 245, 164, 85)
 
 
@@ -97,8 +95,12 @@ class Health:
         if self.recovering(now):
             return False
         hitbox = player.get_hitbox()
-        if any(spikes.overlaps(hitbox) for spikes in spike_beds):
-            self.hit_position = (player.x, player.y + 24)
+        for spikes in spike_beds:
+            if not spikes.overlaps(hitbox):
+                continue
+            left, _, right, top = hitbox
+            hit_x = (max(left, spikes.left) + min(right, spikes.right)) / 2
+            self.hit_position = hit_x, min(top, spikes.y + SPIKE_HEIGHT)
             self.hit_at = now
             self.returned_at = None
             self.current = max(0, self.current - SPIKE_DAMAGE)
@@ -107,25 +109,37 @@ class Health:
             self.safe_pose = (player.x, player.y, player.crouch_time)
         return False
 
-    def draw_hit(self, camera, now):
+    def hit_strength(self, now):
         if self.hit_at is None:
-            return
-        age = now - self.hit_at
-        if age >= HIT_FLASH_DURATION:
+            return 0.0
+        return max(0.0, 1 - (now - self.hit_at) / HIT_FLASH_DURATION)
+
+    def hit_tint(self, now):
+        strength = self.hit_strength(now)
+        if strength > 0:
+            return 255, 255 - round(92 * strength), 255 - round(111 * strength)
+        return None
+
+    def draw_hit(self, camera, now):
+        strength = self.hit_strength(now)
+        if strength == 0:
             return
         x, y = camera.world_to_screen(*self.hit_position)
-        progress = age / HIT_FLASH_DURATION
-        for index in range(9):
-            angle = pi * (index + 1) / 10
-            distance = 3 + progress * (18 + index % 3 * 3)
-            start_x = round(x + cos(angle) * distance)
-            start_y = round(y + sin(angle) * distance)
-            length = 2 + (1 - progress) * 6
-            pico.draw_line(
-                start_x, start_y,
-                round(start_x + cos(angle) * length), round(start_y + sin(angle) * length),
-                230, round(125 + (1 - progress) * 85), 124,
-            )
+        progress = 1 - strength
+        blend_mode = pico.SDL_BlendMode()
+        pico.SDL_GetRenderDrawBlendMode(pico.renderer, byref(blend_mode))
+        pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)
+        try:
+            for travel, rise, delay, size, color in HIT_PARTICLES:
+                flight = (progress - delay) / (1 - delay)
+                if flight < 0:
+                    continue
+                px = round(x + travel * (0.12 + 0.88 * flight))
+                py = round(y + rise * flight * (2.7 - 2 * flight))
+                alpha = round(255 * min(1, (1 - flight) * 1.7))
+                pico.draw_rectangle(px, py, px + size - 1, py + size - 1, *color, alpha, filled=True)
+        finally:
+            pico.SDL_SetRenderDrawBlendMode(pico.renderer, blend_mode)
 
     def draw_hud(self, screen_height, now):
         x, y = 31, screen_height - 29
