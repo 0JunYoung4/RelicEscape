@@ -34,6 +34,8 @@ FLIGHT_CAMERA_LOOKAHEAD = 0.20
 GROUND_IMAGE = ASSET_ROOT / "terrain/ruins-floor-blue-fissures-v1.png"
 GROUND_ART_HEIGHT = 362  # The lower half of the source is stone.
 RECESSED_GROUND_IMAGE = ASSET_ROOT / "terrain/ruins-floor-spike-recess-v1.png"
+PILLAR_IMAGE = ASSET_ROOT / "terrain/ruins-carved-pillar-v1.png"
+PILLAR_FOOT_DEPTH = 6
 BACKGROUND_WALL_IMAGE = ASSET_ROOT / "terrain/ruins-background-wall-tile-v2.png"
 BACKGROUND_WALL_TILE_WIDTH = 360
 BACKGROUND_WALL_TILE_HEIGHT = 180
@@ -87,11 +89,15 @@ TEST_FLOOR = (
     (TEST_SPIKE_BED.right, 0, WORLD_WIDTH, GROUND_Y),
 )
 TEST_LOW_PASSAGE = (4820, GROUND_Y + 106, 5100, inf)
+# The wider walls grow outward from the two wall-jump faces.
+TEST_PILLARS = (
+    (3140, GROUND_Y, 3300, 620),
+    (3560, GROUND_Y, 3720, 700),
+)
 # The step, wall jumps, exit platform, and passage follow the rail area.
 TEST_TERRAIN = (
     (2920, 200, 3080, 320),
-    (3220, 200, 3300, 620),
-    (3560, 200, 3640, 700),
+    *TEST_PILLARS,
     (3780, 460, 4040, 500),
     TEST_CEILING,
     TEST_LOW_PASSAGE,
@@ -273,7 +279,7 @@ def draw_mount_prompt(camera, position, time):
 
 def draw_scene(
     player, camera, show_hitboxes=False, *, ground_image=None, background_wall=None, spike_image=None,
-    recessed_ground_image=None,
+    recessed_ground_image=None, pillar_image=None,
     rail_image=None, rail_bend_image=None, carriage_image=None, carriage_position=None,
     rail_relic_image=None, show_mount_prompt=False, crossbow=None, crossbow_relic_image=None,
     show_crossbow_prompt=False, lighting=None, relic_center=None, return_effect=None, frame_start=0.0,
@@ -317,6 +323,10 @@ def draw_scene(
             pico.draw_rectangle(round(x1), round(y1), round(x2) - 1, y2, 0, 0, 0, filled=True)
             if ground_image is not None:
                 draw_stone_strip(ground_image, camera, (left, bottom, right, bottom + GROUND_Y), flip="v")
+        elif pillar_image is not None and bounds in TEST_PILLARS:
+            screen_left, screen_right = round(x1), round(x2)
+            foot = round((bottom - PILLAR_FOOT_DEPTH) * camera.zoom)
+            pillar_image.draw_to_origin(screen_left, foot, screen_right - screen_left, round(y2) - foot)
         else:
             pico.draw_rectangle(x1, y1, x2, y2, 66, 75, 85, filled=True)
             pico.draw_line(x1, y2, x2, y2, 124, 157, 164)
@@ -461,6 +471,7 @@ def main():
             return
         ground_image = pico.load_image(str(GROUND_IMAGE))
         recessed_ground_image = pico.load_image(str(RECESSED_GROUND_IMAGE))
+        pillar_image = pico.load_image(str(PILLAR_IMAGE))
         background_wall = pico.load_image(str(BACKGROUND_WALL_IMAGE))
         spike_image = pico.load_image(str(SPIKE_IMAGE))
         rail_image = pico.load_image(str(RAIL_IMAGE))
@@ -616,7 +627,7 @@ def main():
                 relic_center = relic_screen_center(camera, *relic_position, relic_elapsed)
             draw_scene(
                 player, camera, show_hitboxes, ground_image=ground_image, spike_image=spike_image,
-                recessed_ground_image=recessed_ground_image,
+                recessed_ground_image=recessed_ground_image, pillar_image=pillar_image,
                 background_wall=background_wall, rail_image=rail_image, rail_bend_image=rail_bend_image,
                 carriage_image=carriage_image,
                 carriage_position=carriage_position,
