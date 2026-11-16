@@ -75,9 +75,9 @@ class LauncherTests(unittest.TestCase):
             main.main()
 
         self.assertTrue(all(frame[0] for frame in frames[:33]))
-        self.assertEqual(frames[0][1], 0)
-        self.assertAlmostEqual(frames[30][1], radians(30))
-        self.assertAlmostEqual(frames[31][1], radians(29))
+        self.assertEqual(frames[0][1], main.TEST_CROSSBOW_ANGLE)
+        self.assertEqual(frames[30][1], MAX_ELEVATION)
+        self.assertAlmostEqual(frames[31][1], MAX_ELEVATION - radians(1))
         self.assertEqual(frames[31][1], frames[32][1])
         self.assertEqual(frames[30][6], -1)
         self.assertEqual(frames[0][4], frames[30][4])

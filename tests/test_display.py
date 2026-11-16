@@ -15,6 +15,40 @@ from pico2d import pico2d as pico
 
 
 class DisplayTests(unittest.TestCase):
+    def test_relic_indicator_draws_at_the_edge_only_for_offscreen_relics(self):
+        width, height = main.SCREEN_WIDTH, main.SCREEN_HEIGHT
+        center_x, center_y = width // 2, height // 2
+        margin, top_margin = main.RELIC_ARROW_MARGIN, main.RELIC_ARROW_TOP_MARGIN
+        pico.open_canvas(width, height)
+        self.addCleanup(pico.close_canvas)
+
+        def pixel_at(x, y):
+            pixel = ctypes.c_uint32()
+            self.assertEqual(pico.SDL_RenderReadPixels(
+                pico.renderer, pico.SDL_Rect(x, height - 1 - y, 1, 1),
+                pico.SDL_PIXELFORMAT_ARGB8888, ctypes.byref(pixel), 4,
+            ), 0, pico.SDL_GetError())
+            return pixel.value & 0xFFFFFF
+
+        for position, edge in (
+            ((-100, center_y), (margin, center_y)),
+            ((width + 100, center_y), (width - margin, center_y)),
+            ((center_x, -100), (center_x, margin)),
+            ((center_x, height + 100), (center_x, height - top_margin)),
+            ((-center_x, height + center_y), (96, height - top_margin)),
+        ):
+            with self.subTest(position=position):
+                pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
+                pico.SDL_RenderClear(pico.renderer)
+                main.draw_relic_indicator(position)
+                self.assertEqual(pixel_at(*edge), 0x80E7FF)
+
+        with patch.object(pico, "SDL_RenderGeometry") as draw:
+            main.draw_relic_indicator(None)
+            main.draw_relic_indicator((center_x, center_y))
+            main.draw_relic_indicator((width - 1, height - 1))
+            draw.assert_not_called()
+
     def test_relic_lights_nearby_terrain_and_ambient_returns_after_recovery(self):
         pico.open_canvas(main.SCREEN_WIDTH, main.SCREEN_HEIGHT)
         self.addCleanup(pico.close_canvas)

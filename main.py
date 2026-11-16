@@ -3,7 +3,7 @@
 from copy import copy
 from ctypes import byref, c_int
 from dataclasses import dataclass
-from math import ceil, cos, exp, inf, tau
+from math import ceil, cos, exp, hypot, inf, radians, tau
 from time import perf_counter, sleep
 
 from PIL import Image
@@ -14,7 +14,7 @@ from launcher import FLIGHT_RADIUS, Crossbow
 from lighting import Lighting
 from player import ASSET_ROOT, STANDING_HITBOX_HEIGHT, Player
 from rail import RAIL_ART_SCALE, RailCarriage, RailSegment, draw_rail
-from return_effect import ReturnEffect
+from return_effect import ReturnEffect, ReturnMark
 
 
 SCREEN_WIDTH = 960
@@ -26,20 +26,27 @@ TITLE_PROMPT = ASSET_ROOT / "ui/title-enter-prompt.png"
 TITLE_PROMPT_Y = 52
 TITLE_BLINK_PERIOD = 2.6
 GROUND_Y = 200
-WORLD_WIDTH = 6400
+WORLD_WIDTH = 9000
 CAMERA_ZOOM = 1 / 3
 AIM_CAMERA_ZOOM = 0.26
+AIM_CAMERA_LOOKAHEAD = 650
 FLIGHT_CAMERA_ZOOM = 0.30
 FLIGHT_CAMERA_LOOKAHEAD = 0.20
 GROUND_IMAGE = ASSET_ROOT / "terrain/ruins-floor-blue-fissures-v1.png"
 GROUND_ART_HEIGHT = 362  # The lower half of the source is stone.
-RECESSED_GROUND_IMAGE = ASSET_ROOT / "terrain/ruins-floor-spike-recess-v1.png"
 PILLAR_IMAGE = ASSET_ROOT / "terrain/ruins-carved-pillar-v1.png"
 PILLAR_FOOT_DEPTH = 6
-BACKGROUND_WALL_IMAGE = ASSET_ROOT / "terrain/ruins-background-wall-tile-v2.png"
+BACKGROUND_WALL_IMAGES = (
+    ASSET_ROOT / "terrain/ruins-background-wall-tile-v2.png",
+    ASSET_ROOT / "terrain/ruins-background-wall-left-edge-v1.png",
+    ASSET_ROOT / "terrain/ruins-background-wall-right-edge-v1.png",
+    ASSET_ROOT / "terrain/ruins-background-wall-outer-corner-v1.png",
+)
+# Bring the brighter interior bricks into the same slate palette as the edge tiles.
+BACKGROUND_WALL_INTERIOR_TINT = (226, 221, 225)
 BACKGROUND_WALL_TILE_WIDTH = 360
 BACKGROUND_WALL_TILE_HEIGHT = 180
-TEST_WALL_LEFT = 4120
+TEST_WALL_LEFT = 6520
 TEST_WALL_COLUMNS = 5
 TEST_WALL_ROWS = 2
 TEST_CEILING_OVERHANG = 80
@@ -52,8 +59,10 @@ TEST_CEILING = (
     inf,
 )
 TEST_BACKGROUND_WALLS = (
-    (170, 7, 4),
-    (TEST_WALL_LEFT, TEST_WALL_COLUMNS, TEST_WALL_ROWS),
+    # Left, columns, rows, joined rows on the left and right, whether the top is exposed.
+    (170, 7, 4, 0, 0, True),
+    (2920, 10, 5, 0, TEST_WALL_ROWS, True),
+    (TEST_WALL_LEFT, TEST_WALL_COLUMNS, TEST_WALL_ROWS, TEST_WALL_ROWS, 0, False),
 )
 RAIL_IMAGE = ASSET_ROOT / "sprites/rail/relic-track-blue-v4.png"
 RAIL_BEND_IMAGE = ASSET_ROOT / "sprites/rail/relic-track-bend-v2.png"
@@ -74,31 +83,30 @@ RELIC_IMAGE = ASSET_ROOT / "sprites/relic/teleport-relic-v1.png"
 RELIC_GLOW_IMAGE = ASSET_ROOT / "sprites/relic/relic-blue-glow-v1.png"
 RELIC_HOVER_FRAMES = 24
 RELIC_HOVER_FPS = 20
+RELIC_ARROW_MARGIN = 22
+RELIC_ARROW_TOP_MARGIN = 54  # Leave space for the health bar.
 CROSSBOW_BASE_IMAGE = ASSET_ROOT / "sprites/launcher/crossbow-base-v1.png"
 CROSSBOW_BODY_IMAGE = ASSET_ROOT / "sprites/launcher/crossbow-body-v1.png"
-TEST_CROSSBOW_X = 215
+TEST_CROSSBOW_X = 3300
+TEST_CROSSBOW_ANGLE = radians(40)
 TEST_SPAWN = (400, GROUND_Y, 0.0)
 SPIKE_IMAGE = ASSET_ROOT / "sprites/hazards/mutant-floor-spikes-v1.png"
 TEST_SPIKE_FLOOR_Y = GROUND_Y - 18
-TEST_SPIKE_BED = SpikeBed(2716, 2876, TEST_SPIKE_FLOOR_Y, art_margin=18)
+TEST_SPIKE_BED = SpikeBed(3600, 5100, TEST_SPIKE_FLOOR_Y, art_margin=18)
 TEST_SPIKES = (TEST_SPIKE_BED,)
-TEST_RECESSED_GROUND_TILE = 2  # Tile spanning x=2400–3600.
 TEST_FLOOR = (
     (0, 0, TEST_SPIKE_BED.left, GROUND_Y),
     (TEST_SPIKE_BED.left, 0, TEST_SPIKE_BED.right, TEST_SPIKE_FLOOR_Y),
     (TEST_SPIKE_BED.right, 0, WORLD_WIDTH, GROUND_Y),
 )
-TEST_LOW_PASSAGE = (4820, GROUND_Y + 106, 5100, inf)
+TEST_LOW_PASSAGE = (7220, GROUND_Y + 106, 7500, inf)
 # The wider walls grow outward from the two wall-jump faces.
 TEST_PILLARS = (
-    (3140, GROUND_Y, 3300, 620),
-    (3560, GROUND_Y, 3720, 700),
+    (5540, GROUND_Y, 5700, 620),
+    (5960, GROUND_Y, 6120, 700),
 )
-# The step, wall jumps, exit platform, and passage follow the rail area.
 TEST_TERRAIN = (
-    (2920, 200, 3080, 320),
     *TEST_PILLARS,
-    (3780, 460, 4040, 500),
     TEST_CEILING,
     TEST_LOW_PASSAGE,
     *TEST_FLOOR,
@@ -214,7 +222,7 @@ def shade_stone_depth(left, right, surface_y, deep_y):
     pico.SDL_RenderFillRect(pico.renderer, dark_bounds)
 
 
-def draw_stone_strip(image, camera, bounds, *, flip="", tile_overrides=None):
+def draw_stone_strip(image, camera, bounds, *, flip=""):
     left, bottom, right, top = bounds
     tile_width = image.w * (top - bottom) / GROUND_ART_HEIGHT
     first_tile = max(0, int((camera.x - left) // tile_width))
@@ -229,8 +237,7 @@ def draw_stone_strip(image, camera, bounds, *, flip="", tile_overrides=None):
         screen_left = round((tile_left - camera.x) * camera.zoom)
         screen_right = round((tile_right - camera.x) * camera.zoom)
         source_width = round(image.w * (tile_right - tile_left) / tile_width)
-        tile = image if tile_overrides is None else tile_overrides.get(index, image)
-        tile.clip_composite_draw(
+        image.clip_composite_draw(
             0, 0, source_width, GROUND_ART_HEIGHT, 0, flip,
             (screen_left + screen_right) / 2, (screen_bottom + screen_top) / 2,
             screen_right - screen_left, screen_top - screen_bottom,
@@ -243,8 +250,9 @@ def draw_stone_strip(image, camera, bounds, *, flip="", tile_overrides=None):
     )
 
 
-def draw_background_wall(image, camera, ground_screen_y, layout):
-    wall_left, columns, rows = layout
+def draw_background_wall(tiles, camera, ground_screen_y, layout):
+    interior, left_edge, right_edge, corner = tiles
+    wall_left, columns, rows, left_join, right_join, exposed_top = layout
     tile_width = BACKGROUND_WALL_TILE_WIDTH
     view_left = camera.x - wall_left
     first_column = max(0, int(view_left // tile_width))
@@ -257,7 +265,24 @@ def draw_background_wall(image, camera, ground_screen_y, layout):
         for row in range(rows):
             bottom = ground_screen_y + round(row * tile_screen_height)
             top = ground_screen_y + round((row + 1) * tile_screen_height)
-            image.draw_to_origin(left, bottom, right - left, top - bottom)
+            is_left = column == 0 and row >= left_join
+            is_right = column == columns - 1 and row >= right_join
+            width, height = right - left, top - bottom
+            if exposed_top and row == rows - 1:
+                # Away from the corners, use just the unbroken width of the cap.
+                cap_width = corner.w - 20 if is_left or is_right else 1450
+                flip = "h" if is_left or (not is_right and column % 2) else ""
+                corner.clip_composite_draw(
+                    20, 15, cap_width, corner.h - 15, 0, flip,
+                    (left + right) / 2, (bottom + top) / 2, width, height,
+                )
+            elif is_left:
+                # Trim export padding from the sides that meet another tile.
+                left_edge.clip_draw_to_origin(0, 12, 1750, 864, left, bottom, width, height)
+            elif is_right:
+                right_edge.clip_draw_to_origin(20, 15, right_edge.w - 20, 864, left, bottom, width, height)
+            else:
+                interior.draw_to_origin(left, bottom, width, height)
 
 
 def draw_mount_prompt(camera, position, time):
@@ -279,7 +304,7 @@ def draw_mount_prompt(camera, position, time):
 
 def draw_scene(
     player, camera, show_hitboxes=False, *, ground_image=None, background_wall=None, spike_image=None,
-    recessed_ground_image=None, pillar_image=None,
+    pillar_image=None,
     rail_image=None, rail_bend_image=None, carriage_image=None, carriage_position=None,
     rail_relic_image=None, show_mount_prompt=False, crossbow=None, crossbow_relic_image=None,
     show_crossbow_prompt=False, lighting=None, relic_center=None, return_effect=None, frame_start=0.0,
@@ -295,19 +320,18 @@ def draw_scene(
     if background_wall is not None:
         for layout in TEST_BACKGROUND_WALLS:
             draw_background_wall(background_wall, camera, ground_screen_y, layout)
-    if ground_image is not None:
-        tile_overrides = {TEST_RECESSED_GROUND_TILE: recessed_ground_image} if recessed_ground_image else None
-        draw_stone_strip(ground_image, camera, (0, 0, WORLD_WIDTH, GROUND_Y), tile_overrides=tile_overrides)
-    if ground_image is None or show_hitboxes:
-        for left, bottom, right, top in TEST_FLOOR:
-            x1, y1 = map(round, camera.world_to_screen(left, bottom))
-            x2, y2 = map(round, camera.world_to_screen(right, top))
-            if x1 >= SCREEN_WIDTH or x2 <= 0:
-                continue
-            if ground_image is None:
-                pico.draw_rectangle(x1, y1, x2 - 1, y2 - 1, 38, 44, 52, filled=True)
-            if show_hitboxes:
-                pico.draw_rectangle(x1, y1, x2 - 1, y2, 76, 220, 220)
+    for bounds in TEST_FLOOR:
+        left, bottom, right, top = bounds
+        x1, y1 = map(round, camera.world_to_screen(left, bottom))
+        x2, y2 = map(round, camera.world_to_screen(right, top))
+        if x1 >= SCREEN_WIDTH or x2 <= 0:
+            continue
+        if ground_image is None:
+            pico.draw_rectangle(x1, y1, x2 - 1, y2 - 1, 38, 44, 52, filled=True)
+        else:
+            draw_stone_strip(ground_image, camera, bounds)
+        if show_hitboxes:
+            pico.draw_rectangle(x1, y1, x2 - 1, y2, 76, 220, 220)
     for bounds in player.terrain:
         if bounds in TEST_FLOOR:
             continue
@@ -383,6 +407,41 @@ def draw_relic(image, camera, x, y, elapsed):
         screen_x - width / 2, SCREEN_HEIGHT - screen_y - height / 2, width, height,
     )
     pico.SDL_RenderCopyF(pico.renderer, image.texture, None, bounds)
+
+
+def draw_relic_indicator(relic_center):
+    if relic_center is None:
+        return
+    x, y = relic_center
+    if 0 <= x < SCREEN_WIDTH and 0 <= y < SCREEN_HEIGHT:
+        return
+
+    center_x, center_y = SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2
+    dx, dy = x - center_x, y - center_y
+    distance = hypot(dx, dy)
+    unit_x, unit_y = dx / distance, dy / distance
+    vertical_margin = RELIC_ARROW_TOP_MARGIN if unit_y > 0 else RELIC_ARROW_MARGIN
+    # Intersect the direction ray with the inset screen edges.
+    edge_distance = min(
+        (center_x - RELIC_ARROW_MARGIN) / abs(unit_x) if unit_x else inf,
+        (center_y - vertical_margin) / abs(unit_y) if unit_y else inf,
+    )
+    edge_x = center_x + edge_distance * unit_x
+    edge_y = center_y + edge_distance * unit_y
+
+    shape = ((10, 0), (0, 7), (0, 3), (-9, 3), (-9, -3), (0, -3), (0, -7))
+    points = [
+        (edge_x + forward * unit_x - side * unit_y, edge_y + forward * unit_y + side * unit_x)
+        for forward, side in shape
+    ]
+    vertices = (pico.SDL_Vertex * len(points))(*(
+        pico.SDL_Vertex((px, SCREEN_HEIGHT - 1 - py), (128, 231, 255, 255))
+        for px, py in points
+    ))
+    triangles = (c_int * 9)(0, 1, 6, 2, 3, 4, 2, 4, 5)
+    pico.SDL_RenderGeometry(pico.renderer, None, vertices, len(vertices), triangles, len(triangles))
+    for start, end in zip(points, points[1:] + points[:1]):
+        pico.draw_line(*map(round, start), *map(round, end), 11, 32, 45)
 
 
 def set_fullscreen(enabled):
@@ -470,9 +529,10 @@ def main():
         if fullscreen is None:
             return
         ground_image = pico.load_image(str(GROUND_IMAGE))
-        recessed_ground_image = pico.load_image(str(RECESSED_GROUND_IMAGE))
         pillar_image = pico.load_image(str(PILLAR_IMAGE))
-        background_wall = pico.load_image(str(BACKGROUND_WALL_IMAGE))
+        background_wall = tuple(pico.load_image(str(path)) for path in BACKGROUND_WALL_IMAGES)
+        if pico.SDL_SetTextureColorMod(background_wall[0].texture, *BACKGROUND_WALL_INTERIOR_TINT) != 0:
+            raise RuntimeError(pico.SDL_GetError())
         spike_image = pico.load_image(str(SPIKE_IMAGE))
         rail_image = pico.load_image(str(RAIL_IMAGE))
         rail_bend_image = pico.load_image(str(RAIL_BEND_IMAGE))
@@ -484,12 +544,14 @@ def main():
             TEST_CROSSBOW_X, GROUND_Y,
             pico.load_image(str(CROSSBOW_BASE_IMAGE)), pico.load_image(str(CROSSBOW_BODY_IMAGE)),
         )
+        initial_crossbow.angle = TEST_CROSSBOW_ANGLE
         relic_image = pico.load_image(str(RELIC_IMAGE))
         lighting = Lighting(SCREEN_WIDTH, SCREEN_HEIGHT, RELIC_GLOW_IMAGE)
         carriage = copy(initial_carriage)
         crossbow = copy(initial_crossbow)
         relic_anchor = None
         return_effect = ReturnEffect()
+        return_marks = []
         player = Player(
             TEST_SPAWN[0], TEST_SPIKE_FLOOR_Y, WORLD_WIDTH, terrain=TEST_TERRAIN, spawn_y=TEST_SPAWN[1],
         )
@@ -521,6 +583,7 @@ def main():
                 crossbow = copy(initial_crossbow)
                 relic_anchor = None
                 return_effect = ReturnEffect()
+                return_marks.clear()
                 camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
                 camera.follow(player.x)
                 pressed_keys.clear()
@@ -537,6 +600,7 @@ def main():
             relic_elsewhere = relic_anchor is not None or crossbow.flight is not None
             carrying_relic = not relic_elsewhere and not carriage.relic_mounted
             use_relic = pico.SDLK_e in pressed_keys
+            destination = None
             if crossbow.aiming:
                 if use_relic:
                     crossbow.aiming = False
@@ -569,13 +633,22 @@ def main():
                         destination = crossbow.flight.return_pose(floor_y)
                     else:
                         destination = (relic_anchor.x, relic_anchor.feet_y, relic_anchor.crouch_time)
-                    departure = copy(player)
-                    if player.teleport_to(*destination):
+            elif pico.SDLK_q in pressed_keys and carrying_relic and return_marks:
+                mark = return_marks[-1]
+                if mark.can_return(frame_start):
+                    destination = mark.pose
+            if destination is not None:
+                departure = copy(player)
+                if player.teleport_to(*destination):
+                    if return_marks:
+                        return_marks[-1].finish(frame_start)
+                    if use_relic:
                         relic_anchor = None
                         carriage.relic_mounted = False
                         crossbow.flight = None
-                        teleported = True
-                        return_effect.start(departure, player, camera, frame_start)
+                        return_marks.append(ReturnMark(departure, frame_start))
+                    teleported = True
+                    return_effect.start(departure, player, camera, frame_start)
             if was_aiming or crossbow.aiming:
                 direction, running, crouching = 0, False, False
                 jump_held = False
@@ -603,7 +676,8 @@ def main():
             if health.recovering(frame_start):
                 camera.update(player.x, delta_time)
             elif crossbow.aiming:
-                camera.update(player.x, delta_time, view_target=crossbow.x, view_zoom=AIM_CAMERA_ZOOM)
+                focus = crossbow.x + crossbow.facing * AIM_CAMERA_LOOKAHEAD
+                camera.update(player.x, delta_time, view_target=focus, view_zoom=AIM_CAMERA_ZOOM)
             elif flight is not None and not flight.landed:
                 focus = flight.x + flight.vx * FLIGHT_CAMERA_LOOKAHEAD
                 camera.update(player.x, delta_time, view_target=focus, view_zoom=FLIGHT_CAMERA_ZOOM)
@@ -627,7 +701,7 @@ def main():
                 relic_center = relic_screen_center(camera, *relic_position, relic_elapsed)
             draw_scene(
                 player, camera, show_hitboxes, ground_image=ground_image, spike_image=spike_image,
-                recessed_ground_image=recessed_ground_image, pillar_image=pillar_image,
+                pillar_image=pillar_image,
                 background_wall=background_wall, rail_image=rail_image, rail_bend_image=rail_bend_image,
                 carriage_image=carriage_image,
                 carriage_position=carriage_position,
@@ -640,9 +714,18 @@ def main():
                 lighting=lighting, relic_center=relic_center,
                 return_effect=return_effect, frame_start=frame_start, health=health,
             )
+            return_marks = [mark for mark in return_marks if mark.visible(frame_start)]
+            if return_marks:
+                mark_target = relic_center
+                if mark_target is None:
+                    _, bottom, _, top = player.get_hitbox()
+                    mark_target = camera.world_to_screen(player.x, (bottom + top) / 2)
+                for mark in return_marks:
+                    mark.draw(camera, mark_target, frame_start)
             if relic_anchor is not None:
                 draw_relic(relic_image, camera, *relic_position, relic_elapsed)
             health.draw_hud(SCREEN_HEIGHT, frame_start)
+            draw_relic_indicator(relic_center)
             health.draw_blackout(SCREEN_WIDTH, SCREEN_HEIGHT, frame_start)
             pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
             pico.update_canvas()

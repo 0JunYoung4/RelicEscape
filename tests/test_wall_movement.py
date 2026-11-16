@@ -10,7 +10,11 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 
 from pico2d import pico2d as pico
 
-from main import CAMERA_ZOOM, GROUND_Y, SCREEN_WIDTH, TEST_TERRAIN, WORLD_WIDTH, Camera, draw_scene
+from launcher import Crossbow
+from main import (
+    CAMERA_ZOOM, GROUND_Y, SCREEN_WIDTH, TEST_CROSSBOW_ANGLE, TEST_CROSSBOW_X,
+    TEST_PILLARS, TEST_SPIKE_BED, TEST_TERRAIN, WORLD_WIDTH, Camera, draw_scene,
+)
 from player import CROUCH_DURATION, WALL_JUMP_PUSH_TIME, WALL_SLIDE_SPEED, Player
 
 
@@ -230,10 +234,21 @@ class WallMovementTests(unittest.TestCase):
         self.assertEqual(self.player.crouch_time, 0)
         self.assertLess(self.player.y, 340)
 
-    def test_test_map_first_wall_can_be_climbed_with_repeated_wall_jumps(self):
+    def test_crossbow_clears_spike_bed_and_reaches_climbable_wall(self):
         self.player.terrain = TEST_TERRAIN
-        wall_left, _, _, wall_top = TEST_TERRAIN[1]
-        self.player.x = wall_left - 20
+        self.player.ground_y = TEST_SPIKE_BED.y
+        wall_left, _, _, wall_top = TEST_PILLARS[0]
+        crossbow = Crossbow(TEST_CROSSBOW_X, GROUND_Y, None, None)
+        crossbow.angle = TEST_CROSSBOW_ANGLE
+        crossbow.fire()
+        flight = crossbow.flight
+        flight.update(3, TEST_TERRAIN, self.player.ground_y, WORLD_WIDTH)
+        self.assertTrue(flight.landed)
+        self.assertTrue(self.player.teleport_to(*flight.return_pose(self.player.ground_y)))
+        self.assertGreater(self.player.get_hitbox()[0], TEST_SPIKE_BED.right)
+        self.assertEqual(self.player.get_hitbox()[2], wall_left)
+        self.assertTrue(self.player.grounded)
+
         self.player.update(1, False, 1 / 60, jump_pressed=True)
         wall_jumps = 0
         for _ in range(600):

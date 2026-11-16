@@ -2,6 +2,7 @@
 
 from ctypes import byref
 from dataclasses import dataclass
+from math import ceil
 
 from pico2d import pico2d as pico
 
@@ -10,6 +11,7 @@ MAX_HEALTH = 100
 SPIKE_DAMAGE = 25
 SPIKE_HEIGHT = 44
 SPIKE_ROOT_DEPTH = 6
+SPIKE_TILE_WIDTH = 196
 SAFE_CLEARANCE = 108
 HIT_FLASH_DURATION = 0.12
 FADE_OUT = 0.18
@@ -54,9 +56,15 @@ class SpikeBed:
         if art_right < camera.x or art_left > camera.x + camera.view_width:
             return
         if image is not None:
-            left, root = map(round, camera.world_to_screen(art_left, self.y - SPIKE_ROOT_DEPTH))
-            right, tip = map(round, camera.world_to_screen(art_right, self.y + SPIKE_HEIGHT))
-            image.draw_to_origin(left, root, right - left, tip - root)
+            left, root = camera.world_to_screen(art_left, self.y - SPIKE_ROOT_DEPTH)
+            right, tip = camera.world_to_screen(art_right, self.y + SPIKE_HEIGHT)
+            tiles = ceil((art_right - art_left) / SPIKE_TILE_WIDTH)
+            width = (right - left) / tiles
+            root, tip = round(root), round(tip)
+            for index in range(tiles):
+                x1 = round(left + index * width)
+                x2 = round(left + (index + 1) * width)
+                image.draw_to_origin(x1, root, x2 - x1, tip - root)
         if show_hitboxes:
             left, base = map(round, camera.world_to_screen(self.left, self.y))
             right, tip = map(round, camera.world_to_screen(self.right, self.y + SPIKE_HEIGHT))

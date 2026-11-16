@@ -2,7 +2,7 @@
 
 import os
 import unittest
-from itertools import count
+from itertools import chain, count
 from unittest.mock import patch
 
 os.environ["SDL_VIDEODRIVER"] = "dummy"
@@ -22,6 +22,63 @@ def keydown(key):
 
 
 class RelicTests(unittest.TestCase):
+    def test_return_mark_can_be_used_once_and_absorbs_into_the_current_relic(self):
+        e, q = pico.SDLK_e, pico.SDLK_q
+        commands = (
+            (0.05, e, 0), (0.10, None, 1), (0.15, e, 0),
+            (0.20, q, 0), (0.25, None, 1), (0.30, q, 0),
+            (1.15, e, 0), (1.20, None, 1), (1.25, e, 0),
+            (1.30, None, 1), (1.35, e, 0), (1.40, None, 1), (1.45, q, 0),
+            (4.45, None, 0), (5.15, None, 0), (5.20, e, 0),
+            (8.40, None, 1), (8.45, q, 0), (9.10, None, 0),
+        )
+        clock = chain((0,), chain.from_iterable((time, time) for time, _, _ in commands), (10,))
+        inputs = iter((*commands, (10, pico.SDLK_ESCAPE, 0)))
+        positions, marks = {}, {}
+        direction = 0
+        draw_mark = main.ReturnMark.draw
+
+        def events():
+            nonlocal direction
+            _, key, direction = next(inputs)
+            return [] if key is None else [keydown(key)]
+
+        def record_scene(player, camera, *args, **kwargs):
+            _, bottom, _, top = player.get_hitbox()
+            positions[kwargs["frame_start"]] = (
+                player.x, kwargs["relic_center"], camera.world_to_screen(player.x, (bottom + top) / 2),
+            )
+
+        def record_mark(mark, camera, target, now):
+            marks[now] = mark.pose, mark.can_return(now), target
+            draw_mark(mark, camera, target, now)
+
+        with patch.object(main, "TEST_SPAWN", (700, main.GROUND_Y, 0.0)), \
+                patch.object(main, "run_title", return_value=False), \
+                patch.object(main, "perf_counter", side_effect=clock), \
+                patch.object(main, "read_movement", side_effect=lambda: (direction, False, False)), \
+                patch.object(pico, "get_events", side_effect=events), \
+                patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
+                patch.object(main, "sleep"), patch.object(main, "draw_scene", new=record_scene), \
+                patch.object(main.ReturnMark, "draw", new=record_mark):
+            main.main()
+
+        self.assertTrue(marks[0.15][1])
+        self.assertEqual(positions[0.20][0], positions[0.10][0])
+        self.assertFalse(marks[0.20][1])
+        self.assertEqual(marks[0.20][2], positions[0.20][2])
+        self.assertEqual(positions[0.30][0], positions[0.25][0])
+        self.assertEqual(positions[1.45][0], positions[1.40][0])
+        self.assertTrue(marks[1.45][1])
+        self.assertFalse(marks[4.45][1])
+        self.assertIsNotNone(positions[4.45][1])
+        self.assertEqual(marks[4.45][2], positions[4.45][1])
+        self.assertNotIn(5.15, marks)
+        self.assertEqual(positions[8.45][0], positions[8.40][0])
+        self.assertFalse(marks[8.40][1])
+        self.assertEqual(marks[8.40][2], positions[8.40][2])
+        self.assertNotIn(9.10, marks)
+
     def test_ground_and_air_return_to_the_position_at_keydown(self):
         start_x = 700
         events = [

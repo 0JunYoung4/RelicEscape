@@ -1,4 +1,4 @@
-"""Scatter the player's sprite into blue pixels and gather it at the relic."""
+"""Draw relic teleportation and the mark left at its departure point."""
 
 from ctypes import byref, c_uint32
 from math import pi, sin
@@ -17,6 +17,84 @@ CAPTURE_HEIGHT = 104
 CAPTURE_FEET_X = 64
 CAPTURE_FEET_Y = 76
 FRAGMENT_SIZE = 2
+RETURN_MARK_DURATION = 3.0
+RETURN_MARK_ABSORB_DURATION = 0.85
+MARK_PIXEL_SIZE = 4.5
+MARK_PATTERN = (
+    ".....######.....",
+    "...##......##...",
+    "..#..........#..",
+    ".#.....++.....#.",
+    ".#....+..+....#.",
+    ".#...+....+...#.",
+    ".#..+..##..+..#.",
+    ".#...+....+...#.",
+    ".#....+..+....#.",
+    ".#.....++.....#.",
+    "..#..........#..",
+    "...##......##...",
+    ".....######.....",
+)
+MARK_COLORS = {"#": (69, 178, 228), "+": (146, 235, 252)}
+
+
+def make_mark_pixels():
+    rng = Random(81)
+    for row, line in enumerate(MARK_PATTERN):
+        for column, symbol in enumerate(line):
+            if symbol in MARK_COLORS:
+                yield (
+                    column - (len(line) - 1) / 2, (len(MARK_PATTERN) - 1) / 2 - row,
+                    MARK_COLORS[symbol], rng.uniform(0, 0.27),
+                    rng.uniform(-62, 62), rng.uniform(-34, 68),
+                )
+
+
+MARK_PIXELS = tuple(make_mark_pixels())
+
+
+class ReturnMark:
+    def __init__(self, departure, now):
+        self.pose = departure.x, departure.y, departure.crouch_time
+        _, bottom, _, top = departure.get_hitbox()
+        self.position = departure.x, (bottom + top) / 2
+        self.created_at = now
+        self.absorbs_at = now + RETURN_MARK_DURATION
+
+    def can_return(self, now):
+        return now < self.absorbs_at
+
+    def finish(self, now):
+        self.absorbs_at = min(now, self.absorbs_at)
+
+    def visible(self, now):
+        return now < self.absorbs_at + RETURN_MARK_ABSORB_DURATION
+
+    def draw(self, camera, target, now):
+        center_x, center_y = camera.world_to_screen(*self.position)
+        target_x, target_y = target
+        pixel_size = MARK_PIXEL_SIZE * camera.zoom
+        size = max(1, round(pixel_size))
+        absorption = max(0.0, (now - self.absorbs_at) / RETURN_MARK_ABSORB_DURATION)
+        # The mark appears quickly and pulses softly until its pixels are released.
+        age = now - self.created_at
+        pulse = (0.88 + 0.12 * sin(age * 6)) * min(1.0, 0.4 + age / 0.15)
+        previous_blend_mode = pico.SDL_BlendMode()
+        pico.SDL_GetRenderDrawBlendMode(pico.renderer, byref(previous_blend_mode))
+        pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)
+        try:
+            for column, row, color, delay, drift_x, drift_y in MARK_PIXELS:
+                flight = max(0.0, (absorption - delay) / (1 - delay))
+                travel = flight ** 2
+                scatter = sin(pi * flight) * camera.zoom
+                origin_x = center_x + column * pixel_size
+                origin_y = center_y + row * pixel_size
+                x = round(origin_x + (target_x - origin_x) * travel + drift_x * scatter)
+                y = round(origin_y + (target_y - origin_y) * travel + drift_y * scatter)
+                alpha = round(225 * pulse * (1 - flight ** 3))
+                pico.draw_rectangle(x, y, x + size - 1, y + size - 1, *color, alpha, filled=True)
+        finally:
+            pico.SDL_SetRenderDrawBlendMode(pico.renderer, previous_blend_mode)
 
 
 class Fragment(NamedTuple):
