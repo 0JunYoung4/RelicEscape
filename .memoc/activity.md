@@ -2,8 +2,8 @@
 memoc: true
 type: core
 scope: project-memory
-created: 2026-11-16T07:56:34
-updated: 2026-11-16T07:56:34
+created: 2026-11-16T08:08:59
+updated: 2026-11-16T08:08:59
 status: active
 tags:
   - memoc
@@ -13,10 +13,11 @@ tags:
 
 Generated shared activity index for memoc work logs.
 
-Last generated: 2026-11-16T07:56:34
+Last generated: 2026-11-16T08:08:59
 
 ## Recent Work
 
+- [레일과 석궁 상호작용을 E로 통합](worklog/0junyoung4/2026-11/20261116T0808-e.md) — 0junyoung4 active.
 - [촬영용 테스트룸 체력·가시·복귀](worklog/0junyoung4/2026-11/20261116T0755-work.md) — 0junyoung4 active.
 - [동굴 타이틀 연결과 Enter 게임 시작](worklog/0junyoung4/2026-11/20261115T0808-enter.md) — 0junyoung4 active.
 - [석궁 방향키 조준과 X 발사](worklog/0junyoung4/2026-11/20261115T0550-x.md) — 0junyoung4 active.
@@ -36,7 +37,6 @@ Last generated: 2026-11-16T07:56:34
 - [배경 석벽을 작은 반복 타일로 전환](worklog/0junyoung4/2026-11/20261112T0606-work.md) — 0junyoung4 active.
 - [테스트 맵에 고대 유적 배경 벽 배치](worklog/0junyoung4/2026-11/20261112T0600-work.md) — 0junyoung4 active.
 - [전방 베기 5프레임 시안](worklog/0junyoung4/2026-11/20261111T1703-create-forward-slash-draft.md) — 0junyoung4 active.
-- [높은 낙하 착지 스프라이트 제작](worklog/0junyoung4/2026-11/20261111T1647-create-hard-landing-sprite.md) — 0junyoung4 active.
 
 ## Related
 

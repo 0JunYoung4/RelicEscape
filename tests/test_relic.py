@@ -23,6 +23,7 @@ def keydown(key):
 
 class RelicTests(unittest.TestCase):
     def test_ground_and_air_return_to_the_position_at_keydown(self):
+        start_x = 700
         events = [
             [keydown(pico.SDLK_e)], [], [keydown(pico.SDLK_e)],
             [keydown(pico.SDLK_SPACE)], [keydown(pico.SDLK_e)], [],
@@ -53,7 +54,8 @@ class RelicTests(unittest.TestCase):
             draw_relic(image, camera, x, y, elapsed)
             self.assertFalse(pico.SDL_GetError())
 
-        with patch.object(main, "run_title", return_value=True), \
+        with patch.object(main, "TEST_SPAWN", (start_x, main.GROUND_Y, 0.0)), \
+                patch.object(main, "run_title", return_value=True), \
                 patch.object(pico, "get_events", side_effect=events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(main, "read_movement", return_value=(1, False, False)), \
@@ -63,8 +65,8 @@ class RelicTests(unittest.TestCase):
                 patch.object(main, "draw_relic", new=record_relic):
             main.main()
 
-        self.assertGreater(player_frames[0][0], 400)
-        self.assertEqual(player_frames[2], (400, main.GROUND_Y, 0.0))
+        self.assertGreater(player_frames[0][0], start_x)
+        self.assertEqual(player_frames[2], (start_x, main.GROUND_Y, 0.0))
         air_x, air_y, _ = player_frames[3]
         self.assertGreater(air_y, main.GROUND_Y)
         self.assertEqual(player_frames[6], (air_x, air_y, 0.0))
@@ -75,7 +77,7 @@ class RelicTests(unittest.TestCase):
         self.assertEqual(
             [(index, x, y) for index, x, y, _ in relic_frames],
             [
-                (0, 400, ground_center_y), (1, 400, ground_center_y),
+                (0, start_x, ground_center_y), (1, start_x, ground_center_y),
                 (4, air_x, air_center_y), (5, air_x, air_center_y),
             ],
         )
@@ -88,18 +90,18 @@ class RelicTests(unittest.TestCase):
         left, rail_y = main.TEST_RAIL_PATH[0].start
         ground = main.GROUND_Y
         return_frame = 73
-        e, f, x = pico.SDLK_e, pico.SDLK_f, pico.SDLK_x
+        e, x = pico.SDLK_e, pico.SDLK_x
         commands = iter((
-            (None, ()),
-            (None, (f,)),
+            (None, (pico.SDLK_f,)),
+            (None, (e,)),
             (None, (x,)),
             *((None, ()) for _ in range(return_frame - 3)),
             (None, (e,)),
-            (left, (f,)),
+            (left, ()),
             (None, (e,)),
-            ("carriage", (f,)),
+            ("carriage", ()),
             (None, (e,)),
-            ("carriage", (f,)),
+            ("carriage", (e,)),
             (None, (e,)),
             (None, (pico.SDLK_ESCAPE,)),
         ))

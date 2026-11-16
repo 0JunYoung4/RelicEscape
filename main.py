@@ -256,6 +256,7 @@ def draw_mount_prompt(camera, position, time):
     pico.draw_rectangle(x - 3, y - 4, x - 2, y + 4, *pale_blue, filled=True)
     pico.draw_rectangle(x - 1, y + 3, x + 3, y + 4, *pale_blue, filled=True)
     pico.draw_rectangle(x - 1, y, x + 2, y + 1, *pale_blue, filled=True)
+    pico.draw_rectangle(x - 1, y - 4, x + 3, y - 3, *pale_blue, filled=True)
 
 
 def draw_scene(
@@ -499,9 +500,9 @@ def main():
             was_aiming = crossbow.aiming
             relic_elsewhere = relic_anchor is not None or crossbow.flight is not None
             carrying_relic = not relic_elsewhere and not carriage.relic_mounted
-            interact = pico.SDLK_f in pressed_keys
+            use_relic = pico.SDLK_e in pressed_keys
             if crossbow.aiming:
-                if interact:
+                if use_relic:
                     crossbow.aiming = False
                 elif has_focus:
                     aim_direction = keys[pico.SDL_SCANCODE_RIGHT] - keys[pico.SDL_SCANCODE_LEFT]
@@ -509,11 +510,11 @@ def main():
                     crossbow.adjust_aim(aim_direction, aim_elevation, delta_time)
                     if pico.SDLK_x in pressed_keys:
                         crossbow.fire()
-            elif interact and carrying_relic and crossbow.can_aim(player):
+            elif use_relic and carrying_relic and crossbow.can_aim(player):
                 crossbow.aiming = True
-            elif interact and carriage.can_mount(player, relic_elsewhere):
+            elif use_relic and carriage.can_mount(player, relic_elsewhere):
                 carriage.relic_mounted = True
-            elif pico.SDLK_e in pressed_keys:
+            elif use_relic:
                 if carrying_relic:
                     _, bottom, _, top = player.get_hitbox()
                     relic_anchor = RelicAnchor(
@@ -570,6 +571,10 @@ def main():
             carriage_position = carriage.position
             crossbow_relic_position = crossbow.relic_position
             relic_elsewhere = relic_anchor is not None or crossbow_relic_position is not None
+            can_interact = has_focus and not health.recovering(frame_start)
+            show_crossbow_prompt = (
+                can_interact and not relic_elsewhere and not carriage.relic_mounted and crossbow.can_aim(player)
+            )
             relic_center = None
             if carriage.relic_mounted:
                 relic_center = camera.world_to_screen(*carriage_position)
@@ -585,11 +590,11 @@ def main():
                 carriage_image=carriage_image,
                 carriage_position=carriage_position,
                 rail_relic_image=relic_image if carriage.relic_mounted else None,
-                show_mount_prompt=has_focus and carriage.can_mount(player, relic_elsewhere),
-                crossbow=crossbow, crossbow_relic_image=relic_image if crossbow_relic_position is not None else None,
-                show_crossbow_prompt=(
-                    has_focus and not relic_elsewhere and not carriage.relic_mounted and crossbow.can_aim(player)
+                show_mount_prompt=(
+                    can_interact and not show_crossbow_prompt and carriage.can_mount(player, relic_elsewhere)
                 ),
+                crossbow=crossbow, crossbow_relic_image=relic_image if crossbow_relic_position is not None else None,
+                show_crossbow_prompt=show_crossbow_prompt,
                 lighting=lighting, relic_center=relic_center,
                 return_effect=return_effect, frame_start=frame_start, health=health,
             )

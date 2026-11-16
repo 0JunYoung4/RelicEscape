@@ -23,15 +23,15 @@ def keydown(key):
 
 
 class LauncherTests(unittest.TestCase):
-    def test_f_arrow_aim_x_and_midflight_return_through_game_loop(self):
-        f, e = keydown(pico.SDLK_f), keydown(pico.SDLK_e)
+    def test_e_arrow_aim_x_and_midflight_return_through_game_loop(self):
+        e = keydown(pico.SDLK_e)
         inputs = iter((
-            ([f], ()),
+            ([e], ()),
             *(([], (pico.SDL_SCANCODE_LEFT, pico.SDL_SCANCODE_UP)) for _ in range(30)),
             ([], (pico.SDL_SCANCODE_DOWN,)),
             ([], ()),
-            ([f], ()),
-            ([f], ()),
+            ([e], ()),
+            ([e], ()),
             ([keydown(pico.SDLK_x)], (pico.SDL_SCANCODE_RIGHT,)),
             *(([], ()) for _ in range(8)),
             ([e], ()),
