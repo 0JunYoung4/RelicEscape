@@ -282,6 +282,15 @@ class Player:
             self.animation_time = TAKEOFF_FRAME_DURATION
         return True
 
+    def recover_at(self, x, y, crouch_time):
+        if not self.teleport_to(x, y, crouch_time):
+            return False
+        self.attack_time = None
+        self.buffered_attack_down = None
+        self.slash = None
+        self.look_down_held = False
+        return True
+
     def _has_support(self):
         left, bottom, right, _ = self.get_hitbox()
         if abs(bottom - self.ground_y) <= CONTACT_EPSILON:

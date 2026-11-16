@@ -2,8 +2,8 @@
 memoc: true
 type: actor
 scope: project-memory
-created: 2026-11-05T03:23:05
-updated: 2026-11-05T03:23:05
+created: 2026-11-16T07:56:34
+updated: 2026-11-16T07:56:34
 status: active
 tags:
   - memoc
@@ -11,7 +11,7 @@ tags:
 ---
 # Actors
 
-People or agents that update memoc in this shared repo.
+Generated actor index for this shared repo.
 
 ## Actor Detection
 
@@ -25,4 +25,4 @@ People or agents that update memoc in this shared repo.
 
 ## Actors
 
-_None yet. Use `memoc actor set <name>` or `memoc work "<title>"`._
+- [0junyoung4](0junyoung4.md)

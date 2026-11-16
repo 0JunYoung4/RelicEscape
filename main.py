@@ -9,6 +9,7 @@ from time import perf_counter, sleep
 from PIL import Image
 from pico2d import pico2d as pico
 
+from health import Health, SpikeBed
 from launcher import Crossbow
 from lighting import Lighting
 from player import ASSET_ROOT, STANDING_HITBOX_HEIGHT, Player
@@ -73,6 +74,9 @@ RELIC_HOVER_FPS = 20
 CROSSBOW_BASE_IMAGE = ASSET_ROOT / "sprites/launcher/crossbow-base-v1.png"
 CROSSBOW_BODY_IMAGE = ASSET_ROOT / "sprites/launcher/crossbow-body-v1.png"
 TEST_CROSSBOW_X = 215
+TEST_SPAWN = (400, GROUND_Y, 0.0)
+TEST_SPIKES = (SpikeBed(2756, 2876, GROUND_Y),)
+TEST_LOW_PASSAGE = (4820, GROUND_Y + 106, 5100, inf)
 # The step, wall jumps, exit platform, and passage follow the rail area.
 TEST_TERRAIN = (
     (2920, 200, 3080, 320),
@@ -80,6 +84,7 @@ TEST_TERRAIN = (
     (3560, 200, 3640, 700),
     (3780, 460, 4040, 500),
     TEST_CEILING,
+    TEST_LOW_PASSAGE,
 )
 
 
@@ -258,6 +263,7 @@ def draw_scene(
     rail_image=None, rail_bend_image=None, carriage_image=None, carriage_position=None,
     rail_relic_image=None, show_mount_prompt=False, crossbow=None, crossbow_relic_image=None,
     show_crossbow_prompt=False, lighting=None, relic_center=None, return_effect=None, frame_start=0.0,
+    health=None,
 ):
     # Clear the full output, including letterbox bars on non-16:9 monitors.
     pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
@@ -284,7 +290,7 @@ def draw_scene(
         if y1 >= SCREEN_HEIGHT:
             continue
         x2, y2 = camera.world_to_screen(right, top)
-        if bounds == TEST_CEILING:
+        if top == inf:
             y2 = SCREEN_HEIGHT - 1
             pico.draw_rectangle(round(x1), round(y1), round(x2) - 1, y2, 0, 0, 0, filled=True)
             if ground_image is not None:
@@ -294,6 +300,8 @@ def draw_scene(
             pico.draw_line(x1, y2, x2, y2, 124, 157, 164)
         if show_hitboxes:
             pico.draw_rectangle(x1, y1, x2, y2, 76, 220, 220)
+    for spikes in TEST_SPIKES:
+        spikes.draw(camera, SCREEN_HEIGHT, show_hitboxes)
     if lighting is not None:
         lighting.apply(relic_center)
     if rail_image is not None and rail_bend_image is not None:
@@ -316,6 +324,8 @@ def draw_scene(
             draw_relic(crossbow_relic_image, camera, *crossbow.relic_position, None)
     if return_effect is None or not return_effect.draw(player, camera, frame_start, lighting):
         player.draw(camera)
+    if health is not None:
+        health.draw_hit(camera, frame_start)
     if show_hitboxes:
         player.draw_hitbox(camera)
     if show_mount_prompt and carriage_position is not None:
@@ -432,18 +442,21 @@ def main():
         rail_image = pico.load_image(str(RAIL_IMAGE))
         rail_bend_image = pico.load_image(str(RAIL_BEND_IMAGE))
         carriage_image = pico.load_image(str(RAIL_CARRIAGE_IMAGE))
-        carriage = RailCarriage(
+        initial_carriage = RailCarriage(
             TEST_RAIL_PATH, carriage_image.w * RAIL_ART_SCALE, carriage_image.h * RAIL_ART_SCALE,
         )
-        crossbow = Crossbow(
+        initial_crossbow = Crossbow(
             TEST_CROSSBOW_X, GROUND_Y,
             pico.load_image(str(CROSSBOW_BASE_IMAGE)), pico.load_image(str(CROSSBOW_BODY_IMAGE)),
         )
         relic_image = pico.load_image(str(RELIC_IMAGE))
         lighting = Lighting(SCREEN_WIDTH, SCREEN_HEIGHT, RELIC_GLOW_IMAGE)
+        carriage = copy(initial_carriage)
+        crossbow = copy(initial_crossbow)
         relic_anchor = None
         return_effect = ReturnEffect()
-        player = Player(400, GROUND_Y, WORLD_WIDTH, terrain=TEST_TERRAIN)
+        player = Player(TEST_SPAWN[0], GROUND_Y, WORLD_WIDTH, terrain=TEST_TERRAIN)
+        health = Health(TEST_SPAWN)
         camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
         camera.follow(player.x)
         show_hitboxes = False
@@ -462,12 +475,25 @@ def main():
             show_hitboxes = update_hitbox_visibility(events, show_hitboxes)
             direction, running, crouching = read_movement()
             pressed_keys = {event.key for event in events if event.type == pico.SDL_KEYDOWN}
+            manual_restart = pico.SDLK_r in pressed_keys
+            if manual_restart or health.ready_to_restart(frame_start):
+                player.recover_at(*TEST_SPAWN)
+                player.facing = 1
+                health = Health(TEST_SPAWN, returned_at=None if manual_restart else frame_start)
+                carriage = copy(initial_carriage)
+                crossbow = copy(initial_crossbow)
+                relic_anchor = None
+                return_effect = ReturnEffect()
+                camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
+                camera.follow(player.x)
+                pressed_keys.clear()
+                direction, running, crouching = 0, False, False
             jump_held = False
             has_focus = bool(pico.SDL_GetKeyboardFocus())
             if has_focus:
                 keys = pico.SDL_GetKeyboardState(None)
                 jump_held = bool(keys[pico.SDL_SCANCODE_SPACE])
-            else:
+            if not has_focus or health.recovering(frame_start):
                 pressed_keys.clear()
             teleported = False
             was_aiming = crossbow.aiming
@@ -512,7 +538,7 @@ def main():
                 direction, running, crouching = 0, False, False
                 jump_held = False
                 pressed_keys.clear()
-            if not teleported:
+            if not teleported and not health.recovering(frame_start):
                 player.update(
                     direction, running, delta_time,
                     jump_pressed=pico.SDLK_SPACE in pressed_keys,
@@ -520,12 +546,21 @@ def main():
                     crouch_held=crouching,
                     attack_pressed=pico.SDLK_x in pressed_keys,
                 )
+            if health.check_spikes(player, TEST_SPIKES, frame_start):
+                crossbow.aiming = False
+                return_effect = ReturnEffect()
+            elif not teleported and not health.recovering(frame_start):
                 carriage.check_attack(player)
+            if health.return_to_safety(player, frame_start):
+                camera.zoom = camera.normal_zoom
+                camera.transitioning = False
             carriage.move(delta_time)
             flight = crossbow.flight
             if flight is not None:
                 flight.update(delta_time, player.terrain, GROUND_Y, WORLD_WIDTH)
-            if crossbow.aiming:
+            if health.recovering(frame_start):
+                camera.update(player.x, delta_time)
+            elif crossbow.aiming:
                 camera.update(player.x, delta_time, view_target=crossbow.x, view_zoom=AIM_CAMERA_ZOOM)
             elif flight is not None and not flight.landed:
                 focus = flight.x + flight.vx * FLIGHT_CAMERA_LOOKAHEAD
@@ -556,10 +591,12 @@ def main():
                     has_focus and not relic_elsewhere and not carriage.relic_mounted and crossbow.can_aim(player)
                 ),
                 lighting=lighting, relic_center=relic_center,
-                return_effect=return_effect, frame_start=frame_start,
+                return_effect=return_effect, frame_start=frame_start, health=health,
             )
             if relic_anchor is not None:
                 draw_relic(relic_image, camera, *relic_position, relic_elapsed)
+            health.draw_hud(SCREEN_HEIGHT, frame_start)
+            health.draw_blackout(SCREEN_WIDTH, SCREEN_HEIGHT, frame_start)
             pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
             pico.update_canvas()
             sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
