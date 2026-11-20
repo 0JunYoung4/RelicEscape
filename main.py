@@ -1,4 +1,4 @@
-"""Run the first RelicEscape movement prototype."""
+"""Run the opening cave or the original movement and device test room."""
 
 from copy import copy
 from ctypes import byref, c_int
@@ -9,6 +9,8 @@ from time import perf_counter, sleep
 from PIL import Image
 from pico2d import pico2d as pico
 
+import opening_cave
+from opening_cutscene import SigilApproach
 from health import Health, SpikeBed
 from launcher import FLIGHT_RADIUS, Crossbow
 from lighting import Lighting
@@ -27,7 +29,9 @@ TITLE_PROMPT_Y = 52
 TITLE_BLINK_PERIOD = 2.6
 GROUND_Y = 200
 WORLD_WIDTH = 9000
-CAMERA_ZOOM = 1 / 3
+CAMERA_ZOOM = 1 / 3  # Wide view for the relic/device test room.
+EXPLORATION_CAMERA_ZOOM = 0.5
+CAVE_FLOOR_SCREEN_Y = 130
 AIM_CAMERA_ZOOM = 0.26
 AIM_CAMERA_LOOKAHEAD = 650
 FLIGHT_CAMERA_ZOOM = 0.30
@@ -124,12 +128,13 @@ class RelicAnchor:
 
 
 class Camera:
-    def __init__(self, screen_width, world_width, zoom):
+    def __init__(self, screen_width, world_width, zoom=EXPLORATION_CAMERA_ZOOM, *, y=0.0):
         self.screen_width = screen_width
         self.normal_zoom = zoom
         self.zoom = zoom
         self.world_width = world_width
         self.x = 0.0
+        self.y = y
         self.transitioning = False
 
     @property
@@ -159,7 +164,7 @@ class Camera:
         self.transitioning = view_target is not None or self.zoom != target_zoom or self.x != target_x
 
     def world_to_screen(self, x, y):
-        return (x - self.x) * self.zoom, y * self.zoom
+        return (x - self.x) * self.zoom, (y - self.y) * self.zoom
 
 
 def read_movement():
@@ -725,7 +730,74 @@ def run_game(fullscreen):
         sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
 
 
-def main():
+def run_opening_cave(fullscreen):
+    cave = opening_cave.OpeningCave(SCREEN_WIDTH, SCREEN_HEIGHT)
+    approach = SigilApproach()
+    player = Player(*opening_cave.SPAWN[:2], opening_cave.WORLD_WIDTH, terrain=opening_cave.TERRAIN)
+    # Keep the floor low in the frame when zooming in, rather than magnifying the underground rock.
+    camera = Camera(
+        SCREEN_WIDTH, opening_cave.WORLD_WIDTH,
+        y=opening_cave.GROUND_Y - CAVE_FLOOR_SCREEN_Y / EXPLORATION_CAMERA_ZOOM,
+    )
+    health = Health(opening_cave.SPAWN)
+    show_hitboxes = False
+    previous_time = perf_counter()
+    while True:
+        frame_start = perf_counter()
+        delta_time = min(frame_start - previous_time, 0.05)
+        previous_time = frame_start
+        events = pico.get_events()
+        if quit_requested(events):
+            return None
+        pressed_keys = {event.key for event in events if event.type == pico.SDL_KEYDOWN}
+        if pico.SDLK_ESCAPE in pressed_keys:
+            return fullscreen
+        if pico.SDLK_F11 in pressed_keys:
+            fullscreen = set_fullscreen(not fullscreen)
+        show_hitboxes = update_hitbox_visibility(events, show_hitboxes)
+        direction, running, crouching = read_movement()
+        has_focus = bool(pico.SDL_GetKeyboardFocus())
+        jump_held = False
+        if has_focus:
+            jump_held = bool(pico.SDL_GetKeyboardState(None)[pico.SDL_SCANCODE_SPACE])
+        else:
+            pressed_keys.clear()
+        if pico.SDLK_r in pressed_keys:
+            approach.reset()
+            player.recover_at(*opening_cave.SPAWN)
+            player.facing = 1
+            pressed_keys.clear()
+            direction, running, crouching = 0, False, False
+            jump_held = False
+        if pico.SDLK_e in pressed_keys:
+            approach.start(player)
+        if approach.active:
+            approach.update(player, delta_time)
+        else:
+            player.update(
+                direction, running, delta_time,
+                jump_pressed=pico.SDLK_SPACE in pressed_keys, jump_held=jump_held,
+                crouch_held=crouching, attack_pressed=pico.SDLK_x in pressed_keys,
+            )
+        camera.follow(player.x)
+        cave.draw(camera, show_hitboxes=show_hitboxes)
+        shade_stone_depth(
+            0, SCREEN_WIDTH, SCREEN_HEIGHT - CAVE_FLOOR_SCREEN_Y, SCREEN_HEIGHT,
+        )
+        if not approach.draw(player, camera):
+            player.draw(camera)
+        cave.draw_foreground(camera)
+        if show_hitboxes:
+            player.draw_hitbox(camera)
+        if has_focus and approach.can_start(player):
+            draw_mount_prompt(camera, (player.x, player.y + STANDING_HITBOX_HEIGHT), frame_start)
+        health.draw_hud(SCREEN_HEIGHT, frame_start)
+        pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
+        pico.update_canvas()
+        sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
+
+
+def main(*, test_room=False):
     pico.SDL_SetHint(pico.SDL_HINT_RENDER_SCALE_QUALITY, b"0")
     pico.open_canvas(SCREEN_WIDTH, SCREEN_HEIGHT)
     try:
@@ -733,10 +805,14 @@ def main():
         while fullscreen is not None:
             fullscreen = run_title(fullscreen)
             if fullscreen is not None:
-                fullscreen = run_game(fullscreen)
+                fullscreen = run_game(fullscreen) if test_room else run_opening_cave(fullscreen)
     finally:
         pico.close_canvas()
 
 
 if __name__ == "__main__":
-    main()
+    from argparse import ArgumentParser
+
+    parser = ArgumentParser(description="RelicEscape")
+    parser.add_argument("--test-room", action="store_true", help="Start the original movement/device test room")
+    main(test_room=parser.parse_args().test_room)

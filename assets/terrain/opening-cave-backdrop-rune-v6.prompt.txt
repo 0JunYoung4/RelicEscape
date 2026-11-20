@@ -1,0 +1,13 @@
+Mode: built-in image_gen localized crop edit + interior-only compositing
+Base: opening-cave-backdrop-rune-v5.png
+Edit input: crop (2044,237,128,402)
+Generated crack source: opening-cave-rune-fine-cracks-v1.png
+Output: opening-cave-backdrop-rune-v6.png, 2172x724 PNG
+Merge: use the same interior polygon as v5 and an inward boundary feather. Preserve original pixels with blue channel >=42 to retain the existing rune highlights and central blue fissure.
+Validation: changed bbox (2063,372,2146,526). Original wall join and original bright rune pixels are unchanged. Same camera, lighting, scale and collision. Four opening-cave tests passed.
+
+Precise localized EDIT of this existing pixel-art rune-wall crop. ADD FINE NATURAL STONE CRACKS inside the rune enclosure only. Keep the original rune design, carved loops, vertical stem, diamond endpoints, existing small incised marks and dim blue central fissure unchanged. Keep the stone-wall outer contour and the way it joins surrounding rock unchanged. No redesign, no new overall lighting or color treatment.
+
+The input represents a 128x402 crop. Work primarily within x20..103, y135..289, the stone inside the outlined rune. Add about SIX to EIGHT thin irregular fractures of different lengths, each approximately 6-16 native pixels long, with a few much shorter branchlets. Spread them in the quiet stone gaps between the existing rune lines: upper-left and upper-right inside the crest, near the side loops, and lower-left/lower-right around the stem. Several may follow shallow cracks already implied in the stone. Give each fracture a crooked stepped route with varied directions; no parallel diagonal arrangement, crosshatching, uniform pattern or all-over spiderweb. The rune must remain fully readable and structurally intact, with the new fractures subordinate to it.
+
+Cracks should look like actual small recesses in old rock: a narrow dark charcoal core, occasional tiny chipped pixels and a very restrained ONE-PIXEL muted slate highlight on one short side. They should be visible as fine low-contrast detail in a dark game scene without being luminous. NOT glowing cyan cracks; ONLY the existing central fissure remains faintly blue. Use chunky but fine coherent game-pixel clusters matched to the input, not photographic speckle or high-resolution hairlines. Leave plenty of dark quiet stone between fractures. No ornate new glyphs, extra symbols, sparkling particles, bright outlines, wet gloss or detailed filigree. Do not modify anything outside the rune interior. Return one portrait edited crop.

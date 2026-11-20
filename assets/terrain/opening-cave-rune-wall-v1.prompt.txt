@@ -1,0 +1,16 @@
+Mode: built-in image_gen
+Design reference: assets/concepts/opening-cave-rune-v9.png
+Style reference: existing opening cave gameplay render
+Output: opening-cave-rune-wall-v1.png, 724x2172 RGBA
+Source rectangle (pico2D bottom origin): (22,18,681,2138). Alpha>200 bounding box: (22,16,703,2154).
+Purpose: 기존 문양의 큰 형태는 유지하고 미세 균열·입자·가는 선을 줄인 굵은 도트의 게임용 문양 벽. 타이틀 원본은 유지한다.
+
+Create a simplified GAME SPRITE adaptation of the ancient rune slab in reference image 1, matching the coarse pixel-art terrain and darkness in reference image 2. Image 1 is the DESIGN IDENTITY REFERENCE: preserve the recognizable rune's overall central vertical axis, small pointed diamond/arrow shapes at top and bottom, curling horizontal side spirals, looped central lines and a thin blue central fissure. Image 2 is the STYLE/IN-GAME CONTEXT REFERENCE. The original slab is excessively detailed and looks pasted into the game. Simplify the design dramatically for a coherent actual game asset.
+
+Output ONLY ONE upright tall narrow stone RUNE WALL PANEL on a genuinely transparent background, approximately 1:3 portrait canvas. The panel fills almost the whole canvas, running close to both side edges and from the top to the bottom, minimal transparent margin. The stone is a solid continuous near-black charcoal/navy monolith with roughly rounded upper corners and lightly chipped irregular outer contour. This wall closes the end of a small cave, not a portal frame or open door. No visible thickness in perspective: straight front-facing orthographic elevation. The bottom edge is a clean nearly horizontal stone foot resting on the game floor. No pedestal, steps, rubble pile, foreground floor, backdrop, cave scenery, text or UI.
+
+CRITICAL PIXEL STYLE: make it look like a SIMPLE NATIVE 72x216 PIXEL ART SPRITE enlarged with nearest-neighbor, with big deliberate square/stepped pixel clusters and a very restricted palette. Just 4 or 5 dark stone shades, 2 muted blue-gray rune shades and a little dim cyan for the central crack. Broad quiet flat rock planes with at most a handful of SHORT irregular cracks. Remove ALL photographic speckle, tiny scratches, dense fine fissures, fine diagonal grain, thin etched filigree and individual stone pores. No detailed high-resolution rock texture. Avoid huge repeated diagonal shapes too. The rune itself should have chunky stepped contours, simplified broad curling hooks instead of many intricate loops. Keep its original overall silhouette recognizable but remove small ornament and reduce the number of lines. The carving is subdued, slightly lighter than the rock rather than glowing bright.
+
+MOOD AND COLOR: very dark desaturated blue-gray stone, damp and weathered but represented by simple patches of color rather than shiny texture. No white/silver edges, bright border, metallic sheen, specular highlights, or neon glow. The one central blue fissure is faint and narrow, not a large luminous effect or halo. No moss garland, magical particles, vegetation, gemstones, statues or extra symbols. This should blend naturally with a dark quiet cave wall while the player remains the brightest element.
+
+Preserve alpha outside the silhouette. No baked checkerboard or solid matte. No image presentation border. One clean, coarse low-detail pixel asset, not a finished illustration or asset sheet.

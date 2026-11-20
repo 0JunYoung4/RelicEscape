@@ -1,0 +1,8 @@
+Mode: existing-image compositing; no new generation
+Base: opening-cave-backdrop-v2.png
+Rune source: opening-cave-backdrop-rune-v2.png rectangle (1940,140,220,530)
+Output: opening-cave-backdrop-rune-v4.png, 2172x724 PNG
+
+Increase the prior rune patch from 85x268 to 128x402, approximately 1.5x in both dimensions. Composite at (2044,237) with nearest-neighbor sampling and a narrow blended boundary. Keep the rune vertically centered near its prior position and its right edge at the map end. Preserve all original pixels outside this region.
+
+Validation: changed bbox (2045,238,2172,638); pixels left of x2044 are identical to the original. Applied with the same camera, brightness and collision. SDL render confirms the entire carving remains visible between foreground ceiling and floor. Four opening-cave tests passed.

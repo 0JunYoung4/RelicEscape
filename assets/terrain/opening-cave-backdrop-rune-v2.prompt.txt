@@ -1,0 +1,15 @@
+Mode: built-in image_gen localized edit; original-pixel restoration/compositing with System.Drawing
+Base image: assets/terrain/opening-cave-backdrop-v2.png (preserved original)
+Insert reference: assets/terrain/opening-cave-rune-wall-v1.png
+Output: opening-cave-backdrop-rune-v2.png, 2172x724 PNG
+Operation: 국소 편집 결과 중 우측 영역 (1930,130)-(2172,680)만 원본에 합성했다. 나머지는 원본 픽셀을 그대로 유지한다. 경계 12~24px에서 원본으로 부드럽게 연결한다.
+Verification: 변경 픽셀 bbox (1931,131,2171,678); 편집 영역 밖은 원본과 픽셀 단위 동일함을 ImageChops로 확인했다.
+Status: 배경 이미지 수정본만 제작. 게임 코드에는 아직 적용하지 않았다.
+
+LOCALIZED COMPOSITING EDIT ONLY. DO NOT REPAINT OR REGENERATE THE CAVE. Image 1 is the actual BASE IMAGE to retain, not a style reference. Image 2 is the existing rune-wall INSERT ASSET to combine into it. The user explicitly requires the ORIGINAL cave-wall picture with the rune wall added, not a newly drawn replacement cave.
+
+Return image 1 at its SAME 2172x724 dimensions and exact framing. Preserve the original rock formations, fine texture, cracks, moisture streaks, moss, illumination, colors, contrast and pixel pattern throughout. In particular, EVERYTHING LEFT OF x=1940 pixels (roughly the left 89% of the canvas), plus the original upper and lower edges, must remain UNCHANGED. Do not simplify, sharpen, enhance, retexture, relight, resize or reinterpret the base. Do not introduce any new general cave scenery. No new ceiling, floor, framing or depth.
+
+Make just ONE local addition within the narrow far-right portion: combine the provided existing rune-wall asset from image 2 with the base at the RIGHT END. Scale that exact tall panel down proportionally to around 110px wide and 330px tall and position it close to the right edge, with its lower edge approximately at y=575px from the top and upper edge about y=245px. Keep the symbol's original central vertical stem, curls, loops and dim blue fissure. The panel should occupy approximately x=2045 through x=2155. Do not redraw its rune into a different design. Within only a very narrow margin around this inserted panel, harmonize its dark stone color and merge its irregular outer rock edges into the existing neighboring rock. Do not draw a bright outline or rectangular matte. The BASE's neighboring rocks, texture and wet streaks should remain in their existing positions. The added panel is the ONLY new visible content. A slight local blend at the panel boundary is allowed, not repainting the whole right side.
+
+Fully opaque single panorama, original blue-black dark palette. No text, labels, game characters, UI, floor or image sheet. This must look unmistakably like the original image 1, with just the provided small rune wall merged at its far right. Again, use IMAGE EDIT/COMPOSITE behavior, not a new image based on the references.

@@ -1,0 +1,223 @@
+{
+  "image": "opening-investigate-unarmed-right-v3.png",
+  "frame_count": 16,
+  "columns": 4,
+  "rows": 4,
+  "facing": "right",
+  "weapon": "none",
+  "reference_height": 276,
+  "foot_anchor": [
+    50,
+    276
+  ],
+  "walk_frames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "walk_fps": 11,
+  "reach_frames": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "reach_frame_durations_ms": [
+    100,
+    90,
+    100,
+    110,
+    120,
+    130,
+    140,
+    390
+  ],
+  "frames": [
+    {
+      "x": 55,
+      "y": 15,
+      "width": 138,
+      "height": 277,
+      "foot_anchor": [
+        69,
+        277
+      ],
+      "pose": "walk-left-contact"
+    },
+    {
+      "x": 385,
+      "y": 15,
+      "width": 101,
+      "height": 277,
+      "foot_anchor": [
+        53,
+        277
+      ],
+      "pose": "walk-left-load"
+    },
+    {
+      "x": 697,
+      "y": 15,
+      "width": 103,
+      "height": 275,
+      "foot_anchor": [
+        54,
+        275
+      ],
+      "pose": "walk-right-pass"
+    },
+    {
+      "x": 1012,
+      "y": 15,
+      "width": 100,
+      "height": 277,
+      "foot_anchor": [
+        52,
+        277
+      ],
+      "pose": "walk-right-forward"
+    },
+    {
+      "x": 67,
+      "y": 327,
+      "width": 128,
+      "height": 278,
+      "foot_anchor": [
+        57,
+        278
+      ],
+      "pose": "walk-right-contact"
+    },
+    {
+      "x": 385,
+      "y": 327,
+      "width": 101,
+      "height": 278,
+      "foot_anchor": [
+        53,
+        278
+      ],
+      "pose": "walk-right-load"
+    },
+    {
+      "x": 699,
+      "y": 327,
+      "width": 102,
+      "height": 279,
+      "foot_anchor": [
+        52,
+        279
+      ],
+      "pose": "walk-left-pass"
+    },
+    {
+      "x": 1013,
+      "y": 328,
+      "width": 112,
+      "height": 277,
+      "foot_anchor": [
+        51,
+        277
+      ],
+      "pose": "walk-left-forward"
+    },
+    {
+      "x": 71,
+      "y": 641,
+      "width": 98,
+      "height": 279,
+      "foot_anchor": [
+        53,
+        279
+      ],
+      "pose": "observe"
+    },
+    {
+      "x": 384,
+      "y": 641,
+      "width": 108,
+      "height": 279,
+      "foot_anchor": [
+        54,
+        279
+      ],
+      "pose": "raise-hand-start"
+    },
+    {
+      "x": 697,
+      "y": 641,
+      "width": 117,
+      "height": 279,
+      "foot_anchor": [
+        54,
+        279
+      ],
+      "pose": "raise-hand-stomach"
+    },
+    {
+      "x": 1011,
+      "y": 641,
+      "width": 116,
+      "height": 278,
+      "foot_anchor": [
+        53,
+        278
+      ],
+      "pose": "raise-hand-chest"
+    },
+    {
+      "x": 70,
+      "y": 954,
+      "width": 121,
+      "height": 280,
+      "foot_anchor": [
+        54,
+        280
+      ],
+      "pose": "extend-hand-start"
+    },
+    {
+      "x": 384,
+      "y": 954,
+      "width": 125,
+      "height": 279,
+      "foot_anchor": [
+        54,
+        279
+      ],
+      "pose": "extend-hand-mid"
+    },
+    {
+      "x": 698,
+      "y": 954,
+      "width": 129,
+      "height": 279,
+      "foot_anchor": [
+        53,
+        279
+      ],
+      "pose": "extend-hand-near"
+    },
+    {
+      "x": 1012,
+      "y": 954,
+      "width": 144,
+      "height": 280,
+      "foot_anchor": [
+        52,
+        280
+      ],
+      "pose": "touch-wall"
+    }
+  ],
+  "gaze": "slightly-up-right"
+}

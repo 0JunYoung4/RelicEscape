@@ -1,0 +1,122 @@
+{
+  "image": "opening-investigate-unarmed-right-v1.png",
+  "frame_count": 8,
+  "columns": 4,
+  "rows": 2,
+  "facing": "right",
+  "weapon": "none",
+  "reference_height": 379,
+  "foot_anchor": [
+    67,
+    379
+  ],
+  "walk_frames": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "walk_fps": 5.5,
+  "reach_frames": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "reach_frame_durations_ms": [
+    180,
+    220,
+    280,
+    500
+  ],
+  "frames": [
+    {
+      "x": 77,
+      "y": 26,
+      "width": 187,
+      "height": 378,
+      "foot_anchor": [
+        90,
+        378
+      ],
+      "pose": "walk-left-contact"
+    },
+    {
+      "x": 544,
+      "y": 26,
+      "width": 133,
+      "height": 375,
+      "foot_anchor": [
+        67,
+        375
+      ],
+      "pose": "walk-left-pass"
+    },
+    {
+      "x": 987,
+      "y": 26,
+      "width": 160,
+      "height": 380,
+      "foot_anchor": [
+        67,
+        380
+      ],
+      "pose": "walk-right-contact"
+    },
+    {
+      "x": 1432,
+      "y": 26,
+      "width": 133,
+      "height": 378,
+      "foot_anchor": [
+        65,
+        378
+      ],
+      "pose": "walk-right-pass"
+    },
+    {
+      "x": 100,
+      "y": 470,
+      "width": 134,
+      "height": 379,
+      "foot_anchor": [
+        67,
+        379
+      ],
+      "pose": "observe"
+    },
+    {
+      "x": 544,
+      "y": 470,
+      "width": 154,
+      "height": 379,
+      "foot_anchor": [
+        67,
+        379
+      ],
+      "pose": "raise-hand"
+    },
+    {
+      "x": 987,
+      "y": 470,
+      "width": 176,
+      "height": 379,
+      "foot_anchor": [
+        67,
+        379
+      ],
+      "pose": "extend-hand"
+    },
+    {
+      "x": 1430,
+      "y": 470,
+      "width": 192,
+      "height": 379,
+      "foot_anchor": [
+        67,
+        379
+      ],
+      "pose": "touch-wall"
+    }
+  ]
+}

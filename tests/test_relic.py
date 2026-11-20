@@ -64,7 +64,7 @@ class RelicTests(unittest.TestCase):
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(main, "sleep"), patch.object(main, "draw_scene", new=record_scene), \
                 patch.object(main.ReturnMark, "draw", new=record_mark):
-            main.main()
+            main.main(test_room=True)
 
         self.assertTrue(marks[0.15][1])
         self.assertEqual(positions[0.20][0], positions[0.10][0])
@@ -123,7 +123,7 @@ class RelicTests(unittest.TestCase):
                 patch.object(main, "sleep"), \
                 patch.object(main, "draw_scene", new=record_player), \
                 patch.object(main, "draw_relic", new=record_relic):
-            main.main()
+            main.main(test_room=True)
 
         self.assertGreater(player_frames[0][0], start_x)
         self.assertEqual(player_frames[2], (start_x, main.GROUND_Y, 0.0))
@@ -220,7 +220,7 @@ class RelicTests(unittest.TestCase):
                 patch.object(main, "perf_counter", side_effect=count(step=1 / 120)), \
                 patch.object(main, "sleep"), \
                 patch.object(main, "draw_scene", new=record_scene):
-            main.main()
+            main.main(test_room=True)
 
         self.assertEqual(carriage_frames[0], (left, rail_y))
         self.assertEqual(mount_frames, [False] + [True] * (return_frame - 1) + [False] * 5 + [True, False])

@@ -1,0 +1,8 @@
+Mode: existing-image compositing; no new image generation in this revision
+Base: opening-cave-backdrop-v2.png (currently applied original wall)
+Local rune source: opening-cave-backdrop-rune-v2.png, from prior built-in image_gen localized edit
+Output: opening-cave-backdrop-rune-v3.png, 2172x724 PNG
+
+Match the rune panel to its original in-game footprint. Scale source rectangle (1940,140,220,530) into target (2087,304,85,268) with nearest-neighbor sampling. Blend only the narrow boundary into the original wall. Preserve all other original pixels.
+
+Validation: changed bbox (2088,305,2172,571). The original runtime backdrop color modulation (76,80,88), world size and camera are unchanged. SDL comparison confirms entrance and middle frames are entirely identical, and the final frame is identical left of x842. Only the rune wall region changes. Applied to the game; separate rune sprite drawing removed.

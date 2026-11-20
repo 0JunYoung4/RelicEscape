@@ -72,7 +72,7 @@ class LauncherTests(unittest.TestCase):
                 patch.object(main, "perf_counter", side_effect=count(step=1 / 120)), \
                 patch.object(main, "sleep"), \
                 patch.object(main, "draw_scene", new=record):
-            main.main()
+            main.main(test_room=True)
 
         self.assertTrue(all(frame[0] for frame in frames[:33]))
         self.assertEqual(frames[0][1], main.TEST_CROSSBOW_ANGLE)

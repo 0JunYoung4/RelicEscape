@@ -77,6 +77,13 @@ v2의 체형과 복장을 유지하고 옆얼굴의 코가 튀어나온 한 픽�
 - 횡스크롤 카메라 배율 0.5를 모든 자세에 추가 적용한다. 기본 캐릭터는 화면에서 약 70픽셀 높이이며, 에셋 자체를 다시 축소해 저장하지 않는다.
 - 왼쪽은 오른쪽 이미지 반전으로 임시 표시한다. 정글도 손과 복장 비대칭을 정확하게 보존하는 전용 왼쪽 이미지는 추후 제작 대상이다.
 
+## 오프닝 문양 조사
+
+- [맨손 조사 시트 v3](../assets/sprites/player/opening-investigate-unarmed-right-v3.png)는 기존 v2를 내장 이미지 생성 도구로 편집해 16개 자세 모두 고개와 시선이 살짝 오른쪽 위를 향하도록 했다. 1254×1254 RGBA, 4열×4행이며 무기가 없다. 생성 PNG와 이전 v1/v2는 보존한다.
+- 상단 두 줄의 8프레임은 조심스럽게 걷는 반복 동작, 하단 두 줄의 8프레임은 관찰 대기 → 손 들기 → 팔 뻗기 → 벽 접촉이다. 제작 지시는 [프롬프트](../assets/sprites/player/opening-investigate-unarmed-right-v3.prompt.txt)에 보관한다.
+- [JSON](../assets/sprites/player/opening-investigate-unarmed-right-v3.json)에 프레임별 영역과 발 기준점을 기록했다. 표시 배율은 140/276이며 기존 몸통의 가로 기준과 발 접점을 맞춘다. 걷기는 11fps로 주기를 유지하고 손 뻗기는 100/90/100/110/120/130/140/390ms, 총 1.18초로 유지한다.
+- `opening_cutscene.SigilApproach`가 문양 조사 이후에만 이 시트를 사용한다. 일반 조작 중의 기존 캐릭터 애니메이션은 유지한다.
+
 ## 이전 버전 비교
 
 - [SD v1 게임용 PNG](../assets/sprites/player/idle-right-v1.png)

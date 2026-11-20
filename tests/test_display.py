@@ -110,7 +110,7 @@ class DisplayTests(unittest.TestCase):
                 patch.object(main, "read_movement", return_value=(0, False, False)), \
                 patch.object(main, "sleep"), \
                 patch.object(main, "set_fullscreen", wraps=main.set_fullscreen) as switch:
-            main.main()
+            main.main(test_room=True)
             self.assertEqual([call.args[0] for call in switch.call_args_list], [True, False])
 
     def test_escape_returns_to_title_and_enter_starts_a_fresh_run(self):
@@ -131,7 +131,7 @@ class DisplayTests(unittest.TestCase):
                 patch.object(main, "sleep"), \
                 patch.object(main, "run_title", wraps=main.run_title) as title, \
                 patch.object(main, "draw_scene", new=record_scene):
-            main.main()
+            main.main(test_room=True)
 
         self.assertEqual([call.args for call in title.call_args_list], [(True,), (False,), (False,)])
         self.assertEqual(game_frames, [(main.TEST_SPAWN[0], mounted) for mounted in (True, True, False)])
@@ -180,7 +180,7 @@ class DisplayTests(unittest.TestCase):
                 patch.object(main, "draw_scene", wraps=main.draw_scene) as game_scene, \
                 patch.object(pico, "get_events", new=get_events), \
                 patch.object(pico, "update_canvas", new=record_canvas):
-            main.main()
+            main.main(test_room=True)
 
         visible, hidden, visible_again = title_frames
         self.assertGreater(visible[0], 160)

@@ -10,18 +10,11 @@ tags:
   - memoc/state
 ---
 # Session Summary
-Last: 2026-11-17 (Asia/Seoul)
+Last: 2026-11-21 (Asia/Seoul)
 
-## Status
-- 촬영용 테스트룸. Enter 시작, R 초기화, 게임 중 Esc로 타이틀 복귀.
-
-## Changed
-- 레일 → 석궁 → 가시밭 → 벽점프. 기본 40도로 첫 석벽 앞에 도달.
-- 화면 밖 유물 화살표, 석벽 외곽 타일과 색 보정.
-- E 출발점 문양 v3, 14px, 3초. Q 1회 복귀. 픽셀은 현재 유물에 흡수.
-
-## Open Tasks
-- 11월 17일 촬영. 속도 유지 워프 후속 테스트.
-
-## Resume
+- 타이틀 Enter → 동굴, 시험 맵 `main.py --test-room`.
+- 문양 근처 E → 맨손 관찰·자동 걷기·손 뻗기·접촉 유지. 조작 차단, R 재시작.
+- `opening_cutscene.py`, 맨손 조사 v3 PNG/JSON: 16프레임, 고개·시선 살짝 위로.
+- 배경 rune-v7·벽 전체 균열 유지. 빛·흔들림·붕괴·수직 추락은 후속.
+- v2 전체 82 tests OK; v3 관련 4 tests OK, SDL 확인.
 - 실행: `.\.venv\Scripts\python.exe main.py`.

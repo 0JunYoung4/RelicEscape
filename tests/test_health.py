@@ -124,7 +124,7 @@ class HealthTests(unittest.TestCase):
                 patch.object(main, "perf_counter", side_effect=count(step=1 / 120)), \
                 patch.object(main, "sleep"), \
                 patch.object(main, "draw_scene", side_effect=record_scene):
-            main.main()
+            main.main(test_room=True)
 
         self.assertEqual([frames[i][0] for i in (0, 1, 36, 37, 73, 109)], [100, 75, 75, 50, 25, 0])
         for hit, returned in ((1, 12), (37, 48), (73, 84)):

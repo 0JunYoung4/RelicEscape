@@ -1,0 +1,13 @@
+Mode: built-in image_gen localized crop edit + interior-only compositing
+Base: opening-cave-backdrop-rune-v4.png
+Edit input: crop (2044,237,128,402) of the base
+Generated detail source: opening-cave-rune-interior-detail-v1.png
+Output: opening-cave-backdrop-rune-v5.png, 2172x724 PNG
+Merge: only inside the rune enclosure polygon in crop-local coordinates [(56,134),(67,145),(85,161),(102,177),(102,244),(88,275),(65,289),(48,286),(23,264),(19,236),(22,183),(37,155)]. A small inward feather preserves the original outer rune edge and wall join.
+Validation: asset change bbox (2064,372,2146,526). Exterior wall and joining boundary remain identical. In-game render change bbox (811,134,924,347). Four opening-cave tests passed. Camera, lighting, scale and collision unchanged.
+
+LOCAL EDIT of the attached pixel-art rune-wall crop, NOT a redesign. Keep its size/proportions, dark stone material, large central rune identity, dim vertical blue crack and outer rock silhouette unchanged. The user likes how its outer rock boundary joins the cave and explicitly wants that boundary preserved. Add ONLY A LITTLE MORE DETAIL INSIDE the outlined rune, since its inner area currently feels too empty.
+
+The input crop is 128x402. Main rune enclosure is roughly x18..108, y125..300. Keep everything outside that enclosure as it is, including the rock top, bottom, sides and weathering. Inside the enclosure, preserve the existing central vertical stem, three loop shapes, side curls and diamond endpoints. Do not move or enlarge them. Add a modest amount of secondary shallow carving: four or five tiny incomplete ancient glyph strokes in empty spaces between the main lines, a few short broken inset lines that imply an inner border, and two or three tiny chips along an existing groove. Suggest the main carving's depth with a restrained one-pixel dark side and very subtle muted blue-gray bevel in a few places. Add just a couple of short natural hairline fractures in the otherwise blank inner stone. Leave ample calm blank stone; fill at most about a quarter of the currently empty inner area.
+
+Keep the visible game-pixel scale coherent with the input: small deliberate stepped pixel clusters, low palette count, muted charcoal and navy-gray. No dense photographic rock texture, fine speckle, elaborate filigree, glowing magical particles, emissive outline, neon glow or high contrast highlights. The thin blue fissure stays subtle. New detail should be slightly more readable than bare stone, but should not become brighter or more detailed than the player. Do not add extra large symbols, symmetrical rings, text, labels or scenery. No new border or frame. Only subtle additional wear and incised secondary marks inside the existing rune. Return one edited portrait crop.
