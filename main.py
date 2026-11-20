@@ -763,7 +763,8 @@ def run_opening_cave(fullscreen):
         else:
             pressed_keys.clear()
         if pico.SDLK_r in pressed_keys:
-            approach.reset()
+            approach.reset(player)
+            camera.zoom = camera.normal_zoom
             player.recover_at(*opening_cave.SPAWN)
             player.facing = 1
             pressed_keys.clear()
@@ -779,14 +780,23 @@ def run_opening_cave(fullscreen):
                 jump_pressed=pico.SDLK_SPACE in pressed_keys, jump_held=jump_held,
                 crouch_held=crouching, attack_pressed=pico.SDLK_x in pressed_keys,
             )
-        camera.follow(player.x)
-        cave.draw(camera, show_hitboxes=show_hitboxes)
-        shade_stone_depth(
-            0, SCREEN_WIDTH, SCREEN_HEIGHT - CAVE_FLOOR_SCREEN_Y, SCREEN_HEIGHT,
-        )
+        shaft_cut = approach.phase in ("descent", "impact")
+        if shaft_cut:
+            cave.draw_descent(camera, player)
+        else:
+            camera.follow(player.x)
+            shake_x, shake_y = approach.shake()
+            camera.x += shake_x / camera.zoom
+            camera.y = opening_cave.GROUND_Y - (CAVE_FLOOR_SCREEN_Y + shake_y) / camera.zoom
+            cave.draw(camera, show_hitboxes=show_hitboxes, sigil_light=approach.sigil_light,
+                      collapse_time=approach.collapse_time)
+            shade_stone_depth(
+                0, SCREEN_WIDTH, SCREEN_HEIGHT - round(CAVE_FLOOR_SCREEN_Y + shake_y), SCREEN_HEIGHT,
+            )
         if not approach.draw(player, camera):
             player.draw(camera)
-        cave.draw_foreground(camera)
+        if not shaft_cut:
+            cave.draw_foreground(camera)
         if show_hitboxes:
             player.draw_hitbox(camera)
         if has_focus and approach.can_start(player):

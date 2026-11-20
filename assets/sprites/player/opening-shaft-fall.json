@@ -1,0 +1,46 @@
+{
+  "image": "opening-shaft-fall.png",
+  "reference_height": 450,
+  "frames": [
+    {
+      "x": 115,
+      "y": 141,
+      "width": 345,
+      "height": 450,
+      "foot_anchor": [
+        170,
+        450
+      ]
+    },
+    {
+      "x": 640,
+      "y": 132,
+      "width": 310,
+      "height": 437,
+      "foot_anchor": [
+        179,
+        437
+      ]
+    },
+    {
+      "x": 1189,
+      "y": 182,
+      "width": 318,
+      "height": 390,
+      "foot_anchor": [
+        135,
+        390
+      ]
+    },
+    {
+      "x": 1721,
+      "y": 302,
+      "width": 308,
+      "height": 281,
+      "foot_anchor": [
+        129,
+        281
+      ]
+    }
+  ]
+}

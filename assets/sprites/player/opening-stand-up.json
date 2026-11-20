@@ -1,0 +1,96 @@
+{
+  "image": "opening-stand-up.png",
+  "reference_height": 388,
+  "frames": [
+    {
+      "x": 80,
+      "y": 96,
+      "width": 317,
+      "height": 292,
+      "foot_anchor": [
+        124,
+        292
+      ]
+    },
+    {
+      "x": 508,
+      "y": 108,
+      "width": 309,
+      "height": 277,
+      "foot_anchor": [
+        140,
+        277
+      ]
+    },
+    {
+      "x": 949,
+      "y": 113,
+      "width": 282,
+      "height": 271,
+      "foot_anchor": [
+        142,
+        271
+      ]
+    },
+    {
+      "x": 1404,
+      "y": 111,
+      "width": 280,
+      "height": 273,
+      "foot_anchor": [
+        130,
+        273
+      ]
+    },
+    {
+      "x": 123,
+      "y": 528,
+      "width": 216,
+      "height": 319,
+      "foot_anchor": [
+        108,
+        319
+      ]
+    },
+    {
+      "x": 548,
+      "y": 495,
+      "width": 222,
+      "height": 352,
+      "foot_anchor": [
+        118,
+        352
+      ]
+    },
+    {
+      "x": 1018,
+      "y": 471,
+      "width": 177,
+      "height": 377,
+      "foot_anchor": [
+        82,
+        377
+      ]
+    },
+    {
+      "x": 1460,
+      "y": 460,
+      "width": 149,
+      "height": 388,
+      "foot_anchor": [
+        83,
+        388
+      ]
+    }
+  ],
+  "frame_durations_ms": [
+    110,
+    140,
+    135,
+    120,
+    145,
+    150,
+    130,
+    180
+  ]
+}

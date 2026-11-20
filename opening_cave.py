@@ -1,4 +1,4 @@
-"""The small, dark opening cave, before the collapse is implemented."""
+"""The opening cave and the breakaway floor in front of the sigil slab."""
 
 from ctypes import byref, c_int
 from math import ceil, inf
@@ -33,6 +33,10 @@ BACKDROP_IMAGE = ASSET_ROOT / "terrain/opening-cave-backdrop-rune-v7.png"
 FLOOR_IMAGE = ASSET_ROOT / "terrain/opening-cave-floor-v1.png"
 SHADOW_IMAGE = ASSET_ROOT / "terrain/opening-cave-stalactite-shadow-v1.png"
 SHADOW_TILE_WIDTH = 1260
+# World units per source pixel; the 1024px lower chamber spans over two camera widths.
+SHAFT_SCALE = 4
+SHAFT_TOP = -140
+SHAFT_FLOOR = SHAFT_TOP - 1421 * SHAFT_SCALE
 # Trim the transparent export margin; pico2D source coordinates start at the bottom.
 FLOOR_ART_HEIGHT = 580
 TERRAIN = (
@@ -40,6 +44,15 @@ TERRAIN = (
     *((left, height, right, inf) for left, right, height in CEILING_SPANS),
     (END_WALL_X, GROUND_Y, WORLD_WIDTH, inf),
 )
+PIT_LEFT = END_WALL_X - 340
+BROKEN_TERRAIN = ((0, 0, PIT_LEFT, GROUND_Y), (END_WALL_X, 0, WORLD_WIDTH, GROUND_Y), *TERRAIN[1:])
+# Width, delay and falling acceleration for each slab, ordered left to right.
+FLOOR_SLABS = ((37, .22, 870), (60, .09, 1040), (49, 0, 1240),
+               (68, .035, 1150), (45, .12, 960), (51, .19, 1100), (30, .27, 930))
+# Bottom-left source rectangles in the breakaway floor atlas.
+SLAB_FRAMES = ((31, 288, 198, 177), (259, 251, 389, 214), (668, 256, 308, 209),
+               (993, 220, 427, 245), (1447, 265, 184, 199), (1651, 256, 337, 208),
+               (2016, 276, 134, 189))
 
 
 class OpeningCave:
@@ -47,12 +60,34 @@ class OpeningCave:
         self.width = width
         self.height = height
         self.backdrop = pico.load_image(str(BACKDROP_IMAGE))
+        self.shaft = pico.load_image(str(ASSET_ROOT / "terrain/opening-fall-shaft-v4.png"))
+        pico.SDL_SetTextureColorMod(self.shaft.texture, 154, 163, 174)
+        self.emission = pico.load_image(str(ASSET_ROOT / "terrain/opening-slab-edge-emission.png"))
+        pico.SDL_SetTextureBlendMode(self.emission.texture, pico.SDL_BLENDMODE_ADD)
+        self.fissure = pico.load_image(str(ASSET_ROOT / "terrain/opening-sigil-emission.png"))
+        pico.SDL_SetTextureBlendMode(self.fissure.texture, pico.SDL_BLENDMODE_ADD)
         self.floor = pico.load_image(str(FLOOR_IMAGE))
+        self.slabs = pico.load_image(str(ASSET_ROOT / "terrain/opening-collapse-slabs.png"))
         self.stalactites = pico.load_image(str(SHADOW_IMAGE))
         # Darken terrain only. The player is drawn afterwards at its normal brightness.
         pico.SDL_SetTextureColorMod(self.backdrop.texture, 76, 80, 88)
         pico.SDL_SetTextureColorMod(self.floor.texture, 158, 164, 174)
         pico.SDL_SetTextureColorMod(self.stalactites.texture, 96, 104, 112)
+
+    def draw_descent(self, camera, player):
+        bottom = SHAFT_TOP - self.shaft.h * SHAFT_SCALE
+        # In the painting the shaft opens at row 1005; finish pulling back above the floor.
+        depth = (SHAFT_TOP - player.y) / SHAFT_SCALE
+        u = min(1.0, max(0.0, (depth - 1005) / 380))
+        camera.zoom = camera.normal_zoom * (1 - 0.26 * u * u * (3 - 2 * u))
+        camera.x = player.x - camera.view_width / 2
+        camera.y = max(SHAFT_FLOOR - self.height * 0.20 / camera.zoom,
+                       min(SHAFT_TOP - self.height / camera.zoom,
+                                   player.y - self.height * 0.50 / camera.zoom))
+        scale = SHAFT_SCALE * camera.zoom
+        self.shaft.draw_to_origin((self.width - self.shaft.w * scale) / 2,
+                                  (bottom - camera.y) * camera.zoom,
+                                  self.shaft.w * scale, self.shaft.h * scale)
 
     def _draw_rock(self, camera, left, right, surface_y, depth):
         left = max(left, camera.x)
@@ -95,6 +130,32 @@ class OpeningCave:
         finally:
             pico.SDL_SetRenderDrawBlendMode(pico.renderer, previous_blend)
 
+    def _draw_shaft(self, camera):
+        # Vertical rock faces catch a little light at the broken lips of the shaft.
+        depth = GROUND_Y
+        levels = (0, 12, 29, 53, 91, 130, 183, 250, depth)
+        profiles = (
+            (PIT_LEFT, 1, (0, 9, 5, 20, 13, 25, 17, 33, 36)),
+            (END_WALL_X, -1, (0, 7, 16, 9, 22, 17, 35, 26, 38)),
+        )
+        for edge, direction, profile in profiles:
+            points = []
+            for i, (below, inset) in enumerate(zip(levels, profile)):
+                shade = max(0.12, 1 - below / 240)
+                facet = (22 if i % 3 else 35) * shade
+                for offset, value in ((-12, facet), (inset, facet * .75),
+                                      (inset + 15, facet * .15)):
+                    x, y = camera.world_to_screen(edge + direction * offset, GROUND_Y - below)
+                    points.append(pico.SDL_Vertex((x, self.height - y),
+                        (int(value * .57), int(value * .8), int(value), 255)))
+            indices = []
+            for row in range(len(levels) - 1):
+                for column in range(2):
+                    first = row * 3 + column
+                    indices.extend(first + offset for offset in (0, 1, 3, 1, 4, 3))
+            pico.SDL_RenderGeometry(pico.renderer, None, (pico.SDL_Vertex * len(points))(*points),
+                                    len(points), (c_int * len(indices))(*indices), len(indices))
+
     def draw_foreground(self, camera):
         source_width, source_height = self.stalactites.w - 16, self.stalactites.h - 6
         width = SHADOW_TILE_WIDTH * camera.zoom
@@ -125,7 +186,7 @@ class OpeningCave:
                     x2 - x1, height,
                 )
 
-    def draw(self, camera, *, show_hitboxes=False):
+    def draw(self, camera, *, show_hitboxes=False, sigil_light=0.0, collapse_time=None):
         pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
         pico.SDL_RenderClear(pico.renderer)
         # One panorama is fixed to the world: no repeated wall motifs or distant parallax.
@@ -134,11 +195,51 @@ class OpeningCave:
             -camera.x * camera.zoom, -camera.y * camera.zoom,
             width, width * self.backdrop.h / self.backdrop.w,
         )
+        if sigil_light > 0:
+            # Authored against the 128 x 402 source patch starting at (2044, 237).
+            scale = width / self.backdrop.w
+            x = 2044 * scale - camera.x * camera.zoom
+            y = (self.backdrop.h - 639) * scale - camera.y * camera.zoom
+            # Additive passes let the outer seam rise above its original brightness.
+            for layer in range(ceil(sigil_light)):
+                alpha = min(1, sigil_light - layer)
+                pico.SDL_SetTextureAlphaMod(self.emission.texture, round(255 * alpha))
+                self.emission.draw_to_origin(x, y, 128 * scale, 402 * scale)
+            # Sample only the central groove of the original 256 x 804 emission map.
+            vertices = []
+            for sy, gain in ((216, 0), (255, 1), (485, 1)):
+                alpha = round(58 * sigil_light * gain)
+                for sx in (90, 174):
+                    vertices.append(pico.SDL_Vertex(
+                        (x + sx * scale / 2, self.height - y - (804 - sy) * scale / 2),
+                        (255, 255, 255, alpha), (sx / 256, sy / 804)))
+            triangles = (c_int * 12)(0, 1, 2, 1, 3, 2, 2, 3, 4, 3, 5, 4)
+            pico.SDL_RenderGeometry(pico.renderer, self.fissure.texture,
+                                    (pico.SDL_Vertex * 6)(*vertices), 6, triangles, 12)
         self._draw_entrance_light(camera)
 
         surface = round(camera.world_to_screen(0, GROUND_Y)[1])
         pico.draw_rectangle(0, 0, self.width - 1, surface - 1, 0, 0, 0, filled=True)
-        self._draw_rock(camera, 0, WORLD_WIDTH, GROUND_Y, GROUND_Y)
+        if collapse_time is None:
+            self._draw_rock(camera, 0, WORLD_WIDTH, GROUND_Y, GROUND_Y)
+        else:
+            self._draw_rock(camera, 0, PIT_LEFT, GROUND_Y, GROUND_Y)
+            self._draw_rock(camera, END_WALL_X, WORLD_WIDTH, GROUND_Y, GROUND_Y)
+            self._draw_shaft(camera)
+            left = PIT_LEFT
+            for i, (width, delay, acceleration) in enumerate(FLOOR_SLABS):
+                elapsed = collapse_time - delay
+                top = GROUND_Y - acceleration * max(0, elapsed) ** 2
+                if elapsed <= 0:
+                    self._draw_rock(camera, left, left + width, GROUND_Y, GROUND_Y)
+                elif top > camera.y:
+                    frame = SLAB_FRAMES[i]
+                    height = width * frame[3] / frame[2]
+                    x, y = camera.world_to_screen(left + width / 2, top - height / 2)
+                    tilt = min(elapsed, 1) * (0.48 if i % 2 else -0.38)
+                    self.slabs.clip_composite_draw(*frame, tilt, "", x, y,
+                                                   width * camera.zoom, height * camera.zoom)
+                left += width
         for left, right, roof in CEILING_SPANS:
             if right <= camera.x or left >= camera.x + camera.view_width:
                 continue
@@ -147,7 +248,7 @@ class OpeningCave:
             pico.draw_rectangle(round(x1), round(y), round(x2) - 1, self.height - 1, 0, 0, 0, filled=True)
 
         if show_hitboxes:
-            for left, bottom, right, top in TERRAIN:
+            for left, bottom, right, top in (TERRAIN if collapse_time is None else BROKEN_TERRAIN):
                 if right <= camera.x or left >= camera.x + camera.view_width:
                     continue
                 x1, y1 = camera.world_to_screen(left, bottom)

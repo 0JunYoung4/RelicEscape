@@ -13,7 +13,7 @@ from pico2d import pico2d as pico
 
 import main
 import opening_cave as cave
-from opening_cutscene import APPROACH_SPEED, INTERACTION_DISTANCE, OBSERVE_DURATION, TOUCH_X, SigilApproach
+from opening_cutscene import APPROACH_SPEED, INTERACTION_DISTANCE, OBSERVE_DURATION, RETREAT_DISTANCE, TOUCH_X, SigilApproach
 from player import Player
 
 
@@ -59,23 +59,65 @@ class OpeningCutsceneTests(unittest.TestCase):
         self.assertEqual(self.sequence.frame_index, 10)
         self.sequence.update(self.player, 0.3)
         self.assertEqual(self.sequence.frame_index, 12)
-        self.sequence.update(self.player, 5)
-        self.assertEqual(self.sequence.phase, "touch")
+        self.assertEqual(self.sequence.sigil_light, 0)
+        self.sequence.update(self.player, 0.45)
+        self.assertGreater(self.sequence.sigil_light, 0)
+        self.assertEqual(self.sequence.shake(), (0, 0))
+        self.sequence.update(self.player, 0.24)
+        self.assertEqual(self.sequence.phase, "recoil")
+        shown = set()
+        while self.sequence.phase == "recoil":
+            shown.add(self.sequence.frame_index)
+            self.sequence.update(self.player, 1 / 60)
+        self.assertEqual(shown, set(range(16)))
+        self.assertEqual(self.sequence.phase, "braced")
         self.assertEqual(self.sequence.frame_index, 15)
         self.sequence.update(self.player, 10)
-        self.assertEqual((self.player.x, self.player.y), (TOUCH_X, cave.GROUND_Y))
+        self.assertEqual(self.player.x, TOUCH_X - RETREAT_DISTANCE)
+        self.assertLess(self.player.y, 0)
+        self.assertTrue(self.player.grounded)
         self.assertFalse(self.sequence.start(self.player))
 
     def test_large_delta_can_cross_phases_and_reset_can_replay(self):
         self.assertTrue(self.sequence.start(self.player))
         self.sequence.update(self.player, 30)
-        self.assertEqual(self.sequence.phase, "touch")
-        self.assertEqual(self.player.get_hitbox()[2], cave.END_WALL_X)
-        self.sequence.reset()
+        self.assertEqual(self.sequence.phase, "impact")
+        self.assertAlmostEqual(self.player.y, cave.SHAFT_FLOOR)
+        self.assertEqual(self.player.get_hitbox()[2], cave.END_WALL_X - RETREAT_DISTANCE)
+        self.sequence.reset(self.player)
         self.player.recover_at(TOUCH_X - 90, cave.GROUND_Y, 0)
         self.assertTrue(self.sequence.can_start(self.player))
         self.assertTrue(self.sequence.start(self.player))
         self.assertEqual(self.sequence.phase, "observe")
+
+    def test_three_light_steps_then_quake_then_floor_gives_way(self):
+        self.player.recover_at(TOUCH_X, cave.GROUND_Y, 0)
+        self.sequence.start(self.player)
+        self.sequence.update(self.player, OBSERVE_DURATION + self.sequence.reach_ends[-2])
+
+        def advance_to(contact_time):
+            self.sequence.update(self.player, contact_time - self.sequence.contact_time)
+
+        advance_to(0.5)
+        light = self.sequence.sigil_light
+        self.assertGreater(light, 0)
+        for beat in (0.85, 1.95, 3.05):
+            advance_to(beat - 0.03)
+            self.assertAlmostEqual(self.sequence.sigil_light, light)
+            self.assertEqual(self.sequence.shake(), (0, 0))
+            advance_to(beat + 0.34)
+            self.assertNotEqual(self.sequence.shake(), (0, 0))
+            self.assertGreater(self.sequence.sigil_light, light)
+            light = self.sequence.sigil_light
+            self.assertIsNone(self.sequence.collapse_time)
+        advance_to(4.4)
+        self.assertNotEqual(self.sequence.shake(), (0, 0))
+        self.assertTrue(self.player.grounded)
+        advance_to(4.85)
+        self.assertAlmostEqual(self.sequence.sigil_light, light)
+        self.assertFalse(self.player._has_support())
+        self.assertLess(self.player.y, cave.GROUND_Y)
+        self.assertTrue(cave.PIT_LEFT < self.player.x < cave.END_WALL_X)
 
     def test_game_loop_locks_controls_until_restart(self):
         # This test owns the renderer through main(), so release the setup canvas first.
@@ -84,7 +126,7 @@ class OpeningCutsceneTests(unittest.TestCase):
         self.doCleanups()
         start = [keydown(key) for key in (pico.SDLK_e, pico.SDLK_SPACE, pico.SDLK_x)]
         interfere = [keydown(key) for key in (pico.SDLK_e, pico.SDLK_q, pico.SDLK_SPACE, pico.SDLK_x)]
-        events = [[], start, *([interfere] * 180), [keydown(pico.SDLK_r)], [pico.Event(pico.SDL_QUIT)]]
+        events = [[], start, *([interfere] * 465), [keydown(pico.SDLK_r)], [pico.Event(pico.SDL_QUIT)]]
         keys = [0] * pico.SDL_NUM_SCANCODES
         keys[pico.SDL_SCANCODE_SPACE] = 1
         frames = []
@@ -116,9 +158,12 @@ class OpeningCutsceneTests(unittest.TestCase):
         prompt.assert_called_once()
         controlled = frames[1:-1]
         self.assertTrue(all(frame[0] != "idle" for frame in controlled))
-        self.assertTrue(all(frame[2:] == (cave.GROUND_Y, 1, None) for frame in controlled))
-        self.assertTrue(all(a[1] <= b[1] for a, b in zip(controlled, controlled[1:])))
-        self.assertEqual(controlled[-1][:2], ("touch", TOUCH_X))
+        self.assertTrue(all(frame[2] <= cave.GROUND_Y and frame[3:] == (1, None) for frame in controlled))
+        positions = [frame[1] for frame in controlled]
+        retreat = positions[positions.index(max(positions)):]
+        self.assertTrue(all(a >= b for a, b in zip(retreat, retreat[1:])))
+        self.assertIn("descent", [frame[0] for frame in controlled])
+        self.assertEqual(controlled[-1][:2], ("impact", TOUCH_X - RETREAT_DISTANCE))
         self.assertEqual(frames[-1][:3], ("idle", cave.SPAWN[0], cave.GROUND_Y))
 
 

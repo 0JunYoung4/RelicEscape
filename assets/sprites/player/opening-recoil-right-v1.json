@@ -1,0 +1,167 @@
+{
+  "image": "opening-recoil-right-v1.png",
+  "reference_height": 281,
+  "fps": 9,
+  "frames": [
+    {
+      "x": 70,
+      "y": 13,
+      "width": 152,
+      "height": 281,
+      "foot_anchor": [
+        53,
+        281
+      ]
+    },
+    {
+      "x": 377,
+      "y": 16,
+      "width": 138,
+      "height": 277,
+      "foot_anchor": [
+        60,
+        277
+      ]
+    },
+    {
+      "x": 686,
+      "y": 22,
+      "width": 146,
+      "height": 271,
+      "foot_anchor": [
+        64,
+        271
+      ]
+    },
+    {
+      "x": 986,
+      "y": 25,
+      "width": 148,
+      "height": 268,
+      "foot_anchor": [
+        77,
+        268
+      ]
+    },
+    {
+      "x": 54,
+      "y": 339,
+      "width": 147,
+      "height": 269,
+      "foot_anchor": [
+        69,
+        269
+      ]
+    },
+    {
+      "x": 355,
+      "y": 340,
+      "width": 151,
+      "height": 267,
+      "foot_anchor": [
+        82,
+        267
+      ]
+    },
+    {
+      "x": 663,
+      "y": 339,
+      "width": 149,
+      "height": 269,
+      "foot_anchor": [
+        87,
+        269
+      ]
+    },
+    {
+      "x": 973,
+      "y": 339,
+      "width": 146,
+      "height": 268,
+      "foot_anchor": [
+        90,
+        268
+      ]
+    },
+    {
+      "x": 40,
+      "y": 651,
+      "width": 147,
+      "height": 268,
+      "foot_anchor": [
+        83,
+        268
+      ]
+    },
+    {
+      "x": 347,
+      "y": 651,
+      "width": 146,
+      "height": 268,
+      "foot_anchor": [
+        90,
+        268
+      ]
+    },
+    {
+      "x": 658,
+      "y": 652,
+      "width": 145,
+      "height": 267,
+      "foot_anchor": [
+        92,
+        267
+      ]
+    },
+    {
+      "x": 964,
+      "y": 654,
+      "width": 140,
+      "height": 265,
+      "foot_anchor": [
+        99,
+        265
+      ]
+    },
+    {
+      "x": 29,
+      "y": 970,
+      "width": 145,
+      "height": 264,
+      "foot_anchor": [
+        94,
+        264
+      ]
+    },
+    {
+      "x": 329,
+      "y": 972,
+      "width": 163,
+      "height": 262,
+      "foot_anchor": [
+        108,
+        262
+      ]
+    },
+    {
+      "x": 639,
+      "y": 972,
+      "width": 166,
+      "height": 262,
+      "foot_anchor": [
+        111,
+        262
+      ]
+    },
+    {
+      "x": 952,
+      "y": 972,
+      "width": 166,
+      "height": 262,
+      "foot_anchor": [
+        111,
+        262
+      ]
+    }
+  ]
+}

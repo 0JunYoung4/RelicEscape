@@ -1,0 +1,126 @@
+{
+  "image": "opening-shaft-flail-seated.png",
+  "reference_height": 315,
+  "frames": [
+    {
+      "x": 85,
+      "y": 38,
+      "width": 235,
+      "height": 304,
+      "foot_anchor": [
+        117,
+        301
+      ]
+    },
+    {
+      "x": 434,
+      "y": 34,
+      "width": 237,
+      "height": 297,
+      "foot_anchor": [
+        99,
+        305
+      ]
+    },
+    {
+      "x": 760,
+      "y": 38,
+      "width": 274,
+      "height": 281,
+      "foot_anchor": [
+        141,
+        301
+      ]
+    },
+    {
+      "x": 1138,
+      "y": 43,
+      "width": 226,
+      "height": 294,
+      "foot_anchor": [
+        134,
+        296
+      ]
+    },
+    {
+      "x": 88,
+      "y": 400,
+      "width": 197,
+      "height": 291,
+      "foot_anchor": [
+        96,
+        299
+      ]
+    },
+    {
+      "x": 421,
+      "y": 401,
+      "width": 243,
+      "height": 267,
+      "foot_anchor": [
+        101,
+        298
+      ]
+    },
+    {
+      "x": 749,
+      "y": 399,
+      "width": 284,
+      "height": 282,
+      "foot_anchor": [
+        157,
+        300
+      ]
+    },
+    {
+      "x": 1169,
+      "y": 403,
+      "width": 189,
+      "height": 289,
+      "foot_anchor": [
+        71,
+        296
+      ]
+    },
+    {
+      "x": 54,
+      "y": 780,
+      "width": 274,
+      "height": 248,
+      "foot_anchor": [
+        152,
+        223
+      ]
+    },
+    {
+      "x": 405,
+      "y": 806,
+      "width": 254,
+      "height": 236,
+      "foot_anchor": [
+        129,
+        231
+      ]
+    },
+    {
+      "x": 757,
+      "y": 812,
+      "width": 259,
+      "height": 226,
+      "foot_anchor": [
+        124,
+        226
+      ]
+    },
+    {
+      "x": 1119,
+      "y": 814,
+      "width": 275,
+      "height": 230,
+      "foot_anchor": [
+        123,
+        225
+      ]
+    }
+  ]
+}
