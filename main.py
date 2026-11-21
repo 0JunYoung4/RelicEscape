@@ -13,6 +13,7 @@ import opening_cave
 from opening_cutscene import SigilApproach
 from health import Health, SpikeBed
 from launcher import FLIGHT_RADIUS, Crossbow
+from lower_caves import LowerCaves
 from lighting import Lighting
 from player import ASSET_ROOT, STANDING_HITBOX_HEIGHT, Player
 from rail import RAIL_ART_SCALE, RailCarriage, RailSegment, draw_rail
@@ -125,6 +126,51 @@ class RelicAnchor:
     crouch_time: float
     display_y: float
     placed_at: float
+
+
+class RelicTravel:
+    def __init__(self):
+        self.art = ReturnMarkArt(RELIC_DEPARTURE_SIGIL)
+        self.reset()
+
+    def reset(self):
+        self.anchor = None
+        self.effect = ReturnEffect()
+        self.marks = []
+
+    def place_or_recall(self, player, now):
+        if self.anchor is not None:
+            return self.anchor.x, self.anchor.feet_y, self.anchor.crouch_time
+        _, bottom, _, top = player.get_hitbox()
+        self.anchor = RelicAnchor(player.x, player.y, player.crouch_time, (bottom + top) / 2, now)
+        return None
+
+    def return_pose(self, now):
+        if self.anchor is None and self.marks and self.marks[-1].can_return(now):
+            return self.marks[-1].pose
+        return None
+
+    def teleport(self, player, camera, destination, now, *, reclaim):
+        if destination is None:
+            return False
+        departure = copy(player)
+        if not player.teleport_to(*destination):
+            return False
+        if self.marks:
+            self.marks[-1].finish(now)
+        if reclaim:
+            self.anchor = None
+            self.marks.append(ReturnMark(departure, now, self.art))
+        self.effect.start(departure, player, camera, now)
+        return True
+
+    def draw_marks(self, player, camera, target, now):
+        self.marks = [mark for mark in self.marks if mark.visible(now)]
+        if self.marks and target is None:
+            _, bottom, _, top = player.get_hitbox()
+            target = camera.world_to_screen(player.x, (bottom + top) / 2)
+        for mark in self.marks:
+            mark.draw(camera, target, now)
 
 
 class Camera:
@@ -541,13 +587,10 @@ def run_game(fullscreen):
     )
     initial_crossbow.angle = TEST_CROSSBOW_ANGLE
     relic_image = pico.load_image(str(RELIC_IMAGE))
-    return_mark_art = ReturnMarkArt(RELIC_DEPARTURE_SIGIL)
+    travel = RelicTravel()
     lighting = Lighting(SCREEN_WIDTH, SCREEN_HEIGHT, RELIC_GLOW_IMAGE)
     carriage = copy(initial_carriage)
     crossbow = copy(initial_crossbow)
-    relic_anchor = None
-    return_effect = ReturnEffect()
-    return_marks = []
     player = Player(
         TEST_SPAWN[0], TEST_SPIKE_FLOOR_Y, WORLD_WIDTH, terrain=TEST_TERRAIN, spawn_y=TEST_SPAWN[1],
     )
@@ -579,9 +622,7 @@ def run_game(fullscreen):
             health = Health(TEST_SPAWN, returned_at=None if manual_restart else frame_start)
             carriage = copy(initial_carriage)
             crossbow = copy(initial_crossbow)
-            relic_anchor = None
-            return_effect = ReturnEffect()
-            return_marks.clear()
+            travel.reset()
             camera = Camera(SCREEN_WIDTH, WORLD_WIDTH, CAMERA_ZOOM)
             camera.follow(player.x)
             pressed_keys.clear()
@@ -593,9 +634,8 @@ def run_game(fullscreen):
             jump_held = bool(keys[pico.SDL_SCANCODE_SPACE])
         if not has_focus or health.recovering(frame_start):
             pressed_keys.clear()
-        teleported = False
         was_aiming = crossbow.aiming
-        relic_elsewhere = relic_anchor is not None or crossbow.flight is not None
+        relic_elsewhere = travel.anchor is not None or crossbow.flight is not None
         carrying_relic = not relic_elsewhere and not carriage.relic_mounted
         use_relic = pico.SDLK_e in pressed_keys
         destination = None
@@ -613,40 +653,24 @@ def run_game(fullscreen):
         elif use_relic and carriage.can_mount(player, relic_elsewhere):
             carriage.relic_mounted = True
         elif use_relic:
-            if carrying_relic:
-                _, bottom, _, top = player.get_hitbox()
-                relic_anchor = RelicAnchor(
-                    player.x, player.y, player.crouch_time, (bottom + top) / 2, frame_start,
+            if carriage.relic_mounted:
+                x, y = carriage.position
+                destination = (x, y - STANDING_HITBOX_HEIGHT / 2, 0.0)
+            elif crossbow.flight is not None:
+                flight_x = crossbow.flight.x
+                floor_y = max(
+                    top for left, _, right, top in TEST_FLOOR
+                    if left < flight_x + FLIGHT_RADIUS and right > flight_x - FLIGHT_RADIUS
                 )
+                destination = crossbow.flight.return_pose(floor_y)
             else:
-                if carriage.relic_mounted:
-                    x, y = carriage.position
-                    destination = (x, y - STANDING_HITBOX_HEIGHT / 2, 0.0)
-                elif crossbow.flight is not None:
-                    flight_x = crossbow.flight.x
-                    floor_y = max(
-                        top for left, _, right, top in TEST_FLOOR
-                        if left < flight_x + FLIGHT_RADIUS and right > flight_x - FLIGHT_RADIUS
-                    )
-                    destination = crossbow.flight.return_pose(floor_y)
-                else:
-                    destination = (relic_anchor.x, relic_anchor.feet_y, relic_anchor.crouch_time)
-        elif pico.SDLK_q in pressed_keys and carrying_relic and return_marks:
-            mark = return_marks[-1]
-            if mark.can_return(frame_start):
-                destination = mark.pose
-        if destination is not None:
-            departure = copy(player)
-            if player.teleport_to(*destination):
-                if return_marks:
-                    return_marks[-1].finish(frame_start)
-                if use_relic:
-                    relic_anchor = None
-                    carriage.relic_mounted = False
-                    crossbow.flight = None
-                    return_marks.append(ReturnMark(departure, frame_start, return_mark_art))
-                teleported = True
-                return_effect.start(departure, player, camera, frame_start)
+                destination = travel.place_or_recall(player, frame_start)
+        elif pico.SDLK_q in pressed_keys and carrying_relic:
+            destination = travel.return_pose(frame_start)
+        teleported = travel.teleport(player, camera, destination, frame_start, reclaim=use_relic)
+        if teleported and use_relic:
+            carriage.relic_mounted = False
+            crossbow.flight = None
         if was_aiming or crossbow.aiming:
             direction, running, crouching = 0, False, False
             jump_held = False
@@ -661,7 +685,7 @@ def run_game(fullscreen):
             )
         if health.check_spikes(player, TEST_SPIKES, frame_start):
             crossbow.aiming = False
-            return_effect = ReturnEffect()
+            travel.effect = ReturnEffect()
         elif not teleported and not health.recovering(frame_start):
             carriage.check_attack(player)
         if health.return_to_safety(player, frame_start):
@@ -683,6 +707,7 @@ def run_game(fullscreen):
             camera.update(player.x, delta_time)
         carriage_position = carriage.position
         crossbow_relic_position = crossbow.relic_position
+        relic_anchor = travel.anchor
         relic_elsewhere = relic_anchor is not None or crossbow_relic_position is not None
         can_interact = has_focus and not health.recovering(frame_start)
         show_crossbow_prompt = (
@@ -710,16 +735,9 @@ def run_game(fullscreen):
             crossbow=crossbow, crossbow_relic_image=relic_image if crossbow_relic_position is not None else None,
             show_crossbow_prompt=show_crossbow_prompt,
             lighting=lighting, relic_center=relic_center,
-            return_effect=return_effect, frame_start=frame_start, health=health,
+            return_effect=travel.effect, frame_start=frame_start, health=health,
         )
-        return_marks = [mark for mark in return_marks if mark.visible(frame_start)]
-        if return_marks:
-            mark_target = relic_center
-            if mark_target is None:
-                _, bottom, _, top = player.get_hitbox()
-                mark_target = camera.world_to_screen(player.x, (bottom + top) / 2)
-            for mark in return_marks:
-                mark.draw(camera, mark_target, frame_start)
+        travel.draw_marks(player, camera, relic_center, frame_start)
         if relic_anchor is not None:
             draw_relic(relic_image, camera, *relic_position, relic_elapsed)
         health.draw_hud(SCREEN_HEIGHT, frame_start)
@@ -733,6 +751,9 @@ def run_game(fullscreen):
 def run_opening_cave(fullscreen):
     cave = opening_cave.OpeningCave(SCREEN_WIDTH, SCREEN_HEIGHT)
     approach = SigilApproach()
+    lower = None
+    travel = RelicTravel()
+    relic_image = pico.load_image(str(RELIC_IMAGE))
     player = Player(*opening_cave.SPAWN[:2], opening_cave.WORLD_WIDTH, terrain=opening_cave.TERRAIN)
     # Keep the floor low in the frame when zooming in, rather than magnifying the underground rock.
     camera = Camera(
@@ -763,6 +784,9 @@ def run_opening_cave(fullscreen):
         else:
             pressed_keys.clear()
         if pico.SDLK_r in pressed_keys:
+            lower = None
+            travel.reset()
+            camera.world_width = player.world_width = opening_cave.WORLD_WIDTH
             approach.reset(player)
             camera.zoom = camera.normal_zoom
             player.recover_at(*opening_cave.SPAWN)
@@ -770,10 +794,27 @@ def run_opening_cave(fullscreen):
             pressed_keys.clear()
             direction, running, crouching = 0, False, False
             jump_held = False
-        if pico.SDLK_e in pressed_keys:
+        if lower is None and pico.SDLK_e in pressed_keys:
             approach.start(player)
-        if approach.active:
+        if lower is not None:
+            use = pico.SDLK_e in pressed_keys
+            destination = None
+            if lower.has_relic:
+                if use:
+                    destination = travel.place_or_recall(player, frame_start)
+                elif pico.SDLK_q in pressed_keys:
+                    destination = travel.return_pose(frame_start)
+            if travel.teleport(player, camera, destination, frame_start, reclaim=use):
+                camera.follow(player.x)
+            else:
+                lower.update(player, camera, delta_time, interact=use and not lower.has_relic,
+                             direction=direction, running=running, jump_pressed=pico.SDLK_SPACE in pressed_keys,
+                             jump_held=jump_held, crouching=crouching, attack_pressed=pico.SDLK_x in pressed_keys)
+        elif approach.active:
             approach.update(player, delta_time)
+            if approach.stood_up:
+                lower = LowerCaves(cave)
+                lower.enter(player, camera)
         else:
             player.update(
                 direction, running, delta_time,
@@ -781,7 +822,13 @@ def run_opening_cave(fullscreen):
                 crouch_held=crouching, attack_pressed=pico.SDLK_x in pressed_keys,
             )
         shaft_cut = approach.phase in ("descent", "impact")
-        if shaft_cut:
+        relic_center = None
+        if lower is not None:
+            lower.draw(camera)
+            relic = lower.relic_position(player)
+            if relic is not None:
+                draw_relic(relic_image, camera, *relic, frame_start)
+        elif shaft_cut:
             cave.draw_descent(camera, player)
         else:
             camera.follow(player.x)
@@ -793,15 +840,29 @@ def run_opening_cave(fullscreen):
             shade_stone_depth(
                 0, SCREEN_WIDTH, SCREEN_HEIGHT - round(CAVE_FLOOR_SCREEN_Y + shake_y), SCREEN_HEIGHT,
             )
-        if not approach.draw(player, camera):
-            player.draw(camera)
-        if not shaft_cut:
-            cave.draw_foreground(camera)
+        if lower is not None:
+            if not travel.effect.draw(player, camera, frame_start, None):
+                player.draw(camera)
+            if travel.anchor is not None:
+                anchor = travel.anchor
+                elapsed = frame_start - anchor.placed_at
+                relic_center = relic_screen_center(camera, anchor.x, anchor.display_y, elapsed)
+                draw_relic(relic_image, camera, anchor.x, anchor.display_y, elapsed)
+            travel.draw_marks(player, camera, relic_center, frame_start)
+            lower.draw_foreground(camera)
+        else:
+            if not approach.draw(player, camera):
+                player.draw(camera)
+            if not shaft_cut:
+                cave.draw_foreground(camera)
         if show_hitboxes:
             player.draw_hitbox(camera)
-        if has_focus and approach.can_start(player):
+        if lower is not None and has_focus and lower.target(player) is not None:
+            draw_mount_prompt(camera, (lower.target(player), STANDING_HITBOX_HEIGHT), frame_start)
+        elif lower is None and has_focus and approach.can_start(player):
             draw_mount_prompt(camera, (player.x, player.y + STANDING_HITBOX_HEIGHT), frame_start)
         health.draw_hud(SCREEN_HEIGHT, frame_start)
+        draw_relic_indicator(relic_center)
         pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
         pico.update_canvas()
         sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))

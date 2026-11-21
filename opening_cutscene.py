@@ -66,6 +66,10 @@ class SigilApproach:
         return self.phase != "idle"
 
     @property
+    def stood_up(self):
+        return self.phase == "impact" and self.phase_time >= GET_UP_START + self.rise.duration
+
+    @property
     def frame_index(self):
         if self.phase == "impact":
             if self.phase_time >= GET_UP_START:
