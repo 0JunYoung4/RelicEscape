@@ -810,6 +810,7 @@ def run_opening_cave(fullscreen):
                 lower.update(player, camera, delta_time, interact=use and not lower.has_relic,
                              direction=direction, running=running, jump_pressed=pico.SDLK_SPACE in pressed_keys,
                              jump_held=jump_held, crouching=crouching, attack_pressed=pico.SDLK_x in pressed_keys)
+            lower.update_pillbugs(player, delta_time)
         elif approach.active:
             approach.update(player, delta_time)
             if approach.stood_up:
@@ -850,6 +851,7 @@ def run_opening_cave(fullscreen):
                 draw_relic(relic_image, camera, anchor.x, anchor.display_y, elapsed)
             travel.draw_marks(player, camera, relic_center, frame_start)
             lower.draw_foreground(camera)
+            lower.draw_attack_hint(player)
         else:
             if not approach.draw(player, camera):
                 player.draw(camera)

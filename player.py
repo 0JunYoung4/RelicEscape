@@ -31,6 +31,7 @@ JUMP_BUFFER_DURATION = 0.10
 ATTACK_BUFFER_WINDOW = 0.05
 STANDING_HITBOX_WIDTH = 40.0
 STANDING_HITBOX_HEIGHT = 140.0
+STARTING_ATTACK_POWER = 12
 CROUCH_HITBOX_WIDTH = 100.0
 CROUCH_HITBOX_HEIGHT = 80.0
 WALL_SLIDE_SPEED = 120.0
@@ -96,6 +97,8 @@ class Player:
         self.buffered_attack_down = None
         self.attack_animation_key = "attack"
         self.attack_facing = self.facing
+        self.attack_power = STARTING_ATTACK_POWER
+        self.swing_id = 0
         self.slash_starts = {}
         self.slash = None
         self.crouch_time = 0.0
@@ -168,6 +171,7 @@ class Player:
             if slash_start is not None and previous_attack_time < slash_start <= self.attack_time:
                 slash_age = self.attack_time - slash_start
                 if slash_age < SLASH_DURATION:
+                    self.swing_id += 1
                     self.slash = (slash_age, self.attack_facing, self.attack_animation_key)
             if self.attack_time >= attack.duration:
                 self.attack_time = None

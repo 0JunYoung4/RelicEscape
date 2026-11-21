@@ -12,6 +12,10 @@ FORWARD_SLASH_CENTER = (31, 82)
 FORWARD_SLASH_RADIUS = (150, 78)
 FORWARD_SLASH_HALF_ANGLE = 102
 SLASH_FADE_EXPANSION = (6, 3)
+DOWNWARD_CENTER = (8, 42)
+DOWNWARD_RADIUS = (128, 66)
+DOWNWARD_ANGLE = 82
+DOWNWARD_ROTATION = radians(-55)
 
 
 def forward_slash_bounds(x, y, facing):
@@ -25,12 +29,25 @@ def forward_slash_bounds(x, y, facing):
     return min(near_x, far_x), y + center_y - radius_y, max(near_x, far_x), y + center_y + radius_y
 
 
+def downward_slash_bounds(x, y, facing):
+    """Bounds of the tilted downward blade trail, including its fading outer edge."""
+    points = []
+    for step in range(ARC_SEGMENTS + 1):
+        angle = radians(DOWNWARD_ANGLE * (1 - 2 * step / ARC_SEGMENTS))
+        dx = (DOWNWARD_RADIUS[0] + SLASH_FADE_EXPANSION[0]) * cos(angle)
+        dy = (DOWNWARD_RADIUS[1] + SLASH_FADE_EXPANSION[1]) * sin(angle)
+        points.append((x + facing * (DOWNWARD_CENTER[0] + dx * cos(DOWNWARD_ROTATION) - dy * sin(DOWNWARD_ROTATION)),
+                       y + DOWNWARD_CENTER[1] + dx * sin(DOWNWARD_ROTATION) + dy * cos(DOWNWARD_ROTATION)))
+    xs, ys = zip(*points)
+    return min(xs), min(ys), max(xs), max(ys)
+
+
 def draw_slash(x, y, facing, age, camera, *, downward=False):
     if downward:
-        center_x, center_y = 8, 42
-        radius_x, radius_y = 128, 66
-        start_angle, end_angle = 82, -82
-        rotation = radians(-55)
+        center_x, center_y = DOWNWARD_CENTER
+        radius_x, radius_y = DOWNWARD_RADIUS
+        start_angle, end_angle = DOWNWARD_ANGLE, -DOWNWARD_ANGLE
+        rotation = DOWNWARD_ROTATION
     else:
         center_x, center_y = FORWARD_SLASH_CENTER
         radius_x, radius_y = FORWARD_SLASH_RADIUS
