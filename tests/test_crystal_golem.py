@@ -14,7 +14,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 from pico2d import pico2d as pico
 
 import main
-from crystal_golem import BODY_WIDTH, HURT_TIME, MAX_HP, CrystalGolem
+from crystal_golem import BODY_WIDTH, MAX_HP, CrystalGolem
 from health import CONTACT_DAMAGE, Health
 from lower_caves import COMBAT_PLATFORMS, COMBAT_TERRAIN, COMBAT_WIDTH, LowerCaves
 from player import STARTING_ATTACK_POWER, Player
@@ -63,7 +63,7 @@ class CrystalGolemTests(unittest.TestCase):
         self.assertFalse(golem.check_strike((760, 0, 840, 100), -1, 12, 1))
         self.assertEqual(golem.hp, 53)
 
-    def test_patrol_stops_at_stone_faces_and_pauses_while_hurt(self):
+    def test_patrol_stops_at_stone_faces_and_keeps_moving_when_hit(self):
         golem = CrystalGolem(100, 900, direction=1)
         golem.x = 400
         wall = (500, 0, 600, 200)
@@ -72,8 +72,8 @@ class CrystalGolemTests(unittest.TestCase):
         self.assertEqual(golem.direction, -1)
         golem.check_strike((400, 0, 450, 100), 1, 12, 1)
         position = golem.x
-        golem.update(HURT_TIME / 2, (), (wall,), 1000)
-        self.assertEqual(golem.x, position)
+        golem.update(.1, (), (wall,), 1000)
+        self.assertAlmostEqual(golem.x, position - 2.2)
         for _ in range(500):
             golem.update(.1, (), (wall,), 1000)
             self.assertGreaterEqual(golem.x, golem.left)
@@ -109,7 +109,7 @@ class CrystalGolemRoomTests(unittest.TestCase):
             self.lower.update_enemies(self.player, 0)
             self.assertEqual(first.hp, expected)
         self.player.slash = None
-        self.lower.update_enemies(self.player, HURT_TIME)
+        self.lower.update_enemies(self.player, .2)
         with patch.object(self.lower.golem_walk, "draw", wraps=self.lower.golem_walk.draw) as draw:
             self.lower.draw(self.camera)
             self.assertEqual(draw.call_count, 1)

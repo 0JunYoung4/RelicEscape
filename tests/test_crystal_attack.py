@@ -39,14 +39,16 @@ class CrystalAttackTests(unittest.TestCase):
         golem.update(ATTACK_DURATION, (), (), 1920)
         self.assertIsNone(golem.attack_time)
 
-    def test_sword_hit_interrupts_charge_and_dead_golem_never_fires(self):
+    def test_sword_hit_does_not_interrupt_charge_and_dead_golem_never_fires(self):
         golem = CrystalGolem(400, 600)
         golem.attack_cooldown = 0
         golem.update(.01, (900, 0, 940, 140), (), 1920)
         self.assertTrue(golem.check_strike((450, 0, 550, 100), 1, 12, 1))
+        self.assertEqual(golem.attack_time, 0)
+        self.assertIsInstance(golem.update(ATTACK_RELEASE, (900, 0, 940, 140), (), 1920), CrystalProjectile)
+        golem.hp = 12
+        self.assertTrue(golem.check_strike((450, 0, 550, 100), 1, 12, 2))
         self.assertIsNone(golem.attack_time)
-        self.assertIsNone(golem.update(ATTACK_RELEASE, (900, 0, 940, 140), (), 1920))
-        golem.hp = 0
         self.assertIsNone(golem.update(10, (900, 0, 940, 140), (), 1920))
 
     def test_ballistic_arc_rises_then_reaches_both_low_and_high_targets(self):

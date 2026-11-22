@@ -15,7 +15,7 @@ from pico2d import pico2d as pico
 from health import Health
 from lower_caves import COMBAT_WIDTH, LowerCaves
 from main import Camera
-from pillbug import DEATH_CURL_DURATION, DEATH_DURATION, Pillbug
+from pillbug import DEATH_CURL_DURATION, DEATH_DURATION, DEATH_PIXEL_COLORS, Pillbug
 from player import Player
 
 
@@ -62,7 +62,7 @@ class PillbugDeathRenderTests(unittest.TestCase):
         gc.collect()
         pico.close_canvas()
 
-    def test_curl_is_one_sprite_then_ball_becomes_many_separating_textured_pixels(self):
+    def test_curl_is_one_sprite_then_ball_becomes_many_separating_blue_pixels(self):
         bug = Pillbug(400, 800, 0)
         bug.hp = 12
         bug.check_strike((760, 0, 840, 100), 1, 12, 1)
@@ -72,23 +72,28 @@ class PillbugDeathRenderTests(unittest.TestCase):
             bug.draw(self.room.crawl, self.room.attack_poses, self.camera,
                      self.room.hurt_poses, death=art)
 
-        with patch.object(art.image, "clip_composite_draw") as render:
+        with patch.object(art.image, "clip_composite_draw") as render, \
+                patch.object(pico, "draw_rectangle") as pixels:
             bug.death_time = DEATH_CURL_DURATION - .01
             draw()
             self.assertEqual(render.call_count, 1)
+            pixels.assert_not_called()
             render.reset_mock()
             bug.death_time = DEATH_CURL_DURATION + .15
             draw()
-            self.assertGreater(render.call_count, 20)
-            first_positions = [call.args[6:8] for call in render.call_args_list]
-            render.reset_mock()
+            render.assert_not_called()
+            self.assertGreater(pixels.call_count, 20)
+            self.assertTrue(all(call.args[4:7] in DEATH_PIXEL_COLORS for call in pixels.call_args_list))
+            first_positions = [call.args[:2] for call in pixels.call_args_list]
+            pixels.reset_mock()
             bug.death_time += .1
             draw()
-            self.assertNotEqual(first_positions, [call.args[6:8] for call in render.call_args_list])
-            render.reset_mock()
+            self.assertNotEqual(first_positions, [call.args[:2] for call in pixels.call_args_list])
+            pixels.reset_mock()
             bug.death_time = DEATH_DURATION
             draw()
             render.assert_not_called()
+            pixels.assert_not_called()
 
     def test_actual_room_sword_kills_use_death_art_in_both_gallery_and_combat(self):
         for name in ("gallery", "combat"):
@@ -105,6 +110,7 @@ class PillbugDeathRenderTests(unittest.TestCase):
                 self.player.slash = None
                 self.assertEqual((bug.hp, bug.phase), (0, "death"))
                 self.room.update_enemies(self.player, DEATH_CURL_DURATION + .1)
-                with patch.object(self.room.pillbug_death.image, "clip_composite_draw") as render:
+                with patch.object(pico, "draw_rectangle") as render:
                     self.room.draw(self.camera)
-                    self.assertGreater(render.call_count, 20)
+                    blue_pixels = [call for call in render.call_args_list if call.args[4:7] in DEATH_PIXEL_COLORS]
+                    self.assertGreater(len(blue_pixels), 20)

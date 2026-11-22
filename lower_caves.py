@@ -103,6 +103,12 @@ class LowerCaves:
                                         golem_emerge["frames"], golem_emerge["foot_anchor"],
                                         golem_emerge["scale"], golem_emerge["fps"],
                                         golem_emerge["frame_durations_ms"])
+        golem_death_path = golem_path.with_name("stone-crystal-golem-death-left-v1.json")
+        golem_death = json.loads(golem_death_path.read_text(encoding="utf-8"))
+        self.golem_death = Animation(golem_death_path.parent / golem_death["image"],
+                                    golem_death["frames"], golem_death["foot_anchor"],
+                                    golem_death["scale"], golem_death["fps"],
+                                    golem_death["frame_durations_ms"])
         self.crystal_image = pico.load_image(str(ASSET_ROOT / "sprites/projectiles/back-crystal-shard-v2.png"))
         self.projectiles = []
         self.attack_poses = pico.load_image(str(ASSET_ROOT / "sprites/enemies/stone-pillbug-roll-flip.png"))
@@ -231,7 +237,8 @@ class LowerCaves:
                                              (x2 - x1) * camera.zoom, (y2 - y1) * camera.zoom)
             if self.encounter_started:
                 for golem in self.golems:
-                    golem.draw(self.golem_walk, camera, self.golem_attack, self.golem_emergence)
+                    golem.draw(self.golem_walk, camera, self.golem_attack,
+                               self.golem_emergence, self.golem_death)
                 for bug in self.combat_pillbugs:
                     bug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses,
                              self.pillbug_emergence, self.pillbug_death)

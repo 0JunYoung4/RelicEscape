@@ -1,19 +1,21 @@
 """Slow crystal-golem patrol, charged back-crystal attack, and sword damage."""
 
 from crystal_projectile import CrystalProjectile
+from death_pixels import draw_blue_pixels
 
 
 MAX_HP = 65
 WALK_SPEED = 22.0
 BODY_WIDTH = 140
 BODY_HEIGHT = 140
-HURT_TIME = 0.20
 ATTACK_RANGE = 1400.0
 ATTACK_RELEASE = 0.72
 ATTACK_DURATION = 1.44
 ATTACK_COOLDOWN = 2.0
 EMERGE_DURATION = 1.92
 EMERGE_ATTACK_DELAY = .65
+DEATH_COLLAPSE_DURATION = 1.28
+DEATH_DURATION = DEATH_COLLAPSE_DURATION + .72
 
 
 class CrystalGolem:
@@ -26,7 +28,7 @@ class CrystalGolem:
         self.phase = "active"
         self.time = 0.0
         self.last_swing = None
-        self.hurt_remaining = 0.0
+        self.death_time = None
         self.attack_time = None
         self.attack_target = None
         self.attack_cooldown = 1.0 if direction < 0 else 1.7
@@ -46,7 +48,6 @@ class CrystalGolem:
         if self.hp == 0 or self.phase == "emerge":
             return
         self.phase, self.time = "emerge", 0.0
-        self.hurt_remaining = 0.0
         self.attack_time = None
         self.attack_target = None
         self.fired = False
@@ -60,18 +61,16 @@ class CrystalGolem:
             return False
         self.hp = max(0, self.hp - damage)
         self.last_swing = swing_id
-        self.hurt_remaining = HURT_TIME
-        # A sword hit interrupts concentration before the release event.
-        self.attack_time = None
-        self.attack_target = None
-        self.attack_cooldown = ATTACK_COOLDOWN
+        if self.hp == 0:
+            self.phase, self.death_time = "death", 0.0
+            self.attack_time = None
+            self.attack_target = None
         return True
 
     def update(self, dt, player_box, terrain, world_width):
-        if self.hurt_remaining > 0:
-            paused = min(dt, self.hurt_remaining)
-            self.hurt_remaining -= paused
-            dt -= paused
+        if self.death_time is not None:
+            self.death_time = min(DEATH_DURATION, self.death_time + max(0, dt))
+            return
         if self.hp == 0 or dt <= 0:
             return
         if self.phase == "emerge":
@@ -122,16 +121,23 @@ class CrystalGolem:
         if self.x != start:
             self.time += dt
 
-    def draw(self, animation, camera, attack_animation=None, emergence=None):
-        if self.hp == 0 and self.hurt_remaining <= 0:
+    def draw(self, animation, camera, attack_animation=None, emergence=None, death=None):
+        if self.death_time is not None:
+            if death is not None and self.death_time < DEATH_DURATION:
+                if self.death_time < DEATH_COLLAPSE_DURATION:
+                    death.draw(self.x, self.floor_y, -self.direction, self.death_time, camera)
+                else:
+                    draw_blue_pixels(death, camera, self.x, self.floor_y, -self.direction,
+                                     self.death_time - DEATH_COLLAPSE_DURATION)
+            return
+        if self.hp == 0:
             return
         if self.phase == "emerge":
             if emergence is not None:
                 emergence.draw(self.x, self.floor_y, -self.direction, self.time, camera)
             return
-        tint = (255, 185, 165) if self.hurt_remaining > 0 else None
         if self.attack_time is not None and attack_animation is not None:
             attack_animation.draw(self.x, self.floor_y, -self.direction, self.attack_time,
-                                  camera, tint=tint)
+                                  camera)
         else:
-            animation.draw(self.x, self.floor_y, -self.direction, self.time, camera, tint=tint)
+            animation.draw(self.x, self.floor_y, -self.direction, self.time, camera)

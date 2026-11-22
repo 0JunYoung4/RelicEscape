@@ -172,14 +172,14 @@ Space를 누르면 즉시 도약하고, 착지 모션 도중에도 다음 점프
 
 ### 몬스터 공통 애니메이션 기준
 
-모든 몬스터는 **생성·움직임·피격·공격·죽음**의 다섯 종류를 공통 필수 애니메이션으로 갖춥니다. 새 몬스터 제작과 기존 몬스터 보완도 이 기준으로 관리합니다. 종류별 동작과 재생 시간은 몬스터의 특징에 맞춥니다.
+몬스터는 **생성·움직임·피격·공격·죽음**의 다섯 종류를 기본 구성으로 관리하며, 몬스터 특성에 따라 예외를 둡니다. 골렘은 덩치가 커 피격 모션과 경직을 사용하지 않는 예외입니다. 종류별 동작과 재생 시간은 각 몬스터의 특징에 맞춥니다.
 
 | 몬스터 | 생성 | 움직임 | 피격 | 공격 | 죽음 |
 | --- | --- | --- | --- | --- | --- |
 | 돌 공벌레 | 바닥 등장 v1 | 걷기 | 전용 피격 자세·반동 | 구르기·뒤집힘·기립 | 몸 말기·픽셀 소멸 v1 |
-| 수정 골렘 | 바닥 등장 v1 | 주먹 걸음 v2 | 임시 색 변화·정지, 전용 모션 필요 | 수정 충전·발사 v1 | 전용 모션 미제작 |
+| 수정 골렘 | 바닥 등장 v1 | 주먹 걸음 v2 | 없음·경직 없음(특성) | 수정 충전·발사 v1 | 무거운 붕괴·푸른 픽셀 소멸 v1 |
 
-공벌레는 공통 5종을 갖췄으며 체력이 0이 되면 몸을 말고 픽셀로 흩어집니다. 골렘은 현재 피격 표시 후 제거하는 방식이며, 전용 피격·죽음 모션이 다음 보완 대상입니다.
+공벌레는 공통 5종을 갖췄으며 체력이 0이 되면 몸을 말고 픽셀로 흩어집니다. 골렘은 피격을 제외한 생성·이동·공격·죽음 4종을 갖췄습니다. 살아 있는 동안 베기에 맞아도 이동·수정 충전/발사와 그 타이밍을 유지하며, 치명타 때만 행동을 멈추고 죽음으로 전환합니다.
 
 ### 돌 공벌레 등장
 
@@ -194,14 +194,14 @@ Space를 누르면 즉시 도약하고, 착지 모션 도중에도 다음 점프
 
 ### 돌 공벌레 죽음
 
-마지막 공격에 맞으면 다리와 더듬이를 접으며 8프레임·0.64초 동안 몸을 둥글게 맙니다. 이어 완성된 공 모양 스프라이트 자체를 8 월드 단위의 사각 픽셀 조각으로 나눠, 원래 돌·이끼 색을 유지한 채 위와 양옆으로 퍼지며 0.72초 동안 사라집니다. 전체 죽음 연출은 1.36초입니다. 뒤집힌 자세는 그 방향으로 몸을 말고, 이미 구르는 중이면 공 상태를 유지해 갑자기 펴지지 않도록 했습니다.
+마지막 공격에 맞으면 다리와 더듬이를 접으며 8프레임·0.64초 동안 몸을 둥글게 맙니다. 이어 완성된 공 모양 스프라이트 자체를 8 월드 단위의 사각 픽셀 조각으로 나눠, 밝은 파랑·하늘색 픽셀로 바뀌어 위와 양옆으로 퍼지며 0.72초 동안 사라집니다. 전체 죽음 연출은 1.36초입니다. 뒤집힌 자세는 그 방향으로 몸을 말고, 이미 구르는 중이면 공 상태를 유지해 갑자기 펴지지 않도록 했습니다.
 
 `Pillbug.death_time`과 `phase=death`로 이동·공격·접촉 피해·추가 피격을 즉시 멈춥니다. 이끼 통로와 전투방에서 같은 죽음 연출을 사용합니다. 전멸 판정은 기존처럼 HP0을 기준으로 하며, 죽음이 끝난 개체는 그리지 않습니다.
 
-- [전체 죽음 GIF](assets/sprites/enemies/stone-pillbug-death-v1-preview.gif) · [투명 APNG](assets/sprites/enemies/stone-pillbug-death-v1-preview.apng)
+- [전체 죽음 GIF](assets/sprites/enemies/stone-pillbug-death-blue-v1-preview.gif) · [투명 APNG](assets/sprites/enemies/stone-pillbug-death-blue-v1-preview.apng)
 - [몸 말기 4×2 시트](assets/sprites/enemies/stone-pillbug-death-curl-left-v1.png) · [프레임 정보](assets/sprites/enemies/stone-pillbug-death-curl-left-v1.json)
-- [실제 세 번 베기→죽음 미리보기](docs/pillbug-death-in-game.gif)
-- 몸 말기는 내장 이미지 생성 도구로 제작했습니다. [생성 프롬프트](assets/sprites/enemies/stone-pillbug-death-curl-left-v1.prompt.txt)를 보존했습니다. 픽셀 분해는 게임에서 최종 공 스프라이트를 잘라 움직이는 방식으로 렌더합니다. APNG도 SDL의 투명 타깃에서 실제 효과를 렌더해 인코딩했습니다.
+- [실제 세 번 베기→죽음 미리보기](docs/pillbug-death-blue-in-game.gif)
+- 몸 말기는 내장 이미지 생성 도구로 제작했습니다. [생성 프롬프트](assets/sprites/enemies/stone-pillbug-death-curl-left-v1.prompt.txt)를 보존했습니다. 픽셀 분해는 최종 공 스프라이트의 알파 실루엣에 맞춰 푸른 사각 조각을 배치하고 움직이는 방식으로 렌더합니다. APNG도 SDL의 투명 타깃에서 실제 효과를 렌더해 인코딩했습니다.
 
 ### 바위 골렘 등장
 
@@ -214,18 +214,29 @@ Space를 누르면 즉시 도약하고, 착지 모션 도중에도 다음 점프
 - [네 마리 등장 게임 미리보기](docs/golem-emergence-in-game.gif)
 - 내장 이미지 생성 도구로 기존 골렘 외형을 참조해 제작했습니다. [정확한 생성 프롬프트](assets/sprites/enemies/stone-crystal-golem-emerge-left-v1.prompt.txt)를 보존하고, 그림 편집 없이 프레임 영역·접지점·크기·미리보기 인코딩을 맞췄습니다.
 
+### 바위 골렘 죽음
+
+골렘이 치명타를 받으면 다리와 팔이 무게를 버티지 못하고, 머리·몸통·등의 수정이 낮은 돌무더기로 무너집니다. 붕괴 16프레임·1.28초 뒤 푸른 사각 픽셀로 0.72초 동안 흩어집니다. 전체 연출은 2초입니다.
+
+`CrystalGolem.death_time`으로 처치 후 이동·접촉 피해·추가 피격·예약 발사를 멈춥니다. 비치명 피격은 행동이나 공격 타이머를 건드리지 않습니다. `death_pixels.py`의 같은 푸른 픽셀 효과를 공벌레와 공유합니다. 전멸 판정은 기존처럼 HP0을 기준으로 합니다.
+
+- [확대 죽음 GIF](assets/sprites/enemies/stone-crystal-golem-death-v1-preview.gif) · [투명 APNG](assets/sprites/enemies/stone-crystal-golem-death-v1-preview.apng)
+- [투명 붕괴 시트](assets/sprites/enemies/stone-crystal-golem-death-left-v1.png) · [프레임/픽셀 정보](assets/sprites/enemies/stone-crystal-golem-death-left-v1.json)
+- [실제 6회 베기·공격 유지·죽음 미리보기](docs/golem-death-in-game.gif)
+- 내장 이미지 생성 도구로 기존 골렘을 참조해 제작했습니다. [생성 프롬프트](assets/sprites/enemies/stone-crystal-golem-death-left-v1.prompt.txt)를 보존했으며, 그림 변경 없이 프레임 영역·접지점·픽셀 실루엣·미리보기를 내보냈습니다.
+
 ### 수정 바위 골렘
 
 원거리 몬스터 [콘셉트](assets/concepts/stone-crystal-golem-concept-v1.png)를 기준으로 기본 이미지와 느린 주먹 걸음을 제작했습니다. 최신 이동 v2는 바깥쪽 주먹의 지지·회수·착지 사이 중간 자세를 늘린 16프레임입니다. 주인공처럼 수정 끝까지 높이 140 월드 단위로 표시할 수 있도록 JSON에 배율과 발 기준점을 기록했습니다. 초당 12.5프레임으로 기존과 같은 1.28초 동안 반복합니다.
 
-새 전투방에는 [체력 65](crystal_golem.py)의 골렘 두 마리가 느리게 순찰합니다. 기본 공격력 12로 다섯 번 맞으면 체력 5가 남고 여섯 번째에 처치됩니다. 한 번의 베기에는 한 번만 피해를 받으며, 명중 반동·피격 표시·접촉 피해를 적용했습니다. 적 체력바는 표시하지 않습니다. 전투방에서 사망하면 골렘 체력은 초기화하고 이미 획득한 유물은 유지합니다. 등의 수정 발사와 두 종류 총 네 마리 전투·전멸 후 통로 개방을 구현했습니다.
+새 전투방에는 [체력 65](crystal_golem.py)의 골렘 두 마리가 느리게 순찰합니다. 기본 공격력 12로 다섯 번 맞으면 체력 5가 남고 여섯 번째에 처치됩니다. 한 번의 베기에는 한 번만 피해를 받으며, 주인공의 명중 반동과 몬스터 접촉 피해를 적용했습니다. 골렘에는 피격 모션·색 변화·경직이 없고, 맞아도 이동과 공격을 유지합니다. 적 체력바는 표시하지 않습니다. 전투방에서 사망하면 골렘 체력은 초기화하고 이미 획득한 유물은 유지합니다. 등의 수정 발사와 두 종류 총 네 마리 전투·전멸 후 통로 개방을 구현했습니다.
 
 - [투명 기본 이미지](assets/sprites/enemies/stone-crystal-golem-idle-left-v1.png) · [기본 프레임 정보](assets/sprites/enemies/stone-crystal-golem-idle-left-v1.json)
 - [투명 이동 시트 4×4](assets/sprites/enemies/stone-crystal-golem-walk-left-v2.png) · [이동 프레임 정보](assets/sprites/enemies/stone-crystal-golem-walk-left-v2.json)
 - [반복 이동 GIF](assets/sprites/enemies/stone-crystal-golem-walk-left-v2-preview.gif) · [투명 반복 APNG](assets/sprites/enemies/stone-crystal-golem-walk-left-v2-preview.apng)
 - 내장 이미지 생성 도구 사용: [기본 이미지 프롬프트](assets/sprites/enemies/stone-crystal-golem-idle-left-v1.prompt.txt) · [이동 수정 프롬프트](assets/sprites/enemies/stone-crystal-golem-walk-left-v2.prompt.txt)
 
-공격 모션과 투사체는 별도 투명 자산입니다. 골렘이 멈춰 양 주먹을 짚고 몸을 낮추며 등의 수정을 충전합니다. 16프레임·1.44초 모션의 8번 프레임(0.72초)에서 수정 한 개를 발사하고 반동 후 순찰로 돌아갑니다. 충전 시작 시 주인공 위치를 고정해 조준하며, 충전 중 베기에 맞으면 공격이 취소됩니다. 공격 후 대기는 2초입니다.
+공격 모션과 투사체는 별도 투명 자산입니다. 골렘이 멈춰 양 주먹을 짚고 몸을 낮추며 등의 수정을 충전합니다. 16프레임·1.44초 모션의 8번 프레임(0.72초)에서 수정 한 개를 발사하고 반동 후 순찰로 돌아갑니다. 충전 시작 시 주인공 위치를 고정해 조준하며, 충전 중 베기에 맞아도 공격을 유지하고 치명타 때만 발사를 중단합니다. 공격 후 대기는 2초입니다.
 
 `crystal_projectile.py`의 독립 투사체는 중력 1000으로 포물선을 그립니다. 발사점과 표적 중 높은 쪽보다 160 높은 정점을 거쳐 내려오며 비행 방향에 맞춰 이미지를 회전합니다. 벽·발판·바닥에 막히고 주인공 명중 시 피해 10을 줍니다. 몸 접촉과 0.8초 무적을 공유하며 처치된 골렘이 이미 쏜 수정도 계속 비행합니다. 방 이동·재시작 시 남은 투사체를 비웁니다. 최신 투사체 v2는 표시 길이를 44→76으로 키우고 투명 여백을 정리했습니다. 밝은 청록·흰색 내부와 짙은 남색 윤곽선, 외곽 발광으로 배경에서 분리됩니다. 순찰 방향 전환은 실제 지형 충돌이나 순찰 끝 도달 시에만 처리해 소수점 이동 오차로 좌우 반전이 반복되는 문제도 수정했습니다.
 
