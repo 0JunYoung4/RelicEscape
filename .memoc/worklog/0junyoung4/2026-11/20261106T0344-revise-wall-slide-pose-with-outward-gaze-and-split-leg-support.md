@@ -27,9 +27,9 @@ created: 2026-11-06T03:44:44
 - `memoc/02-current-project-state.md`
 - `.memoc/04-handoff.md`
 - `.memoc/session-summary.md`
-- `assets/sprites/player/wall-slide-right-draft-v1.png`
-- `assets/sprites/player/wall-slide-right-draft-v1.prompt.txt`
-- `assets/sprites/player/wall-slide-right-draft-v2.png`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v1.png`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v1.prompt.txt`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v2.png`
 
 ## Verification
 

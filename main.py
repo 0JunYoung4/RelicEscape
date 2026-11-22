@@ -827,6 +827,8 @@ def run_opening_cave(fullscreen, *, after_relic=False):
                     destination = travel.place_or_recall(player, frame_start)
                 elif pico.SDLK_q in pressed_keys:
                     destination = travel.return_pose(frame_start)
+            if not lower.allows_relic_destination(destination):
+                destination = None
             if travel.teleport(player, camera, destination, frame_start, reclaim=use):
                 lower.follow_camera(player, camera)
             else:
@@ -836,7 +838,10 @@ def run_opening_cave(fullscreen, *, after_relic=False):
                              jump_held=jump_held, crouching=crouching, attack_pressed=pico.SDLK_x in pressed_keys)
                 if lower.room != previous_room:
                     travel.reset()
+            encounter_started = lower.encounter_started
             lower.update_enemies(player, delta_time)
+            if not encounter_started and lower.encounter_started:
+                travel.reset()
             health.check_contact(player, lower.enemies, frame_start)
             lower.update_projectiles(player, health, delta_time, frame_start)
         elif lower is None and approach.active:
@@ -852,12 +857,14 @@ def run_opening_cave(fullscreen, *, after_relic=False):
             )
         shaft_cut = approach.phase in ("descent", "impact")
         relic_center = None
+        render_origin = camera.x, camera.y
         if lower is not None:
+            lower.update_effects(delta_time, player)
+            shake_x, shake_y = lower.wall_effects.shake()
+            camera.x -= shake_x / camera.zoom
+            camera.y -= shake_y / camera.zoom
             lower.draw(camera)
             if lower.room == "combat":
-                floor_y = round(camera.world_to_screen(0, 0)[1])
-                shade_stone_depth(0, SCREEN_WIDTH, SCREEN_HEIGHT - floor_y + 6,
-                                  SCREEN_HEIGHT, fade_fraction=0.22)
                 lower.draw_combat_exit(camera)
             relic = lower.relic_position(player)
             if relic is not None:
@@ -897,6 +904,9 @@ def run_opening_cave(fullscreen, *, after_relic=False):
             draw_mount_prompt(camera, (lower.target(player), STANDING_HITBOX_HEIGHT), frame_start)
         elif lower is None and has_focus and approach.can_start(player):
             draw_mount_prompt(camera, (player.x, player.y + STANDING_HITBOX_HEIGHT), frame_start)
+        if lower is not None:
+            # Shake only the world render; keep tracking, collision and HUD stable.
+            camera.x, camera.y = render_origin
         health.draw_hud(SCREEN_HEIGHT, frame_start)
         draw_relic_indicator(relic_center)
         health.draw_blackout(SCREEN_WIDTH, SCREEN_HEIGHT, frame_start)

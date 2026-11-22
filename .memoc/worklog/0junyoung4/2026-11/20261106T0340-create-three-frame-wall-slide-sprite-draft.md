@@ -24,8 +24,8 @@ created: 2026-11-06T03:40:39
 
 ## Changed Files
 
-- `assets/sprites/player/wall-slide-right-draft-v1.png`
-- `assets/sprites/player/wall-slide-right-draft-v1.prompt.txt`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v1.png`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v1.prompt.txt`
 
 ## Verification
 

@@ -1,0 +1,15 @@
+{
+  "image": "moss-combat-floor-cover-v4.png",
+  "source_image": "moss-combat-floor-cover-v4-source.png",
+  "source_crop": [
+    22,
+    116,
+    1838,
+    724
+  ],
+  "world_size": [
+    248,
+    112
+  ],
+  "mode": "builtin-imagegen"
+}

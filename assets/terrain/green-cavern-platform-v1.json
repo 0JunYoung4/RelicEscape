@@ -1,0 +1,12 @@
+{
+  "image": "green-cavern-platform-v1.png",
+  "source_image": "green-cavern-platform-v1-source.png",
+  "source_crop": [
+    17,
+    156,
+    2156,
+    544
+  ],
+  "surface_y": 69,
+  "mode": "builtin-imagegen"
+}

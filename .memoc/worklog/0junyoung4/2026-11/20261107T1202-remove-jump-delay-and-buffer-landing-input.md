@@ -35,7 +35,7 @@ created: 2026-11-07T12:02:43
 - `main.py`
 - `player.py`
 - `tests/test_player.py`
-- `assets/sprites/player/attack-right-draft-v1.json`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/attack-right-draft-v1.json`
 
 ## Verification
 

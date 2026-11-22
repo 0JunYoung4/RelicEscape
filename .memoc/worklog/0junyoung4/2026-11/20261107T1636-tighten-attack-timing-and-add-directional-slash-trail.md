@@ -26,7 +26,7 @@ created: 2026-11-07T16:36:20
 
 - `player.py`
 - `slash_effect.py`
-- `assets/sprites/player/attack-right-draft-v2.json`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/attack-right-draft-v2.json`
 - `assets/sprites/player/air-attack-right-draft-v3.json`
 - `assets/sprites/player/air-down-attack-right-draft-v4.json`
 - `tests/test_player.py`

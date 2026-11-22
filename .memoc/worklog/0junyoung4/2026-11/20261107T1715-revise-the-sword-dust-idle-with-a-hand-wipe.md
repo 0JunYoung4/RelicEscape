@@ -25,8 +25,8 @@ created: 2026-11-07T17:15:24
 
 - `.memoc/02-current-project-state.md`
 - `.memoc/session-summary.md`
-- `assets/sprites/player/idle-sword-dust-right-draft-v2.png`
-- `assets/sprites/player/idle-sword-dust-right-draft-v2.prompt.txt`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/idle-sword-dust-right-draft-v2.png`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/idle-sword-dust-right-draft-v2.prompt.txt`
 
 ## Verification
 

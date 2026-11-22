@@ -13,7 +13,7 @@ from pico2d import pico2d as pico
 
 from crystal_projectile import CrystalProjectile
 from health import Health
-from lower_caves import (COMBAT_CENTER_X, COMBAT_EXIT_DURATION, COMBAT_EXIT_LEFT,
+from lower_caves import (COMBAT_CENTER_X, COMBAT_COVER_THICKNESS, COMBAT_EXIT_DURATION, COMBAT_EXIT_LEFT,
                          COMBAT_EXIT_RIGHT, COMBAT_OPEN_TERRAIN, COMBAT_SHAFT_FLOOR,
                          COMBAT_WIDTH, LowerCaves)
 from main import Camera
@@ -69,7 +69,7 @@ class CombatClearTests(unittest.TestCase):
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION / 2)
         self.assertGreater(self.room.exit_progress, 0)
         self.assertFalse(self.room.exit_open)
-        self.assertEqual(self.player.ground_y, 0)
+        self.assertEqual(self.player.ground_y, COMBAT_SHAFT_FLOOR)
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION / 2)
         self.assertTrue(self.room.exit_open)
         self.assertEqual(self.player.terrain, COMBAT_OPEN_TERRAIN)
@@ -98,6 +98,19 @@ class CombatClearTests(unittest.TestCase):
         self.assertLess(self.camera.y, original_camera_y)
         self.assertFalse(self.player._overlaps_terrain())
 
+    def test_sliding_cover_still_supports_right_side_while_left_side_is_open(self):
+        for enemy in self.room.enemies:
+            enemy.hp = 0
+        self.room.update_enemies(self.player, COMBAT_EXIT_DURATION / 2)
+        terrain = self.room.combat_terrain()
+        # Freeze the half-open cover to check each side's support independently.
+        for x, falling in ((COMBAT_EXIT_LEFT + 50, True), (COMBAT_EXIT_RIGHT - 50, False)):
+            self.player.terrain = terrain
+            self.player.recover_at(x, 0, 0)
+            for _ in range(12):
+                self.player.update(0, False, 1 / 60)
+            self.assertEqual(self.player.y < 0, falling)
+
     def test_clear_persists_on_room_return_but_fresh_encounter_is_closed(self):
         for enemy in self.room.enemies:
             enemy.hp = 0
@@ -111,6 +124,16 @@ class CombatClearTests(unittest.TestCase):
         fresh = LowerCaves(self.cave)
         self.assertFalse(fresh.exit_open)
         self.assertEqual(sum(enemy.hp > 0 for enemy in (*fresh.golems, *fresh.combat_pillbugs)), 4)
+
+    def test_fixed_socket_ledges_remain_after_the_thin_lid_retracts(self):
+        for enemy in self.room.enemies:
+            enemy.hp = 0
+        self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
+        for x in (COMBAT_EXIT_LEFT + 20, COMBAT_EXIT_RIGHT - 20):
+            self.assertTrue(self.player.recover_at(x, 0, 0))
+            for _ in range(60):
+                self.player.update(0, False, 1 / 60)
+            self.assertEqual((self.player.y, self.player.grounded), (-COMBAT_COVER_THICKNESS, True))
 
     def test_ground_pillbug_contact_and_remaining_crystal_can_enter_the_open_shaft(self):
         bug = self.room.combat_pillbugs[0]

@@ -1,0 +1,8 @@
+{
+  "image": "moss-combat-floor-cover-v1.png",
+  "source_image": "moss-combat-floor-cover-v1-source.png",
+  "source_crop": [39, 216, 2127, 536],
+  "world_size": [300, 80],
+  "motion": "single slab slides right into the floor bank",
+  "mode": "builtin-imagegen"
+}

@@ -33,11 +33,11 @@ created: 2026-11-11T13:32:17
 - `player.py`
 - `slash_effect.py`
 - `tests/test_player.py`
-- `assets/sprites/player/attack-sweep-right-v1.json`
-- `assets/sprites/player/attack-sweep-right-v1.png`
-- `assets/sprites/player/attack-sweep-right-v1.prompt.txt`
-- `assets/sprites/player/attack-windup-right-v1.png`
-- `assets/sprites/player/attack-windup-right-v1.prompt.txt`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v1.json`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v1.png`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v1.prompt.txt`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/attack-windup-right-v1.png`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/attack-windup-right-v1.prompt.txt`
 - `assets/sprites/player/attack-sweep-right-v2.json`
 - `assets/sprites/player/attack-sweep-right-v2.png`
 - `assets/sprites/player/attack-sweep-right-v2.prompt.txt`

@@ -23,8 +23,8 @@ created: 2026-11-07T16:05:06
 
 ## Changed Files
 
-- `assets/sprites/player/air-down-attack-right-draft-v2.png`
-- `assets/sprites/player/air-down-attack-right-draft-v2.prompt.txt`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/air-down-attack-right-draft-v2.png`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/air-down-attack-right-draft-v2.prompt.txt`
 
 ## Verification
 

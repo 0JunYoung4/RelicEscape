@@ -1,0 +1,15 @@
+{
+  "image": "moss-combat-shaft-rim-v1.png",
+  "source_image": "moss-combat-shaft-rim-v1-source.png",
+  "source_crop": [
+    19,
+    236,
+    2154,
+    513
+  ],
+  "world_size": [
+    352,
+    64
+  ],
+  "mode": "builtin-imagegen"
+}

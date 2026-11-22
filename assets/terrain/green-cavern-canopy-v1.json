@@ -1,0 +1,11 @@
+{
+  "image": "green-cavern-canopy-v1.png",
+  "source_image": "green-cavern-canopy-v1-source.png",
+  "source_crop": [
+    0,
+    0,
+    2172,
+    569
+  ],
+  "mode": "builtin-imagegen"
+}

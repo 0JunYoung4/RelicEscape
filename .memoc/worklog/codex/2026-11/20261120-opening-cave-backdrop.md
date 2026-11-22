@@ -8,7 +8,7 @@ date: 2026-11-20
 
 ## Summary
 - 내장 image_gen으로 바닥 뒤에 배치할 동굴 뒷배경을 제작했다.
-- 첫 시안의 거대한 공동 느낌에 대해 사용자가 작은 동굴로 수정을 요청했다. 가까운 젖은 암벽·물자국·적은 이끼로 다시 제작해 `assets/terrain/opening-cave-backdrop-v1.png`와 `.prompt.txt`에 저장했다.
+- 첫 시안의 거대한 공동 느낌에 대해 사용자가 작은 동굴로 수정을 요청했다. 가까운 젖은 암벽·물자국·적은 이끼로 다시 제작해 `archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-v1.png`와 `.prompt.txt`에 저장했다.
 - 바닥·문양문·캐릭터·UI를 포함하지 않는 별도 배경이다. 코드와 게임 연결은 변경하지 않았다.
 
 ## Verification

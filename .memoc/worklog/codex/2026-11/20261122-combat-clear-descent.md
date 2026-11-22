@@ -8,4 +8,4 @@
 - `draw_combat_exit`는 본편 지하 암전 후 통로 배경·기존 기둥/발판 자산의 직선 벽·돌 덮개 두 반쪽을 렌더한다. 새 이미지 생성은 사용하지 않았다. 발사체도 열린 통로 안으로 떨어질 수 있게 지면 인자를 추가했다.
 - 같은 LowerCaves로 왕복하면 개방 유지, R/사망 시 새 인스턴스가 적4마리·닫힌 덮개로 초기화된다. 유물 유지 정책은 기존 유지.
 - 새 검사5개: 4마리 배치·각 종 HP, 실제18회 검 명중(골렘 각6/공벌레 각3)으로 전멸 판정, 일부 생존/반 개방 차단, 양옆 바닥 유지·낙하·카메라·착지, 복귀/새 인스턴스, 공벌레 접촉·하강 중 투사체. 관련26개 및 전체131개 통과. py_compile·git diff --check 통과.
-- 실제 SDL로 `docs/combat-room-four-enemies.png`, `combat-room-exit-open.png`, `combat-room-descent.png` 저장·시각 검토.
+- 실제 SDL로 `archive/unused-assets/2026-11-23/docs/combat-room-four-enemies.png`, `combat-room-exit-open.png`, `combat-room-descent.png` 저장·시각 검토.

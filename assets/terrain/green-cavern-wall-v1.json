@@ -1,0 +1,11 @@
+{
+  "image": "green-cavern-wall-v1.png",
+  "source_image": "green-cavern-wall-v1-source.png",
+  "source_crop": [
+    101,
+    0,
+    630,
+    2168
+  ],
+  "mode": "builtin-imagegen"
+}

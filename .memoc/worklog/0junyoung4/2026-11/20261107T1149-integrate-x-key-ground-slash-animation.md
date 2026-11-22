@@ -32,8 +32,8 @@ created: 2026-11-07T11:49:35
 - `README.md`
 - `main.py`
 - `player.py`
-- `assets/sprites/player/attack-right-draft-v1.json`
-- `assets/sprites/player/attack-right-draft-v1.png`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/attack-right-draft-v1.json`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/attack-right-draft-v1.png`
 
 ## Verification
 

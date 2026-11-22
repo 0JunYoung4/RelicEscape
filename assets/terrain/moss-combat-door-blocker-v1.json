@@ -1,0 +1,13 @@
+{
+  "image": "moss-combat-door-blocker-v1.png",
+  "source_image": "moss-combat-door-blocker-v1-source.png",
+  "source_crop": [
+    103,
+    14,
+    921,
+    1521
+  ],
+  "mode": "builtin-imagegen",
+  "motion": "rises from floor on encounter; sinks on clear",
+  "duration_seconds": 0.55
+}

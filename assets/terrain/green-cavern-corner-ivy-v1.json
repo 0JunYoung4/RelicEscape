@@ -1,0 +1,15 @@
+{
+  "image": "green-cavern-corner-ivy-v1.png",
+  "source_image": "green-cavern-corner-ivy-v1-source.png",
+  "source_crop": [
+    57,
+    33,
+    880,
+    1128
+  ],
+  "anchor": [
+    123,
+    87
+  ],
+  "mode": "builtin-imagegen"
+}

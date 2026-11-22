@@ -35,7 +35,7 @@ created: 2026-11-05T11:11:50
 - `docs/PLAYER_SPRITES.md`
 - `player.py`
 - `tests/test_player.py`
-- `assets/sprites/player/crawl-right-draft-v1.json`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/crawl-right-draft-v1.json`
 
 ## Verification
 

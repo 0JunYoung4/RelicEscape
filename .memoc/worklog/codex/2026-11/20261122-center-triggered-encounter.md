@@ -6,4 +6,4 @@
 - 시작 전 공개 적 목록이 비고 렌더도 생략되어 적 이동/공격/피격/접촉 피해가 발생하지 않는다. all(empty)로 잘못 전멸 판정하지 않도록 개방 조건에도 encounter_started를 추가했다.
 - 시작 후 중앙 재통과·방 왕복은 조우/HP/개방 상태를 유지한다. 기존 R/사망 새 LowerCaves는 빈 방 대기 상태로 리셋한다. 별도 입구 봉쇄나 새로운 등장 모션은 추가하지 않았다.
 - 기존 전투 검사 fixtures는 진행 중 조우 상태를 명시했다. 신규3개 검사: 대기10초·적 숨김/명중/접촉/공격/개방 차단, 실제 달리기로30/60/120fps 진입, 중복 생성/재입장/처치 후 재생성 방지 및 새 인스턴스 초기화. 관련20개·추가 관련14개 및 전체134개 통과. py_compile·git diff --check 통과.
-- SDL 입장/중앙 도달 두 화면을 docs/combat-room-before-trigger.png와 combat-room-after-trigger.png로 저장하고 실제 렌더를 검토했다.
+- SDL 입장/중앙 도달 두 화면을 archive/unused-assets/2026-11-23/docs/combat-room-before-trigger.png와 combat-room-after-trigger.png로 저장하고 실제 렌더를 검토했다.

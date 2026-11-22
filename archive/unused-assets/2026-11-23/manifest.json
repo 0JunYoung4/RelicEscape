@@ -1,0 +1,1844 @@
+{
+  "date": "2026-11-23",
+  "files": [
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-attack-left-v1-preview.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-attack-left-v1-preview.gif",
+      "size_bytes": 264962,
+      "sha256": "aa6f2a73316e5fd666c8d42fd4a2c81891122f9c72560e460d6a8f22badbbd57",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-death-v1-preview.apng",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-death-v1-preview.apng",
+      "size_bytes": 2860197,
+      "sha256": "b58a4074c142169b1aefbdf32ffa2c24c612105cb8e8af5ab5473a1ffd6bfa68",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-death-v1-preview.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-death-v1-preview.gif",
+      "size_bytes": 429609,
+      "sha256": "e8b82e5d6a1f36b865f332c9d8f3a8d90fdd750955768adb35be505a5d1b2bbf",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-emerge-left-v1-preview.apng",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-emerge-left-v1-preview.apng",
+      "size_bytes": 1264633,
+      "sha256": "4cd723e2d849c778f6916a713a42dc1e1b8db5c007d9d0260833c8645d53c9f4",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-emerge-left-v1-preview.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-emerge-left-v1-preview.gif",
+      "size_bytes": 1015319,
+      "sha256": "a1a9897a4de4e1fcb8dee21e42e2d41fd694e8a8cef4380cbeebe31bb500d91f",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-walk-left-v1-preview.apng",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-walk-left-v1-preview.apng",
+      "size_bytes": 1215156,
+      "sha256": "9be3f23568a7089a9d5c66227370d71633df8077a2359ee1f120d095d29c6488",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-walk-left-v1-preview.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-walk-left-v1-preview.gif",
+      "size_bytes": 409074,
+      "sha256": "10086c67c5942693b7387cbc51e82ba156658a9fcaebac55ae0b5813fd8882c7",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-walk-left-v1.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-walk-left-v1.json",
+      "size_bytes": 1851,
+      "sha256": "07bdc517324721a81a79974989b4d8d972e2ba7996e503677fb6d678189ebb6c",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-walk-left-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-walk-left-v1.png",
+      "size_bytes": 1891570,
+      "sha256": "4590f8e6f545509d609047fd9dcf7638dab427366d7f2c52c2593ca2814553ac",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-walk-left-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-walk-left-v1.prompt.txt",
+      "size_bytes": 3579,
+      "sha256": "75ed0d575728b5561b4adf76f602bf04d62af383803e0fa88003610b331878f3",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-walk-left-v2-preview.apng",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-walk-left-v2-preview.apng",
+      "size_bytes": 2037994,
+      "sha256": "2afc57e3667d489d70887b3993e504c06b9ea99f1e46d08c084b36f5e00602ee",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-crystal-golem-walk-left-v2-preview.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-walk-left-v2-preview.gif",
+      "size_bytes": 819038,
+      "sha256": "d9a8a4729f1b339e362896b3d1a5624d960ba7c7b69f3ec0b777b06fc5b2686b",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-pillbug-death-blue-v1-preview.apng",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-pillbug-death-blue-v1-preview.apng",
+      "size_bytes": 806215,
+      "sha256": "0dcf0b5eb04d3c42b1a4555a80fe4722f1b911a3dcc7fb2fcfa1c0b8b3406f0b",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-pillbug-death-blue-v1-preview.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-pillbug-death-blue-v1-preview.gif",
+      "size_bytes": 181692,
+      "sha256": "60e8c15d42cb9b2b5a4091727953ce362bbbb9cc6852628a4d271d6ab087e2d0",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-pillbug-death-v1-preview.apng",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-pillbug-death-v1-preview.apng",
+      "size_bytes": 1256917,
+      "sha256": "4d2933162df274a74ff65b0d274f3c2751f39ee6af41a442c31d19738f64bb66",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-pillbug-death-v1-preview.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-pillbug-death-v1-preview.gif",
+      "size_bytes": 295539,
+      "sha256": "6b888115fb69b7d8eb52c9770d56afbd27a043de5a8bb8b4540f72cfe7a84d8d",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-pillbug-emerge-left-v1-preview.apng",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-pillbug-emerge-left-v1-preview.apng",
+      "size_bytes": 796905,
+      "sha256": "9008bb88c33ba13f9e11155e569109d72fd56e20f6d12599f9bd5a4e084e091d",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/enemies/stone-pillbug-emerge-left-v1-preview.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-pillbug-emerge-left-v1-preview.gif",
+      "size_bytes": 539848,
+      "sha256": "249c2047c6c6141911525be42da5f8971c5770df0b071df28471a3a513244ded",
+      "reason": "게임에서 읽지 않는 애니메이션 미리보기"
+    },
+    {
+      "original_path": "assets/sprites/player/air-attack-right-draft-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/air-attack-right-draft-v1.png",
+      "size_bytes": 800500,
+      "sha256": "c7d333f27914f482c6c0c248572f4b2a87f71fef79cb6521fb257869608271d8",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/air-attack-right-draft-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/air-attack-right-draft-v1.prompt.txt",
+      "size_bytes": 3605,
+      "sha256": "f8b36ba79c281f70909f4d90b4941e8c632bf12644bbcadbb5ef6cb641356e03",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/air-attack-right-draft-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/air-attack-right-draft-v2.png",
+      "size_bytes": 923949,
+      "sha256": "5d1302e352d6e0e36a2c22c5942a3f1436297e5529db07d8c481d208708c5409",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/air-attack-right-draft-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/air-attack-right-draft-v2.prompt.txt",
+      "size_bytes": 3668,
+      "sha256": "d4a42c34dc11d2b8a3b8c9462b21879e901f54460dffb0993244eee9aa85720e",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/air-down-attack-right-draft-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/air-down-attack-right-draft-v1.png",
+      "size_bytes": 833815,
+      "sha256": "51356ca2218170edae4d698b90b00ed3b3bbf6ac71303fbcf8d7502bd4dab553",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/air-down-attack-right-draft-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/air-down-attack-right-draft-v1.prompt.txt",
+      "size_bytes": 3600,
+      "sha256": "44e1dd18bbb6cf79c8b34cfb28e17ce7e9a9ae33d5fbf3dc15db205cc8e805bc",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/air-down-attack-right-draft-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/air-down-attack-right-draft-v2.png",
+      "size_bytes": 771482,
+      "sha256": "e8957b7dda8ccebce198f49c8ce7853870c421efe6b38a8153936ef05739c86d",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/air-down-attack-right-draft-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/air-down-attack-right-draft-v2.prompt.txt",
+      "size_bytes": 3564,
+      "sha256": "316a09b548aaa8502c34fae6961b8e2eb3a472e1de50cd6ea3917a5d8e8243be",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/air-down-attack-right-draft-v3.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/air-down-attack-right-draft-v3.png",
+      "size_bytes": 651355,
+      "sha256": "fa057df83bd293539c0b0f3f635dcb6615b7297443b18eff5b642e9b54bda6f8",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/air-down-attack-right-draft-v3.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/air-down-attack-right-draft-v3.prompt.txt",
+      "size_bytes": 3415,
+      "sha256": "ac9507e077e3d9c2bccf434861f56cdc1a559b6018bcfe1f3ef5ec3c43822d9f",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-forward-right-v1.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-forward-right-v1.json",
+      "size_bytes": 778,
+      "sha256": "d32aac4b1503f4f2c766bca8451f23a0e7c256f3dc1be59c919244b5f721f609",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-forward-right-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-forward-right-v1.png",
+      "size_bytes": 1252149,
+      "sha256": "c04eb0e39a87bc19ad88de29c4beb25275179d0577085c919dd655fe30ef4e6b",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-right-draft-v1.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-right-draft-v1.json",
+      "size_bytes": 831,
+      "sha256": "8005ef8fb531f9b2d1bca3d7f8f39dd7386c78812a961f339889bb029ead7515",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-right-draft-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-right-draft-v1.png",
+      "size_bytes": 931921,
+      "sha256": "05ac2a9667e6a216017983bc4eef03801b63a018ce817cd9f180bbf01672a447",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-right-draft-v2.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-right-draft-v2.json",
+      "size_bytes": 943,
+      "sha256": "770b0978357c252f2d536dee64f1cd033653f55da28e61dfd05d57530065ed07",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-right-draft-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-right-draft-v2.png",
+      "size_bytes": 936358,
+      "sha256": "1130fd5ab6c4a5de75a7ac8b89a745eb41c9a98790e8d54a35697a8d3b6038f6",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-right-draft-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-right-draft-v2.prompt.txt",
+      "size_bytes": 1893,
+      "sha256": "b32a3da8c12fdaa28a13c3d2c118251026799ff09ac89ec449c5ac66486e557f",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-semicircle-right-v1.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-semicircle-right-v1.json",
+      "size_bytes": 777,
+      "sha256": "0c9ef6e512e1036946537d57b86efd840594feffcebe73a4734803b69521300b",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-semicircle-right-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-semicircle-right-v1.png",
+      "size_bytes": 923976,
+      "sha256": "b5e69b9dd3ac54439b694b2973a25eec166a0bd25084eb6e661ba6e45134c179",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-semicircle-right-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-semicircle-right-v1.prompt.txt",
+      "size_bytes": 1831,
+      "sha256": "9b34081f632dfd40926126b95a653648ef59ee2e7f1fa5041ffd62ef81580dc6",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-sweep-right-v1.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v1.json",
+      "size_bytes": 788,
+      "sha256": "e92326e455185b750679b1d08a8e9b63c0dd9c7df8ac061f57e2cd4a10b68d4d",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-sweep-right-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v1.png",
+      "size_bytes": 1252654,
+      "sha256": "7fb77de25aff8391e38807d52dccf8f4c2b13ef81334c2bfe23e5f5c9a6439be",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-sweep-right-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v1.prompt.txt",
+      "size_bytes": 10968,
+      "sha256": "66185a539b0af85c0da9bce5913c352a50cad357f1db1d76a02b7dc371656f8f",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-sweep-right-v3.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v3.json",
+      "size_bytes": 783,
+      "sha256": "f392f742443aa5765e762be97297f92344f1c4dbddeb4549e5798982f0713168",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-sweep-right-v3.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v3.png",
+      "size_bytes": 1296291,
+      "sha256": "df10a496f52421796bfbedd6330dfbe7c473edc41b0a309bc30bb85195fff280",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-sweep-right-v3.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v3.prompt.txt",
+      "size_bytes": 3418,
+      "sha256": "106a952cb828e234e832772aea17dcfe39a5bc568fa6c08724b110cd10c0a5aa",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-sweep-right-v4.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v4.json",
+      "size_bytes": 783,
+      "sha256": "e62b62121656d8e887163c72b3ba9e7a40342204d7e4caf0cb5707944bc28885",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-sweep-right-v4.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v4.png",
+      "size_bytes": 1296449,
+      "sha256": "edf1e9d74e307f62e2ad4571ae0635b233c0c02b0060837bf3b0b4d824a927ab",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-sweep-right-v4.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-sweep-right-v4.prompt.txt",
+      "size_bytes": 2671,
+      "sha256": "da1f293bb70146bccb8e58879b73d95e7e9c935c9d11d2d0013fb97738e4310e",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-windup-right-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-windup-right-v1.png",
+      "size_bytes": 458014,
+      "sha256": "bd401a23fa69800b2c2476bfa419783a1b888f95cb48f77224986b728a8df6ec",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/attack-windup-right-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/attack-windup-right-v1.prompt.txt",
+      "size_bytes": 1566,
+      "sha256": "bd89b45fc8cee9eb07f5bbcaee33f957ba9cbad957daa78343e0e51b37f6632f",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/crawl-right-draft-v1.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/crawl-right-draft-v1.json",
+      "size_bytes": 1021,
+      "sha256": "7403b1d4857b95c513a17204203ef88cacade2d19596049c9c93cf7a9213aded",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/crawl-right-draft-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/crawl-right-draft-v1.png",
+      "size_bytes": 876167,
+      "sha256": "bfa51805d1190cb894bbb47ddd46bf3d08123e3df0a9662337d4d346bffcf0e7",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/hard-landing-right-v1.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/hard-landing-right-v1.json",
+      "size_bytes": 670,
+      "sha256": "0671b2f743043dd8b6a4a0d092040611163e036f7eef3d9af74dc493cdf15bf0",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/hard-landing-right-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/hard-landing-right-v1.png",
+      "size_bytes": 149815,
+      "sha256": "e172622e10238835c5ecf0f2c7a4f5d63a9f886f53740f8dced11b39a767ce75",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/idle-sword-dust-right-draft-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/idle-sword-dust-right-draft-v1.png",
+      "size_bytes": 1271047,
+      "sha256": "db20863bccdefe9e75ce32bc399e4040df6241d456c81c45406c5ff5e5630097",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/idle-sword-dust-right-draft-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/idle-sword-dust-right-draft-v1.prompt.txt",
+      "size_bytes": 3053,
+      "sha256": "27dd529245dbabcd45af36b0cf6e02e9bde7c4db75b3b57d64275629e0cf619e",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/idle-sword-dust-right-draft-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/idle-sword-dust-right-draft-v2.png",
+      "size_bytes": 1348958,
+      "sha256": "b7a4bd1d5ee4038c26c9fe9801e320396817c0099e45c1fbc98d43fbb40eac54",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/idle-sword-dust-right-draft-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/idle-sword-dust-right-draft-v2.prompt.txt",
+      "size_bytes": 2995,
+      "sha256": "b7e67c68db87083a2002deacb3837783f9a9dd87fda51e5c336abfb57fa3c33f",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/opening-investigate-unarmed-right-v1.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/opening-investigate-unarmed-right-v1.json",
+      "size_bytes": 1920,
+      "sha256": "4d8eec014e144f85dd8acf261a66325318b0a2a73f87211a6ee7619093db3489",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/opening-investigate-unarmed-right-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/opening-investigate-unarmed-right-v1.png",
+      "size_bytes": 713291,
+      "sha256": "a71a3191c13333801ade74cb81b130df194b300957c040677529186353f85bb3",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/opening-investigate-unarmed-right-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/opening-investigate-unarmed-right-v1.prompt.txt",
+      "size_bytes": 3687,
+      "sha256": "8e9dcd6a28e65b22a9a51d23d5ce1984e773bb9d7e8ee5546e785f19b442e4cf",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/opening-investigate-unarmed-right-v2.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/opening-investigate-unarmed-right-v2.json",
+      "size_bytes": 3524,
+      "sha256": "85f779af5ac1a7671d96337d731ab9cc909874536146ea7ea0ee587d5865b810",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/opening-investigate-unarmed-right-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/opening-investigate-unarmed-right-v2.png",
+      "size_bytes": 895278,
+      "sha256": "820b5a10b62222167161b97e840b2579435b43b9355888426c95c0f8b6d5a261",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/opening-investigate-unarmed-right-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/opening-investigate-unarmed-right-v2.prompt.txt",
+      "size_bytes": 3067,
+      "sha256": "4879012dbafdc0f7620bb280cb1408d7b565adaeddd1f0e068a3ca2b1a47d071",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/opening-shaft-fall.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/opening-shaft-fall.json",
+      "size_bytes": 701,
+      "sha256": "b1db29ee1cf4be5cb7303bc1d58a8369caffd7025b83d551a762101f908f7edc",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/opening-shaft-fall.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/opening-shaft-fall.png",
+      "size_bytes": 598493,
+      "sha256": "6f94b5f35a09cce5bfefbad7161539c7718e4436be999820dd582f44c1a52f94",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/opening-shaft-fall.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/opening-shaft-fall.prompt.txt",
+      "size_bytes": 919,
+      "sha256": "3bb52d4aafdd24815b0123bb1a636195497458f8bee0b391b809dbb383c61293",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/wall-slide-right-draft-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v1.png",
+      "size_bytes": 734671,
+      "sha256": "fe8f200154b155942ccf86a6a1ed3fae55b707724a732f4ec3857ec04f83677a",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/wall-slide-right-draft-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v1.prompt.txt",
+      "size_bytes": 2287,
+      "sha256": "2de62285944930676e5e0e6321e762befdcb983489985dbf2f66698437500289",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/wall-slide-right-draft-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v2.png",
+      "size_bytes": 753563,
+      "sha256": "4cb832edd28809c0c981ada798e49198a9130ed0557bc6b8c8e22ecce5451ce2",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/wall-slide-right-draft-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v2.prompt.txt",
+      "size_bytes": 3304,
+      "sha256": "eecb476bf2407bdea43421e86012a6eb8e7f59669ddfbd7cdd9ae4bb6ce96583",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/wall-slide-right-draft-v3.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v3.png",
+      "size_bytes": 782661,
+      "sha256": "4fd629355497e5d442b0390e0313a610e3d7e7da20c9d18f903f35b48e1c2d6e",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/player/wall-slide-right-draft-v3.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v3.prompt.txt",
+      "size_bytes": 1836,
+      "sha256": "45ce8e37e5997a060c3b2397134000ae5d21882cc2fe37c8ab2d0bd9e063b7ed",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/projectiles/back-crystal-shard-source-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/projectiles/back-crystal-shard-source-v1.png",
+      "size_bytes": 529250,
+      "sha256": "1c9f9d9c449c0f62e2f7dfe4ea60f0004e7583034165f1665da909b173be0b41",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/projectiles/back-crystal-shard-v1.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/projectiles/back-crystal-shard-v1.json",
+      "size_bytes": 225,
+      "sha256": "d47b7b42b1866a160c54dfc78e84532435f68847c174f7a6c7672c32e720781e",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/projectiles/back-crystal-shard-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/projectiles/back-crystal-shard-v1.png",
+      "size_bytes": 454353,
+      "sha256": "76728b98a814c63ad1150719c5c0b64eb0ba2b1e8e7d12a2db38bf41e338bb1c",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/projectiles/back-crystal-shard-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/projectiles/back-crystal-shard-v1.prompt.txt",
+      "size_bytes": 1030,
+      "sha256": "8b28fac9061c8b84ca2d876e5adcd32993b364b6823c776b21bb33381d93cd4c",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/rail/relic-carriage-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/rail/relic-carriage-v1.png",
+      "size_bytes": 1468,
+      "sha256": "fb34bd156c82b05bc1d197b3a1be04b1503a4fcaa9bb428fd38f97ac2e9afc11",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/rail/relic-track-bend-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/rail/relic-track-bend-v1.png",
+      "size_bytes": 4675,
+      "sha256": "da4776ec93e0f08daa2d3699c1905aff83a2d45fa10f8aa093923164bb5f0bb8",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/rail/relic-track-bend-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/rail/relic-track-bend-v1.prompt.txt",
+      "size_bytes": 1181,
+      "sha256": "64c1149b08d49a0139af9fcbac56e68d4cb5e1f0cc6902084282f5476a795087",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/rail/relic-track-blue-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/rail/relic-track-blue-v1.png",
+      "size_bytes": 37749,
+      "sha256": "55e97c9be02d371d4386d9b3122ff00b9cdeac16ef1a7dd33d62fc63568ef92b",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/rail/relic-track-blue-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/rail/relic-track-blue-v1.prompt.txt",
+      "size_bytes": 1489,
+      "sha256": "2c0e2c701aa33f513770dec49bb410343e3652baa87f30a868163aac3ae8e3d4",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/rail/relic-track-blue-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/rail/relic-track-blue-v2.png",
+      "size_bytes": 21718,
+      "sha256": "410cd21d85df0e9b438f6c2b7a3c90f6bd35400fec1a817ca1e8a38bc7372f59",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/rail/relic-track-blue-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/rail/relic-track-blue-v2.prompt.txt",
+      "size_bytes": 1104,
+      "sha256": "6b20ff7fce2db797b267c5ec590d6beef50327469db77d0e30bf5acc2778cfe0",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/rail/relic-track-blue-v3.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/rail/relic-track-blue-v3.png",
+      "size_bytes": 24771,
+      "sha256": "89fde3dc98db18717f1c528a10f4cefa79537a77e0f80ba803f5e1cc178b7853",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/rail/relic-track-blue-v3.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/rail/relic-track-blue-v3.prompt.txt",
+      "size_bytes": 949,
+      "sha256": "e5a28f2f1f75dd21a779abca0188904e10b3ada860e4e357743e47818eb641d7",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/relic/relic-departure-sigil-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/relic/relic-departure-sigil-v1.png",
+      "size_bytes": 647855,
+      "sha256": "2787920cb87bb7413b49d65ac1dbd7186c7ffc0fbe171c8afc2c5e231df537f5",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/relic/relic-departure-sigil-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/relic/relic-departure-sigil-v1.prompt.txt",
+      "size_bytes": 1526,
+      "sha256": "32a92e271229757c47690bbce0068f0c036fa4b36143073754149addaaa5c13b",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/relic/relic-departure-sigil-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/relic/relic-departure-sigil-v2.png",
+      "size_bytes": 582004,
+      "sha256": "f79f434e661fe30c69452e6b5badefe9ecca56fdecc49f2cf17b633bf8ffd7af",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/sprites/relic/relic-departure-sigil-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/sprites/relic/relic-departure-sigil-v2.prompt.txt",
+      "size_bytes": 1185,
+      "sha256": "4433b672b4ffbd0b09d97bf43a5affa4e575394f1a2067447272e4f9a06d0903",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v1-source.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v1-source.png",
+      "size_bytes": 1037881,
+      "sha256": "eecd00cd825d59993d76e3cc409efba571c204c04b1e6115091a1966ca5639bc",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v1.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v1.json",
+      "size_bytes": 263,
+      "sha256": "e54c47a9d8ce6727282b926d19b7774597ba9189242360543b4bb06f90501989",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v1.png",
+      "size_bytes": 910242,
+      "sha256": "d7ad902f26832f58ef26a753b35f7a11217ba51a02aa5e09bf0f92290678d8df",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v1.prompt.txt",
+      "size_bytes": 1191,
+      "sha256": "9bc2ada3f3b19d8f77b6cbeec8190661eb1e6ad46bfe2dab4e49c6325cf1768f",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v2-source.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v2-source.png",
+      "size_bytes": 290125,
+      "sha256": "ad03a02bbac695fc6f7ec81c1e9ed5a93d8f744b99f0435ee68a5efabaea48ee",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v2.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v2.json",
+      "size_bytes": 250,
+      "sha256": "ed18ca4076ac9f6b3b4ff2694deda8783b01903509e0b11023b2c66cb6a249d1",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v2.png",
+      "size_bytes": 197590,
+      "sha256": "c588c0d12bac9fc10a51ee3d4720cd44e2f23e8de54919d8d3ca4527f32ea468",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v2.prompt.txt",
+      "size_bytes": 1119,
+      "sha256": "94b8b5869d20e3b014eb1257edeb2a5e957d11b6102f36b7d4aaeaeeaf9845ca",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v3-source.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v3-source.png",
+      "size_bytes": 460222,
+      "sha256": "309e340bfed83d2c9b77eb6e8828deb3a0b3907361abe2345534eb65c0402883",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v3.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v3.json",
+      "size_bytes": 249,
+      "sha256": "1a765b179f21fc55ad6d22166e5c1798da7b041a48e9484adcec1772c4be209a",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v3.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v3.png",
+      "size_bytes": 371077,
+      "sha256": "3b56243c7ca5ffe23f200519141754b678c421115e0306af97a33288092ffcf8",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-floor-cover-v3.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-floor-cover-v3.prompt.txt",
+      "size_bytes": 1001,
+      "sha256": "0be21d638d280175b650c6c68768c73183d441b15745f542217d7b6842c8bec8",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-room-shell-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-room-shell-v1.png",
+      "size_bytes": 2024712,
+      "sha256": "0cddfdf3dc0611e6590282ef635b975e6f63d189ea3e3c088c3c2a99a42ec0c3",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-room-shell-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-room-shell-v1.prompt.txt",
+      "size_bytes": 4314,
+      "sha256": "44f69ccf252b749903f0f606eea08579213ac92bd8c7dabcb7af66999af0fe02",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-room-shell-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-room-shell-v2.png",
+      "size_bytes": 1901311,
+      "sha256": "f73a8e04b5cd6ed397ab86e22b42646225a2000eb6ac1f4c92fd7a2ada7d46b6",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-room-shell-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-room-shell-v2.prompt.txt",
+      "size_bytes": 1984,
+      "sha256": "9f1013695edf7cf9c35a71b8571088ca471b0c1cf2531bf1b92d091cd22a7130",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-room-shell-v3.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-room-shell-v3.png",
+      "size_bytes": 1843922,
+      "sha256": "a997ba912ea009beb59a85d1e8a743bca964bd89e4749dd7280cbe64618802db",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-room-shell-v3.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-room-shell-v3.prompt.txt",
+      "size_bytes": 2806,
+      "sha256": "955509dedc1e46f8bef07e49f11d57dae6ca265864531fa38a52623212e595c5",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-room-shell-v4.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-room-shell-v4.png",
+      "size_bytes": 1768825,
+      "sha256": "9f925da074c2de20117212b257cc06e361b06771411383781e2cf5e5fd233d8d",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-room-shell-v4.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-room-shell-v4.prompt.txt",
+      "size_bytes": 1811,
+      "sha256": "9b6d3fa58632497eb104f7ba58f9553ef9eaeba8c0e557fccb1954293bd75661",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-shaft-rim-v1-source.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-shaft-rim-v1-source.png",
+      "size_bytes": 533641,
+      "sha256": "bffa3537c5707a2c6618bcfef11e0a72a6e2f93ccc2cb262fe3dc9bceb9ba4c6",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-shaft-rim-v1.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-shaft-rim-v1.json",
+      "size_bytes": 246,
+      "sha256": "6219cac787745d5eed971bd5e5a0d9da71d739e37456eb9186433dd3aaa24764",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-shaft-rim-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-shaft-rim-v1.png",
+      "size_bytes": 441776,
+      "sha256": "79fab5cb0bfff773435c8da1007b404edcb48943df74479c04b96e5200ce8b26",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-shaft-rim-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-shaft-rim-v1.prompt.txt",
+      "size_bytes": 1523,
+      "sha256": "c9e887d347b10729971d5af8578f49a45d314c00d8e0ab3c469fd3158e3eedfc",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-shaft-rim-v2-source.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-shaft-rim-v2-source.png",
+      "size_bytes": 1154327,
+      "sha256": "6a9d3db292fe897678edb8c610765d5b35a4b9828896672679894784abf11e64",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-shaft-rim-v2.json",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-shaft-rim-v2.json",
+      "size_bytes": 305,
+      "sha256": "545fe8ccb3d286b0d58e1ea1e43297327d55f4a3a15ae06ef1657f971b65f165",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-shaft-rim-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-shaft-rim-v2.png",
+      "size_bytes": 964179,
+      "sha256": "4e8f9b7be862ded5f27e7fbc5c02d911b24f42793603bc2e554c3683dbed2bda",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/moss-combat-shaft-rim-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/moss-combat-shaft-rim-v2.prompt.txt",
+      "size_bytes": 1937,
+      "sha256": "08c67abf7725f81e472cb7ae9e413f0dc72ed8b2696ab6a458f4d6b9206f2e4b",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v1.png",
+      "size_bytes": 1823027,
+      "sha256": "379b09ad971ff46e14843b9593f053b95c90d426dff06c1ef1bf12d9be590273",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v1.prompt.txt",
+      "size_bytes": 4223,
+      "sha256": "be287c1fdb68e565e4a5e98cd1b708ee516fc4d479d6cc53cfdc778cf1d3066f",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v2.png",
+      "size_bytes": 2028514,
+      "sha256": "8110ed7ade4db5b5df1e0e06346aa477d188594c3dd93298968227a6a888b809",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v2.prompt.txt",
+      "size_bytes": 2964,
+      "sha256": "68f1a7861eba8408dd0ce4a46c8444955776bdf8eb27a6be0698963b45657910",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v3.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v3.png",
+      "size_bytes": 2022545,
+      "sha256": "1b97225432be15446062cae1d57457c7f8240774a198f381d4c8e6616ea27bc4",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v3.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v3.prompt.txt",
+      "size_bytes": 910,
+      "sha256": "e652abc99878cb929de4fde34d624d8e0914b2ea39ec85b378321c6813c48506",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v4.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v4.png",
+      "size_bytes": 2030050,
+      "sha256": "2e7b21e40a716b97bbfb50d5f5a71cdc92aaa6d112ad46cd3d3ddd3c84e586e6",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v4.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v4.prompt.txt",
+      "size_bytes": 822,
+      "sha256": "b6ad3cc3230be25254fe1659a051fc8af0adc373a5e7167cb09d8d0e394408e5",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v5.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v5.png",
+      "size_bytes": 2030580,
+      "sha256": "958de5e77c5489d315303f27ef9ea4f03f7fdcad0dab21a2614387d10f488afd",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v5.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v5.prompt.txt",
+      "size_bytes": 2769,
+      "sha256": "55edd3b8678a95d867128b4518a429d09db6fc6b37b6da2d52503adc45f36019",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v6.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v6.png",
+      "size_bytes": 2029783,
+      "sha256": "345ea8379023f2464f419c286d7479695d793b280203a5ae8f12b1dbf8780499",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-rune-v6.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-rune-v6.prompt.txt",
+      "size_bytes": 2565,
+      "sha256": "f095e9cb6d4d5d3450d9c495f9d8157142a358f6b3c29db106b4e06fbeee2434",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-v1.png",
+      "size_bytes": 1752230,
+      "sha256": "df99c69fcc3281f230ebcb9a56ef2bb63eadd94bbaceb16856d2a840cadea5f0",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-v1.prompt.txt",
+      "size_bytes": 3740,
+      "sha256": "2b8bbb2a7838d017574b6cad5a505cdabaf79f91381b673d9865400e634dee1a",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-v2.png",
+      "size_bytes": 1766610,
+      "sha256": "66227d44912c32e71f2e20a3078eca3affde4ae0a784a432a09364580d1a519b",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-backdrop-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-backdrop-v2.prompt.txt",
+      "size_bytes": 2978,
+      "sha256": "998c186498d0bfe53431f9ff74fbd5018c9b79b05f6d0a9d52a8e86479cc22a2",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-background-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-background-v1.png",
+      "size_bytes": 1679114,
+      "sha256": "8aa2295a65bc45053bba1421ce21cce2d57305a548b0e9b947ff1d2b5611e494",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-background-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-background-v1.prompt.txt",
+      "size_bytes": 4651,
+      "sha256": "45e78512d75ab4f3765119b4e0c4d44f8c435bee4bc4acbf595cb49c75b18797",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-escape-wall-cracks-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-escape-wall-cracks-v1.png",
+      "size_bytes": 1428462,
+      "sha256": "8d1e140730b3883c85347792706ecf3323e8c9088c4afcbb1849487c6afac5de",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-rune-fine-cracks-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-rune-fine-cracks-v1.png",
+      "size_bytes": 1277924,
+      "sha256": "66d2d7d7f6b1919750c1d22ee612e3422c8d1bf05a79209f6d18f35b8fd8124f",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-rune-interior-detail-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-rune-interior-detail-v1.png",
+      "size_bytes": 1359931,
+      "sha256": "b68089ef3bfffe57367dca7a089d94a2ee1caa7dc31114538500672f9104ba79",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-rune-wall-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-rune-wall-v1.png",
+      "size_bytes": 1194961,
+      "sha256": "c0d8a00eff0480b8fef83e89c251f83d9abbd63e8b66eef611605ed8180564bf",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-cave-rune-wall-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-cave-rune-wall-v1.prompt.txt",
+      "size_bytes": 3418,
+      "sha256": "08d9dba536b44db7dfc8812253eee263ff69311f097b97cd6db84bd0db5170e9",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-fall-shaft-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-fall-shaft-v2.png",
+      "size_bytes": 1695976,
+      "sha256": "f23b76d037ae16a0ceee482916546da09c0916568db520e6ef4982b0d39e8ee4",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-fall-shaft-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-fall-shaft-v2.prompt.txt",
+      "size_bytes": 3567,
+      "sha256": "bcb06eef6255a5bfdbfac6f04e1f03854575172804d3c4e1e38464b442141655",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-fall-shaft-v3.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-fall-shaft-v3.png",
+      "size_bytes": 1269406,
+      "sha256": "cce44ff57aaf8721cc4c1bacad4201d1bb36d742976207a380084daa43895b69",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-sigil-emission-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-sigil-emission-v2.png",
+      "size_bytes": 834937,
+      "sha256": "9384cbe2eb610366c37666c5f776300bb5d37bac5373f46abe93050e69cb95f7",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/opening-sigil-emission-v2.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/opening-sigil-emission-v2.prompt.txt",
+      "size_bytes": 1771,
+      "sha256": "ad06ac68c81382f2d093e5d9c0d01d531878360b825ab64e032ac418742098bb",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/ruins-background-wall-tile-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/ruins-background-wall-tile-v1.png",
+      "size_bytes": 12940,
+      "sha256": "2cf911a25ec28d33105aa635734268df8f7dee913cd52cd9177bf495938848ed",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/ruins-background-wall-tile-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/ruins-background-wall-tile-v1.prompt.txt",
+      "size_bytes": 1341,
+      "sha256": "04133b5d1f2b99123c92b3f2a40193b29f0a3283d52c33c1566789a3e68e47e8",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/ruins-background-wall-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/ruins-background-wall-v1.png",
+      "size_bytes": 1655902,
+      "sha256": "c2ec1878ffcbb0afd70c843c1388424c012050b1c0b4a454f058940d698e6010",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/ruins-background-wall-v1.prompt.txt",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/ruins-background-wall-v1.prompt.txt",
+      "size_bytes": 710,
+      "sha256": "b20c3bfa69ee7338d22ee1fb83ea1d2d90873a10852076e5478a356ef0cb59a6",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "assets/terrain/ruins-floor-spike-recess-v1.png",
+      "archived_path": "archive/unused-assets/2026-11-23/assets/terrain/ruins-floor-spike-recess-v1.png",
+      "size_bytes": 821844,
+      "sha256": "cd99e2af0148d498b16ce1a36664692b08d133c464c901e5e3e5fbaa2aaaf967",
+      "reason": "현재 코드/테스트 및 간접 JSON 참조에서 사용하지 않는 구버전/시안"
+    },
+    {
+      "original_path": "docs/combat-clear-passage-open.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-clear-passage-open.png",
+      "size_bytes": 396738,
+      "sha256": "cd73aff52214d55e006e894e98f2c4a9bcbce52026a11d86280750c41dff2a61",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-clear-passage-opening.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-clear-passage-opening.gif",
+      "size_bytes": 10702712,
+      "sha256": "2d6b120d25c4ba49ce575d8152b576f4940e774e39557bfada3054b71580f1af",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-gate-cleared.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-gate-cleared.png",
+      "size_bytes": 679707,
+      "sha256": "f6713ce5fd4a011912514ecf9f0966f0738865a97592c72a0b9b61b1d14a44d6",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-gate-comparison.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-gate-comparison.png",
+      "size_bytes": 53858,
+      "sha256": "215fc2cb887d8176e50e8506e43dc59d6ac5d80de5b263c4be8d003f5e33bf03",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-gate-locked.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-gate-locked.png",
+      "size_bytes": 707612,
+      "sha256": "8d34f4c8cfa7141db625db70c74c690b519d82f5d9c492b23092671a1f1051b9",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-room-after-trigger.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-room-after-trigger.png",
+      "size_bytes": 707765,
+      "sha256": "12aa988f74dbead5c8e8b59d9c8065e3685ee4e90f26980f06e0c584fbcb2468",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-room-before-trigger.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-room-before-trigger.png",
+      "size_bytes": 680762,
+      "sha256": "ebb4a99e1e8f45e5b97d018cf8bc06dd1f5ee318ba650f610886c60a08436ee8",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-room-descent.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-room-descent.png",
+      "size_bytes": 434635,
+      "sha256": "ca60262424e0ecc3f0c0b5928ac0d90b9d217c186760135fb27a45e4b3f51b36",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-room-exit-open.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-room-exit-open.png",
+      "size_bytes": 680578,
+      "sha256": "0dd7d18d92211e7951011d84422dc18f3a223550eeaa65850c71bc5ca0841703",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-room-four-enemies.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-room-four-enemies.png",
+      "size_bytes": 707798,
+      "sha256": "8b38776f7b65c49f355af5382507764d73971dd1cae89dc775a593a16a42e93d",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v2-closed.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v2-closed.png",
+      "size_bytes": 270686,
+      "sha256": "ef33cfff8d5dbe4531c132679d8cca9b9a158167d8ccc49cc5e522511dcdb078",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v2-half-open.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v2-half-open.png",
+      "size_bytes": 287501,
+      "sha256": "c8c63514333849628f5fc2a208be3d94eb9362d5a8fb3dd4fe27db9a97bd98aa",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v2-landing.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v2-landing.png",
+      "size_bytes": 104163,
+      "sha256": "4d0745aefeba8ad21c0839a17306509b655909ade834cfe509c7ee5127f6bf9c",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v2-open.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v2-open.png",
+      "size_bytes": 300689,
+      "sha256": "b36703af4b2cc0ea411d0cf1acaddb19ba20a10f3ad9fe0163fb067e3425319a",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v2-opening.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v2-opening.gif",
+      "size_bytes": 4262985,
+      "sha256": "67a29d7bb7dd3f176878a44fd3be6da4c544f4de25504bb0bce8f4abb902def3",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v2-states.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v2-states.png",
+      "size_bytes": 858878,
+      "sha256": "1dbca2afa1411c047dca8f0b4c8dccd0ddbf60b47b5b2a28c7bbc00dfc8f5118",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v3-approach.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v3-approach.gif",
+      "size_bytes": 5328164,
+      "sha256": "9b0e3864bef54c5ddfdcfc35d40e89501cce18e86c538e458c6b921ad1942a9c",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v3-approaching.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v3-approaching.png",
+      "size_bytes": 210789,
+      "sha256": "d87405286fc5905919f06fa091a04a1e3fc795b6342dd0356bf12858e4d858f5",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v3-closed.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v3-closed.png",
+      "size_bytes": 190585,
+      "sha256": "e7a2c8f830e241469bf5bfdfab702781518d2f4bb7035d6f1333b4941bd64c1e",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v3-half-open.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v3-half-open.png",
+      "size_bytes": 161787,
+      "sha256": "cb6ae9aa9e5c7f38e7ba93403ccd8c6f345dad8ff01c944c24d4adacfbf2ad40",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v3-landing.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v3-landing.png",
+      "size_bytes": 196464,
+      "sha256": "031eec8b7caf5ec01baa6d7dd9174de9ff9f097f28390c1524ccbcccd87e0b84",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v3-open-dark.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v3-open-dark.png",
+      "size_bytes": 182276,
+      "sha256": "68d38d09b2f5bc1f2554e81d1d56452e16ce0c5b04547a5ed42af6b09c13af40",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v3-open-near.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v3-open-near.png",
+      "size_bytes": 238742,
+      "sha256": "3f1fe1f7530f924e4cdb3fac575999e35a5a7227eeefaaf1da5dc26cbe0ac724",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v3-open.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v3-open.png",
+      "size_bytes": 185883,
+      "sha256": "fe51cee08e381dfafa1bdca4cedc1343bea1cd779cd5e6dc321891256bd3fb08",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v3-opening.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v3-opening.gif",
+      "size_bytes": 2538585,
+      "sha256": "9d1cffd94ad9740b5267e599a2b6c94f781a32b849d813c6be215f33a92bdd19",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v3-states.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v3-states.png",
+      "size_bytes": 481026,
+      "sha256": "3a3c6ae26bfdae5d7e67482ab5cc73354683f26250e10f8ddbf1fb2a00c5b104",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v4-approach.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v4-approach.gif",
+      "size_bytes": 5424386,
+      "sha256": "75bcb6d5fedb6dec8fa48931bd6fae6a19645649b5997cd128ff6b826fb89d77",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v4-approaching.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v4-approaching.png",
+      "size_bytes": 227331,
+      "sha256": "b174d560f9cf3493c9c72401493a125c8680af6b28daafa63f3f7ca9826718dc",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v4-closed.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v4-closed.png",
+      "size_bytes": 212533,
+      "sha256": "1d9b81e864a30fb03026ea4f4b573e1f08dbadea6f383d5413bbf44ffb2dad1c",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v4-half-open.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v4-half-open.png",
+      "size_bytes": 237393,
+      "sha256": "dab1e1bc08e1543a92285037d54b81d69a070b18c88313f76d53b7afbb85b8d1",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v4-landing.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v4-landing.png",
+      "size_bytes": 199031,
+      "sha256": "9e542c9be2be8473dc9360903000a7a1ba924f464d6149e53f2ae7858c3a54d5",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v4-open-dark.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v4-open-dark.png",
+      "size_bytes": 198484,
+      "sha256": "d4a5a5a33069c9c874e6d597f1133ee435b1aeea3a8089a8a004e53e71e10ddb",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v4-open-near.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v4-open-near.png",
+      "size_bytes": 253950,
+      "sha256": "120ed8655969602cbf2dbd3f407d51cb09ab035bfa67f228748a1c61c7d9111a",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v4-open.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v4-open.png",
+      "size_bytes": 256853,
+      "sha256": "2c7a901a8a98dd63b2bc40acc0a931cc46733c60eec1009cf912d139bbe44017",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v4-states.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v4-states.png",
+      "size_bytes": 711843,
+      "sha256": "9c3889d54a801995aed389447448f7c81b3b6e0c9348646dc611e280f87c10a3",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v5-approach.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v5-approach.gif",
+      "size_bytes": 6128689,
+      "sha256": "6222f3cac42044e88fcad23f5f39803cad58b036ffcba2139bfe54c664b4bd67",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v5-closed.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v5-closed.png",
+      "size_bytes": 277156,
+      "sha256": "41d74b4c9c57885c486521d802011838a2b0c5a00a1da6a6413416a2bb2470a0",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v5-half-open.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v5-half-open.png",
+      "size_bytes": 280049,
+      "sha256": "94619f61e8474fe0732e808ef6c42cd800ee46a5964d676218c0b2079e7b153f",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v5-landing.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v5-landing.png",
+      "size_bytes": 209172,
+      "sha256": "e0d28d54448cff8f2b1f33785cb66111dfa9e3faaff6cdec8589c02d1e960da5",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v5-open-dark.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v5-open-dark.png",
+      "size_bytes": 237893,
+      "sha256": "62ff380baa55d9abc3c28d5af8d0b5b75be3e53ee5b59a45d38230225445f927",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v5-open-near.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v5-open-near.png",
+      "size_bytes": 276506,
+      "sha256": "ecb46e32aab4707e1958d2e2812d4fa935a78eaaa14f014e6a4ede1c95564460",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v5-open.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v5-open.png",
+      "size_bytes": 278540,
+      "sha256": "3e646192aaf73734282763c4b111d4638a410a779cb086cd9eafce9d752aee0d",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-shaft-v5-states.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-shaft-v5-states.png",
+      "size_bytes": 842284,
+      "sha256": "c87e8140babd9ab54a4b8f99ba10ea7d4eef847e8d3793a133006236e6055de7",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-stone-wall-aligned.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-stone-wall-aligned.png",
+      "size_bytes": 118507,
+      "sha256": "ebc66543903b4e91b13555194cecc5f83e9348dab88b7946e7bc308d8bae0349",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-stone-wall-dust.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-stone-wall-dust.png",
+      "size_bytes": 123175,
+      "sha256": "349e61ec6b1916529f27c0af9068a2cc200c158032b0687da5d920762dd4627b",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-stone-wall-motion-check.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-stone-wall-motion-check.png",
+      "size_bytes": 179220,
+      "sha256": "7a730c7e9d5fe9421990a0434297066a143627192700065326d5e0d51cfdc14d",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-stone-wall-motion.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-stone-wall-motion.gif",
+      "size_bytes": 1792830,
+      "sha256": "79b5a50423282f5df8d4d3d51c7ac0b9cc93e06f3408da0fafed0b0067a53e0e",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/combat-stone-wall-open.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/combat-stone-wall-open.png",
+      "size_bytes": 63938,
+      "sha256": "cdb5e10391e4261b0d2242e180422012d06da44baa0697206e3b1dfe2170f377",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/crystal-golem-attack-contact-sheet.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/crystal-golem-attack-contact-sheet.png",
+      "size_bytes": 375872,
+      "sha256": "3c2ebedb43f9699ff99c8b5eb7f50bcf727a0836a9c90ee7a090687dd53ee3ca",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/crystal-golem-attack-in-game-v2.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/crystal-golem-attack-in-game-v2.png",
+      "size_bytes": 616528,
+      "sha256": "e963ee3c55f937b44c59a2d37bad4dd52fcdcc1763de242ac0b210c09a1b4eb2",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/crystal-golem-attack-in-game.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/crystal-golem-attack-in-game.gif",
+      "size_bytes": 551576,
+      "sha256": "bdf5519f951fa9b4f42be706315df2155fbe48d7894aaa6d71ab6d9ce0ded45c",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/crystal-golem-attack-in-game.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/crystal-golem-attack-in-game.png",
+      "size_bytes": 615475,
+      "sha256": "e23b3cd3a233c3efcda758cae55bc42d87b989373a5a46cb57e44ee537cf6fdb",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/crystal-golem-attack-preview-check.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/crystal-golem-attack-preview-check.png",
+      "size_bytes": 209305,
+      "sha256": "1e3763b10ee2b9d7770305118fa338d5758c42a0d5b315cef3e3d466fbb66b2c",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/crystal-golem-attack-preview-v2-check.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/crystal-golem-attack-preview-v2-check.png",
+      "size_bytes": 209841,
+      "sha256": "5ea14338a9ba4f6aeec4db907fe99e17f5c8e3dab9025703118f5a6b387651b2",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/golem-death-contact-sheet.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/golem-death-contact-sheet.png",
+      "size_bytes": 325825,
+      "sha256": "3ad32681de6aa55a48a05376b4765a050f2eeb03224f28d59d45fa8ca19b26b7",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/golem-death-in-game.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/golem-death-in-game.png",
+      "size_bytes": 305771,
+      "sha256": "aec05f0d4b34a74ab7174f64d63fb5d6c8183061fc525e6ec05b49fb9ce00ee3",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/golem-emergence-contact-sheet.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/golem-emergence-contact-sheet.png",
+      "size_bytes": 326686,
+      "sha256": "43e29cbbb40f5a5c929ba3f8edc186184e79074d51a3429cfa410f47aa83f8fe",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/golem-emergence-in-game.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/golem-emergence-in-game.png",
+      "size_bytes": 304997,
+      "sha256": "a8f776bb8ba0b5b5e0350115a1c48fc960ba2662de362fd1ebe4f789824a3be4",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/pillbug-death-blue-in-game.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/pillbug-death-blue-in-game.png",
+      "size_bytes": 306807,
+      "sha256": "8060f63879713b0f4e52c45f16500b1fe85ffbbe8b0accc7434709676261998c",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/pillbug-death-blue-preview.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/pillbug-death-blue-preview.png",
+      "size_bytes": 28720,
+      "sha256": "992ee6588468ebad6ac7e837656e345647ec0d3ca9a66b6d2680b541dec7169e",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/pillbug-death-contact-sheet.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/pillbug-death-contact-sheet.png",
+      "size_bytes": 225919,
+      "sha256": "0298ce4784f7ba65e91d0ef36932e1c2a12033a871c40d8014f90ec66991ee19",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/pillbug-death-in-game.gif",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/pillbug-death-in-game.gif",
+      "size_bytes": 503936,
+      "sha256": "384a4a8b53f82dcfe18aafd6453b84c53a4bbbdcf5429c8a5587ccbb64f9527f",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/pillbug-death-in-game.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/pillbug-death-in-game.png",
+      "size_bytes": 306251,
+      "sha256": "f7ea659dd8132de8450ad7dfcf49a983bffb4487fd2b620e5b89737fda640178",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/pillbug-emergence-contact-sheet.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/pillbug-emergence-contact-sheet.png",
+      "size_bytes": 179279,
+      "sha256": "c1f6bab58e7d23f8168f353413f75fbdbadd7e2b37c9a01ae6007ef3f4cc39f0",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    },
+    {
+      "original_path": "docs/pillbug-emergence-in-game.png",
+      "archived_path": "archive/unused-assets/2026-11-23/docs/pillbug-emergence-in-game.png",
+      "size_bytes": 306179,
+      "sha256": "1dd2b8286ba32e6c607930d6fdfd6d3c5374541c64145eea9f35451caba57e96",
+      "reason": "이전 구현 검수용 캡처/애니메이션"
+    }
+  ],
+  "protected_asset_sha256": {
+    "assets/audio/moss-cave-ambience-loop.wav": "9a6a9bd08712e381a4b52516f4b7d9f70e72bbd11927fdf25f46addb62a8ed7a",
+    "assets/concepts/character-a-back-v2.png": "a9ced05ef3e8388bd1be25ed9e84980e8736b942b2f800078ae74954850a84eb",
+    "assets/concepts/character-a-coarse-v1.png": "542af5644cfe4f45d8d1a2ef3ce6739caa7899baf8621907a600c78674d61074",
+    "assets/concepts/character-a-coarse-v1.prompt.txt": "3e4958f9e6548c1803a2e42a7d43ac5d451e41b3586e2ba8a9bcf5f7ce7ca2bb",
+    "assets/concepts/character-a-front-v2.png": "e446cb10b2e07908ead56bcf196ebf232c17751e4f40a1e2200492252716c83e",
+    "assets/concepts/character-a-left-v2.png": "2cfec8516223784d5b44a1d5c7c414351db7d32b81e233c9e76cf31cd1a434da",
+    "assets/concepts/character-a-right-v2.png": "5b2f192b9584524cf0c14a7065f84c7b92b816a6ed302f4809f0960e17d3b14f",
+    "assets/concepts/character-a-turnaround-v2.prompt.txt": "1591189952dcdcc6c1d4f208643e4a841ac42593a147ed5967ad2b7d5d18c2f8",
+    "assets/concepts/character-concepts-v1.png": "048893e5670bad7861193021a2c7b065fdfae8167323c6b6113b7a84a056eabd",
+    "assets/concepts/character-concepts-v1.prompt.txt": "fbc3594e4dad14af5250684380fbff9b460e311723564ef512f34c6a7a45ccaa",
+    "assets/concepts/character-introduction-v1.png": "4394fec8c6a4d5c4126fe5667500a2467aa7224286027950c606aeb6a9d2af08",
+    "assets/concepts/mechanics-presentation-concept-v1.png": "d4d94549538027e2a28d4e73350e7a29499104a016c52abbf9e9cc4914fd93fc",
+    "assets/concepts/opening-cave-rune-loop-v1.png": "c1f4c4854af1bc9ecb2b8bd25484e46f726039fe25a8c05ee823c428fee9dcdc",
+    "assets/concepts/opening-cave-rune-loop-v2.png": "f72240e525bb963348a39cbac82276fb8b201c1a9928aeb5e518da84f85d341c",
+    "assets/concepts/opening-cave-rune-loop-v3.png": "61b7b3023e5f2a5e6915c6d1c023552273ce600cdc38e5cb2667d35323814022",
+    "assets/concepts/opening-cave-rune-loop-v4.png": "d66be0a6d5bb2d83958a1b6960df1124e02be6c0e54e8dae39fbaf1a69d42f75",
+    "assets/concepts/opening-cave-rune-v1.png": "d489641e65081b8d4b72b65d5cd110877998cbc8488b8d1e6a40afce61bf56f9",
+    "assets/concepts/opening-cave-rune-v2.png": "9c8c208ebfd9d9102e80180560b723040d4ad8f0371dcd5be3a266feb2015906",
+    "assets/concepts/opening-cave-rune-v3.png": "27f33e31f5de5ac9d062a17d94e3fc07c2f059f11e81ac2e84cd087c2fbe0382",
+    "assets/concepts/opening-cave-rune-v4.png": "8687946f67002302a8fc6d9e7fcbd5f11a363b09086add25661760b4dc99fe14",
+    "assets/concepts/opening-cave-rune-v5.png": "acae232b687e40b4440bf2efc2bbe040f8fb74468a53cd946d291c696444334a",
+    "assets/concepts/opening-cave-rune-v6.png": "6a0da03dc27862880eba516d27a84beebdd7c29928c2f763cb0015422023a713",
+    "assets/concepts/opening-cave-rune-v7.png": "b36ac5bdbded9e606662ca1050a21d7cfab1659544fb9d877dd100a01038c1b5",
+    "assets/concepts/opening-cave-rune-v8.png": "b90fb40d263a4d9917ed273ccc4a305feed34d063abedec4ec931e9ddfa179c7",
+    "assets/concepts/opening-cave-rune-v9.png": "63aefcb6ad921fb5de07042a0bb0a61d1b0aee5c269f380a4ab9c521c027e72f",
+    "assets/concepts/player-sd-idle-right-preview-v1.png": "7107cc9220a69c4aaec9b77cce08debf5cc0619c95cc82fb98f8b31a49ad135e",
+    "assets/concepts/player-sd-idle-right-preview-v2.png": "fa6dcb6422f1f10ae8dc8ca15e7da673e2a46b80a5076375bb4af3f048cb3c31",
+    "assets/concepts/player-sd-idle-right-preview-v3.png": "34e7aa8e3df55dd1e15578c26adec680a9e179d02941c4f97868948d743d46ae",
+    "assets/concepts/player-sd-idle-right-source-v1.png": "dfce54d234829f508a94722613531f5987f0b78152c06acb231f46cff43209d1",
+    "assets/concepts/player-sd-idle-right-source-v2.png": "e67ec8e90b0937936778a936dbb7cbceb1cc54c32cc074caa43126ff190aaeec",
+    "assets/concepts/player-sd-idle-right-source-v3.png": "a5ee28de5e82546a00d203b4419843fc2109cc9674b08bbae71e1681451cc602",
+    "assets/concepts/player-sd-idle-right-v1.prompt.txt": "7cbd69d68ab42a66e0237cd57ea545ce85069438ad161f2eab1c5770ac97dffb",
+    "assets/concepts/player-sd-idle-right-v2.prompt.txt": "c4dc4f64337193e34dd3e1c16465bcd8b3e0faddae71719302eee78f4d7c8261",
+    "assets/concepts/player-sd-idle-right-v3.prompt.txt": "789d2b5da7ffa956781cb3ce45b7da78410e1dd201e09f869b591bd4adfa3a8b",
+    "assets/concepts/presentation-art-v1.prompt.txt": "c3778f8466048c8caaf24500cfbf1e6301b7d2f1133723fb6cb2652c50d6deff",
+    "assets/concepts/relic-draft.png": "428ca160693a6930645412a9c03887062808e15de0d9951929b8175e39419373",
+    "assets/concepts/ruins-presentation-background-v1.png": "e8544094f11d93cc80df8f5bc1e3612cf6675ffb0dd2ae4080e04f4b576421c2",
+    "assets/concepts/stone-crystal-golem-concept-v1.png": "4f4893aec370aee89805366deda92b87f04ceae9ac21e9c638499435398ee8b5",
+    "assets/concepts/stone-crystal-golem-concept-v1.prompt.txt": "b65d30d23994a6b741e9a672302964d1b410889afb739a6274a26f486e398cba",
+    "assets/terrain/green-cavern-background-v1-source.png": "b6a684fe3d63fcb33d4b0f131c9cc8c12e032ee81662da883a435268a58e2b54",
+    "assets/terrain/green-cavern-background-v1.json": "afaa1fbfcd56ae713f64b137689ff6f736fac779aad9ed411a232df7ecf11086",
+    "assets/terrain/green-cavern-background-v1.png": "d41a69bac447771e29d72cc1358efe6d05814a6d306d5835af758abe67b2ca86",
+    "assets/terrain/green-cavern-background-v1.prompt.txt": "1f799c4d8da37c2cecd91f56e4d488df1df1b9a497096945f0ebca3cfc2a8ff1",
+    "assets/terrain/green-cavern-canopy-v1-source.png": "4c0e4e7b3507ced12805cdfe6ca5c9d13877aa761a23fa3d33f8ba666b5e34da",
+    "assets/terrain/green-cavern-canopy-v1.json": "9ddc1f170daff70c5f15b9da676ba6cf1d206a3adf5fe7a2e2332fa7ac2453d2",
+    "assets/terrain/green-cavern-canopy-v1.png": "891777afc3ce0717d5be39091796703c58ea66cb9023c6762dcd89b9a06f95ee",
+    "assets/terrain/green-cavern-canopy-v1.prompt.txt": "9e556e4457251cdacbcbff181c3b4243ad6ec8d665b0889d46976393d2137bd2",
+    "assets/terrain/green-cavern-floor-v1-source.png": "b2804d8ee7e89d573796576a04febbebe35f531a2df68bf9452f58b56ab51091",
+    "assets/terrain/green-cavern-floor-v1.json": "987fa218b899f8cc9a1af345ad9c2c4029198ea13256cdd3128e828e75fe2375",
+    "assets/terrain/green-cavern-floor-v1.png": "10419154ced647c5d649a49d9e2b789aae0b330b04514581e247784ea1b30684",
+    "assets/terrain/green-cavern-floor-v1.prompt.txt": "d8083660a274f151a1e57259b291207d2a9bba676629adf04c007cbc18e3df86",
+    "assets/terrain/green-cavern-platform-v1-source.png": "63132c05d4c8b1cf422fbe1802a5893172e31ce514b035a8f6e08b86055be3eb",
+    "assets/terrain/green-cavern-platform-v1.prompt.txt": "212b03814dbe53a1bc1409f9f7c23bc73c36ef3ec8b6b2c0a816a81446260bc0",
+    "assets/terrain/green-cavern-wall-v1-source.png": "4018b1ffc29fabf8d0f7f8b8be8d533ab922398c68e48506a8049baafaa8dbbd",
+    "assets/terrain/green-cavern-wall-v1.json": "1987e4d4b04adbde49f333a688f3cd7ff394a9a8d6574c2c4aae4b995bf5e917",
+    "assets/terrain/green-cavern-wall-v1.png": "15818eff02c0d7067892ff3db6ac7f77607d361fdaab7cb1877d5a6064cffabc",
+    "assets/terrain/green-cavern-wall-v1.prompt.txt": "b754a6dcba1fa9dc591f6e4c1e29c99a18f23c3dde46fce1d9f72a745c88b3eb",
+    "assets/terrain/moss-combat-descent-shaft-v1-source.png": "2de6db6d9cddefea4e5530bcefca95f582cea58aaf69ebdc985a4839dda7ea78",
+    "assets/terrain/moss-combat-descent-shaft-v1.json": "4b299d3b841835a107d699fa5378f566c55bb366f43f06f00224d1d8d90c2589",
+    "assets/terrain/moss-combat-descent-shaft-v1.png": "8021e2fd6028c4264d761df444d21705998429d8753851de135418478fe563bb",
+    "assets/terrain/moss-combat-descent-shaft-v1.prompt.txt": "782500d1c907fd00020feb5d1f948361135c139af67c162b142e5277961524ac",
+    "assets/terrain/moss-combat-door-blocker-v1-source.png": "8778577c945f5cb581840ed662f08bb810b5e053c5ee98c0b9e5f4441da66609",
+    "assets/terrain/moss-combat-door-blocker-v1.json": "bee7799f0ec5a60e0e9c55f0548e90ec506162a3b6d1a1605d45d1f9ba685e5b",
+    "assets/terrain/moss-combat-door-blocker-v1.png": "df05d08e625ad69c81c869a7f0e607ab07c8db1fa38645289b533e36b99fdd84",
+    "assets/terrain/moss-combat-door-blocker-v1.prompt.txt": "6d6a2f88eac3568e27e7ed96bc9fdf992170bb70a40799a7274350956f58a74b",
+    "assets/terrain/moss-combat-floor-cover-v4-source.png": "95c581c1dad8f66ba6382b63f6f6c4c35db24c11463ac4f0d8549d4f8661dc3f",
+    "assets/terrain/moss-combat-floor-cover-v4.json": "5bf452778769f0aabc3c2b0989429a975fa3fb90426c7e89cea74de3fc1e3d8a",
+    "assets/terrain/moss-combat-floor-cover-v4.png": "a22442d81c20c90d69fe11a447e00db7515a4eb5f2ed148e512541e8cb575cce",
+    "assets/terrain/moss-combat-floor-cover-v4.prompt.txt": "565922d2ad0b793e7a505b7049dbc6143f2cd0059744adce6b4a98f5dd46c7d6",
+    "assets/terrain/moss-combat-room-shell-v5.png": "bc47e5331aa1ab8e8e8aec3a8020e6ff431c8bc8470e7cced1ce1c8133c08c3a",
+    "assets/terrain/moss-combat-room-shell-v5.prompt.txt": "6761c21a8d63b91690665f43772e08021bd3eff3834c58671c8b610094a3bb4a",
+    "assets/terrain/moss-combat-shaft-rim-v3-source.png": "9bc23748d1950cf62a2b502391edbbb19cc04b0885d20172c6087bce6d2a7ef4",
+    "assets/terrain/moss-combat-shaft-rim-v3.json": "8d6561112a14c34594c554f24773dfd1bdf704d40268976a947ab30b1b985e4a",
+    "assets/terrain/moss-combat-shaft-rim-v3.png": "7710145fe42d7f0ac9b491311c3e6e223e4b9bb50cae977e9b28edcaaacf5373",
+    "assets/terrain/moss-combat-shaft-rim-v3.prompt.txt": "640b4b71d1d7f64e98a552ba2f6aaed28d2ab19f890915b18dbed5d45f266fec",
+    "assets/terrain/moss-gallery-backdrop.png": "ee94bfd2b888c2db411f87eaed1eb1152c22fc515bb8c14cba17ef2de6f7f526",
+    "assets/terrain/moss-gallery-ceiling.png": "7288efe99436f571d10a9fc29d55a4e00dbbe6fafc8828b57e5de221ea7149ed",
+    "assets/terrain/moss-gallery-entry.png": "2d28dcff5af7d48f49c1cdaff0293a2d4088cbf5cc9bc32d3229197ffbda6ac7",
+    "assets/terrain/moss-gallery-entry.prompt.txt": "a202bb6060a5a0cdd061d741b918bc26abe1d26fa28c5d9d228584c14bd55fcd",
+    "assets/terrain/moss-gallery-floor.png": "0dc3a17d620ed0e3131fa1a42a007fa38ee237442051af4266fbdb536fafde75",
+    "assets/terrain/moss-gallery-small-pillar-v2.png": "af13ecf51916f161030653cd1dbec7fa23a94c2b86cd2256947e05eddbeba676",
+    "assets/terrain/moss-gallery-small-pillar-v2.prompt.txt": "9417fba5d2a45e6edbaf7d3f880a56f21753d673c6f4316d845c923c8bfc722e",
+    "assets/terrain/moss-gallery-small-pillar.png": "81528ccc59a58e3c64a2725496e65b47f3880a19a68f143dfd2b4c3bc2b9e058",
+    "assets/terrain/moss-gallery-small-pillar.prompt.txt": "d2d0951aae9c8615b60eb63b09da01071e76d0edc3680a43b11970b3ab40f7cf",
+    "assets/terrain/moss-gallery-small-platform.png": "2465d19fe0d8f91332d124b62aa3223d306e2b58b3cb0dc4914689e89ec5bc1a",
+    "assets/terrain/moss-gallery-small-platform.prompt.txt": "b466aef2147c93fdec132a6226e5675e9c822f6c7d15947d90f150bd254b0700",
+    "assets/terrain/moss-gallery.prompt.txt": "66a90e1cf016de8bb023dc8f32edaf8ebc7fa815040b97fc63681ac02ccc5fbc",
+    "assets/terrain/opening-cave-backdrop-rune-v7.png": "9274becd019adc31f255b4def93b29c28e3cdce5e1f618038c485477eac2fca9",
+    "assets/terrain/opening-cave-backdrop-rune-v7.prompt.txt": "9e3c576ad92cec20bcaaa257e749b8f9c6023ee6b1f22b3a7cd09948bdadfd6a",
+    "assets/terrain/opening-cave-floor-v1.png": "32e8beeb3cc1d65046ff57b78ce8da45290b226e4d2096c571d02ce380abf40c",
+    "assets/terrain/opening-cave-floor-v1.prompt.txt": "4785fa729ee0cfb606b772b829c975a4eb764bffbfbda4245abcfa8fe47ad330",
+    "assets/terrain/opening-cave-stalactite-shadow-v1.png": "7124fb87aec333caf0892e57605d0faa2ef53614e5cf66169c9d9b3d1487edfe",
+    "assets/terrain/opening-cave-stalactite-shadow-v1.prompt.txt": "5888f4200ef84ce05a49ff1665871d868546aee89bf675c92be2e822e8d2c061",
+    "assets/terrain/opening-collapse-slabs.png": "6256653e5fb95966327d0c36aa857fefc449ccbe5591fc76ef6e4232d63f232a",
+    "assets/terrain/opening-collapse-slabs.prompt.txt": "d7cf24f5e1ce62a9f08c26eccc3b5147071576bb3328bf162a042b8dc98a3f5a",
+    "assets/terrain/opening-fall-shaft-v4.png": "ff642ae0b730674a5906378311435642a9bc294932b81885b0a0b679e94d5804",
+    "assets/terrain/opening-fall-shaft-v4.prompt.txt": "bf5373898e0797391498e0f30515a363134f95a31fe6a8df53ba576648f711df",
+    "assets/terrain/opening-fall-shaft.png": "588b4a7eec88ac427daf8d3780938b0f146e6c4a2690b2018ad297b11cd06ba4",
+    "assets/terrain/opening-sigil-emission.png": "d81b93ee5858f4848c25f337abba313e1283017e50fd563dc428e55f15a85f9f",
+    "assets/terrain/opening-slab-edge-emission.png": "bb106fc8814e9a22d3b37455bd8634bd518c33891ae8a53abad04f69f7e64507",
+    "assets/terrain/opening-slab-edge-emission.prompt.txt": "64343c17879c408ba760d50c31435fe27ea3674147c9f9ae8e75d9516c4a40c4",
+    "assets/terrain/ruins-background-wall-left-edge-v1.png": "37550e74eab5d4e2988a7fe39981418b7be1095b01098e68ecc85b61ff34d1b2",
+    "assets/terrain/ruins-background-wall-outer-corner-v1.png": "f9a844bcd5cee935e0fabf0f5c8f67df5969e3e11972daf0b5e4bf34049063f7",
+    "assets/terrain/ruins-background-wall-outer-corner-v1.prompt.txt": "9c929db9770bbbc9db4d3d21f2c468e000fad2afd66a33eb5c4ec09f91fed8bf",
+    "assets/terrain/ruins-background-wall-right-edge-v1.png": "1c74d42292e90ec32ede596f9c697debaa745b3164b696bcdf8bb5afc8d86c24",
+    "assets/terrain/ruins-background-wall-side-edges-v1.prompt.txt": "51faa7107568ac68f92bcc00622a9ca76e7fc6809080e1aab2296bfd4f33fe0f",
+    "assets/terrain/ruins-background-wall-tile-v2.png": "6f34de4c5b4305c348cf4fa9a7cf7ab3eb13d6f54bb594d7deaf9690c3e3f1af",
+    "assets/terrain/ruins-background-wall-tile-v2.prompt.txt": "5f30fcf96583b5a8a7df6b9b9f1d4a90e2247de77572b1574b6e56e7df4e46cb",
+    "assets/terrain/ruins-carved-pillar-v1.png": "deaff26141d976805f102c4dd523a3471cef4e0717f3bb339e00110ce47be848",
+    "assets/terrain/ruins-floor-blue-fissures-v1.png": "f244f8422955b2d90dbfce7c25adc21874bfc3a5fa35469d2b2f90904a50783a",
+    "assets/terrain/ruins-floor-blue-fissures-v1.prompt.txt": "d5366807cb1840fae822803322ca734dc55a40a1300a8736ad03511c14c1030c",
+    "assets/ui/gallery-attack-hints.png": "949fba6944f67517efa9e7799d940588172482135f21ae483dbe8cc25794b387",
+    "assets/ui/gallery-wall-jump-hint.png": "67f482652b7e4c53b9a52a8f733ed105ab85d79177977df93739247fd5f224ae",
+    "assets/ui/title-enter-prompt.png": "9bdddcfbc15df7c76a1bf35f2206bb191ab1c37dd955bfaf73826bd92f762706",
+    "assets/sprites/enemies/moss-shell-grub-idle-left.png": "53078133f39e0ae176c0194b454b539416fcf3b1a66b33ae3deeb1912e3d1304",
+    "assets/sprites/enemies/moss-shell-grub-idle-left.prompt.txt": "639bdad96b1c63acfba8ee66b3cb3cfc9229b31039972c37ceda5aef18aefeb2",
+    "assets/sprites/enemies/rock-shell-grub-idle-left.png": "424397a6767a76d2020a9237f79650a43ce39989e9cc4571edf472896bdf9c45",
+    "assets/sprites/enemies/rock-shell-grub-idle-left.prompt.txt": "30882018b619ba1800fc78d5ba137ba80074c18640163bd0de6bd478bfd5945f",
+    "assets/sprites/enemies/stone-crystal-golem-attack-left-v1.json": "443db388aef94de59a128e819a6a7aa2f28553dbb955e7a20f1c90509d6e5efc",
+    "assets/sprites/enemies/stone-crystal-golem-attack-left-v1.png": "130bb1090c13e0bc09829d51175baab8bcd48856243108bfa71db701531a8d35",
+    "assets/sprites/enemies/stone-crystal-golem-attack-left-v1.prompt.txt": "e63fb516bbd7df38c3636c11ff5b6de03d2aa1426e2843bce225bff627ab5e5c",
+    "assets/sprites/enemies/stone-crystal-golem-death-left-v1.json": "377700c5d2feb24b5c3b0d6ae475f00bb2f55e2d530f284b7f397b501ed242d7",
+    "assets/sprites/enemies/stone-crystal-golem-death-left-v1.png": "46e288aee04fef0997da82f256c4e0ec3cc7a72f8d8d602582a0db2b1d7dcdb4",
+    "assets/sprites/enemies/stone-crystal-golem-death-left-v1.prompt.txt": "1d1fd9af8f6db197b3cd3c126208179ca3f4dbd72503a63e0b12d56121d9aae3",
+    "assets/sprites/enemies/stone-crystal-golem-emerge-left-v1.json": "16d83236a77b3bf09e080f45d6210ea71d720355c6e84a5559d720f40ce1614b",
+    "assets/sprites/enemies/stone-crystal-golem-emerge-left-v1.png": "28961f86e3173492ef6b1eebfe538d8e803fce26f43ac11343e902e443f096a1",
+    "assets/sprites/enemies/stone-crystal-golem-emerge-left-v1.prompt.txt": "6a89172da8199c390e0be1a3d22a41a15af29251f7bd591e36047a7e3a0a8940",
+    "assets/sprites/enemies/stone-crystal-golem-idle-left-v1.json": "b3caf1c29c71cd72ac418e2c2038129d1a92e56af969da0fd66027656ec27eb7",
+    "assets/sprites/enemies/stone-crystal-golem-idle-left-v1.png": "ccbd0838965064cc72071f2449b052654576ca76b71a28323289656d599c5f82",
+    "assets/sprites/enemies/stone-crystal-golem-idle-left-v1.prompt.txt": "e423e8876b65fc3817126972067312f52273de23888bbcc02318a31169a8f0cc",
+    "assets/sprites/enemies/stone-crystal-golem-walk-left-v2.json": "849fac7564d930611849e5c48e4c762155ea9bb594a87b4900baeceeed88f046",
+    "assets/sprites/enemies/stone-crystal-golem-walk-left-v2.png": "f1170bc4d49422bc5b4d15092cacfbb0c75d5368cab66e87a6cab488639647db",
+    "assets/sprites/enemies/stone-crystal-golem-walk-left-v2.prompt.txt": "56b7fe803d7ad8ca2afa6f9606429e3fa0b93e9df89efb816a68105422293a29",
+    "assets/sprites/enemies/stone-pillbug-death-curl-left-v1.json": "de33a30622296fdb1d29bf34a59cac703a86b037e364df4ebd7631426dfa2919",
+    "assets/sprites/enemies/stone-pillbug-death-curl-left-v1.png": "43a533b8e19a5257e98a8a560c5f786fa23e880ead12e529638dc799a2eae8ae",
+    "assets/sprites/enemies/stone-pillbug-death-curl-left-v1.prompt.txt": "3a02fbcf9461b12729f56ffbca276e3016d276158f8ce22fb7321861fc54bf1e",
+    "assets/sprites/enemies/stone-pillbug-emerge-left-v1.json": "d5ca33e43ce7892c27cbea19f85fbf07c93cf429cebd20cc17e0a7ccfec54148",
+    "assets/sprites/enemies/stone-pillbug-emerge-left-v1.png": "5470a58bd575c2c8713db2cbc333f764db03dd659224992556ea2828ca8c6368",
+    "assets/sprites/enemies/stone-pillbug-emerge-left-v1.prompt.txt": "690bf5a024a0f82c44c373e493e4fe5a783c610b0983e61adffbcdafcc764a7c",
+    "assets/sprites/enemies/stone-pillbug-hurt.png": "68ca8d7be4e794eaf2b12b15ee5709ae0a05146ffba29897b4556e469dd560b2",
+    "assets/sprites/enemies/stone-pillbug-hurt.prompt.txt": "cafa73ba11da83e5dbeec4b5907174d5333ffe14e587f55ee36bb46b1d9969d0",
+    "assets/sprites/enemies/stone-pillbug-idle-left.png": "96880e223a832a318c1fe7afb385822112d3867afa38f467bd3587bc937f8947",
+    "assets/sprites/enemies/stone-pillbug-idle-left.prompt.txt": "338979702115b16ab05335e75d565671f631a01972753c58336c73b047f547ce",
+    "assets/sprites/enemies/stone-pillbug-moss-crawl-left.png": "e96748319758ff2cad030fa455cd417fb4dd54c5136961a5d639f262bdc8012a",
+    "assets/sprites/enemies/stone-pillbug-moss-crawl-left.prompt.txt": "04c09715a7cec9bc9805c038c2209383207a22cefab9245a455fc3e860a573ec",
+    "assets/sprites/enemies/stone-pillbug-moss-idle-left.png": "a074d0e4bf71f0e0eb4c68f899db9524323caeb78e91932443a3ce335d8b6be7",
+    "assets/sprites/enemies/stone-pillbug-moss-idle-left.prompt.txt": "7e542644c96eabcb5a60d09321a2ef4b34413842a5e786746be73c3e4719db15",
+    "assets/sprites/enemies/stone-pillbug-roll-flip.png": "d08c409079c7c2a034bee1425259bde00514a8d3abca88f08c2809e4a6eddf24",
+    "assets/sprites/enemies/stone-pillbug-roll-flip.prompt.txt": "56b37c4d2265c2045e803522b270386cbe3eb75ad9ac02d7603361f6688d8a67",
+    "assets/sprites/hazards/mutant-floor-spikes-v1.png": "df8e84ecd304322a7ac8003ef5ae70beecd5b08e8bfdb1809d6e022348c87a5c",
+    "assets/sprites/launcher/crossbow-base-v1.png": "230c4147136caeecbd9e9ccdd8c98f608bd57f44a4b6545759104f2145276af0",
+    "assets/sprites/launcher/crossbow-body-v1.png": "dc12cd5d94bb360296cf3e1a0c5133e52fcf04698621e3306efb9166d9994bf4",
+    "assets/sprites/player/air-attack-right-draft-v3.json": "38efb335ff6ba54ddf875e7e812ded9570dac2c50bc1f5bf586c1e3aa16c0170",
+    "assets/sprites/player/air-attack-right-draft-v3.png": "b8320ac1cd9e01b11453f3e1920491a4b2b629e83dc00227e1d840e9a5a07334",
+    "assets/sprites/player/air-attack-right-draft-v3.prompt.txt": "eb3d8ace5e62b1252a55b330f68832d3adfd7cf4455922c91bdf4048f021aa42",
+    "assets/sprites/player/air-down-attack-right-draft-v4.json": "afedb0125f1ef79293b2eb6a0b1f5f7855ec3f342f5262b25be1c6e88df2a162",
+    "assets/sprites/player/air-down-attack-right-draft-v4.png": "2e1f9609e35456e7b44efe13ff13aba1955bb12c49943633465a6ef373fdb199",
+    "assets/sprites/player/air-down-attack-right-draft-v4.prompt.txt": "c2604c08f01169402836e2e7bc95a2543cdb67fa5097ccb68a9343db0cf9f433",
+    "assets/sprites/player/attack-sweep-right-v2.json": "35aebaa8490f02bc55b7646a362540003a5af404383c85d48294076165696101",
+    "assets/sprites/player/attack-sweep-right-v2.png": "490d59bc8d5d4231eee1e946673da786c52e1720f0a06f5fbb065733a0c59559",
+    "assets/sprites/player/attack-sweep-right-v2.prompt.txt": "e6cb5d55af4563acd645f2e683a4517a1d7cab97f6d9f947aa1eb28d04f23a5f",
+    "assets/sprites/player/crawl-right-draft-v2.json": "8501c672a58805559255255b1700ff418f6de1d3338dcb7fbedf90275c392eaa",
+    "assets/sprites/player/crawl-right-draft-v2.png": "0a3b72b4c05ac6d3b50f31ac7a6ffc33ec6cad99634d86f79c01c19e6179f63d",
+    "assets/sprites/player/crouch-right-fast-v1.json": "54e602141a4e3c84727082ac15dc5e1d0385294488580077b3daee1a08ff088b",
+    "assets/sprites/player/idle-right-v1.json": "4a9b6d664202d942711d08f7bc3443238ae75c216015af566594342de1b60213",
+    "assets/sprites/player/idle-right-v1.png": "9c0f00a02892c02af0dc67cd4761ff24a88ee3bdc494562badbfd75ef7b95d80",
+    "assets/sprites/player/idle-right-v2.json": "b2b553fe29d8c6c9be314ad1b076c9c64a190e0085ebbc318f1aef527b4670b0",
+    "assets/sprites/player/idle-right-v2.png": "c5fa4a1db14c5e26a9b815fb8011ed7e13974967b4675b2e43da1970060737be",
+    "assets/sprites/player/idle-right-v3.json": "3c2df05451e5fc6165c74246137ca0bd9b2ef9feb6d7c68a4bde94e8c2ce1e58",
+    "assets/sprites/player/idle-right-v3.png": "05cb5f4d116fc5d5415269e4002e5d1ecf49030d4bfcfbf73ecdbd2519219bb1",
+    "assets/sprites/player/idle-right.json": "eeb8324efddedd240d59672bef42e8d6b2002a2f5d017658d1aaa0c4dbc66eb1",
+    "assets/sprites/player/idle-right.png": "05cb5f4d116fc5d5415269e4002e5d1ecf49030d4bfcfbf73ecdbd2519219bb1",
+    "assets/sprites/player/idle-sword-dust-right-draft-v3.json": "bbec4baf1afaa6e8e74b3c752d9cddc489cb0a95e43e5913479b0a28851454dd",
+    "assets/sprites/player/idle-sword-dust-right-draft-v3.png": "89bfd8d353564e87e39c5f8e9d1751a4c1cab74a1a552d88cafcd769dc505211",
+    "assets/sprites/player/jump-look-down-right-v1.png": "7a4642477e93c28e810bdfba1c3e4436ba336785ff4f2c50b2071bba7a68db95",
+    "assets/sprites/player/jump-look-down-right-v1.prompt.txt": "77d82c701e4e36dcc959fb48cf33c3c428dfbb280a9d725717ac49d95cfdb74c",
+    "assets/sprites/player/jump-right-draft-v1.json": "41215645774bfd0fd6778b913bef09133f4fa56795911bebcfb3d88edf85f497",
+    "assets/sprites/player/jump-right-draft-v1.png": "8b5a5d8d5889fcc59a33a3fda583dd35433bbf8e76aefff3ff5fbd792ae5e28e",
+    "assets/sprites/player/opening-investigate-unarmed-right-v3.json": "a7dfdce6215b3f3dea437a9fcc738f3663ba3b01c4403b28912d60a0a1f188f2",
+    "assets/sprites/player/opening-investigate-unarmed-right-v3.png": "7dc6725ecb7454cc29cbf2ae0176e68ff4d7db17b4963c0420b62220fc94bcc5",
+    "assets/sprites/player/opening-investigate-unarmed-right-v3.prompt.txt": "a1f6c0138e5b4027f360f707b48bb9ab6984d981556b2603b734495da4cb7949",
+    "assets/sprites/player/opening-recoil-right-v1.json": "4996e7944d19670541c1c137a00273de2f1912e6b418e5729451ff932b11abd2",
+    "assets/sprites/player/opening-recoil-right-v1.png": "5bf52ba4c3ab2195fa6933e5ed345aec47832fd0d19e951b211607aba9170f7c",
+    "assets/sprites/player/opening-recoil-right-v1.prompt.txt": "3ed6e8171c53210e3e5882629a38af16a1a69eb2f1bd275bc1fee5a399dc472e",
+    "assets/sprites/player/opening-shaft-flail-seated.json": "77405f13fc53baab0cc78a67350cd424d4d1e4a130d9d432d49eaa208c19c5fc",
+    "assets/sprites/player/opening-shaft-flail-seated.png": "2ac3be54ae73a0884e7ab69c7242ed2582bc74d5d27e15590b68bcb111a9f1c1",
+    "assets/sprites/player/opening-shaft-flail-seated.prompt.txt": "301a1fe0d943d565a1a07612ca5017169b050b322cedbfc63e8ffe102488a07b",
+    "assets/sprites/player/opening-stand-up.json": "31bd75e8b4b6d5859b1b34267b2da06b2852ebc4c74b292a84e0a8a05982c09f",
+    "assets/sprites/player/opening-stand-up.png": "7ce5aad10abcc55ed9cf242fd0e3f41902e0e98ec3e75184c8d75ea27ae0c43e",
+    "assets/sprites/player/opening-stand-up.prompt.txt": "465d81959cb23552c219c9f8c6035a9cad3c0e19d851f11c2482ce895f1df255",
+    "assets/sprites/player/run-right-v1.json": "71a58106bc767f0d60e59e4fa989319bc292c4d04a4c5e6d622b53409f65b045",
+    "assets/sprites/player/run-right-v1.png": "bea61aa8ccb22fe17861b48d89fa8e1ae5eb49ae4907c13bcef30c4fff0b9033",
+    "assets/sprites/player/walk-right-v1.json": "7654d6e2f84a93b0867ac17752a0e48b57ae2278a4bd66139b144822fb32a30f",
+    "assets/sprites/player/walk-right-v1.png": "51ebdc78bd82a03d8e4c56d585b27b0d399bac153035e0545a492d009c87ce42",
+    "assets/sprites/player/wall-slide-right-draft-v4.json": "258e807eed8d5a111a01f8392e57c206659bdbec429e3c5038d6082b98ef8b8d",
+    "assets/sprites/player/wall-slide-right-draft-v4.png": "d69125fe7d7e252a486dca20fee2a74cfbc91e3fe8056b89191cbfad868cb588",
+    "assets/sprites/player/wall-slide-right-draft-v4.prompt.txt": "cd773571583ec202c0825b55827b411accb6a956431b11c7452e6a787f785e01",
+    "assets/sprites/projectiles/back-crystal-shard-source-v2.png": "5bfa19a566d41ebd2be0f9053b7cd6dc94cd286584f201a243b6ac363b4902bb",
+    "assets/sprites/projectiles/back-crystal-shard-v2.json": "8e4236e1cf0055a35fadfe932ede833cd265ed4ee51419d0afefdd6db5a93819",
+    "assets/sprites/projectiles/back-crystal-shard-v2.png": "f8f909f07549fb15ec250f725834da728a9694c6a1f632ca1a9f70e151cabaed",
+    "assets/sprites/projectiles/back-crystal-shard-v2.prompt.txt": "9b491718d013a82624e43e477e87b1b8043a272acb9fbcdcce49f7d7869d6106",
+    "assets/sprites/rail/relic-carriage-v2.png": "c795c540742a994744f84ff8c6d5350faff350c017ef4113fb6863698dcc0798",
+    "assets/sprites/rail/relic-track-bend-v2.png": "5c7fa5a053eb472e5ac919ea07bea872ca52f18da9f261638b881711d7ddf254",
+    "assets/sprites/rail/relic-track-bend-v2.prompt.txt": "5c103634c4ce1ef142819c5fb85994cdc3b86a0cdb410be518f64fa121c13b33",
+    "assets/sprites/rail/relic-track-blue-v4.png": "5d2081087de80662746302a8b12080b033f62d83309060049b6aaefc009e7416",
+    "assets/sprites/rail/relic-track-blue-v4.prompt.txt": "2dda013cf6598ba3ac16ac3a1d2dccb49c6ff9c40c94c820af520790d9b2fa8b",
+    "assets/sprites/relic/relic-blue-glow-v1.png": "81c4412d19a6a63ca6a64c7dca8e51917842fca6770abffe35e82e77e2b685c7",
+    "assets/sprites/relic/relic-departure-sigil-v3.png": "12d506247487a121ab71f7bfc81e34d65aae2efb71296423d599419fba3ac4df",
+    "assets/sprites/relic/relic-departure-sigil-v3.prompt.txt": "7bd6a066fe96d5f60fa93fae6a428bcce9c8e36940f6b6628cc822315ba17270",
+    "assets/sprites/relic/teleport-relic-v1.png": "7194201b2aaa753cdc8e38ddd13b7924f7801128f7c22fa1c30292ef3c87aea7",
+    "assets/sprites/player/reference/crouch-8frame-v1/crouch-right-draft-v1.json": "8d9d966c1de4f62cd5a5286d581a1f99404e67e7aab4d8781fd3b71986baa63f",
+    "assets/sprites/player/reference/crouch-8frame-v1/crouch-right-draft-v1.png": "b456fa0ff60073411a5b6a27da65d8eae2c7f151f4fb14669743a66a6c5bb02b"
+  },
+  "runtime_assets": [
+    "assets/concepts/opening-cave-rune-loop-v4.png",
+    "assets/concepts/player-sd-idle-right-source-v3.png",
+    "assets/sprites/enemies/stone-crystal-golem-attack-left-v1.json",
+    "assets/sprites/enemies/stone-crystal-golem-attack-left-v1.png",
+    "assets/sprites/enemies/stone-crystal-golem-death-left-v1.json",
+    "assets/sprites/enemies/stone-crystal-golem-death-left-v1.png",
+    "assets/sprites/enemies/stone-crystal-golem-emerge-left-v1.json",
+    "assets/sprites/enemies/stone-crystal-golem-emerge-left-v1.png",
+    "assets/sprites/enemies/stone-crystal-golem-walk-left-v2.json",
+    "assets/sprites/enemies/stone-crystal-golem-walk-left-v2.png",
+    "assets/sprites/enemies/stone-pillbug-death-curl-left-v1.json",
+    "assets/sprites/enemies/stone-pillbug-death-curl-left-v1.png",
+    "assets/sprites/enemies/stone-pillbug-emerge-left-v1.json",
+    "assets/sprites/enemies/stone-pillbug-emerge-left-v1.png",
+    "assets/sprites/enemies/stone-pillbug-hurt.png",
+    "assets/sprites/enemies/stone-pillbug-moss-crawl-left.png",
+    "assets/sprites/enemies/stone-pillbug-roll-flip.png",
+    "assets/sprites/hazards/mutant-floor-spikes-v1.png",
+    "assets/sprites/launcher/crossbow-base-v1.png",
+    "assets/sprites/launcher/crossbow-body-v1.png",
+    "assets/sprites/player/air-attack-right-draft-v3.json",
+    "assets/sprites/player/air-attack-right-draft-v3.png",
+    "assets/sprites/player/air-down-attack-right-draft-v4.json",
+    "assets/sprites/player/air-down-attack-right-draft-v4.png",
+    "assets/sprites/player/attack-sweep-right-v2.json",
+    "assets/sprites/player/attack-sweep-right-v2.png",
+    "assets/sprites/player/crawl-right-draft-v2.json",
+    "assets/sprites/player/crawl-right-draft-v2.png",
+    "assets/sprites/player/crouch-right-fast-v1.json",
+    "assets/sprites/player/idle-right-v2.png",
+    "assets/sprites/player/idle-right-v3.png",
+    "assets/sprites/player/idle-right.json",
+    "assets/sprites/player/idle-right.png",
+    "assets/sprites/player/idle-sword-dust-right-draft-v3.json",
+    "assets/sprites/player/idle-sword-dust-right-draft-v3.png",
+    "assets/sprites/player/jump-look-down-right-v1.png",
+    "assets/sprites/player/jump-right-draft-v1.json",
+    "assets/sprites/player/jump-right-draft-v1.png",
+    "assets/sprites/player/opening-investigate-unarmed-right-v3.json",
+    "assets/sprites/player/opening-investigate-unarmed-right-v3.png",
+    "assets/sprites/player/opening-recoil-right-v1.json",
+    "assets/sprites/player/opening-recoil-right-v1.png",
+    "assets/sprites/player/opening-shaft-flail-seated.json",
+    "assets/sprites/player/opening-shaft-flail-seated.png",
+    "assets/sprites/player/opening-stand-up.json",
+    "assets/sprites/player/opening-stand-up.png",
+    "assets/sprites/player/reference/crouch-8frame-v1/crouch-right-draft-v1.json",
+    "assets/sprites/player/reference/crouch-8frame-v1/crouch-right-draft-v1.png",
+    "assets/sprites/player/run-right-v1.json",
+    "assets/sprites/player/run-right-v1.png",
+    "assets/sprites/player/walk-right-v1.json",
+    "assets/sprites/player/walk-right-v1.png",
+    "assets/sprites/player/wall-slide-right-draft-v4.json",
+    "assets/sprites/player/wall-slide-right-draft-v4.png",
+    "assets/sprites/projectiles/back-crystal-shard-v2.json",
+    "assets/sprites/projectiles/back-crystal-shard-v2.png",
+    "assets/sprites/rail/relic-carriage-v2.png",
+    "assets/sprites/rail/relic-track-bend-v2.png",
+    "assets/sprites/rail/relic-track-blue-v4.png",
+    "assets/sprites/relic/relic-blue-glow-v1.png",
+    "assets/sprites/relic/relic-departure-sigil-v3.png",
+    "assets/sprites/relic/teleport-relic-v1.png",
+    "assets/terrain/green-cavern-background-v1-source.png",
+    "assets/terrain/green-cavern-background-v1.json",
+    "assets/terrain/green-cavern-background-v1.png",
+    "assets/terrain/green-cavern-canopy-v1-source.png",
+    "assets/terrain/green-cavern-canopy-v1.json",
+    "assets/terrain/green-cavern-canopy-v1.png",
+    "assets/terrain/green-cavern-floor-v1-source.png",
+    "assets/terrain/green-cavern-floor-v1.json",
+    "assets/terrain/green-cavern-floor-v1.png",
+    "assets/terrain/green-cavern-wall-v1-source.png",
+    "assets/terrain/green-cavern-wall-v1.json",
+    "assets/terrain/green-cavern-wall-v1.png",
+    "assets/terrain/moss-combat-descent-shaft-v1-source.png",
+    "assets/terrain/moss-combat-descent-shaft-v1.json",
+    "assets/terrain/moss-combat-descent-shaft-v1.png",
+    "assets/terrain/moss-combat-door-blocker-v1-source.png",
+    "assets/terrain/moss-combat-door-blocker-v1.json",
+    "assets/terrain/moss-combat-door-blocker-v1.png",
+    "assets/terrain/moss-combat-floor-cover-v4-source.png",
+    "assets/terrain/moss-combat-floor-cover-v4.json",
+    "assets/terrain/moss-combat-floor-cover-v4.png",
+    "assets/terrain/moss-combat-room-shell-v5.png",
+    "assets/terrain/moss-combat-shaft-rim-v3-source.png",
+    "assets/terrain/moss-combat-shaft-rim-v3.json",
+    "assets/terrain/moss-combat-shaft-rim-v3.png",
+    "assets/terrain/moss-gallery-backdrop.png",
+    "assets/terrain/moss-gallery-ceiling.png",
+    "assets/terrain/moss-gallery-entry.png",
+    "assets/terrain/moss-gallery-floor.png",
+    "assets/terrain/moss-gallery-small-pillar-v2.png",
+    "assets/terrain/moss-gallery-small-pillar.png",
+    "assets/terrain/moss-gallery-small-platform.png",
+    "assets/terrain/opening-cave-backdrop-rune-v7.png",
+    "assets/terrain/opening-cave-floor-v1.png",
+    "assets/terrain/opening-cave-stalactite-shadow-v1.png",
+    "assets/terrain/opening-collapse-slabs.png",
+    "assets/terrain/opening-fall-shaft-v4.png",
+    "assets/terrain/opening-fall-shaft.png",
+    "assets/terrain/opening-sigil-emission.png",
+    "assets/terrain/opening-slab-edge-emission.png",
+    "assets/terrain/ruins-background-wall-left-edge-v1.png",
+    "assets/terrain/ruins-background-wall-outer-corner-v1.png",
+    "assets/terrain/ruins-background-wall-right-edge-v1.png",
+    "assets/terrain/ruins-background-wall-tile-v2.png",
+    "assets/terrain/ruins-carved-pillar-v1.png",
+    "assets/terrain/ruins-floor-blue-fissures-v1.png",
+    "assets/ui/gallery-attack-hints.png",
+    "assets/ui/gallery-wall-jump-hint.png",
+    "assets/ui/title-enter-prompt.png"
+  ],
+  "deleted_files": [
+    {
+      "original_path": "발표&기획서/1차 발표 및 기획/~$RelicEscape_1차_발표자료.pptx",
+      "size_bytes": 165,
+      "reason": "2026-11-04 생성된 PowerPoint 임시 잠금 파일. POWERPNT 실행 없음 및 독점 열기 가능 확인 후 삭제."
+    }
+  ]
+}

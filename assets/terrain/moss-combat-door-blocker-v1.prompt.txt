@@ -1,0 +1,9 @@
+Use case: stylized-concept
+Asset type: transparent 2D side-scrolling game terrain sprite, one rising stone doorway blocker.
+Primary request: create one solid heavy stone wall slab that rises vertically out of the floor to block a cave entrance and sinks back into the floor. Match the supplied game's existing cave artwork precisely.
+Input images: Image 1 is the existing combat-room environment STYLE AND PALETTE reference only. Image 2 is a freestanding terrain pillar STYLE AND EDGE reference only. Do not recreate either scene.
+Subject: one tall upright rectangular solid wall, width to height ratio about 0.65. Straight parallel vertical sides and a flat horizontal top and bottom, tiny chipped edges only. The face consists of large interlocking dark blue-teal slate stones with subtle diagonal fissures; shallow stone depth on the left edge. A little muted olive moss in a few upper seams, no hanging plants. It must read as a continuous impenetrable stone wall.
+Style: hand-painted 2D game terrain, chunky angular rock planes, restrained teal edge highlights and dark crevices, matching the second reference. Front/side-on orthographic game view, no perspective receding into a scene.
+Composition: a single complete standalone rectangular slab centered, fills most of the canvas vertically, narrow transparent padding all around.
+Background: genuinely transparent alpha. No ground, no floor base, no surrounding room, no background.
+Avoid: iron bars, gates, openings, arches, doors, handles, runes, crystals, lights, characters, text, labels, diagrams, cast shadow outside the sprite. Do not add a pedestal or a wide foot.

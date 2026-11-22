@@ -35,7 +35,9 @@
 
 살아 있는 공벌레의 몸에 닿으면 체력이 10 감소하고, 0.8초 동안 접촉 피해를 다시 받지 않습니다. 뒤집히거나 일어나는 중에도 접촉 피해가 있으며, 처치한 몬스터는 피해를 주지 않습니다. 체력이 0이면 암전 후 이끼 통로 입구에서 체력·몬스터·유물을 초기화해 재시작합니다. 공벌레는 뒤집힌 상태로 약 1.25초 머문 뒤 약 0.52초 동안 몸을 일으킵니다. 일어난 직후에는 잠깐 순찰하고 다시 구르기를 사용할 수 있습니다.
 
-이끼 통로 오른쪽 끝으로 걸어가면 [다음 전투방](assets/terrain/moss-combat-room-shell-v5.png)의 왼쪽 돌 문틀로 들어갑니다. 양쪽 벽은 수직으로 곧게 이어지며 그림의 벽면과 충돌 경계를 맞췄습니다. 왼쪽 끝으로 나가면 기존 통로로 돌아옵니다. 유물 획득 상태는 유지하고, 이전 방에 설치한 유물과 귀환 문양은 방 전환 시 회수·초기화합니다. 새 방은 일반 탐험 배율을 유지하며 높이 이동에 따라 카메라가 위아래로 따라갑니다. 전투 중에는 바닥 중앙의 돌 덮개가 충돌을 막고 아래 구멍은 어둡게 가립니다. 좌우 벽에 폭 280·상면 높이 368의 발판을 붙이고, 중앙에는 폭 560·상면 높이 568의 긴 발판을 배치했습니다. 세 발판의 두께는 모두 90입니다. 지면에서 최대 점프로 좌우 발판 옆면에 접근한 뒤 달리기 입력을 유지하며 벽점프로 올라갈 수 있습니다. 좌우→중앙은 높이 차이 200이며 달리며 최대 점프로 이동합니다. 골렘은 좌우 발판에 한 마리씩 서서 가장자리 안에서 순찰합니다. 방 입장 직후에는 적이 없습니다. 주인공이 방 가로 중앙에서 ±80 월드 단위 안에 도달하면, 좌우 위 발판에 골렘(HP65)을 한 마리씩, 바닥 좌우에 공벌레(HP30)를 한 마리씩 총 4마리가 한 번 등장합니다. 중앙에 오기 전에는 적의 표시·이동·공격·피격·접촉 피해와 전멸 판정이 모두 비활성입니다. 중앙을 다시 지나거나 방을 왕복해도 중복 생성하지 않으며 진행 중인 전투 상태를 유지합니다. 마지막 적을 처치하면 중앙 돌 덮개가 0.7초 동안 양쪽으로 열립니다. 중앙 폭 300의 구멍으로 실제 낙하하며 카메라가 깊이 960의 통로를 따라 내려갑니다. 양옆 바닥은 계속 밟을 수 있습니다. 방을 나갔다 돌아와도 개방 상태를 유지하고, 사망·R 재시작은 적과 덮개를 초기화합니다. 이번 연결은 하강 통로의 착지 지점까지이며 이후 보스 구역은 후속 제작입니다. [입장 직후](docs/combat-room-before-trigger.png) · [중앙 도달 후 4마리 등장](docs/combat-room-after-trigger.png) · [전멸 후 개방](docs/combat-room-exit-open.png) · [하강 중 화면](docs/combat-room-descent.png).
+이끼 동굴 구간의 최신 미술은 [미술 방향 문서](docs/environment-art-direction.md)를 따릅니다. 첫 시작 동굴과 처음 추락하는 착지방은 기존 모습으로 유지하고, 옆 이끼 통로·전투방·하강에는 검은 지형 내부, 작은 돌과 이끼 가장자리, 푸른 원경과 전경 뿌리를 적용했습니다. [이끼 통로](docs/green-style-gallery.png) · [배경 시차 GIF](docs/green-style-gallery-parallax.gif) · [전투방](docs/green-style-combat.png) · [하강 통로](docs/green-style-shaft.png).
+
+이끼 통로 오른쪽 끝으로 걸어가면 [다음 전투방](docs/green-style-combat-map.png)의 왼쪽 돌 문틀로 들어갑니다. 양쪽 벽은 수직으로 곧게 이어지며 그림의 벽면과 충돌 경계를 맞췄습니다. 왼쪽 끝으로 나가면 기존 통로로 돌아옵니다. 유물 획득 상태는 유지하고, 이전 방에 설치한 유물과 귀환 문양은 방 전환 시 회수·초기화합니다. 새 방은 일반 탐험 배율을 유지하며 높이 이동에 따라 카메라가 위아래로 따라갑니다. 전투 중에는 바닥 중앙의 돌 덮개가 충돌을 막고 아래 구멍은 어둡게 가립니다. 좌우 벽에 폭 280·상면 높이 368의 발판을 붙이고, 중앙에는 폭 560·상면 높이 568의 긴 발판을 배치했습니다. 세 발판의 두께는 모두 90입니다. 지면에서 최대 점프로 좌우 발판 옆면에 접근한 뒤 달리기 입력을 유지하며 벽점프로 올라갈 수 있습니다. 좌우→중앙은 높이 차이 200이며 달리며 최대 점프로 이동합니다. 골렘은 좌우 발판에 한 마리씩 서서 가장자리 안에서 순찰합니다. 방 입장 직후에는 적이 없습니다. 주인공이 방 가로 중앙에서 ±80 월드 단위 안에 도달하면, 좌우 위 발판에 골렘(HP65)을 한 마리씩, 바닥 좌우에 공벌레(HP30)를 한 마리씩 총 4마리가 한 번 등장합니다. 중앙에 오기 전에는 적의 표시·이동·공격·피격·접촉 피해와 전멸 판정이 모두 비활성입니다. 전투가 시작되면 왼쪽 입구에서 [돌벽](assets/terrain/moss-combat-door-blocker-v1.png)이 0.55초 동안 바닥에서 올라와 출구를 막습니다. 돌벽의 오른쪽 면과 상단은 기존 문틀에 맞췄으며 그림·충돌·먼지 경계도 통일했습니다. 돌벽이 오르내릴 때 바닥 틈에서 먼지가 양옆으로 퍼지고, 이동 중 약한 진동과 멈추는 순간 짧은 충격이 발생합니다. 체력 UI는 흔들리지 않습니다. 실제 충돌로 걷기·숙이기·점프 퇴장을 막고, 전투 시작 전 설치한 유물과 귀환 표시는 회수합니다. 전투 중 돌벽 밖으로 향하는 유물 이동도 제한합니다. 중앙을 다시 지나도 중복 생성하지 않습니다. 마지막 적을 처치하면 돌벽이 0.55초 동안 바닥으로 내려가 왼쪽 문이 다시 열리고, 바닥과 같은 재질의 입구 봉쇄 바위와 같은 두께 112인 바위 덮개만 0.7초 동안 오른쪽 받침 속으로 밀려 들어갑니다. 고정 돌 턱과 아래 암벽은 움직이지 않습니다. 덮개와 연결부 아래는 주변 바닥과 같은 그림자로 가려 윗면과 열리는 구멍만 보이게 합니다. 연결부는 기존 바닥으로 넓게 이어지고 바깥 경계와 하단이 자연스럽게 겹치도록 새 이미지로 바꿨습니다. 열린 왼쪽부터 아래로 떨어질 수 있습니다. 닫혀 있을 때 아래 통로는 검게 가려지고, 덮개가 완전히 열린 뒤에도 멀리서는 검게 유지합니다. 주인공이 구멍 가장자리 240 이내로 접근하면 거리와 시간에 따라 지하가 서서히 밝아집니다. 높은 발판에서는 미리 밝아지지 않습니다. 방과 하강 통로의 좌우 암벽 내부도 검게 처리했습니다. 중앙 입구 폭 248·턱 아래 통로 폭 180의 구멍으로 실제 낙하하며 카메라가 깊이 960의 통로를 따라 내려갑니다. 양옆 바닥은 계속 밟을 수 있습니다. 방을 나갔다 돌아와도 개방 상태를 유지하고, 사망·R 재시작은 적과 덮개를 초기화합니다. 이번 연결은 하강 통로의 착지 지점까지이며 이후 보스 구역은 후속 제작입니다. [입장 직후](docs/combat-gate-before.png) · [전투 중 돌벽 봉쇄](docs/combat-stone-wall-locked.png) · [돌벽 먼지·진동](docs/combat-stone-wall-weight.gif) · [바위 덮개·접근 조명](docs/combat-shaft-v6-approach.gif) · [통로 개방](docs/combat-shaft-v6-open-near.png) · [하강 착지](docs/combat-shaft-v6-landing.png).
 
 ## 핵심 플레이
 
@@ -62,6 +64,8 @@
 확정한 규칙, 제작 범위, 제안 중인 세부 사항과 4주 개발 계획을 기록합니다. 끼임 복구 방식, 벽 이동 조작, 순간이동 직후 공격 상태는 추가로 결정할 항목입니다.
 
 ## 개발 및 실행
+
+미사용 구버전 이미지와 과거 검수 자료는 [보관 폴더 안내](archive/unused-assets/2026-11-23/README.md)에 정리했습니다. 콘셉트·설정 자료와 현재 사용하는 자산은 유지했으며, 보관 목록에 원래 경로와 복원 방법을 기록했습니다.
 
 Windows, Python 3.10 이상과 pico2D 1.5.1을 사용합니다. Python 3.10에서는 Pillow 12.3.0, Python 3.11 이상에서는 Pillow 13.0.0을 자동으로 설치합니다. `RelicEscape` 폴더에서 PowerShell로 실행합니다.
 
@@ -187,7 +191,7 @@ Space를 누르면 즉시 도약하고, 착지 모션 도중에도 다음 점프
 
 `Pillbug.begin_emergence()`와 `emerge` 상태를 사용합니다. 등장 중에는 위치를 고정하고 이동·구르기·검 피격·접촉 피해를 보류합니다. 마지막 프레임 후 걷기로 전환하고 0.65초 공격 대기를 둡니다. 진행 중 방을 왕복해도 등장 모션이 처음부터 반복되지 않습니다. 골렘도 별도 바닥 등장 모션을 사용합니다.
 
-- [확대 등장 GIF](assets/sprites/enemies/stone-pillbug-emerge-left-v1-preview.gif) · [투명 APNG](assets/sprites/enemies/stone-pillbug-emerge-left-v1-preview.apng)
+- [확대 등장 GIF](archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-pillbug-emerge-left-v1-preview.gif) · [투명 APNG](archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-pillbug-emerge-left-v1-preview.apng)
 - [투명 4×4 시트](assets/sprites/enemies/stone-pillbug-emerge-left-v1.png) · [프레임/접지 정보](assets/sprites/enemies/stone-pillbug-emerge-left-v1.json)
 - [실제 전투방 등장 미리보기](docs/pillbug-emergence-in-game.gif)
 - 내장 이미지 생성 도구로 기존 공벌레를 참조해 제작했습니다. [정확한 생성 프롬프트](assets/sprites/enemies/stone-pillbug-emerge-left-v1.prompt.txt)를 보존했고, 그림 수정 없이 프레임 영역·주 몸체 기준 접지점·미리보기 인코딩만 후처리했습니다.
@@ -198,7 +202,7 @@ Space를 누르면 즉시 도약하고, 착지 모션 도중에도 다음 점프
 
 `Pillbug.death_time`과 `phase=death`로 이동·공격·접촉 피해·추가 피격을 즉시 멈춥니다. 이끼 통로와 전투방에서 같은 죽음 연출을 사용합니다. 전멸 판정은 기존처럼 HP0을 기준으로 하며, 죽음이 끝난 개체는 그리지 않습니다.
 
-- [전체 죽음 GIF](assets/sprites/enemies/stone-pillbug-death-blue-v1-preview.gif) · [투명 APNG](assets/sprites/enemies/stone-pillbug-death-blue-v1-preview.apng)
+- [전체 죽음 GIF](archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-pillbug-death-blue-v1-preview.gif) · [투명 APNG](archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-pillbug-death-blue-v1-preview.apng)
 - [몸 말기 4×2 시트](assets/sprites/enemies/stone-pillbug-death-curl-left-v1.png) · [프레임 정보](assets/sprites/enemies/stone-pillbug-death-curl-left-v1.json)
 - [실제 세 번 베기→죽음 미리보기](docs/pillbug-death-blue-in-game.gif)
 - 몸 말기는 내장 이미지 생성 도구로 제작했습니다. [생성 프롬프트](assets/sprites/enemies/stone-pillbug-death-curl-left-v1.prompt.txt)를 보존했습니다. 픽셀 분해는 최종 공 스프라이트의 알파 실루엣에 맞춰 푸른 사각 조각을 배치하고 움직이는 방식으로 렌더합니다. APNG도 SDL의 투명 타깃에서 실제 효과를 렌더해 인코딩했습니다.
@@ -209,7 +213,7 @@ Space를 누르면 즉시 도약하고, 착지 모션 도중에도 다음 점프
 
 `CrystalGolem.begin_emergence()`와 `phase=emerge`를 사용합니다. 등장 중에는 이동·방향 변경·피격·접촉 피해·수정 발사를 보류하고, 끝난 뒤 기존 좌우 공격 대기와 최소 0.65초 준비 시간을 두고 순찰과 원거리 공격을 시작합니다. 방 왕복 중 진행 시간은 유지하며, 새 게임/R/사망 재시작은 기존 중앙 조우 조건을 다시 적용합니다.
 
-- [발판 위 확대 GIF](assets/sprites/enemies/stone-crystal-golem-emerge-left-v1-preview.gif) · [투명 APNG](assets/sprites/enemies/stone-crystal-golem-emerge-left-v1-preview.apng)
+- [발판 위 확대 GIF](archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-emerge-left-v1-preview.gif) · [투명 APNG](archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-emerge-left-v1-preview.apng)
 - [투명 4×4 시트](assets/sprites/enemies/stone-crystal-golem-emerge-left-v1.png) · [프레임/접지 정보](assets/sprites/enemies/stone-crystal-golem-emerge-left-v1.json)
 - [네 마리 등장 게임 미리보기](docs/golem-emergence-in-game.gif)
 - 내장 이미지 생성 도구로 기존 골렘 외형을 참조해 제작했습니다. [정확한 생성 프롬프트](assets/sprites/enemies/stone-crystal-golem-emerge-left-v1.prompt.txt)를 보존하고, 그림 편집 없이 프레임 영역·접지점·크기·미리보기 인코딩을 맞췄습니다.
@@ -220,7 +224,7 @@ Space를 누르면 즉시 도약하고, 착지 모션 도중에도 다음 점프
 
 `CrystalGolem.death_time`으로 처치 후 이동·접촉 피해·추가 피격·예약 발사를 멈춥니다. 비치명 피격은 행동이나 공격 타이머를 건드리지 않습니다. `death_pixels.py`의 같은 푸른 픽셀 효과를 공벌레와 공유합니다. 전멸 판정은 기존처럼 HP0을 기준으로 합니다.
 
-- [확대 죽음 GIF](assets/sprites/enemies/stone-crystal-golem-death-v1-preview.gif) · [투명 APNG](assets/sprites/enemies/stone-crystal-golem-death-v1-preview.apng)
+- [확대 죽음 GIF](archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-death-v1-preview.gif) · [투명 APNG](archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-death-v1-preview.apng)
 - [투명 붕괴 시트](assets/sprites/enemies/stone-crystal-golem-death-left-v1.png) · [프레임/픽셀 정보](assets/sprites/enemies/stone-crystal-golem-death-left-v1.json)
 - [실제 6회 베기·공격 유지·죽음 미리보기](docs/golem-death-in-game.gif)
 - 내장 이미지 생성 도구로 기존 골렘을 참조해 제작했습니다. [생성 프롬프트](assets/sprites/enemies/stone-crystal-golem-death-left-v1.prompt.txt)를 보존했으며, 그림 변경 없이 프레임 영역·접지점·픽셀 실루엣·미리보기를 내보냈습니다.
@@ -233,14 +237,14 @@ Space를 누르면 즉시 도약하고, 착지 모션 도중에도 다음 점프
 
 - [투명 기본 이미지](assets/sprites/enemies/stone-crystal-golem-idle-left-v1.png) · [기본 프레임 정보](assets/sprites/enemies/stone-crystal-golem-idle-left-v1.json)
 - [투명 이동 시트 4×4](assets/sprites/enemies/stone-crystal-golem-walk-left-v2.png) · [이동 프레임 정보](assets/sprites/enemies/stone-crystal-golem-walk-left-v2.json)
-- [반복 이동 GIF](assets/sprites/enemies/stone-crystal-golem-walk-left-v2-preview.gif) · [투명 반복 APNG](assets/sprites/enemies/stone-crystal-golem-walk-left-v2-preview.apng)
+- [반복 이동 GIF](archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-walk-left-v2-preview.gif) · [투명 반복 APNG](archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-walk-left-v2-preview.apng)
 - 내장 이미지 생성 도구 사용: [기본 이미지 프롬프트](assets/sprites/enemies/stone-crystal-golem-idle-left-v1.prompt.txt) · [이동 수정 프롬프트](assets/sprites/enemies/stone-crystal-golem-walk-left-v2.prompt.txt)
 
 공격 모션과 투사체는 별도 투명 자산입니다. 골렘이 멈춰 양 주먹을 짚고 몸을 낮추며 등의 수정을 충전합니다. 16프레임·1.44초 모션의 8번 프레임(0.72초)에서 수정 한 개를 발사하고 반동 후 순찰로 돌아갑니다. 충전 시작 시 주인공 위치를 고정해 조준하며, 충전 중 베기에 맞아도 공격을 유지하고 치명타 때만 발사를 중단합니다. 공격 후 대기는 2초입니다.
 
 `crystal_projectile.py`의 독립 투사체는 중력 1000으로 포물선을 그립니다. 발사점과 표적 중 높은 쪽보다 160 높은 정점을 거쳐 내려오며 비행 방향에 맞춰 이미지를 회전합니다. 벽·발판·바닥에 막히고 주인공 명중 시 피해 10을 줍니다. 몸 접촉과 0.8초 무적을 공유하며 처치된 골렘이 이미 쏜 수정도 계속 비행합니다. 방 이동·재시작 시 남은 투사체를 비웁니다. 최신 투사체 v2는 표시 길이를 44→76으로 키우고 투명 여백을 정리했습니다. 밝은 청록·흰색 내부와 짙은 남색 윤곽선, 외곽 발광으로 배경에서 분리됩니다. 순찰 방향 전환은 실제 지형 충돌이나 순찰 끝 도달 시에만 처리해 소수점 이동 오차로 좌우 반전이 반복되는 문제도 수정했습니다.
 
-- [공격 시트](assets/sprites/enemies/stone-crystal-golem-attack-left-v1.png) · [프레임/발사 시점 정보](assets/sprites/enemies/stone-crystal-golem-attack-left-v1.json) · [공격 모션 GIF](assets/sprites/enemies/stone-crystal-golem-attack-left-v1-preview.gif)
+- [공격 시트](assets/sprites/enemies/stone-crystal-golem-attack-left-v1.png) · [프레임/발사 시점 정보](assets/sprites/enemies/stone-crystal-golem-attack-left-v1.json) · [공격 모션 GIF](archive/unused-assets/2026-11-23/assets/sprites/enemies/stone-crystal-golem-attack-left-v1-preview.gif)
 - [분리된 수정 투사체](assets/sprites/projectiles/back-crystal-shard-v2.png) · [투사체 정보](assets/sprites/projectiles/back-crystal-shard-v2.json)
 - [실제 게임 공격 미리보기](docs/crystal-golem-attack-in-game-v2.gif)
 - 내장 이미지 생성 도구 사용: [공격 프롬프트](assets/sprites/enemies/stone-crystal-golem-attack-left-v1.prompt.txt) · [투사체 프롬프트](assets/sprites/projectiles/back-crystal-shard-v2.prompt.txt). 원본 그림은 보존하고 프레임 영역·발 기준점·투사체 여백 크롭과 미리보기 인코딩만 후처리했습니다.

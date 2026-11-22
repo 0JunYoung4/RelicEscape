@@ -28,7 +28,7 @@ created: 2026-11-07T13:50:31
 - `.memoc/session-summary.md`
 - `.memoc/wiki/project/player.md`
 - `assets/sprites/player/air-attack-right-draft-v3.json`
-- `assets/sprites/player/attack-right-draft-v2.json`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/attack-right-draft-v2.json`
 - `assets/sprites/player/crawl-right-draft-v2.json`
 - `assets/sprites/player/jump-right-draft-v1.json`
 - `assets/sprites/player/run-right-v1.json`

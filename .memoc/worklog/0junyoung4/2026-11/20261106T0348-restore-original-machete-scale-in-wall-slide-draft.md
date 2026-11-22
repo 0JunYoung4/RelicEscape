@@ -28,11 +28,11 @@ created: 2026-11-06T03:48:54
 - `.memoc/04-handoff.md`
 - `.memoc/06-project-rules.md`
 - `.memoc/session-summary.md`
-- `assets/sprites/player/wall-slide-right-draft-v1.png`
-- `assets/sprites/player/wall-slide-right-draft-v1.prompt.txt`
-- `assets/sprites/player/wall-slide-right-draft-v2.png`
-- `assets/sprites/player/wall-slide-right-draft-v2.prompt.txt`
-- `assets/sprites/player/wall-slide-right-draft-v3.png`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v1.png`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v1.prompt.txt`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v2.png`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v2.prompt.txt`
+- `archive/unused-assets/2026-11-23/assets/sprites/player/wall-slide-right-draft-v3.png`
 
 ## Verification
 

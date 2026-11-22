@@ -1,0 +1,12 @@
+{
+  "image": "green-cavern-floor-v1.png",
+  "source_image": "green-cavern-floor-v1-source.png",
+  "source_crop": [
+    32,
+    163,
+    2141,
+    555
+  ],
+  "mode": "builtin-imagegen",
+  "surface_y": 62
+}

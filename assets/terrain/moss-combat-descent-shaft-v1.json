@@ -1,0 +1,8 @@
+{
+  "image": "moss-combat-descent-shaft-v1.png",
+  "source_image": "moss-combat-descent-shaft-v1-source.png",
+  "inner_left": 136,
+  "inner_right": 589,
+  "floor_y": 2038,
+  "mode": "builtin-imagegen"
+}
