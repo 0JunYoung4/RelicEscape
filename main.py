@@ -249,10 +249,10 @@ def update_hitbox_visibility(events, visible):
     return visible
 
 
-def shade_stone_depth(left, right, surface_y, deep_y):
+def shade_stone_depth(left, right, surface_y, deep_y, *, fade_fraction=0.8):
     if left >= right or surface_y == deep_y:
         return
-    fade_end_y = round(surface_y + (deep_y - surface_y) * 0.8)
+    fade_end_y = round(surface_y + (deep_y - surface_y) * fade_fraction)
     clear = (0, 0, 0, 0)
     black = (0, 0, 0, 255)
     vertices = (pico.SDL_Vertex * 4)(
@@ -748,7 +748,7 @@ def run_game(fullscreen):
         sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
 
 
-def run_opening_cave(fullscreen):
+def run_opening_cave(fullscreen, *, after_relic=False):
     cave = opening_cave.OpeningCave(SCREEN_WIDTH, SCREEN_HEIGHT)
     approach = SigilApproach()
     lower = None
@@ -761,6 +761,10 @@ def run_opening_cave(fullscreen):
         y=opening_cave.GROUND_Y - CAVE_FLOOR_SCREEN_Y / EXPLORATION_CAMERA_ZOOM,
     )
     health = Health(opening_cave.SPAWN)
+    if after_relic:
+        lower = LowerCaves(cave)
+        lower.start_after_relic(player, camera)
+        health = Health((player.x, player.y, player.crouch_time))
     show_hitboxes = False
     previous_time = perf_counter()
     while True:
@@ -786,17 +790,36 @@ def run_opening_cave(fullscreen):
         if pico.SDLK_r in pressed_keys:
             lower = None
             travel.reset()
+            health = Health(opening_cave.SPAWN)
             camera.world_width = player.world_width = opening_cave.WORLD_WIDTH
             approach.reset(player)
             camera.zoom = camera.normal_zoom
             player.recover_at(*opening_cave.SPAWN)
             player.facing = 1
+            if after_relic:
+                lower = LowerCaves(cave)
+                lower.start_after_relic(player, camera)
+                health = Health((player.x, player.y, player.crouch_time))
             pressed_keys.clear()
             direction, running, crouching = 0, False, False
             jump_held = False
+        elif lower is not None and health.ready_to_restart(frame_start):
+            room = lower.room
+            has_relic = lower.has_relic
+            lower = LowerCaves(cave)
+            lower.room = room
+            if room == "combat":
+                lower.has_relic = has_relic
+            if after_relic and room == "gallery":
+                lower.start_after_relic(player, camera)
+            else:
+                lower.enter(player, camera)
+            travel.reset()
+            health = Health((player.x, player.y, player.crouch_time), returned_at=frame_start)
+            pressed_keys.clear()
         if lower is None and pico.SDLK_e in pressed_keys:
             approach.start(player)
-        if lower is not None:
+        if lower is not None and not health.recovering(frame_start):
             use = pico.SDLK_e in pressed_keys
             destination = None
             if lower.has_relic:
@@ -805,18 +828,23 @@ def run_opening_cave(fullscreen):
                 elif pico.SDLK_q in pressed_keys:
                     destination = travel.return_pose(frame_start)
             if travel.teleport(player, camera, destination, frame_start, reclaim=use):
-                camera.follow(player.x)
+                lower.follow_camera(player, camera)
             else:
+                previous_room = lower.room
                 lower.update(player, camera, delta_time, interact=use and not lower.has_relic,
                              direction=direction, running=running, jump_pressed=pico.SDLK_SPACE in pressed_keys,
                              jump_held=jump_held, crouching=crouching, attack_pressed=pico.SDLK_x in pressed_keys)
-            lower.update_pillbugs(player, delta_time)
-        elif approach.active:
+                if lower.room != previous_room:
+                    travel.reset()
+            lower.update_enemies(player, delta_time)
+            health.check_contact(player, lower.enemies, frame_start)
+            lower.update_projectiles(player, health, delta_time, frame_start)
+        elif lower is None and approach.active:
             approach.update(player, delta_time)
             if approach.stood_up:
                 lower = LowerCaves(cave)
                 lower.enter(player, camera)
-        else:
+        elif lower is None:
             player.update(
                 direction, running, delta_time,
                 jump_pressed=pico.SDLK_SPACE in pressed_keys, jump_held=jump_held,
@@ -826,6 +854,11 @@ def run_opening_cave(fullscreen):
         relic_center = None
         if lower is not None:
             lower.draw(camera)
+            if lower.room == "combat":
+                floor_y = round(camera.world_to_screen(0, 0)[1])
+                shade_stone_depth(0, SCREEN_WIDTH, SCREEN_HEIGHT - floor_y + 6,
+                                  SCREEN_HEIGHT, fade_fraction=0.22)
+                lower.draw_combat_exit(camera)
             relic = lower.relic_position(player)
             if relic is not None:
                 draw_relic(relic_image, camera, *relic, frame_start)
@@ -843,7 +876,8 @@ def run_opening_cave(fullscreen):
             )
         if lower is not None:
             if not travel.effect.draw(player, camera, frame_start, None):
-                player.draw(camera)
+                player.draw(camera, tint=health.hit_tint(frame_start))
+            health.draw_hit(camera, frame_start)
             if travel.anchor is not None:
                 anchor = travel.anchor
                 elapsed = frame_start - anchor.placed_at
@@ -865,12 +899,13 @@ def run_opening_cave(fullscreen):
             draw_mount_prompt(camera, (player.x, player.y + STANDING_HITBOX_HEIGHT), frame_start)
         health.draw_hud(SCREEN_HEIGHT, frame_start)
         draw_relic_indicator(relic_center)
+        health.draw_blackout(SCREEN_WIDTH, SCREEN_HEIGHT, frame_start)
         pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
         pico.update_canvas()
         sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
 
 
-def main(*, test_room=False):
+def main(*, test_room=False, after_relic=False):
     pico.SDL_SetHint(pico.SDL_HINT_RENDER_SCALE_QUALITY, b"0")
     pico.open_canvas(SCREEN_WIDTH, SCREEN_HEIGHT)
     try:
@@ -878,7 +913,8 @@ def main(*, test_room=False):
         while fullscreen is not None:
             fullscreen = run_title(fullscreen)
             if fullscreen is not None:
-                fullscreen = run_game(fullscreen) if test_room else run_opening_cave(fullscreen)
+                fullscreen = (run_game(fullscreen) if test_room
+                              else run_opening_cave(fullscreen, after_relic=after_relic))
     finally:
         pico.close_canvas()
 
@@ -887,5 +923,8 @@ if __name__ == "__main__":
     from argparse import ArgumentParser
 
     parser = ArgumentParser(description="RelicEscape")
-    parser.add_argument("--test-room", action="store_true", help="Start the original movement/device test room")
-    main(test_room=parser.parse_args().test_room)
+    starts = parser.add_mutually_exclusive_group()
+    starts.add_argument("--test-room", action="store_true", help="Start the original movement/device test room")
+    starts.add_argument("--after-relic", action="store_true", help="Start just after acquiring the first relic; R restarts here")
+    args = parser.parse_args()
+    main(test_room=args.test_room, after_relic=args.after_relic)

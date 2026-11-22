@@ -1,4 +1,4 @@
-"""Spike damage, safe footing, and the test room health display."""
+"""Player health, enemy contact, spike recovery, and the health display."""
 
 from ctypes import byref
 from dataclasses import dataclass
@@ -9,6 +9,8 @@ from pico2d import pico2d as pico
 
 MAX_HEALTH = 100
 SPIKE_DAMAGE = 25
+CONTACT_DAMAGE = 10
+CONTACT_INVULNERABILITY = 0.8
 SPIKE_HEIGHT = 44
 SPIKE_ROOT_DEPTH = 6
 SPIKE_TILE_WIDTH = 196
@@ -77,6 +79,7 @@ class Health:
         self.safe_pose = spawn_pose
         self.current = MAX_HEALTH
         self.hit_at = None
+        self.contact_hit_at = None
         self.hit_position = None
         self.returned_at = returned_at
 
@@ -117,10 +120,42 @@ class Health:
             self.safe_pose = (player.x, player.y, player.crouch_time)
         return False
 
+    def check_contact(self, player, enemies, now):
+        if self.current == 0 or self.recovering(now):
+            return False
+        if self.contact_hit_at is not None and now - self.contact_hit_at < CONTACT_INVULNERABILITY:
+            return False
+        left, bottom, right, top = player.get_hitbox()
+        for enemy in enemies:
+            if enemy.hp == 0 or getattr(enemy, "phase", None) == "emerge":
+                continue
+            x, y, width, height = enemy.body_bounds()
+            # Include tangency: a rolling shell stops at the player's body surface.
+            if right < x - width / 2 or left > x + width / 2 or top < y or bottom > y + height:
+                continue
+            position = ((max(left, x - width / 2) + min(right, x + width / 2)) / 2,
+                        (max(bottom, y) + min(top, y + height)) / 2)
+            return self.take_enemy_hit(position, now, CONTACT_DAMAGE)
+        return False
+
+    def take_enemy_hit(self, position, now, damage):
+        if self.current == 0 or self.recovering(now):
+            return False
+        if self.contact_hit_at is not None and now - self.contact_hit_at < CONTACT_INVULNERABILITY:
+            return False
+        self.hit_position = position
+        self.contact_hit_at = now
+        self.current = max(0, self.current - damage)
+        if self.current == 0:
+            self.hit_at = now
+            self.returned_at = None
+        return True
+
     def hit_strength(self, now):
-        if self.hit_at is None:
+        hits = [hit for hit in (self.hit_at, self.contact_hit_at) if hit is not None]
+        if not hits:
             return 0.0
-        return max(0.0, 1 - (now - self.hit_at) / HIT_FLASH_DURATION)
+        return max(0.0, 1 - (now - max(hits)) / HIT_FLASH_DURATION)
 
     def hit_tint(self, now):
         strength = self.hit_strength(now)

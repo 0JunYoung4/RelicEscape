@@ -1,6 +1,6 @@
 import unittest
 
-from pillbug import BODY_LENGTH, CURL_TIME, HURT_TIME, MAX_ROLL, NOTICE_DISTANCE, RADIUS, Pillbug
+from pillbug import ATTACK_COOLDOWN, BODY_LENGTH, CURL_TIME, HURT_TIME, MAX_ROLL, NOTICE_DISTANCE, OVERTURNED_TIME, RADIUS, RIGHTING_TIME, Pillbug
 from player import STARTING_ATTACK_POWER
 
 
@@ -62,7 +62,7 @@ class PillbugAttackTests(unittest.TestCase):
         bug.update(CURL_TIME, (920, 0, 960, 140), (), 2400)
         self.assertEqual((bug.phase, bug.direction), ("roll", -1))
 
-    def test_sweep_hits_player_obstacle_or_boundary_and_stays_overturned(self):
+    def test_sweep_hits_player_obstacle_or_boundary_then_overturns(self):
         for player, terrain, width, expected in (
             ((520, 0, 560, 140), (), 2400, 560 + RADIUS),
             ((960, 0, 1000, 140), ((920, 0, 930, 200),), 2400, 920 - RADIUS),
@@ -73,8 +73,50 @@ class PillbugAttackTests(unittest.TestCase):
                 bug.update(CURL_TIME, player, terrain, width)
                 for _ in range(50):
                     bug.update(.05, player, terrain, width)
+                    if bug.phase == "overturned":
+                        break
                 self.assertEqual(bug.phase, "overturned")
                 self.assertEqual(bug.x, expected)
+
+    def test_overturned_bug_gets_up_and_can_charge_again_without_teleporting(self):
+        bug = Pillbug(700, 900, 0)
+        bug.x, bug.direction = 610, -1
+        bug.phase, bug.time, bug.hit = "overturned", 0, True
+        target = (520, 0, 560, 140)
+        bug.update(OVERTURNED_TIME - .01, target, (), 2400)
+        self.assertEqual(bug.phase, "overturned")
+        bug.update(.02, target, (), 2400)
+        self.assertEqual(bug.phase, "recover")
+        bug.update(RIGHTING_TIME, target, (), 2400)
+        self.assertEqual((bug.phase, bug.rolled, bug.hit), ("crawl", 0, False))
+        self.assertEqual(bug.x, 610 + BODY_LENGTH / 2 - RADIUS)
+        bug.update(.1, target, (), 2400)
+        self.assertEqual(bug.phase, "crawl")
+        self.assertLess(bug.x, 650)  # Do not snap back to the old patrol interval.
+        bug.update(ATTACK_COOLDOWN, target, (), 2400)
+        self.assertIn(bug.phase, ("curl", "roll", "flip"))
+
+    def test_righting_on_both_platform_edges_keeps_the_whole_body_supported(self):
+        platform = (500, 274, 756, 364)
+        for direction in (-1, 1):
+            bug = Pillbug.on_platform(platform)
+            bug.x = platform[0] + RADIUS if direction < 0 else platform[2] - RADIUS
+            bug.direction, bug.phase, bug.time, bug.hit = direction, "overturned", 0, True
+            target = (600, 0, 640, 140)
+            bug.update(OVERTURNED_TIME + RIGHTING_TIME, target, (platform,), 2000)
+            self.assertEqual(bug.phase, "crawl")
+            for _ in range(120):
+                bug.update(1 / 60, target, (platform,), 2000)
+                x, y, width, _ = bug.body_bounds()
+                self.assertEqual(y, platform[3])
+                self.assertGreaterEqual(x - width / 2, platform[0])
+                self.assertLessEqual(x + width / 2, platform[2])
+
+    def test_dead_bug_never_recovers(self):
+        bug = Pillbug(700, 900, 0)
+        bug.phase, bug.time, bug.hp = "overturned", 0, 0
+        bug.update(10, (800, 0, 840, 140), (), 2400)
+        self.assertEqual((bug.phase, bug.time), ("overturned", 0))
 
     def test_jump_over_roll_stops_at_maximum_range(self):
         bug = Pillbug(400, 800, 0)

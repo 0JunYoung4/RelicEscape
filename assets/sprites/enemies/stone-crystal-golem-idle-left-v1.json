@@ -1,0 +1,28 @@
+{
+  "image": "stone-crystal-golem-idle-left-v1.png",
+  "frame_size": [
+    1536,
+    1024
+  ],
+  "frame_count": 1,
+  "columns": 1,
+  "fps": 0,
+  "loop": false,
+  "facing": "left",
+  "pose": "idle",
+  "foot_anchor": [
+    768.5,
+    953
+  ],
+  "anchor_coordinates": "frame top-left",
+  "display_height": 140,
+  "scale": 0.15748031496062992,
+  "frames": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 1536,
+      "height": 1024
+    }
+  ]
+}

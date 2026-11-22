@@ -1,0 +1,18 @@
+{
+  "image": "back-crystal-shard-v2.png",
+  "facing": "right",
+  "pivot": [
+    721.5,
+    300.0
+  ],
+  "display_length": 76,
+  "collision_radius": 8,
+  "source_crop": [
+    164,
+    134,
+    1607,
+    734
+  ],
+  "crop_alpha_threshold": 1,
+  "appearance": "bright cyan facets, dark navy contour, outer cyan glow"
+}

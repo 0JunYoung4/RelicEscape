@@ -1,0 +1,16 @@
+{
+  "image": "back-crystal-shard-v1.png",
+  "facing": "right",
+  "pivot": [
+    914.5,
+    403.5
+  ],
+  "display_length": 44,
+  "collision_radius": 8,
+  "source_crop": [
+    0,
+    29,
+    1829,
+    836
+  ]
+}

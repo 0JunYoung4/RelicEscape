@@ -32,6 +32,8 @@ ATTACK_BUFFER_WINDOW = 0.05
 STANDING_HITBOX_WIDTH = 40.0
 STANDING_HITBOX_HEIGHT = 140.0
 STARTING_ATTACK_POWER = 12
+ATTACK_RECOIL_SPEED = 360.0
+ATTACK_RECOIL_DURATION = 0.12
 CROUCH_HITBOX_WIDTH = 100.0
 CROUCH_HITBOX_HEIGHT = 80.0
 WALL_SLIDE_SPEED = 120.0
@@ -99,6 +101,9 @@ class Player:
         self.attack_facing = self.facing
         self.attack_power = STARTING_ATTACK_POWER
         self.swing_id = 0
+        self.recoil_swing = None
+        self.recoil_remaining = 0.0
+        self.recoil_direction = 0
         self.slash_starts = {}
         self.slash = None
         self.crouch_time = 0.0
@@ -208,6 +213,12 @@ class Player:
             horizontal_delta = self.wall_jump_speed * push_time + direction * speed * (delta_time - push_time)
             self.wall_jump_remaining = max(0.0, self.wall_jump_remaining - delta_time)
             self.facing = 1 if self.wall_jump_speed > 0 else -1
+        if self.recoil_remaining > 0:
+            # Briefly yield horizontal movement to the impact, then restore held input.
+            push_time = min(delta_time, self.recoil_remaining)
+            distance = ATTACK_RECOIL_SPEED * push_time * (self.recoil_remaining - push_time / 2) / ATTACK_RECOIL_DURATION
+            horizontal_delta = self.recoil_direction * distance + direction * speed * (delta_time - push_time)
+            self.recoil_remaining = max(0.0, self.recoil_remaining - delta_time)
         self._move_horizontal(horizontal_delta)
         self.grounded = self.vertical_speed <= 0 and self._has_support()
         self.wall_direction = 0 if self.grounded else self._touching_wall()
@@ -271,6 +282,13 @@ class Player:
             if self.animation_time >= idle_cycle:
                 self.animation_time = 0.0
 
+    def recoil_from_hit(self, facing, swing_id):
+        if self.recoil_swing == swing_id:
+            return
+        self.recoil_swing = swing_id
+        self.recoil_direction = -facing
+        self.recoil_remaining = ATTACK_RECOIL_DURATION
+
     def teleport_to(self, x, y, crouch_time):
         previous_pose = self.x, self.y, self.crouch_time
         self.x, self.y, self.crouch_time = x, y, crouch_time
@@ -281,6 +299,8 @@ class Player:
         self.vertical_speed = 0.0
         self.wall_jump_speed = 0.0
         self.wall_jump_remaining = 0.0
+        self.recoil_remaining = 0.0
+        self.recoil_direction = 0
         self.jump_buffer_remaining = 0.0
         self.jump_origin_y = None
         self.grounded = self._has_support()

@@ -1,0 +1,212 @@
+{
+  "image": "stone-pillbug-emerge-left-v1.png",
+  "frame_count": 16,
+  "columns": 4,
+  "fps": 10,
+  "loop": false,
+  "facing": "left",
+  "pose": "climb_out_of_ground",
+  "foot_anchor": [
+    152.5,
+    258
+  ],
+  "scale": 0.6007326007326007,
+  "display_width": 164,
+  "duration_ms": 1600,
+  "frame_durations_ms": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "frames": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 314,
+      "height": 314,
+      "foot_anchor": [
+        152.5,
+        281
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 314,
+      "y": 0,
+      "width": 313,
+      "height": 314,
+      "foot_anchor": [
+        152.5,
+        284
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 627,
+      "y": 0,
+      "width": 313,
+      "height": 314,
+      "foot_anchor": [
+        152.5,
+        284
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 940,
+      "y": 0,
+      "width": 314,
+      "height": 314,
+      "foot_anchor": [
+        152.5,
+        286
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 0,
+      "y": 314,
+      "width": 314,
+      "height": 313,
+      "foot_anchor": [
+        152.5,
+        282
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 314,
+      "y": 314,
+      "width": 313,
+      "height": 313,
+      "foot_anchor": [
+        152.5,
+        286
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 627,
+      "y": 314,
+      "width": 313,
+      "height": 313,
+      "foot_anchor": [
+        152.5,
+        280
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 940,
+      "y": 314,
+      "width": 314,
+      "height": 313,
+      "foot_anchor": [
+        152.5,
+        280
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 0,
+      "y": 627,
+      "width": 314,
+      "height": 313,
+      "foot_anchor": [
+        152.5,
+        263
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 314,
+      "y": 627,
+      "width": 313,
+      "height": 313,
+      "foot_anchor": [
+        152.5,
+        260
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 627,
+      "y": 627,
+      "width": 313,
+      "height": 313,
+      "foot_anchor": [
+        152.5,
+        259
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 940,
+      "y": 627,
+      "width": 314,
+      "height": 313,
+      "foot_anchor": [
+        152.5,
+        258
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 0,
+      "y": 940,
+      "width": 314,
+      "height": 314,
+      "foot_anchor": [
+        152.5,
+        258
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 314,
+      "y": 940,
+      "width": 313,
+      "height": 314,
+      "foot_anchor": [
+        152.5,
+        258
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 627,
+      "y": 940,
+      "width": 313,
+      "height": 314,
+      "foot_anchor": [
+        152.5,
+        258
+      ],
+      "duration_ms": 100
+    },
+    {
+      "x": 940,
+      "y": 940,
+      "width": 314,
+      "height": 314,
+      "foot_anchor": [
+        152.5,
+        258
+      ],
+      "duration_ms": 100
+    }
+  ]
+}

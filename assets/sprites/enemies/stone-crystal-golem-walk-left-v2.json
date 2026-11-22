@@ -1,0 +1,199 @@
+{
+  "image": "stone-crystal-golem-walk-left-v2.png",
+  "frame_size": [
+    314,
+    314
+  ],
+  "frame_count": 16,
+  "columns": 4,
+  "fps": 12.5,
+  "loop": true,
+  "facing": "left",
+  "pose": "knuckle_walk",
+  "foot_anchor": [
+    156.75,
+    286
+  ],
+  "anchor_coordinates": "frame top-left",
+  "display_height": 140,
+  "scale": 0.5384615384615384,
+  "duration_ms": 1280,
+  "frames": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 314,
+      "height": 314,
+      "duration_ms": 80,
+      "foot_anchor": [
+        157.0,
+        286
+      ]
+    },
+    {
+      "x": 314,
+      "y": 0,
+      "width": 313,
+      "height": 314,
+      "duration_ms": 80,
+      "foot_anchor": [
+        156.5,
+        286
+      ]
+    },
+    {
+      "x": 627,
+      "y": 0,
+      "width": 313,
+      "height": 314,
+      "duration_ms": 80,
+      "foot_anchor": [
+        156.5,
+        286
+      ]
+    },
+    {
+      "x": 940,
+      "y": 0,
+      "width": 314,
+      "height": 314,
+      "duration_ms": 80,
+      "foot_anchor": [
+        157.0,
+        286
+      ]
+    },
+    {
+      "x": 0,
+      "y": 314,
+      "width": 314,
+      "height": 313,
+      "duration_ms": 80,
+      "foot_anchor": [
+        157.0,
+        282
+      ]
+    },
+    {
+      "x": 314,
+      "y": 314,
+      "width": 313,
+      "height": 313,
+      "duration_ms": 80,
+      "foot_anchor": [
+        156.5,
+        282
+      ]
+    },
+    {
+      "x": 627,
+      "y": 314,
+      "width": 313,
+      "height": 313,
+      "duration_ms": 80,
+      "foot_anchor": [
+        156.5,
+        282
+      ]
+    },
+    {
+      "x": 940,
+      "y": 314,
+      "width": 314,
+      "height": 313,
+      "duration_ms": 80,
+      "foot_anchor": [
+        157.0,
+        282
+      ]
+    },
+    {
+      "x": 0,
+      "y": 627,
+      "width": 314,
+      "height": 313,
+      "duration_ms": 80,
+      "foot_anchor": [
+        157.0,
+        280
+      ]
+    },
+    {
+      "x": 314,
+      "y": 627,
+      "width": 313,
+      "height": 313,
+      "duration_ms": 80,
+      "foot_anchor": [
+        156.5,
+        277
+      ]
+    },
+    {
+      "x": 627,
+      "y": 627,
+      "width": 313,
+      "height": 313,
+      "duration_ms": 80,
+      "foot_anchor": [
+        156.5,
+        277
+      ]
+    },
+    {
+      "x": 940,
+      "y": 627,
+      "width": 314,
+      "height": 313,
+      "duration_ms": 80,
+      "foot_anchor": [
+        157.0,
+        277
+      ]
+    },
+    {
+      "x": 0,
+      "y": 940,
+      "width": 314,
+      "height": 314,
+      "duration_ms": 80,
+      "foot_anchor": [
+        157.0,
+        278
+      ]
+    },
+    {
+      "x": 314,
+      "y": 940,
+      "width": 313,
+      "height": 314,
+      "duration_ms": 80,
+      "foot_anchor": [
+        156.5,
+        278
+      ]
+    },
+    {
+      "x": 627,
+      "y": 940,
+      "width": 313,
+      "height": 314,
+      "duration_ms": 80,
+      "foot_anchor": [
+        156.5,
+        279
+      ]
+    },
+    {
+      "x": 940,
+      "y": 940,
+      "width": 314,
+      "height": 314,
+      "duration_ms": 80,
+      "foot_anchor": [
+        157.0,
+        282
+      ]
+    }
+  ]
+}
