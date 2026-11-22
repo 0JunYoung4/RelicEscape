@@ -30,6 +30,16 @@ class Pillbug:
         self.last_swing = None
         self.hurt_remaining = 0.0
         self.strike_direction = 1
+        self.floor_y = 0
+        self.support_edges = None
+
+    @classmethod
+    def on_platform(cls, bounds):
+        left, _, right, top = bounds
+        bug = cls(left + BODY_LENGTH / 2, right - BODY_LENGTH / 2, 0)
+        bug.floor_y = top
+        bug.support_edges = (left, right)
+        return bug
 
     def check_strike(self, box, facing, damage, swing_id):
         if box is None or self.hp == 0 or self.last_swing == swing_id:
@@ -45,7 +55,8 @@ class Pillbug:
     def _clearance(self, box):
         """Horizontal travel before the rolling circle first touches a solid box."""
         left, bottom, right, top = box
-        dy = max(bottom - RADIUS, RADIUS - top, 0)
+        center_y = self.floor_y + RADIUS
+        dy = max(bottom - center_y, center_y - top, 0)
         if dy >= RADIUS:  # Ground directly beneath the shell supports the roll.
             return float("inf")
         reach = sqrt(RADIUS ** 2 - dy ** 2)
@@ -67,7 +78,9 @@ class Pillbug:
         if self.phase == "crawl":
             left, bottom, right, top = player_box
             gap_x = max(left - self.x - BODY_LENGTH / 2, self.x - BODY_LENGTH / 2 - right, 0)
-            if hypot(gap_x, max(bottom - 70, -top, 0)) > NOTICE_DISTANCE:
+            gap_y = max(bottom - self.floor_y - 70, self.floor_y - top, 0)
+            below_ledge = self.support_edges is not None and top < self.floor_y
+            if below_ledge or hypot(gap_x, gap_y) > NOTICE_DISTANCE:
                 self.time += dt
                 self.x += self.direction * CRAWL_SPEED * dt
                 if self.x <= self.left or self.x >= self.right:
@@ -86,7 +99,8 @@ class Pillbug:
             self.phase, self.time = "roll", 0.0
 
         if self.phase == "roll":
-            wall = self.x - RADIUS if self.direction < 0 else world_width - self.x - RADIUS
+            left_edge, right_edge = self.support_edges or (0, world_width)
+            wall = self.x - RADIUS - left_edge if self.direction < 0 else right_edge - self.x - RADIUS
             clearance = min(max(0.0, wall), self._clearance(player_box))
             for box in terrain:
                 clearance = min(clearance, self._clearance(box))
@@ -120,11 +134,11 @@ class Pillbug:
         width, height = POSE_SIZES[pose]
         # Unfold away from the contact surface while keeping the leading edge fixed.
         x = self.x - self.direction * max(0, width / 2 - RADIUS) if self.hit else self.x
-        return pose, angle, x, lift, width, height
+        return pose, angle, x, self.floor_y + lift, width, height
 
     def body_bounds(self):
         if self.phase == "crawl":
-            return self.x, 0, BODY_LENGTH, 70
+            return self.x, self.floor_y, BODY_LENGTH, 70
         _, _, x, lift, width, height = self.attack_pose()
         return x, lift, width, height
 
@@ -140,7 +154,7 @@ class Pillbug:
         if self.hp == 0:
             return
         if self.phase == "crawl":
-            crawl.draw(self.x, 0, -self.direction, self.time, camera)
+            crawl.draw(self.x, self.floor_y, -self.direction, self.time, camera)
             return
         pose, angle, x, lift, width, height = self.attack_pose()
         poses.clip_composite_draw(pose * 168, 0, width, height, angle,

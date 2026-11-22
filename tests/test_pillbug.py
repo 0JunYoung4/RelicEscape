@@ -5,6 +5,29 @@ from player import STARTING_ATTACK_POWER
 
 
 class PillbugAttackTests(unittest.TestCase):
+    def test_platform_patrol_turns_at_both_edges_and_ignores_the_floor_below(self):
+        platform = (500, 274, 756, 364)
+        bug = Pillbug.on_platform(platform)
+        directions = set()
+        for _ in range(600):
+            bug.update(1/60, (620, 0, 660, 140), (platform,), 2000)
+            x, y, width, _ = bug.body_bounds()
+            self.assertEqual((bug.phase, y), ("crawl", platform[3]))
+            self.assertGreaterEqual(x - width/2, platform[0])
+            self.assertLessEqual(x + width/2, platform[2])
+            directions.add(bug.direction)
+        self.assertEqual(directions, {-1, 1})
+        for side in (-1, 1):
+            bug = Pillbug.on_platform(platform)
+            target = bug.x + side * 220
+            box = (target - 20, 364, target + 20, 504)
+            for _ in range(120):
+                bug.update(1/60, box, (platform,), 2000)
+            x, y, width, _ = bug.body_bounds()
+            self.assertEqual((bug.phase, y), ("overturned", platform[3]))
+            self.assertGreaterEqual(x - width/2, platform[0])
+            self.assertLessEqual(x + width/2, platform[2])
+
     def test_only_one_flinch_per_swing_even_on_an_overturned_bug(self):
         bug = Pillbug(400, 800, 0)
         bug.phase = "overturned"

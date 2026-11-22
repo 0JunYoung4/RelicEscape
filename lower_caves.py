@@ -14,7 +14,9 @@ RELIC_X = GALLERY_SECTION_WIDTH * 1.65
 RELIC_Y = 100
 PASSAGE_TIME = 0.55
 PICKUP_TIME = 0.32
-PILLBUG_PATROLS = ((1120, 1450, 0.0), (3070, 3380, 2.4), (3990, 4290, 0.7))
+PILLAR = (3240, 0, 3380, 242)
+AIR_PLATFORM = (3488, 274, 3744, 364)
+GALLERY_TERRAIN = (PILLAR, AIR_PLATFORM)
 
 
 class LowerCaves:
@@ -24,6 +26,9 @@ class LowerCaves:
         self.backdrop = pico.load_image(str(terrain / "moss-gallery-backdrop.png"))
         self.entry_backdrop = pico.load_image(str(terrain / "moss-gallery-entry.png"))
         self.attack_hints = pico.load_image(str(ASSET_ROOT / "ui/gallery-attack-hints.png"))
+        self.wall_jump_hint = pico.load_image(str(ASSET_ROOT / "ui/gallery-wall-jump-hint.png"))
+        self.pillar = pico.load_image(str(terrain / "moss-gallery-small-pillar-v2.png"))
+        self.platform = pico.load_image(str(terrain / "moss-gallery-small-platform.png"))
         self.floor = pico.load_image(str(terrain / "moss-gallery-floor.png"))
         self.ceiling = pico.load_image(str(terrain / "moss-gallery-ceiling.png"))
         pico.SDL_SetTextureColorMod(self.backdrop.texture, 166, 180, 178)
@@ -36,7 +41,7 @@ class LowerCaves:
         self.passage_time = None
         self.pickup_time = None
         self.has_relic = False
-        self.pillbugs = [Pillbug(*patrol) for patrol in PILLBUG_PATROLS]
+        self.pillbugs = [Pillbug(1120, 1450, 0.0), Pillbug.on_platform(AIR_PLATFORM)]
         self.attack_poses = pico.load_image(str(ASSET_ROOT / "sprites/enemies/stone-pillbug-roll-flip.png"))
         self.hurt_poses = pico.load_image(str(ASSET_ROOT / "sprites/enemies/stone-pillbug-hurt.png"))
         frames = [{"x": i % 4 * 170, "y": i // 4 * 72, "width": 170, "height": 72}
@@ -48,7 +53,7 @@ class LowerCaves:
         landing = self.room == "landing"
         width = self.landing_width if landing else GALLERY_WIDTH
         player.world_width = camera.world_width = width
-        player.terrain = ()
+        player.terrain = () if landing else GALLERY_TERRAIN
         player.ground_y = 0
         player.recover_at(width / 2 if landing else 130, 0, 0)
         player.facing = 1
@@ -107,6 +112,8 @@ class LowerCaves:
         floor_height = 620
         bottom = -floor_height * (1 - 208 / self.floor.h)
         self.draw_stone_strip(self.floor, left, (bottom - camera.y) * camera.zoom, width, floor_height * camera.zoom)
+        for image, (x1, y1, x2, y2) in zip((self.pillar, self.platform), GALLERY_TERRAIN):
+            image.draw_to_origin(*camera.world_to_screen(x1, y1), (x2-x1)*camera.zoom, (y2-y1)*camera.zoom)
         for bug in self.pillbugs:
             bug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses)
 
@@ -132,7 +139,10 @@ class LowerCaves:
             return
         if 450 <= player.x <= 1810 and self.pillbugs[0].hp > 0:
             row = 0
-        elif 2460 <= player.x <= 4450 and any(bug.hp for bug in self.pillbugs[1:]):
+        elif PILLAR[0] - 580 <= player.x < PILLAR[2] and player.y < PILLAR[3]:
+            self.wall_jump_hint.draw(self.cave.width / 2, 38)
+            return
+        elif PILLAR[0] - 120 <= player.x <= AIR_PLATFORM[2] + 320 and self.pillbugs[1].hp > 0:
             row = 1
         else:
             return
