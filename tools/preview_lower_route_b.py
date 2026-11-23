@@ -11,7 +11,6 @@ os.environ.setdefault("SDL_RENDER_DRIVER", "software")
 from pico2d import pico2d as pico
 
 from main import Camera, RELIC_GLOW_IMAGE, RELIC_IMAGE
-from moss_art import MossCaveArt
 from player import ASSET_ROOT, Animation, Player
 from rail import RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE, draw_rail
 from tools.lower_route_b_layout import (A_ENTRY, C_PASSAGE, GOLEM_LEDGE, LEFT_WALL, PILLBUG_LEDGE,
@@ -22,7 +21,7 @@ from tools.preview_lower_route_a import read_render
 CONCEPTS = ASSET_ROOT / "concepts"
 STRUCTURES = ASSET_ROOT / "structures/map1-lower-route"
 ENEMIES = ASSET_ROOT / "sprites/enemies"
-STEM = "map1-lower-route-b-v2"
+PLATFORMS = ASSET_ROOT / "terrain/ruin-platforms"
 WIDTH, HEIGHT = 2500, 850
 ZOOM = .5
 BOTTOM = -330
@@ -57,6 +56,19 @@ def draw_structure(image, crop, camera, x, bottom, width, height, *, flip=""):
                               width * camera.zoom, height * camera.zoom)
 
 
+def draw_ruin_platform(camera, entry, bounds, *, base_y=None):
+    left, _, right, top = bounds
+    source_left, surface_y, source_right = entry["walk_surface"]
+    crop_left, crop_top, crop_right, crop_bottom = entry["crop"]
+    scale = (right - left) / (source_right - source_left)
+    center = left + ((crop_left + crop_right) / 2 - source_left) * scale
+    height_scale = scale if base_y is None else (top - base_y) / (crop_bottom - surface_y)
+    bottom = top + (surface_y - crop_bottom) * height_scale
+    image = pico.load_image(str(PLATFORMS / entry["image"]))
+    draw_structure(image, entry["crop"], camera, center, bottom,
+                   (crop_right - crop_left) * scale, (crop_bottom - crop_top) * height_scale)
+
+
 def draw_spike_bank(camera):
     spikes = pico.load_image(str(STRUCTURES / "lower-cave-thorn-bed-v1.png"))
     pico.draw_rectangle(0, 0, WIDTH, camera.world_to_screen(0, -300)[1], 5, 13, 15, filled=True)
@@ -82,32 +94,26 @@ def actor(stem):
 
 
 def draw_scene(camera):
-    art = MossCaveArt(WIDTH, HEIGHT)
-    background = pico.load_image(str(CONCEPTS / (STEM + "-background.png")))
+    background = pico.load_image(str(CONCEPTS / "map1-lower-route-b-v2-background.png"))
     background.draw_to_origin(0, 0, WIDTH, HEIGHT)
 
-    left, bottom, right, top = LEFT_WALL
-    draw_rock_wall(art.wall, camera, ((bottom, right - 25, right - 9),
-                                     (bottom + 38, left + 16, right),
-                                     (bottom + 120, left - 24, right),
-                                     (top, left - 85, right)))
+    wall = pico.load_image(str(ASSET_ROOT / "terrain/green-cavern-wall-v1.png"))
     left, bottom, right, top = RIGHT_WALL
-    draw_rock_wall(art.wall, camera, ((bottom - 16, left + 60, right - 58),
-                                     (bottom + 4, left + 26, right - 36),
-                                     (bottom + 28, left, right - 18),
-                                     (bottom + 120, left, right + 8),
-                                     (790, left, right + 12),
-                                     (top, left - 27, right + 40),
-                                     (1210, left - 78, right + 122),
-                                     (1380, left - 130, right + 192)))
+    draw_rock_wall(wall, camera, ((bottom - 16, left + 60, right - 58),
+                                 (bottom + 4, left + 26, right - 36),
+                                 (bottom + 28, left, right - 18),
+                                 (bottom + 120, left, right + 8),
+                                 (790, left, right + 12),
+                                 (top, left - 27, right + 40),
+                                 (1210, left - 78, right + 122),
+                                 (1380, left - 130, right + 192)))
 
-    art.draw_platform(camera, (C_PASSAGE[0] - 160, 418, GOLEM_LEDGE[2], GOLEM_LEDGE[3]))
-    art.draw_platform(camera, (PILLBUG_LEDGE[0], 58, PILLBUG_LEDGE[2], PILLBUG_LEDGE[3]))
-    art.draw_platform(camera, (A_ENTRY[0], 48, A_ENTRY[2] + 110, A_ENTRY[3]))
-    bridge = pico.load_image(str(STRUCTURES / "lower-cave-stone-bridge-v1.png"))
-    left, _, right, top = SHIELD_LEDGE
-    draw_structure(bridge, (40, 193, 2132, 579), camera, (left + right) / 2, top - 136,
-                   right - left, 136)
+    platforms = json.loads((PLATFORMS / "manifest.json").read_text(encoding="utf-8"))["platforms"]
+    draw_ruin_platform(camera, platforms["root-wedge"], (A_ENTRY[0], A_ENTRY[1], A_ENTRY[2] + 110, A_ENTRY[3]))
+    draw_ruin_platform(camera, platforms["connected-guard-wall"], SHIELD_LEDGE, base_y=LEFT_WALL[1])
+    passage = (C_PASSAGE[0] - 105, C_PASSAGE[1], GOLEM_LEDGE[2], GOLEM_LEDGE[3])
+    draw_ruin_platform(camera, platforms["connected-passage"], passage)
+    draw_ruin_platform(camera, platforms["spike-bed-pier"], PILLBUG_LEDGE, base_y=SPIKE_TIP_Y - 113)
 
     marker = pico.load_image(str(STRUCTURES / "lower-cave-safe-waymarker-v1.png"))
     for x, surface, size in ((240, C_PASSAGE[3], 139), (1200, GOLEM_LEDGE[3], 66),
@@ -149,6 +155,6 @@ if __name__ == "__main__":
     try:
         camera = Camera(WIDTH, A_ENTRY[2], zoom=ZOOM, y=BOTTOM)
         draw_scene(camera)
-        read_render(0, 0, WIDTH, HEIGHT).save(CONCEPTS / (STEM + ".png"))
+        read_render(0, 0, WIDTH, HEIGHT).save(CONCEPTS / "map1-lower-route-b-v3.png")
     finally:
         pico.close_canvas()

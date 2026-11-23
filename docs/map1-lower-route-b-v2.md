@@ -2,11 +2,13 @@
 
 A의 왼쪽 출구에서 B의 오른쪽으로 진입해 왼쪽 C 연결부로 간다. 협곡 하단은 전부 가시로 채운다. 중간의 넓은 공중 발판 세 곳에서 착지하고 전투한다. 발판 사이는 위로 솟는 레일, 벽점프, 아래로 돌아 올라오는 레일 순서로 건넌다. [B파트 사각형 콘셉트 도면](map1-lower-route-b-blockout-v2.png)
 
-[B파트 전체 맵 시안](../assets/concepts/map1-lower-route-b-v2.png) · [원경 레이어](../assets/concepts/map1-lower-route-b-v2-background.png) · [원경 생성 프롬프트](../assets/concepts/map1-lower-route-b-v2-background.prompt.txt)
+[B파트 전체 맵 시안](../assets/concepts/map1-lower-route-b-v3.png) · [유적 발판 PNG 모음](../assets/terrain/ruin-platforms/README.md) · [원경 레이어](../assets/concepts/map1-lower-route-b-v2-background.png)
 
 ## 맵 미술
 
 원경은 A파트와 같은 청록빛 동굴에 폐수로·육각 문양 기둥·큰 석륜·멀리 흐르는 물줄기를 배치한다. 벽점프 슬롯은 천장에서 내려온 바위와 방패병 발판 밑의 돌출암으로 둘러싼다. 두 벽의 접촉면은 도면에 맞추고, 바깥쪽 암반과 장식은 불규칙하게 다듬는다.
+
+발판은 젖은 청회색 돌과 이끼 군집을 공통으로 쓰고, 양쪽 끝까지 두꺼운 돌층을 유지한다. 골렘 발판과 C 통로는 파인 하부가 남은 통로 연결판 한 장으로 그린다. 방패병 발판의 오른쪽은 벽점프 벽으로 이어지고, 공벌레 발판의 석조 받침은 가시 사이까지 내려간다.
 
 협곡 바닥 전체에 기존 [가시 덩굴](../assets/structures/map1-lower-route/lower-cave-thorn-bed-v1.png)을 두 겹으로 겹친다. 안쪽 줄은 청록색 대기에 잠기고, 앞쪽 줄은 밝은 칼날 끝이 보인다. 발판 위에는 기존 공벌레·방패병·수정 골렘 스프라이트와 작은 석등을 배치한다. 레일과 장착 파츠도 본편에서 쓰는 이미지를 사용한다.
 

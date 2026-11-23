@@ -1,0 +1,57 @@
+{
+  "coordinate_system": "Source PNG pixels from the top left",
+  "crop_format": ["left", "top", "right", "bottom"],
+  "walk_surface_format": ["left", "y", "right"],
+  "platforms": {
+    "root-wedge": {
+      "image": "root-wedge-v2.png",
+      "crop": [5, 87, 1773, 850],
+      "walk_surface": [28, 176, 1751]
+    },
+    "carved-buttress": {
+      "image": "carved-buttress-v1.png",
+      "crop": [7, 145, 1554, 816],
+      "walk_surface": [21, 174, 1540]
+    },
+    "split-bedrock": {
+      "image": "split-bedrock-v1.png",
+      "crop": [12, 261, 1523, 802],
+      "walk_surface": [39, 299, 1500]
+    },
+    "short-root-step": {
+      "image": "short-root-step-v1.png",
+      "crop": [45, 212, 1502, 871],
+      "walk_surface": [125, 242, 1440]
+    },
+    "long-arch": {
+      "image": "long-arch-v1.png",
+      "crop": [4, 270, 1519, 779],
+      "walk_surface": [25, 338, 1497]
+    },
+    "waterworn-sill": {
+      "image": "waterworn-sill-v2.png",
+      "crop": [6, 148, 1853, 722],
+      "walk_surface": [35, 159, 1831]
+    },
+    "recessed-overhang": {
+      "image": "recessed-overhang-v1.png",
+      "crop": [104, 64, 1272, 1054],
+      "walk_surface": [119, 129, 1254]
+    },
+    "spike-bed-pier": {
+      "image": "spike-bed-pier-v2.png",
+      "crop": [4, 88, 1371, 1105],
+      "walk_surface": [20, 155, 1359]
+    },
+    "connected-passage": {
+      "image": "connected-passage-v1.png",
+      "crop": [16, 34, 2009, 758],
+      "walk_surface": [31, 99, 1989]
+    },
+    "connected-guard-wall": {
+      "image": "connected-guard-wall-v1.png",
+      "crop": [6, 94, 1558, 998],
+      "walk_surface": [19, 128, 1550]
+    }
+  }
+}
