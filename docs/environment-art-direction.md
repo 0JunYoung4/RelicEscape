@@ -69,13 +69,13 @@ SDL 소프트웨어 렌더로 위 화면과 GIF를 생성해 확인했다. 재�
 
 첫 유물 지점에 놓을 구조물 v1은 이끼와 덩굴에 잠식된 **깨진 육각 봉인석과 낮은 받침대**다. 기존 순간이동 문양의 육각 외곽과 짝을 이룬 홈을 돌에 새겼다. 윗부분을 비대칭으로 부수고, 유물이 놓이는 중앙은 식생 없이 비워 시선을 모은다. 맵의 어두운 청록색 돌·둥근 잎·정돈된 손그림 윤곽을 따른다.
 
-현재는 **디자인 및 배치 미리보기만 제작했으며 게임에는 적용하지 않았다**. 높이380월드, 바닥에 묻히는 기준점과 기존 유물 높이100을 메타데이터에 기록했다. 구조물 PNG에는 유물을 넣지 않아 획득 시 별도로 사라질 수 있다. 향후 충돌과 상호작용 여부는 별도 구현 사항이다.
+현재는 **실제 게임의 유물 뒤 배경 오브젝트로 적용했다**. 장식이며 이동을 막는 충돌은 없다. 높이380월드, 바닥에 묻히는 기준점과 기존 유물 높이100을 메타데이터에 기록했다. 구조물 PNG에는 유물을 넣지 않아 기존 유물 획득 동작과 분리된다.
 
 [투명 구조물 PNG](../assets/concepts/relic-acquisition-shrine-v1.png) · [원본](../assets/concepts/relic-acquisition-shrine-v1-source.png) · [정확한 내장 imagegen 프롬프트](../assets/concepts/relic-acquisition-shrine-v1.prompt.txt) · [배치 메타데이터](../assets/concepts/relic-acquisition-shrine-v1.json) · [기본 배율 배치 시안](relic-acquisition-shrine-v1-gallery.png) · [확대 배치 시안](relic-acquisition-shrine-v1-closeup.png).
 
-최신 조명 시안 v2는 천장의 작은 틈에서 내려오는 청백색 빛이 봉인석의 깨진 상단을 지나 유물을 비추도록 수정했다. 유물의 밝은 청색 중심과 작은 후광, 받침대·주변 이끼의 반사광, 빛줄기 속 먼지를 강조하고 주변 동굴은 어둡게 정리했다. v1 배치 화면을 내장 imagegen으로 편집한 **전체 장면 콘셉트 이미지이며 실제 게임 조명이나 투명 구조물 PNG에는 아직 반영하지 않았다**. [조명 시안 v2](../assets/concepts/relic-acquisition-shrine-lighting-v2.png) · [정확한 편집 프롬프트](../assets/concepts/relic-acquisition-shrine-lighting-v2.prompt.txt) · [출처·상태 메타데이터](../assets/concepts/relic-acquisition-shrine-lighting-v2.json).
+최신 조명 시안 v2는 천장의 작은 틈에서 내려오는 청백색 빛이 봉인석의 깨진 상단을 지나 유물을 비추도록 수정했다. 유물의 밝은 청색 중심과 작은 후광, 받침대·주변 이끼의 반사광, 빛줄기 속 먼지를 강조하고 주변 동굴은 어둡게 정리했다. v1 배치 화면을 내장 imagegen으로 편집한 **전체 장면 콘셉트 이미지**다. 게임은 `relic_shrine.py`의 SDL 조명으로 청백색 사선 빛줄기·작은 유물 후광·바닥 반사광·22개 먼지 입자를 실시간 표현한다. 월드 좌표에 고정되며 획득 후 후광은 사라지고 천장 빛은 55%로 약해진다. 기존 구조물 PNG를 그대로 사용한다. [조명 시안 v2](../assets/concepts/relic-acquisition-shrine-lighting-v2.png) · [정확한 편집 프롬프트](../assets/concepts/relic-acquisition-shrine-lighting-v2.prompt.txt) · [출처·상태 메타데이터](../assets/concepts/relic-acquisition-shrine-lighting-v2.json).
 
-v1 SDL 배치 미리보기 재생성: `.\.venv\Scripts\python.exe tools/preview_relic_shrine.py`. 기존 공통 맵 렌더러와 실제 유물·캐릭터를 사용하며 실행 게임의 배치·충돌·획득 로직은 수정하지 않는다. 이 명령은 imagegen 조명 시안 v2를 재생성하지 않는다.
+실제 게임 SDL 배치 미리보기 재생성: `.\.venv\Scripts\python.exe tools/preview_relic_shrine.py`. 실제 LowerCaves 렌더러·유물·캐릭터를 사용해 `docs/relic-shrine-runtime-{gallery,closeup,collected}.png`를 저장한다. 이 명령은 imagegen 조명 시안 v2를 재생성하지 않는다.
 
 ## 녹색 거리 추가 조사 자료
 

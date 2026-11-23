@@ -15,6 +15,7 @@ from pico2d import pico2d as pico
 from lower_caves import COMBAT_CEILING_Y, GALLERY_WIDTH, LowerCaves
 from main import Camera
 from moss_art import MossCaveArt
+from relic_shrine import RelicShrine
 
 
 class CanopyTrackingTests(unittest.TestCase):
@@ -22,10 +23,11 @@ class CanopyTrackingTests(unittest.TestCase):
     def setUpClass(cls):
         pico.open_canvas(960, 540)
         cls.art = MossCaveArt(960, 540)
+        cls.shrine = RelicShrine(540)
 
     @classmethod
     def tearDownClass(cls):
-        del cls.art
+        del cls.art, cls.shrine
         gc.collect()
         pico.close_canvas()
 
@@ -33,6 +35,8 @@ class CanopyTrackingTests(unittest.TestCase):
         self.room = LowerCaves.__new__(LowerCaves)
         self.room.cave = SimpleNamespace(width=960, height=540)
         self.room.art = self.art
+        self.room.shrine = self.shrine
+        self.room.has_relic = True
         self.room.room = "gallery"
         self.room.passage_time = None
         self.room.exit_progress = 0

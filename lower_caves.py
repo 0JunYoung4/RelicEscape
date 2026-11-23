@@ -14,6 +14,7 @@ from pillbug import Pillbug
 from slash_effect import downward_slash_bounds, forward_slash_bounds
 from stone_wall_effects import StoneWallEffects
 from moss_art import MossCaveArt, WALL_SKIN_WIDTH, WALL_TILE_HEIGHT
+from relic_shrine import RelicShrine
 from player import ASSET_ROOT, STANDING_HITBOX_WIDTH, Animation
 
 
@@ -74,6 +75,7 @@ class LowerCaves:
     def __init__(self, cave):
         self.cave = cave
         self.art = MossCaveArt(cave.width, cave.height)
+        self.shrine = RelicShrine(cave.height)
         terrain = ASSET_ROOT / "terrain"
         self.backdrop = pico.load_image(str(terrain / "moss-gallery-backdrop.png"))
         self.entry_backdrop = pico.load_image(str(terrain / "moss-gallery-entry.png"))
@@ -321,6 +323,7 @@ class LowerCaves:
             return
         self.art.draw_background(camera)
         self.art.draw_motes(camera, 0, GALLERY_CEILING_Y, right=GALLERY_WIDTH)
+        self.shrine.draw_stone(camera, RELIC_X)
         self.art.draw_pillar(camera, PILLAR)
         self.art.draw_floor(camera, 0, GALLERY_WIDTH, 0)
         self.art.shadow_floor(camera, 0)
@@ -550,6 +553,8 @@ class LowerCaves:
             self.art.combat_scenery().draw_foreground(camera, COMBAT_LEFT_WALL,
                                                      COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
         elif self.room == "gallery":
+            self.shrine.draw_light(camera, RELIC_X, RELIC_Y, GALLERY_CEILING_Y,
+                                   collected=self.has_relic)
             self.art.draw_canopy(camera, GALLERY_CEILING_Y)
         if self.passage_time is not None:
             opacity = round(255 * min(1, self.passage_time / PASSAGE_TIME))
