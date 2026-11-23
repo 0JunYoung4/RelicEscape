@@ -16,7 +16,7 @@ from pico2d import pico2d as pico
 import main
 from lower_caves import LowerCaves
 from lower_route_a import (BUTTON_CENTER, ENTRY_LEDGE, ENTRY_STEP, EXIT_LEDGE, GROUND_Y,
-                           LOWER_DOCK, RECOVERY, RECESS_BACK, UPPER_DOCK, WIDTH, LowerRouteA)
+                           LOWER_DOCK, OVERHANG, RECOVERY, RECESS_BACK, UPPER_DOCK, WIDTH, LowerRouteA)
 from player import Player, STANDING_HITBOX_HEIGHT, WORLD_MARGIN
 
 
@@ -90,7 +90,7 @@ class LowerRouteATests(unittest.TestCase):
                     self.tick(direction, jump=frame % 12 == 0)
                     self.assertFalse(self.player.x < EXIT_LEDGE[2] and self.player.y >= EXIT_LEDGE[3])
         self.assertTrue(self.player.recover_at(RECESS_BACK[2] + 20,
-                                              EXIT_LEDGE[1] - STANDING_HITBOX_HEIGHT - 2, 0))
+                                              OVERHANG[0][1] - STANDING_HITBOX_HEIGHT - 2, 0))
         for frame in range(100):
             self.tick(1, jump=frame % 12 == 0)
             self.assertLess(self.player.y, EXIT_LEDGE[3])
