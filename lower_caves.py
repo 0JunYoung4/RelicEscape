@@ -9,6 +9,7 @@ from pico2d import pico2d as pico
 from combat_scenery import COMBAT_BACKGROUND_TINT
 from crystal_golem import CrystalGolem
 from crystal_projectile import DAMAGE as CRYSTAL_DAMAGE
+from hit_impact import IMPACT_DURATION, HitImpact
 from lower_route_a import WIDTH as ROUTE_A_WIDTH, LowerRouteA
 from opening_cave import SHAFT_FLOOR, SHAFT_SCALE, SHAFT_TOP
 from pillbug import Pillbug
@@ -149,6 +150,7 @@ class LowerCaves:
                                     golem_death["frame_durations_ms"])
         self.crystal_image = pico.load_image(str(ASSET_ROOT / "sprites/projectiles/back-crystal-shard-v2.png"))
         self.projectiles = []
+        self.hit_impacts = []
         self.attack_poses = pico.load_image(str(ASSET_ROOT / "sprites/enemies/stone-pillbug-roll-flip.png"))
         self.hurt_poses = pico.load_image(str(ASSET_ROOT / "sprites/enemies/stone-pillbug-hurt.png"))
         frames = [{"x": i % 4 * 170, "y": i // 4 * 72, "width": 170, "height": 72}
@@ -208,6 +210,7 @@ class LowerCaves:
         self.wall_effects.clear()
         self.wall_effects.progress = self.entrance_progress
         self.projectiles.clear()
+        self.hit_impacts.clear()
         for golem in self.golems:
             golem.attack_time = None
             golem.attack_target = None
@@ -377,14 +380,20 @@ class LowerCaves:
                 bug.begin_emergence()
         if self.enemies:
             strike = None
+            downward = False
             facing = player.attack_facing
             if player.slash is not None:
                 _, facing, kind = player.slash
-                bounds = downward_slash_bounds if kind == "air_down_attack" else forward_slash_bounds
+                downward = kind == "air_down_attack"
+                bounds = downward_slash_bounds if downward else forward_slash_bounds
                 strike = bounds(player.x, player.y, facing)
             for enemy in self.enemies:
-                if enemy.check_strike(strike, facing, player.attack_power, player.swing_id):
-                    player.recoil_from_hit(facing, player.swing_id)
+                if strike is not None:
+                    body = enemy.body_bounds()
+                    if enemy.check_strike(strike, facing, player.attack_power, player.swing_id):
+                        self.hit_impacts.append(HitImpact.from_strike(
+                            strike, body, facing, downward=downward, heavy=isinstance(enemy, CrystalGolem)))
+                        player.recoil_from_hit(facing, player.swing_id)
                 projectile = enemy.update(dt, player.get_hitbox(), player.terrain, player.world_width)
                 if projectile is not None:
                     self.projectiles.append(projectile)
@@ -401,6 +410,9 @@ class LowerCaves:
             player.terrain = self.combat_terrain()
 
     def update_effects(self, dt, player):
+        for impact in self.hit_impacts:
+            impact.age += dt
+        self.hit_impacts[:] = [impact for impact in self.hit_impacts if impact.age < IMPACT_DURATION]
         if self.room == "route_a":
             self.route_a.update_shadow(player, dt)
         if self.room == "combat":
@@ -416,6 +428,10 @@ class LowerCaves:
         # Light follows the player's approach after the lid opens, independently of its motion.
         change = dt / .7
         self.shaft_visibility += max(-change, min(change, target - self.shaft_visibility))
+
+    def draw_hit_impacts(self, camera):
+        for impact in self.hit_impacts:
+            impact.draw(camera)
 
     def draw_combat_gate(self, camera):
         if self.room != "combat" or self.entrance_progress <= 0:

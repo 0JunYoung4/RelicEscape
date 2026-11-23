@@ -16,6 +16,7 @@ from pico2d import pico2d as pico
 import main
 from crystal_golem import BODY_WIDTH, MAX_HP, CrystalGolem
 from health import CONTACT_DAMAGE, Health
+from hit_impact import IMPACT_DURATION
 from lower_caves import COMBAT_PLATFORMS, COMBAT_TERRAIN, COMBAT_WIDTH, LowerCaves
 from player import STARTING_ATTACK_POWER, Player
 
@@ -108,6 +109,7 @@ class CrystalGolemRoomTests(unittest.TestCase):
             self.assertGreater(self.player.recoil_remaining, 0)
             self.lower.update_enemies(self.player, 0)
             self.assertEqual(first.hp, expected)
+            self.assertEqual(len(self.lower.hit_impacts), swing)
         self.player.slash = None
         self.lower.update_enemies(self.player, .2)
         with patch.object(self.lower.golem_walk, "draw", wraps=self.lower.golem_walk.draw) as draw:
@@ -119,6 +121,29 @@ class CrystalGolemRoomTests(unittest.TestCase):
         self.assertEqual(health.current, 100 - CONTACT_DAMAGE)
         second.hp = 0
         self.assertFalse(health.check_contact(self.player, self.lower.enemies, 1))
+
+    def test_confirmed_impact_marks_the_hit_and_expires_without_stopping_charge(self):
+        golem = self.lower.golems[0]
+        self.assertTrue(self.player.recover_at(golem.x - 120, golem.floor_y, 0))
+        self.player.slash = (0, -1, "attack")
+        self.player.swing_id = 1
+        self.lower.update_enemies(self.player, 0)
+        self.assertFalse(self.lower.hit_impacts)
+
+        golem.attack_time = .24
+        golem.attack_target = (self.player.x, golem.floor_y)
+        self.player.slash = (0, 1, "attack")
+        self.lower.update_enemies(self.player, .03)
+        impact, = self.lower.hit_impacts
+        self.assertLess(impact.x, golem.x)
+        self.assertGreater(impact.x, golem.x - BODY_WIDTH / 2)
+        self.assertAlmostEqual(golem.attack_time, .27)
+        self.assertEqual(golem.hp, MAX_HP - STARTING_ATTACK_POWER)
+        self.lower.update_enemies(self.player, 0)
+        self.assertEqual(self.lower.hit_impacts, [impact])
+        self.lower.draw_hit_impacts(self.camera)
+        self.lower.update_effects(IMPACT_DURATION, self.player)
+        self.assertFalse(self.lower.hit_impacts)
 
     def test_both_golems_start_at_top_ends_and_patrol_separate_halves(self):
         left, bottom, right, top = COMBAT_PLATFORMS[1]

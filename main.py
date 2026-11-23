@@ -906,6 +906,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
         if lower is not None:
             if not travel.effect.draw(player, camera, frame_start, None):
                 player.draw(camera, tint=health.hit_tint(frame_start))
+            lower.draw_hit_impacts(camera)
             health.draw_hit(camera, frame_start)
             if travel.anchor is not None:
                 anchor = travel.anchor

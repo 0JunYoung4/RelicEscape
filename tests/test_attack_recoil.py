@@ -28,6 +28,7 @@ class AttackRecoilTests(unittest.TestCase):
         gallery = LowerCaves.__new__(LowerCaves)
         gallery.room = "gallery"
         gallery.pillbugs = list(bugs)
+        gallery.hit_impacts = []
         return gallery
 
     def test_only_successful_hits_trigger_recoil_once_per_swing(self):

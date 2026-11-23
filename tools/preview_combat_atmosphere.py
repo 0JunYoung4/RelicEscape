@@ -25,6 +25,7 @@ def render(room, player, camera, path=None):
     room.draw(camera)
     room.draw_combat_exit(camera)
     player.draw(camera)
+    room.draw_hit_impacts(camera)
     room.draw_foreground(camera)
     pixels = (c_ubyte * (960 * 540 * 4))()
     if pico.SDL_RenderReadPixels(pico.renderer, None, pico.SDL_PIXELFORMAT_RGBA32,
