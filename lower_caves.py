@@ -18,6 +18,7 @@ from player import ASSET_ROOT, STANDING_HITBOX_WIDTH, Animation
 
 GALLERY_SECTION_WIDTH = 3240
 GALLERY_WIDTH = 2 * GALLERY_SECTION_WIDTH
+GALLERY_CEILING_Y = 900
 RELIC_X = GALLERY_SECTION_WIDTH * 1.65
 RELIC_Y = 100
 PASSAGE_TIME = 0.55
@@ -77,7 +78,6 @@ class LowerCaves:
         self.entry_backdrop = pico.load_image(str(terrain / "moss-gallery-entry.png"))
         self.attack_hints = pico.load_image(str(ASSET_ROOT / "ui/gallery-attack-hints.png"))
         self.wall_jump_hint = pico.load_image(str(ASSET_ROOT / "ui/gallery-wall-jump-hint.png"))
-        self.pillar = pico.load_image(str(terrain / "moss-gallery-small-pillar-v2.png"))
         self.platform = pico.load_image(str(terrain / "moss-gallery-small-platform.png"))
         self.floor = pico.load_image(str(terrain / "moss-gallery-floor.png"))
         self.ceiling = pico.load_image(str(terrain / "moss-gallery-ceiling.png"))
@@ -219,13 +219,12 @@ class LowerCaves:
 
     def follow_camera(self, player, camera):
         camera.follow(player.x)
-        if self.room == "combat":
+        if self.room in ("gallery", "combat"):
             base = -self.cave.height * 0.20 / camera.zoom
-            if self.exit_progress > 0 and player.y < 0:
+            if self.room == "combat" and self.exit_progress > 0 and player.y < 0:
                 camera.y = max(COMBAT_SHAFT_FLOOR + base, player.y + base)
                 return
-            ceiling_limit = COMBAT_CEILING_Y - self.cave.height * 0.90 / camera.zoom
-            camera.y = max(base, min(player.y - self.cave.height * 0.40 / camera.zoom, ceiling_limit))
+            camera.y = max(base, player.y - self.cave.height * 0.40 / camera.zoom)
 
     def start_after_relic(self, player, camera):
         self.room = "gallery"
@@ -317,10 +316,10 @@ class LowerCaves:
                 projectile.draw(self.crystal_image, camera)
             return
         self.art.draw_background(camera)
-        self.art.draw_motes(camera, 0, 900, right=GALLERY_WIDTH)
+        self.art.draw_motes(camera, 0, GALLERY_CEILING_Y, right=GALLERY_WIDTH)
+        self.art.draw_pillar(camera, PILLAR)
         self.art.draw_floor(camera, 0, GALLERY_WIDTH, 0)
         self.art.shadow_floor(camera, 0)
-        self.art.draw_pillar(camera, PILLAR)
         self.art.draw_platform(camera, AIR_PLATFORM)
         for bug in self.pillbugs:
             bug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses, death=self.pillbug_death)
@@ -543,10 +542,9 @@ class LowerCaves:
 
     def draw_foreground(self, camera):
         if self.room == "combat":
-            roof = COMBAT_CEILING_Y if camera.world_to_screen(0, COMBAT_CEILING_Y)[1] < self.cave.height * 1.2 else None
-            self.art.draw_canopy(camera, roof)
+            self.art.draw_canopy(camera, COMBAT_CEILING_Y)
         elif self.room == "gallery":
-            self.art.draw_canopy(camera)
+            self.art.draw_canopy(camera, GALLERY_CEILING_Y)
         if self.passage_time is not None:
             opacity = round(255 * min(1, self.passage_time / PASSAGE_TIME))
             pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)

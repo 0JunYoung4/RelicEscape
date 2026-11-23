@@ -24,9 +24,11 @@ class MossCaveArt:
         self.wall = pico.load_image(str(root / "green-cavern-wall-v1.png"))
         self.canopy = pico.load_image(str(root / "green-cavern-canopy-v1.png"))
         self.corner_ivy = pico.load_image(str(root / "green-cavern-corner-ivy-v1.png"))
+        self.pillar = pico.load_image(str(root / "green-cavern-ground-pillar-v2.png"))
         self.floor_art = json.loads((root / "green-cavern-floor-v1.json").read_text(encoding="utf-8"))
         self.platform_art = json.loads((root / "green-cavern-platform-v1.json").read_text(encoding="utf-8"))
         self.corner_art = json.loads((root / "green-cavern-corner-ivy-v1.json").read_text(encoding="utf-8"))
+        self.pillar_art = json.loads((root / "green-cavern-ground-pillar-v2.json").read_text(encoding="utf-8"))
         pico.SDL_SetTextureColorMod(self.background.texture, 172, 199, 214)
         self.started = perf_counter()
 
@@ -46,14 +48,16 @@ class MossCaveArt:
                              (right - left) * camera.zoom, height * camera.zoom)
 
     def draw_pillar(self, camera, bounds):
+        """Align the solid stone with collision, leaving foliage outside the block."""
         left, bottom, right, top = bounds
-        pico.draw_rectangle(*camera.world_to_screen(left, bottom),
-                            *camera.world_to_screen(right, top), 0, 0, 0, filled=True)
-        self.draw_wall(camera, left, bottom, top, right_wall=True, skin_width=(right - left) / 2)
-        self.draw_wall(camera, right, bottom, top, skin_width=(right - left) / 2)
-        self.draw_floor(camera, left, right, top, depth=40, tiled=False)
-        self.draw_corner(camera, left, top, width=80, right_wall=True)
-        self.draw_corner(camera, right, top, width=80)
+        image = self.pillar
+        stone_left, surface, stone_right, ground = self.pillar_art["collision_rect"]
+        scale_x = (right - left) / (stone_right - stone_left)
+        scale_y = (top - bottom) / (ground - surface)
+        origin_x = left - stone_left * scale_x
+        origin_y = bottom - (image.h - ground) * scale_y
+        image.draw_to_origin(*camera.world_to_screen(origin_x, origin_y),
+                             image.w * scale_x * camera.zoom, image.h * scale_y * camera.zoom)
 
     def draw_corner(self, camera, x, y, *, width=120, right_wall=False, grow_up=False, alpha=1.0):
         image = self.corner_ivy
@@ -136,17 +140,23 @@ class MossCaveArt:
                 source_top - source_bottom, 0, "h" if right_wall else "", sx, sy,
                 skin_width * camera.zoom, (high - low) * camera.zoom)
 
-    def draw_canopy(self, camera, roof=None):
-        width = 1120 * camera.zoom
+    def draw_canopy(self, camera, roof):
+        """Attach hanging roots to the map ceiling, independent of the viewport."""
+        width = 1120
         height = width * self.canopy.h / self.canopy.w
-        top = self.height + height * .12 if roof is None else camera.world_to_screen(0, roof + 30)[1]
-        offset = -camera.x * camera.zoom * 1.04
-        for tile in range(floor(-offset / width), ceil((self.width - offset) / width)):
-            world_left = camera.x + (offset + tile * width) / camera.zoom
-            world_bottom = camera.y + (top - height) / camera.zoom
-            self.draw_surface(camera, self.canopy, world_left, world_bottom,
-                              (width + 1) / camera.zoom, height / camera.zoom,
-                              profile_origin=tile * 1120, amount=-1.8)
+        top = roof + 30
+        screen_roof = camera.world_to_screen(0, roof)[1]
+        if screen_roof < self.height:
+            pico.draw_rectangle(0, max(0, ceil(screen_roof)), self.width, self.height,
+                                0, 0, 0, filled=True)
+        bottom = top - height
+        # The uneven silhouette can hang another 19 world units below the strip.
+        if bottom - 19 > camera.y + self.height / camera.zoom or top < camera.y:
+            return
+        for tile in range(floor(camera.x / width), ceil((camera.x + camera.view_width) / width)):
+            self.draw_surface(camera, self.canopy, tile * width, bottom,
+                              width + 2, height,
+                              profile_origin=tile * width, amount=-1.8)
 
     def draw_motes(self, camera, floor_y, ceiling_y, *, left=0, right=None):
         right = camera.world_width if right is None else right

@@ -1,0 +1,17 @@
+{
+  "image": "green-cavern-ground-pillar-v1.png",
+  "source_image": "green-cavern-ground-pillar-v1-source.png",
+  "source_crop": [
+    78,
+    127,
+    868,
+    1518
+  ],
+  "mode": "builtin-imagegen",
+  "collision_rect": [
+    72,
+    43,
+    718,
+    1365
+  ]
+}

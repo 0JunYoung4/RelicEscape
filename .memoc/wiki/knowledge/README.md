@@ -17,6 +17,8 @@ Source-backed concepts, external docs, glossary, questions, and durable research
 
 ## Hubs
 
+- [녹색 거리 환경 미술 조사](greenpath-art-study.md) — 참고45장, 맵·텍스처·몬스터·전경·배경·그림자·조명 분석과 프로젝트 적용 제안.
+
 - [Sources](sources.md) — provenance, ingests, and source-to-topic links.
 - [Topics](topics/README.md) — synthesized topic pages.
 - [Global](global/README.md) — broad source-backed principles.

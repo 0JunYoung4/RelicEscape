@@ -9,6 +9,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 
 from pico2d import pico2d as pico
 
+from health import Health
 from lower_caves import GALLERY_WIDTH, LowerCaves
 from pillbug import Pillbug
 from player import ATTACK_RECOIL_DURATION, ATTACK_RECOIL_SPEED, WALK_SPEED, WORLD_MARGIN, Player
@@ -74,6 +75,32 @@ class AttackRecoilTests(unittest.TestCase):
                     start = player.x
                     player.update(facing, False, .1)
                     self.assertAlmostEqual(player.x - start, facing * WALK_SPEED * .1)
+
+    def test_continuous_attacks_keep_small_enemies_out_of_contact(self):
+        for phase in ("crawl", "roll"):
+            for facing in (-1, 1):
+                for fps in (30, 60, 120):
+                    with self.subTest(phase=phase, facing=facing, fps=fps):
+                        player = Player(1800, 0, GALLERY_WIDTH)
+                        player.facing, player.attack_power = facing, 1
+                        bug = Pillbug(1200, 2400, 0)
+                        bug.x, bug.hp = player.x + facing * 170, 300
+                        bug.phase, bug.direction = phase, -facing
+                        gallery = self.gallery(bug)
+                        health = Health((player.x, 0, 0))
+                        for frame in range(4 * fps):
+                            player.update(0, False, 1 / fps, attack_pressed=True)
+                            before, swing = bug.x, bug.last_swing
+                            gallery.update_enemies(player, 1 / fps)
+                            if bug.last_swing != swing:
+                                self.assertGreater(facing * (bug.x - before), 0)
+                            self.assertFalse(health.check_contact(player, (bug,), frame / fps))
+                            x, _, width, _ = bug.body_bounds()
+                            left, _, right, _ = player.get_hitbox()
+                            gap = x - width / 2 - right if facing > 0 else left - x - width / 2
+                            self.assertGreater(gap, 20)
+                        self.assertGreaterEqual(300 - bug.hp, 8)
+                        self.assertEqual(health.current, 100)
 
     def test_recoil_respects_walls_and_world_edges(self):
         wall = (400, 0, 500, 200)

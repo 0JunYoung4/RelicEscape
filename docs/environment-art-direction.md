@@ -15,11 +15,15 @@
 - [전투방](green-style-combat.png) · [전투방 전체](green-style-combat-map.png) · [하강 통로](green-style-shaft.png)
 - [기존 시작 동굴 유지](green-style-opening.png) · [기존 문양 유지](green-style-sigil.png)
 
-공통 렌더링은 `moss_art.py`의 `MossCaveArt`가 담당하고 `lower_caves.py`에서 사용한다. `opening_cave.py`는 변경 전 상태로 복원했다. 배경 시차는 지형 이동의0.16배, 전경은1.04배다. 잎과 뿌리는 장식이며 실제 충돌 상면은 바꾸지 않는다.
+공통 렌더링은 `moss_art.py`의 `MossCaveArt`가 담당하고 `lower_caves.py`에서 사용한다. `opening_cave.py`는 변경 전 상태로 복원했다. 배경 시차는 지형 이동의0.16배다. 천장 덩굴은 지형과 같은 월드 좌표에 고정한다. 잎과 뿌리는 장식이며 실제 충돌 상면은 바꾸지 않는다.
+
+천장 덩굴을 화면 상단에 붙이거나 천장의 화면 진입 여부에 따라 배치 기준을 바꾸지 않는다. 이끼 통로는 기존 포자 영역 상단과 같은 `GALLERY_CEILING_Y=900`, 전투방은 실제 천장 `COMBAT_CEILING_Y`에 배치한다. 천장 위는 검게 채우고, 기존 불규칙한 아래 윤곽은 유지한다. 카메라는 두 구간 모두 캐릭터의 가로·세로 위치를 따라가며 천장을 보이게 하려는 높이 제한을 사용하지 않는다. 지상에서는 발밑 여백을 확보하고, 하강 통로는 기존 추적을 유지한다. [통로 지상](ceiling-vines-gallery-floor.png) · [통로 발판](ceiling-vines-gallery-platform.png) · [전투방 지상](ceiling-vines-combat-floor.png) · [전투방 상승](ceiling-vines-combat-high.png) · [높이별 비교 GIF](ceiling-vines-follow.gif).
 
 ## 새 생성 자산
 
 모두 내장 imagegen으로 생성했다. 원본, 투명 경계 크롭, 메타데이터, 정확한 생성 프롬프트를 `assets/terrain/`에 저장했다.
+
+유물 획득 전 통로의 지면 기둥은 `green-cavern-ground-pillar-v2` 전용 이미지를 사용한다. 사용자 지정 할로우 나이트 녹색 거리 참고의 깔끔한 윤곽·거의 검은 청록색 돌몸체·둥근 잎과 이끼·감긴 덩굴을 반영했다. 직사각형 돌몸체의 실제 폭140·높이242는 유지하고 JSON의 `collision_rect`로 윗면과 양옆을 맞춘다. 바닥보다 먼저 그려 밑동이 바닥 식생 속에 묻히도록 한다. v1은 비교 초안이며 게임에서는 v2만 사용한다. [적용 화면](green-ground-pillar-gallery.png) · [기둥 위 착지](green-ground-pillar-standing.png) · [확대 화면](green-ground-pillar-closeup.png).
 
 | 용도 | PNG | 프롬프트 |
 | --- | --- | --- |
@@ -29,5 +33,10 @@
 | 뿌리가 매달린 발판 | [발판](../assets/terrain/green-cavern-platform-v1.png) | [프롬프트](../assets/terrain/green-cavern-platform-v1.prompt.txt) |
 | 천장 전경 실루엣 | [전경](../assets/terrain/green-cavern-canopy-v1.png) | [프롬프트](../assets/terrain/green-cavern-canopy-v1.prompt.txt) |
 | 모서리 덩굴 장식 | [덩굴](../assets/terrain/green-cavern-corner-ivy-v1.png) | [프롬프트](../assets/terrain/green-cavern-corner-ivy-v1.prompt.txt) |
+| 유물 통로의 지면 기둥 | [기둥](../assets/terrain/green-cavern-ground-pillar-v2.png) | [프롬프트](../assets/terrain/green-cavern-ground-pillar-v2.prompt.txt) |
 
 사용자 참고 이미지7장은 [참고 폴더](references/green-cavern-style/)에 보관했다.
+
+## 녹색 거리 추가 조사 자료
+
+녹색 거리39장·비교 지역6장, 총45장의 [이미지 갤러리](references/hollow-knight-greenpath/index.html)와 [이미지별 분석 목록](references/hollow-knight-greenpath/README.md)을 추가했다. [맵·텍스처·몬스터 종합 분석](hollow-knight-greenpath-study.md), [전경 그림자·배경층·조명 상세 분석](hollow-knight-layer-lighting-study.md), 대표8장의 영역 주석과 확대 자료를 함께 제공한다. 모든 이미지에 출처·저장 해상도·해시를 기록했다. 자료집의 적용안과 조명 수치는 후속 제작 제안이며 현재 승인된 미술·충돌·카메라 규칙을 변경하지 않는다.
