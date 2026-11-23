@@ -43,17 +43,19 @@ class RelicShrine:
         pico.SDL_GetRenderDrawBlendMode(pico.renderer, byref(previous))
         pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_ADD)
         try:
-            for offset, width, opacity in ((-75, 125, 30), (20, 74, 47), (100, 32, 32)):
+            for offset, width, opacity in ((-65, 95, 65), (0, 55, 115), (78, 28, 78)):
                 vertices, indices = [], []
                 # Feather both sides and the foot instead of drawing solid triangles.
-                for row, (height, spread, fade) in enumerate(((ceiling + 24, .32, .45),
-                        (ceiling - 85, .48, 1), (y + 110, 1, .65), (0, 1.15, 0))):
-                    center = x + 175 * height / ceiling + offset
-                    for across, weight in ((-1, 0), (-.55, .5), (0, 1), (.55, .5), (1, 0)):
+                for row, (height, spread, fade) in enumerate(((ceiling + 24, .32, .7),
+                        (ceiling - 85, .48, 1), (y + 110, 1, .9),
+                        (y, 1.05, .22), (0, 1.15, 0))):
+                    descent = (height - y) / (ceiling - y)
+                    center = x + 175 * descent + offset * (.35 + .65 * descent)
+                    for across, weight in ((-1, 0), (-.55, .65), (0, 1), (.55, .65), (1, 0)):
                         sx, sy = camera.world_to_screen(center + width * spread * across, height)
                         vertices.append(pico.SDL_Vertex((sx, self.height - sy),
-                            (154, 211, 240, round(opacity * fade * weight * strength))))
-                    if row < 3:
+                            (177, 224, 250, round(opacity * fade * weight * strength))))
+                    if row < 4:
                         for col in range(4):
                             start = row * 5 + col
                             indices.extend((start, start + 5, start + 1,
@@ -61,12 +63,12 @@ class RelicShrine:
                 data = (pico.SDL_Vertex * len(vertices))(*vertices)
                 triangles = (c_int * len(indices))(*indices)
                 pico.SDL_RenderGeometry(pico.renderer, None, data, len(vertices), triangles, len(indices))
-            self.glow_at(camera, x + 175, ceiling - 18, 165, 75, 95 * strength)
+            self.glow_at(camera, x + 175, ceiling - 18, 165, 75, 140 * strength)
             self.glow_at(camera, x + 25, 25, 540, 90, 105 * strength)
-            self.glow_at(camera, x, 170, 460, 440, 48 * strength)
+            self.glow_at(camera, x, 170, 460, 440, 30 * strength)
             if not collected:
-                self.glow_at(camera, x, y, 225, 210, 155 * pulse)
-                self.glow_at(camera, x, y, 70, 65, 110 * pulse)
+                self.glow_at(camera, x, y, 225, 210, 85 * pulse)
+                self.glow_at(camera, x, y, 70, 65, 40 * pulse)
             for index in range(22):
                 height = 32 + (index * 137.7 + elapsed * (9 + index % 5)) % (ceiling - 65)
                 center = x + 175 * height / ceiling
