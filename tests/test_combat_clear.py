@@ -16,6 +16,7 @@ from health import Health
 from lower_caves import (COMBAT_CENTER_X, COMBAT_COVER_THICKNESS, COMBAT_EXIT_DURATION, COMBAT_EXIT_LEFT,
                          COMBAT_EXIT_RIGHT, COMBAT_OPEN_TERRAIN, COMBAT_SHAFT_FLOOR,
                          COMBAT_WIDTH, LowerCaves)
+from lower_route_a import ENTRY_LEDGE, ENTRY_X
 from main import Camera
 from player import Player
 
@@ -89,13 +90,21 @@ class CombatClearTests(unittest.TestCase):
             self.assertEqual((self.player.y, self.player.grounded), (0, True))
         self.player.recover_at(COMBAT_CENTER_X, 0, 0)
         original_camera_y = self.camera.y
+        lowest_combat_camera = original_camera_y
+        saw_route_fall = False
         for _ in range(120):
             self.step()
+            if self.room.room == "combat":
+                lowest_combat_camera = min(lowest_combat_camera, self.camera.y)
+            elif self.player.vertical_speed < 0:
+                saw_route_fall = True
             foot = self.camera.world_to_screen(self.player.x, self.player.y)[1]
             self.assertGreaterEqual(foot, 0)
             self.assertLess(foot, 540)
-        self.assertEqual((self.player.y, self.player.grounded), (COMBAT_SHAFT_FLOOR, True))
-        self.assertLess(self.camera.y, original_camera_y)
+        self.assertEqual(self.room.room, "route_a")
+        self.assertEqual((self.player.x, self.player.y, self.player.grounded), (ENTRY_X, ENTRY_LEDGE[3], True))
+        self.assertTrue(saw_route_fall)
+        self.assertLess(lowest_combat_camera, original_camera_y)
         self.assertFalse(self.player._overlaps_terrain())
 
     def test_sliding_cover_still_supports_right_side_while_left_side_is_open(self):

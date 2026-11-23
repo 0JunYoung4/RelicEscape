@@ -16,34 +16,33 @@ sys.path.insert(0, str(ROOT))
 from PIL import Image
 from pico2d import pico2d as pico
 
+from lower_route_a import ART_ZOOM as ZOOM, HOLE_PIXEL as HOLE, SHADOW_BOUNDS, lift_path
 from main import CAMERA_ZOOM, Camera, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE, RELIC_IMAGE
 from player import Player
 from rail import BEND_ART_RADIUS, RAIL_ART_SCALE, RAIL_TRAVEL_SPEED, RailCarriage, RailSegment, draw_rail
 
 
 SHADOW = ROOT / "assets/terrain/lower-route-a-ceiling-shadow-v2.png"
-ZOOM = 0.4
 
 # Anchor positions in art pixels, measured from the top left of the source plate.
-RAIL_LAYOUTS = {
-    2: ((600, 350), 935, (1315, 599)),
-    3: ((605, 329), 975, (725, 594)),
-}
-HOLE = (1950, 90)
-SHADOW_BOUNDS = (1808, -8, 480, 300)
+V2_UPPER_DOCK = (600, 350)
+V2_LOWER_DOCK = (1315, 599)
+V2_RAIL_X = 935
 WALK_START = (1632, 405)
 WALK_END = (1950, 404)
 
 
 def rail_path(height, version=2):
+    if version == 3:
+        return lift_path()
     radius = BEND_ART_RADIUS * ZOOM
-    (upper_x, upper), rail_x, (lower_x, lower) = RAIL_LAYOUTS[version]
-    top_center = (rail_x - radius, upper + radius)
-    lower_side = 1 if lower_x > rail_x else -1
-    bottom_center = (rail_x + lower_side * radius, lower - radius)
+    upper_x, upper = V2_UPPER_DOCK
+    lower_x, lower = V2_LOWER_DOCK
+    top_center = (V2_RAIL_X - radius, upper + radius)
+    bottom_center = (V2_RAIL_X + radius, lower - radius)
     points = [
-        (upper_x, upper), (top_center[0], upper), (rail_x, top_center[1]),
-        (rail_x, bottom_center[1]), (bottom_center[0], lower), (lower_x, lower),
+        (upper_x, upper), (top_center[0], upper), (V2_RAIL_X, top_center[1]),
+        (V2_RAIL_X, bottom_center[1]), (bottom_center[0], lower), (lower_x, lower),
     ]
 
     def world(point):
@@ -51,10 +50,6 @@ def rail_path(height, version=2):
         return x / ZOOM, (height - y) / ZOOM
 
     centers = (None, top_center, None, bottom_center, None)
-    if version == 3:
-        # On this layout positive direction (a right-facing hit) travels up.
-        points.reverse()
-        centers = centers[::-1]
     return tuple(
         RailSegment(world(start), world(end), world(center) if center else None)
         for start, end, center in zip(points, points[1:], centers)
@@ -158,5 +153,5 @@ def main(version):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description=__doc__)
-    parser.add_argument("--version", type=int, choices=RAIL_LAYOUTS, default=2)
+    parser.add_argument("--version", type=int, choices=(2, 3), default=2)
     main(parser.parse_args().version)

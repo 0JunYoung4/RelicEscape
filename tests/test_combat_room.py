@@ -55,6 +55,13 @@ class CombatRoomTests(unittest.TestCase):
         self.assertEqual(self.player.x, GALLERY_WIDTH - 130)
         self.assertTrue(self.lower.has_relic)
 
+    def test_gallery_requires_the_relic_before_the_combat_route(self):
+        self.lower.room = "gallery"
+        self.lower.enter(self.player, self.camera)
+        self.player.x = GALLERY_WIDTH - 100
+        self.step(1, .05)
+        self.assertEqual(self.lower.room, "gallery")
+
     def test_closed_floor_and_entry_ceiling_and_right_wall_are_solid(self):
         self.lower.room = "combat"
         self.lower.enter(self.player, self.camera)

@@ -2,12 +2,17 @@
 
 from dataclasses import dataclass
 from math import atan2, cos, hypot, pi, sin, tau
+from pathlib import Path
 
 
 RAIL_MOUNT_RADIUS = 90
 RAIL_TRAVEL_SPEED = 660
 RAIL_ART_SCALE = 3  # World units per pixel at the authored size.
 BEND_ART_RADIUS = 72
+RAIL_ASSETS = Path(__file__).resolve().parent / "assets/sprites/rail"
+RAIL_IMAGE = RAIL_ASSETS / "relic-track-blue-v4.png"
+RAIL_BEND_IMAGE = RAIL_ASSETS / "relic-track-bend-v2.png"
+RAIL_CARRIAGE_IMAGE = RAIL_ASSETS / "relic-carriage-v2.png"
 
 
 @dataclass(frozen=True)

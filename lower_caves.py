@@ -1,4 +1,4 @@
-"""Playable landing chamber, moss gallery, and adjoining combat chamber."""
+"""Playable landing chamber, moss gallery, combat chamber, and lower route."""
 
 import json
 from ctypes import byref, c_int
@@ -9,6 +9,7 @@ from pico2d import pico2d as pico
 from combat_scenery import COMBAT_BACKGROUND_TINT
 from crystal_golem import CrystalGolem
 from crystal_projectile import DAMAGE as CRYSTAL_DAMAGE
+from lower_route_a import WIDTH as ROUTE_A_WIDTH, LowerRouteA
 from opening_cave import SHAFT_FLOOR, SHAFT_SCALE, SHAFT_TOP
 from pillbug import Pillbug
 from slash_effect import downward_slash_bounds, forward_slash_bounds
@@ -57,6 +58,7 @@ COMBAT_COVER_THICKNESS = COMBAT_ENTRANCE_BARRIER[2] - COMBAT_ENTRANCE_BARRIER[0]
 COMBAT_RIM_HEIGHT = COMBAT_COVER_THICKNESS + 64
 COMBAT_RIM_WIDTH = 997
 COMBAT_SHAFT_FLOOR = -960
+COMBAT_ROUTE_SEAM = COMBAT_SHAFT_FLOOR + 96
 COMBAT_EXIT_DURATION = .7
 COMBAT_FLOOR_BANKS = ((0, -COMBAT_COVER_THICKNESS, COMBAT_EXIT_LEFT, 0),
                       (COMBAT_EXIT_RIGHT, -COMBAT_COVER_THICKNESS, COMBAT_WIDTH, 0),
@@ -103,6 +105,7 @@ class LowerCaves:
         self.landing_width = cave.shaft.w * SHAFT_SCALE
         self.door_x = self.landing_width * 0.965
         self.room = "landing"
+        self.route_a = None
         self.passage_time = None
         self.pickup_time = None
         self.has_relic = False
@@ -170,6 +173,8 @@ class LowerCaves:
             return self.pillbugs
         if self.room == "combat" and self.encounter_started:
             return (*self.golems, *self.combat_pillbugs)
+        if self.room == "route_a":
+            return (self.route_a.pillbug,)
         return ()
 
     @property
@@ -199,7 +204,7 @@ class LowerCaves:
         return (destination is None or self.room != "combat" or not self.entrance_locked
                 or destination[0] >= COMBAT_ENTRANCE_BARRIER[2])
 
-    def enter(self, player, camera, *, from_right=False):
+    def enter(self, player, camera, *, from_right=False, shaft_offset=None):
         self.shaft_visibility = 0.0
         self.wall_effects.clear()
         self.wall_effects.progress = self.entrance_progress
@@ -207,6 +212,14 @@ class LowerCaves:
         for golem in self.golems:
             golem.attack_time = None
             golem.attack_target = None
+        if self.room == "route_a":
+            if self.route_a is None:
+                self.route_a = LowerRouteA()
+            camera.world_width = ROUTE_A_WIDTH
+            camera.zoom = camera.normal_zoom
+            self.route_a.enter(player, shaft_offset=shaft_offset)
+            self.follow_camera(player, camera)
+            return
         landing = self.room == "landing"
         width = self.landing_width if landing else (COMBAT_WIDTH if self.room == "combat" else GALLERY_WIDTH)
         player.world_width = camera.world_width = width
@@ -225,6 +238,9 @@ class LowerCaves:
         self.follow_camera(player, camera)
 
     def follow_camera(self, player, camera):
+        if self.room == "route_a":
+            self.route_a.follow_camera(player, camera, self.cave.height)
+            return
         camera.follow(player.x)
         if self.room in ("gallery", "combat"):
             base = -self.cave.height * 0.20 / camera.zoom
@@ -275,13 +291,20 @@ class LowerCaves:
         else:
             player.update(direction, running, dt, jump_pressed=jump_pressed, jump_held=jump_held,
                           crouch_held=crouching, attack_pressed=attack_pressed)
-        if self.room == "gallery" and direction > 0 and player.x >= GALLERY_WIDTH - ROOM_EDGE:
+        if (self.room == "gallery" and self.has_relic
+                and direction > 0 and player.x >= GALLERY_WIDTH - ROOM_EDGE):
             self.room = "combat"
             self.enter(player, camera)
+        elif self.room == "combat" and self.exit_open and player.y <= COMBAT_ROUTE_SEAM:
+            shaft_offset = player.x - COMBAT_CENTER_X
+            self.room = "route_a"
+            self.enter(player, camera, shaft_offset=shaft_offset)
         elif (self.room == "combat" and not self.entrance_locked
               and direction < 0 and player.x <= ROOM_EDGE):
             self.room = "gallery"
             self.enter(player, camera, from_right=True)
+        if self.room == "route_a":
+            self.route_a.update(player, dt)
         self.follow_camera(player, camera)
 
     def draw(self, camera):
@@ -290,6 +313,11 @@ class LowerCaves:
             bottom = SHAFT_TOP - SHAFT_FLOOR - shaft.h * SHAFT_SCALE
             shaft.draw_to_origin(*camera.world_to_screen(0, bottom),
                                  self.landing_width * camera.zoom, shaft.h * SHAFT_SCALE * camera.zoom)
+            return
+        if self.room == "route_a":
+            self.route_a.draw(camera)
+            self.route_a.pillbug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses,
+                                      death=self.pillbug_death)
             return
         if self.room == "combat":
             self.art.draw_background(camera, tint=COMBAT_BACKGROUND_TINT)
@@ -372,6 +400,8 @@ class LowerCaves:
             player.terrain = self.combat_terrain()
 
     def update_effects(self, dt, player):
+        if self.room == "route_a":
+            self.route_a.update_shadow(player, dt)
         if self.room == "combat":
             self.wall_effects.update(self.entrance_progress, dt)
         else:
@@ -561,6 +591,8 @@ class LowerCaves:
                                                      COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
         elif self.room == "gallery":
             self.art.draw_canopy(camera, GALLERY_CEILING_Y)
+        elif self.room == "route_a":
+            self.route_a.draw_foreground(camera)
         if self.passage_time is not None:
             opacity = round(255 * min(1, self.passage_time / PASSAGE_TIME))
             pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)

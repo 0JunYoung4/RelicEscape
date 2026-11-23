@@ -16,7 +16,8 @@ from launcher import FLIGHT_RADIUS, Crossbow
 from lower_caves import LowerCaves
 from lighting import Lighting
 from player import ASSET_ROOT, STANDING_HITBOX_HEIGHT, Player
-from rail import RAIL_ART_SCALE, RailCarriage, RailSegment, draw_rail
+from rail import (RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE,
+                  RailCarriage, RailSegment, draw_rail)
 from return_effect import ReturnEffect, ReturnMark, ReturnMarkArt
 
 
@@ -69,9 +70,6 @@ TEST_BACKGROUND_WALLS = (
     (2920, 10, 5, 0, TEST_WALL_ROWS, True),
     (TEST_WALL_LEFT, TEST_WALL_COLUMNS, TEST_WALL_ROWS, TEST_WALL_ROWS, 0, False),
 )
-RAIL_IMAGE = ASSET_ROOT / "sprites/rail/relic-track-blue-v4.png"
-RAIL_BEND_IMAGE = ASSET_ROOT / "sprites/rail/relic-track-bend-v2.png"
-RAIL_CARRIAGE_IMAGE = ASSET_ROOT / "sprites/rail/relic-carriage-v2.png"
 RAIL_LOW_Y = GROUND_Y + STANDING_HITBOX_HEIGHT / 2
 RAIL_MIDDLE_Y = RAIL_LOW_Y + 216
 RAIL_HIGH_Y = RAIL_MIDDLE_Y + 216
@@ -337,7 +335,7 @@ def draw_background_wall(tiles, camera, ground_screen_y, layout):
                 interior.draw_to_origin(left, bottom, width, height)
 
 
-def draw_mount_prompt(camera, position, time):
+def draw_mount_prompt(camera, position, time, *, launch=False):
     x, y = map(round, camera.world_to_screen(*position))
     pulse = (1 - cos(tau * time / 1.2)) / 2
     y += 24 + round(2 * pulse)
@@ -348,6 +346,13 @@ def draw_mount_prompt(camera, position, time):
     pico.draw_line(x, y - 11, x + 3, y - 7, *outline)
     pico.draw_rectangle(x - 7, y - 7, x + 7, y + 7, *outline, filled=True)
     pico.draw_rectangle(x - 6, y - 6, x + 6, y + 6, 14, 25, 37, filled=True)
+    if launch:
+        pico.draw_line(x - 3, y - 4, x + 3, y + 4, *pale_blue)
+        pico.draw_line(x - 3, y + 4, x + 3, y - 4, *pale_blue)
+        pico.draw_line(x + 10, y, x + 19, y, *pale_blue)
+        pico.draw_line(x + 16, y + 3, x + 19, y, *pale_blue)
+        pico.draw_line(x + 16, y - 3, x + 19, y, *pale_blue)
+        return
     pico.draw_rectangle(x - 3, y - 4, x - 2, y + 4, *pale_blue, filled=True)
     pico.draw_rectangle(x - 1, y + 3, x + 3, y + 4, *pale_blue, filled=True)
     pico.draw_rectangle(x - 1, y, x + 2, y + 1, *pale_blue, filled=True)
@@ -808,7 +813,7 @@ def run_opening_cave(fullscreen, *, after_relic=False):
             has_relic = lower.has_relic
             lower = LowerCaves(cave)
             lower.room = room
-            if room == "combat":
+            if room in ("combat", "route_a"):
                 lower.has_relic = has_relic
             if after_relic and room == "gallery":
                 lower.start_after_relic(player, camera)
@@ -822,14 +827,21 @@ def run_opening_cave(fullscreen, *, after_relic=False):
         if lower is not None and not health.recovering(frame_start):
             use = pico.SDLK_e in pressed_keys
             destination = None
+            route = lower.route_a if lower.room == "route_a" else None
             if lower.has_relic:
                 if use:
-                    destination = travel.place_or_recall(player, frame_start)
-                elif pico.SDLK_q in pressed_keys:
+                    handled = False
+                    if route is not None:
+                        handled, destination = route.use_relic(player, relic_placed=travel.anchor is not None)
+                    if not handled:
+                        destination = travel.place_or_recall(player, frame_start)
+                elif pico.SDLK_q in pressed_keys and (route is None or not route.carriage.relic_mounted):
                     destination = travel.return_pose(frame_start)
             if not lower.allows_relic_destination(destination):
                 destination = None
             if travel.teleport(player, camera, destination, frame_start, reclaim=use):
+                if route is not None and use:
+                    route.carriage.relic_mounted = False
                 lower.follow_camera(player, camera)
             else:
                 previous_room = lower.room
@@ -859,6 +871,7 @@ def run_opening_cave(fullscreen, *, after_relic=False):
         relic_center = None
         render_origin = camera.x, camera.y
         if lower is not None:
+            route = lower.route_a if lower.room == "route_a" else None
             lower.update_effects(delta_time, player)
             shake_x, shake_y = lower.wall_effects.shake()
             camera.x -= shake_x / camera.zoom
@@ -869,6 +882,10 @@ def run_opening_cave(fullscreen, *, after_relic=False):
             relic = lower.relic_position(player)
             if relic is not None:
                 draw_relic(relic_image, camera, *relic, frame_start)
+            if route is not None and route.carriage.relic_mounted:
+                relic_position = route.carriage.position
+                relic_center = relic_screen_center(camera, *relic_position, None)
+                draw_relic(relic_image, camera, *relic_position, None)
         elif shaft_cut:
             cave.draw_descent(camera, player)
         else:
@@ -900,7 +917,12 @@ def run_opening_cave(fullscreen, *, after_relic=False):
                 cave.draw_foreground(camera)
         if show_hitboxes:
             player.draw_hitbox(camera)
-        if lower is not None and has_focus and lower.target(player) is not None:
+        if lower is not None and has_focus and route is not None:
+            prompt = route.prompt(player, travel.anchor is not None)
+            if prompt is not None:
+                position, launch = prompt
+                draw_mount_prompt(camera, position, frame_start, launch=launch)
+        elif lower is not None and has_focus and lower.target(player) is not None:
             draw_mount_prompt(camera, (lower.target(player), STANDING_HITBOX_HEIGHT), frame_start)
         elif lower is None and has_focus and approach.can_start(player):
             draw_mount_prompt(camera, (player.x, player.y + STANDING_HITBOX_HEIGHT), frame_start)
