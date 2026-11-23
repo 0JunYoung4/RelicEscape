@@ -19,3 +19,5 @@
 
 B1 아치의 `-source.png`는 투명 경계 편집 전 입력 원본이다. 그 밖의 최종 PNG는 생성 결과와 같은 파일이다. 프롬프트와 생성 출처는 각각 동명 `.prompt.txt`와 [출처 목록](generation-sources.json)에 보관한다.
 
+A파트 버튼실에는 [상승 레일 뒤 폐기둥](lower-cave-lift-support-v1.png)을 별도로 추가했다. [A파트 환경 시안](../../concepts/map1-lower-route-a-v1.md)에서 사용 위치와 원경을 함께 볼 수 있다.
+
