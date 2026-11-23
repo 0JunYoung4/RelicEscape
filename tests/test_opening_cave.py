@@ -40,7 +40,7 @@ class OpeningCaveTests(unittest.TestCase):
                 patch.object(main, "run_game") as test_room, \
                 patch.object(main, "Player", wraps=main.Player) as player, \
                 patch.object(cave.OpeningCave, "draw", new=record):
-            main.main()
+            main.main(opening=True)
 
         self.assertEqual(frames, [(cave.WORLD_WIDTH, 1920, 130)] * 2)
         self.assertEqual(player.call_count, 2)

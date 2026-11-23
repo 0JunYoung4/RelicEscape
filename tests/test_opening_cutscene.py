@@ -152,7 +152,7 @@ class OpeningCutsceneTests(unittest.TestCase):
                 patch.object(main, "draw_mount_prompt") as prompt, \
                 patch.object(Player, "update", autospec=True, side_effect=update) as manual_update, \
                 patch.object(SigilApproach, "draw", new=record):
-            main.main()
+            main.main(opening=True)
 
         self.assertEqual(manual_update.call_count, 2)  # Before investigation and after R only.
         prompt.assert_called_once()

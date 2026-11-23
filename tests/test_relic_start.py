@@ -13,7 +13,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 from pico2d import pico2d as pico
 
 import main
-from lower_caves import GALLERY_WIDTH, RELIC_X, LowerCaves
+from lower_caves import COMBAT_CENTER_X, GALLERY_WIDTH, RELIC_X, LowerCaves
 
 
 def keydown(key):
@@ -25,6 +25,43 @@ def keydown(key):
 class RelicStartTests(unittest.TestCase):
     def tearDown(self):
         gc.collect()
+
+    def test_default_enter_and_r_start_a_fresh_combat_room_with_the_relic(self):
+        players, frames = [], []
+        player_type, draw = main.Player, LowerCaves.draw
+        event_index = count()
+
+        def make_player(*args, **kwargs):
+            player = player_type(*args, **kwargs)
+            players.append(player)
+            return player
+
+        def events():
+            frame = next(event_index)
+            if frame == 0:
+                return [keydown(pico.SDLK_RETURN)]
+            if frame == 2:
+                players[0].x = COMBAT_CENTER_X
+            if frame == 3:
+                return [keydown(pico.SDLK_r)]
+            return [pico.Event(pico.SDL_QUIT)] if frame == 4 else []
+
+        def record(room, camera):
+            frames.append((room.room, room.has_relic, players[0].x, room.encounter_started, room.exit_progress))
+            draw(room, camera)
+
+        with patch.object(main, "configure_display", return_value=False), \
+                patch.object(main, "Player", side_effect=make_player), \
+                patch.object(pico, "get_events", side_effect=events), \
+                patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
+                patch.object(main, "read_movement", return_value=(0, False, False)), \
+                patch.object(main, "perf_counter", side_effect=count(step=1 / 60)), \
+                patch.object(main, "sleep"), patch.object(LowerCaves, "draw", new=record):
+            main.main()
+
+        self.assertEqual(frames[0], ("combat", True, 130, False, 0))
+        self.assertTrue(frames[1][3])
+        self.assertEqual(frames[2], frames[0])
 
     def test_checkpoint_has_relic_supports_placement_restart_and_combat_entry(self):
         players, travels, frames = [], [], []

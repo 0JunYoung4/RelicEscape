@@ -753,7 +753,7 @@ def run_game(fullscreen):
         sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
 
 
-def run_opening_cave(fullscreen, *, after_relic=False):
+def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
     cave = opening_cave.OpeningCave(SCREEN_WIDTH, SCREEN_HEIGHT)
     approach = SigilApproach()
     lower = None
@@ -765,11 +765,18 @@ def run_opening_cave(fullscreen, *, after_relic=False):
         SCREEN_WIDTH, opening_cave.WORLD_WIDTH,
         y=opening_cave.GROUND_Y - CAVE_FLOOR_SCREEN_Y / EXPLORATION_CAMERA_ZOOM,
     )
+    def start_checkpoint():
+        room = LowerCaves(cave)
+        if start_in_combat:
+            room.room, room.has_relic = "combat", True
+            room.enter(player, camera)
+        else:
+            room.start_after_relic(player, camera)
+        return room, Health((player.x, player.y, player.crouch_time))
+
     health = Health(opening_cave.SPAWN)
-    if after_relic:
-        lower = LowerCaves(cave)
-        lower.start_after_relic(player, camera)
-        health = Health((player.x, player.y, player.crouch_time))
+    if start_in_combat or after_relic:
+        lower, health = start_checkpoint()
     show_hitboxes = False
     previous_time = perf_counter()
     while True:
@@ -801,10 +808,8 @@ def run_opening_cave(fullscreen, *, after_relic=False):
             camera.zoom = camera.normal_zoom
             player.recover_at(*opening_cave.SPAWN)
             player.facing = 1
-            if after_relic:
-                lower = LowerCaves(cave)
-                lower.start_after_relic(player, camera)
-                health = Health((player.x, player.y, player.crouch_time))
+            if start_in_combat or after_relic:
+                lower, health = start_checkpoint()
             pressed_keys.clear()
             direction, running, crouching = 0, False, False
             jump_held = False
@@ -937,7 +942,7 @@ def run_opening_cave(fullscreen, *, after_relic=False):
         sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
 
 
-def main(*, test_room=False, after_relic=False):
+def main(*, test_room=False, after_relic=False, opening=False):
     pico.SDL_SetHint(pico.SDL_HINT_RENDER_SCALE_QUALITY, b"0")
     pico.open_canvas(SCREEN_WIDTH, SCREEN_HEIGHT)
     try:
@@ -945,8 +950,11 @@ def main(*, test_room=False, after_relic=False):
         while fullscreen is not None:
             fullscreen = run_title(fullscreen)
             if fullscreen is not None:
-                fullscreen = (run_game(fullscreen) if test_room
-                              else run_opening_cave(fullscreen, after_relic=after_relic))
+                if test_room:
+                    fullscreen = run_game(fullscreen)
+                else:
+                    fullscreen = run_opening_cave(fullscreen, after_relic=after_relic,
+                                                  start_in_combat=not (opening or after_relic))
     finally:
         pico.close_canvas()
 
@@ -958,5 +966,6 @@ if __name__ == "__main__":
     starts = parser.add_mutually_exclusive_group()
     starts.add_argument("--test-room", action="store_true", help="Start the original movement/device test room")
     starts.add_argument("--after-relic", action="store_true", help="Start just after acquiring the first relic; R restarts here")
+    starts.add_argument("--opening", action="store_true", help="Start the original opening cave")
     args = parser.parse_args()
-    main(test_room=args.test_room, after_relic=args.after_relic)
+    main(test_room=args.test_room, after_relic=args.after_relic, opening=args.opening)
