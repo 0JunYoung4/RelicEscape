@@ -14,6 +14,7 @@ from opening_cutscene import SigilApproach
 from health import Health, SpikeBed
 from launcher import FLIGHT_RADIUS, Crossbow
 from lower_caves import LowerCaves
+from lower_route_a import HEIGHT as ROUTE_A_HEIGHT
 from lighting import Lighting
 from player import ASSET_ROOT, STANDING_HITBOX_HEIGHT, Player
 from rail import (RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE,
@@ -136,6 +137,12 @@ class RelicTravel:
         self.effect = ReturnEffect()
         self.marks = []
 
+    @property
+    def anchor_position(self):
+        if self.anchor is not None:
+            return self.anchor.x, self.anchor.display_y
+        return None
+
     def place_or_recall(self, player, now):
         if self.anchor is not None:
             return self.anchor.x, self.anchor.feet_y, self.anchor.crouch_time
@@ -190,6 +197,11 @@ class Camera:
 
     def follow(self, player_x):
         self.x = self._clamp_x(player_x - self.view_width / 2)
+
+    def focus_relic(self, position, *, bottom, top=inf):
+        self.follow(position[0])
+        view_height = SCREEN_HEIGHT / self.zoom
+        self.y = max(bottom, min(top - view_height, position[1] - view_height / 2))
 
     def update(self, player_x, delta_time, *, view_target=None, view_zoom=None):
         if view_target is None and not self.transitioning:
@@ -278,8 +290,8 @@ def draw_stone_strip(image, camera, bounds, *, flip=""):
     first_tile = max(0, int((camera.x - left) // tile_width))
     view_right = min(right, camera.x + camera.view_width)
     last_tile = ceil((view_right - left) / tile_width)
-    screen_bottom = round(bottom * camera.zoom)
-    screen_top = round(top * camera.zoom)
+    screen_bottom = round(camera.world_to_screen(left, bottom)[1])
+    screen_top = round(camera.world_to_screen(left, top)[1])
     for index in range(first_tile, last_tile):
         tile_left = left + index * tile_width
         tile_right = min(right, left + (index + 1) * tile_width)
@@ -370,7 +382,7 @@ def draw_scene(
     # Clear the full output, including letterbox bars on non-16:9 monitors.
     pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
     pico.SDL_RenderClear(pico.renderer)
-    ground_screen_y = round(GROUND_Y * camera.zoom)
+    ground_screen_y = round(camera.world_to_screen(0, GROUND_Y)[1])
     pico.draw_rectangle(
         0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1, 22, 26, 34, filled=True,
     )
@@ -406,7 +418,7 @@ def draw_scene(
                 draw_stone_strip(ground_image, camera, (left, bottom, right, bottom + GROUND_Y), flip="v")
         elif pillar_image is not None and bounds in TEST_PILLARS:
             screen_left, screen_right = round(x1), round(x2)
-            foot = round((bottom - PILLAR_FOOT_DEPTH) * camera.zoom)
+            foot = round(camera.world_to_screen(left, bottom - PILLAR_FOOT_DEPTH)[1])
             pillar_image.draw_to_origin(screen_left, foot, screen_right - screen_left, round(y2) - foot)
         else:
             pico.draw_rectangle(x1, y1, x2, y2, 66, 75, 85, filled=True)
@@ -633,10 +645,12 @@ def run_game(fullscreen):
             pressed_keys.clear()
             direction, running, crouching = 0, False, False
         jump_held = False
+        relic_view_held = False
         has_focus = bool(pico.SDL_GetKeyboardFocus())
         if has_focus:
             keys = pico.SDL_GetKeyboardState(None)
             jump_held = bool(keys[pico.SDL_SCANCODE_SPACE])
+            relic_view_held = bool(keys[pico.SDL_SCANCODE_C])
         if not has_focus or health.recovering(frame_start):
             pressed_keys.clear()
         was_aiming = crossbow.aiming
@@ -718,13 +732,18 @@ def run_game(fullscreen):
         show_crossbow_prompt = (
             can_interact and not relic_elsewhere and not carriage.relic_mounted and crossbow.can_aim(player)
         )
+        render_origin = camera.x, camera.y
+        if relic_view_held and can_interact and not crossbow.aiming:
+            target = carriage_position if carriage.relic_mounted else crossbow_relic_position or travel.anchor_position
+            if target is not None:
+                camera.focus_relic(target, bottom=0)
         relic_center = None
         if carriage.relic_mounted:
             relic_center = camera.world_to_screen(*carriage_position)
         elif crossbow_relic_position is not None:
             relic_center = camera.world_to_screen(*crossbow_relic_position)
         elif relic_anchor is not None:
-            relic_position = (relic_anchor.x, relic_anchor.display_y)
+            relic_position = travel.anchor_position
             relic_elapsed = frame_start - relic_anchor.placed_at
             relic_center = relic_screen_center(camera, *relic_position, relic_elapsed)
         draw_scene(
@@ -745,6 +764,7 @@ def run_game(fullscreen):
         travel.draw_marks(player, camera, relic_center, frame_start)
         if relic_anchor is not None:
             draw_relic(relic_image, camera, *relic_position, relic_elapsed)
+        camera.x, camera.y = render_origin
         health.draw_hud(SCREEN_HEIGHT, frame_start)
         draw_relic_indicator(relic_center)
         health.draw_blackout(SCREEN_WIDTH, SCREEN_HEIGHT, frame_start)
@@ -795,8 +815,11 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
         direction, running, crouching = read_movement()
         has_focus = bool(pico.SDL_GetKeyboardFocus())
         jump_held = False
+        relic_view_held = False
         if has_focus:
-            jump_held = bool(pico.SDL_GetKeyboardState(None)[pico.SDL_SCANCODE_SPACE])
+            keys = pico.SDL_GetKeyboardState(None)
+            jump_held = bool(keys[pico.SDL_SCANCODE_SPACE])
+            relic_view_held = bool(keys[pico.SDL_SCANCODE_C])
         else:
             pressed_keys.clear()
         if pico.SDLK_r in pressed_keys:
@@ -877,6 +900,17 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
         render_origin = camera.x, camera.y
         if lower is not None:
             route = lower.route_a if lower.room == "route_a" else None
+            mounted_position = None
+            if route is not None and route.carriage.relic_mounted:
+                mounted_position = route.carriage.position
+            if relic_view_held and not health.recovering(frame_start):
+                target = mounted_position or travel.anchor_position
+                if target is not None:
+                    if route is not None:
+                        camera.focus_relic(target, bottom=0, top=ROUTE_A_HEIGHT)
+                    else:
+                        bottom = min(0, target[1]) - SCREEN_HEIGHT * .20 / camera.zoom
+                        camera.focus_relic(target, bottom=bottom)
             lower.update_effects(delta_time, player)
             shake_x, shake_y = lower.wall_effects.shake()
             camera.x -= shake_x / camera.zoom
@@ -887,10 +921,9 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
             relic = lower.relic_position(player)
             if relic is not None:
                 draw_relic(relic_image, camera, *relic, frame_start)
-            if route is not None and route.carriage.relic_mounted:
-                relic_position = route.carriage.position
-                relic_center = relic_screen_center(camera, *relic_position, None)
-                draw_relic(relic_image, camera, *relic_position, None)
+            if mounted_position is not None:
+                relic_center = camera.world_to_screen(*mounted_position)
+                draw_relic(relic_image, camera, *mounted_position, None)
         elif shaft_cut:
             cave.draw_descent(camera, player)
         else:

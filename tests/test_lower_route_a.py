@@ -127,9 +127,14 @@ class LowerRouteATests(unittest.TestCase):
             self.tick(1, jump=frame % 12 == 0)
             self.assertLess(self.player.y, EXIT_LEDGE[3])
 
-    def test_opening_loop_mounts_launches_recalls_and_walks_to_the_exit(self):
+    def test_opening_loop_mounts_launches_tracks_recalls_and_walks_to_the_exit(self):
         frame = count()
         state = SimpleNamespace(room=None, player=None, launched=False, recalled=False, mounted=False)
+        keys = [0] * pico.SDL_NUM_SCANCODES
+        moving_views = []
+        dock_views = []
+        dock_frames = 0
+        draw = LowerCaves.draw
 
         def start(room, player, camera):
             room.room, room.has_relic = "route_a", True
@@ -141,14 +146,25 @@ class LowerRouteATests(unittest.TestCase):
             player.facing = 1
 
         def events():
+            nonlocal dock_frames
             index = next(frame)
             carriage = state.room.route_a.carriage
+            keys[pico.SDL_SCANCODE_C] = 0
             if index == 0:
                 return [keydown(pico.SDLK_e)]
             if index == 1:
                 state.mounted = carriage.relic_mounted
                 return [keydown(pico.SDLK_x)]
+            if index == 12:
+                # From the far side of the pit, the upper dock is entirely off-screen.
+                self.assertTrue(state.player.recover_at(RECOVERY[0] - 230, GROUND_Y, 0))
+            if 12 <= index < 36 or carriage.position[1] > 600:
+                keys[pico.SDL_SCANCODE_C] = 1
             if carriage.position == UPPER_DOCK and not state.recalled:
+                dock_frames += 1
+                keys[pico.SDL_SCANCODE_C] = dock_frames % 2
+                if dock_frames < 5:
+                    return []
                 state.launched = carriage.relic_mounted
                 state.recalled = True
                 return [keydown(pico.SDLK_e)]
@@ -161,13 +177,38 @@ class LowerRouteATests(unittest.TestCase):
                 return -1, True, False
             return 0, False, False
 
+        def record(room, camera):
+            carriage = room.route_a.carriage
+            if carriage.relic_mounted and carriage.position == UPPER_DOCK:
+                dock_views.append(camera.world_to_screen(*carriage.position)[0])
+            elif carriage.relic_mounted and carriage.direction and keys[pico.SDL_SCANCODE_C]:
+                moving_views.append((camera.x, camera.y, camera.world_to_screen(*carriage.position)))
+            elif state.recalled and keys[pico.SDL_SCANCODE_C]:
+                self.assertAlmostEqual(camera.x, camera._clamp_x(state.player.x - camera.view_width / 2))
+            draw(room, camera)
+
         with patch.object(LowerCaves, "start_after_relic", new=start), \
+                patch.object(LowerCaves, "draw", new=record), \
                 patch.object(pico, "get_events", side_effect=events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
+                patch.object(pico, "SDL_GetKeyboardState", return_value=keys), \
                 patch.object(main, "read_movement", side_effect=movement), \
                 patch.object(main, "perf_counter", side_effect=count(step=1 / 60)), \
                 patch.object(main, "sleep"), patch.object(pico, "update_canvas"):
             main.run_opening_cave(False, after_relic=True)
         self.assertTrue(state.mounted and state.launched and state.recalled)
+        self.assertGreater(len(moving_views), 10)
+        self.assertGreater(max(view[0] for view in moving_views), moving_views[0][0])
+        self.assertGreater(max(view[1] for view in moving_views), 0)
+        for _, _, (x, y) in moving_views:
+            self.assertAlmostEqual(x, main.SCREEN_WIDTH / 2)
+            self.assertTrue(0 <= y < main.SCREEN_HEIGHT)
+        # The moving view stays held on the frame when the carriage reaches the dock.
+        self.assertEqual(len(dock_views), 5)
+        for index, x in enumerate(dock_views):
+            if index == 0 or index % 2:
+                self.assertAlmostEqual(x, main.SCREEN_WIDTH / 2)
+            else:
+                self.assertLess(x, 0)
         self.assertFalse(state.room.route_a.carriage.relic_mounted)
         self.assertEqual((state.player.x, state.player.y), (WORLD_MARGIN, EXIT_LEDGE[3]))

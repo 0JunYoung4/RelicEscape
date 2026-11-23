@@ -169,6 +169,8 @@ class RelicTests(unittest.TestCase):
         carriage_frames = []
         mount_frames = []
         prompt_frames = []
+        relic_views = []
+        held = [0] * pico.SDL_NUM_SCANCODES
         draw_scene = main.draw_scene
 
         def create_player(*args, **kwargs):
@@ -182,6 +184,10 @@ class RelicTests(unittest.TestCase):
                 return [pico.Event(pico.SDL_QUIT)]
             player_x, keys = command
             player_y = ground
+            index = len(carriage_frames)
+            held[pico.SDL_SCANCODE_C] = int(56 <= index < 63)
+            if index == 55:
+                player_x = 2800
             if player_x == "carriage":
                 player_x, rail_y = carriage_frames[-1]
                 player_y = rail_y - STANDING_HITBOX_HEIGHT / 2
@@ -201,6 +207,7 @@ class RelicTests(unittest.TestCase):
             self.assertEqual((carriage.w, carriage.h), (24, 21))
             if mounted:
                 self.assertEqual(kwargs["relic_center"], camera.world_to_screen(*position))
+            relic_views.append(kwargs["relic_center"])
             carriage_draws = []
             draw_carriage = carriage.draw
 
@@ -216,6 +223,7 @@ class RelicTests(unittest.TestCase):
                 patch.object(main, "run_title", return_value=True), \
                 patch.object(pico, "get_events", new=frame_events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
+                patch.object(pico, "SDL_GetKeyboardState", return_value=held), \
                 patch.object(main, "read_movement", return_value=(0, False, False)), \
                 patch.object(main, "perf_counter", side_effect=count(step=1 / 120)), \
                 patch.object(main, "sleep"), \
@@ -223,6 +231,9 @@ class RelicTests(unittest.TestCase):
             main.main(test_room=True)
 
         self.assertEqual(carriage_frames[0], (left, rail_y))
+        self.assertLess(relic_views[55][0], 0)
+        self.assertTrue(all(0 <= x < main.SCREEN_WIDTH for x, _ in relic_views[56:63]))
+        self.assertLess(relic_views[63][0], 0)
         self.assertEqual(mount_frames, [False] + [True] * (return_frame - 1) + [False] * 5 + [True, False])
         self.assertEqual(
             [index for index, visible in enumerate(prompt_frames) if visible],
