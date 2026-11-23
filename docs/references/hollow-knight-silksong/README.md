@@ -100,7 +100,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 천장 덩굴은 어둡고 가까우며 폭포와 기둥은 흐리고 멀다.
 - 조명: 흰 등불의 작은 광원과 넓은 청록색 수직 빛이 겹친다.
 - 제작 패턴: P03, P04, P10 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B03, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9c/Screenshot_HK_Greenpath_01.png/800px-Screenshot_HK_Greenpath_01.png)
 
 ### HK-GP02 웅덩이 위 철문과 수직 샛길
@@ -111,7 +111,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 화면 위 검은 덩어리는 지형 내부이고 뒤의 낙수는 원경이다.
 - 조명: 산성 액체의 밝은 수평면이 낙하 위험을 분명하게 만든다.
 - 제작 패턴: P03, P05, P07 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B03, B06, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/dd/Screenshot_HK_Greenpath_02.png/800px-Screenshot_HK_Greenpath_02.png)
 
 ### HK-GP03 산성 호수 위 유적 회랑
@@ -122,7 +122,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 뒤 회랑의 기둥은 낮은 대비로 반복되고 앞 가장자리가 선명하다.
 - 조명: 차가운 등불과 밝은 녹색 액체가 서로 다른 높이에 놓인다.
 - 제작 패턴: P04, P12, P16 — 목표에 모이는 빛 / 재질의 군집과 빈 구간 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B04, B05, B14, B17
+- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B04, B05, B14, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/22/Screenshot_HK_Greenpath_03.png/800px-Screenshot_HK_Greenpath_03.png)
 
 ### HK-GP04 가시로 둘러싸인 좁은 통로
@@ -133,7 +133,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 바깥 검은 덩어리와 안쪽 가시 테두리가 통로를 액자처럼 감싼다.
 - 조명: 중앙 배경은 청록색으로 밝고 위험한 가시는 따뜻한 가장자리를 갖는다.
 - 제작 패턴: P05, P07, P12 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B14
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/d0/Screenshot_HK_Greenpath_04.png/800px-Screenshot_HK_Greenpath_04.png)
 
 ### HK-GP05 이끼 기사의 평평한 전투 공간
@@ -144,7 +144,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 위 덩굴은 검은 프레임이며 뒤 기둥은 흐리다.
 - 조명: 두 줄기 이상의 세로 빛이 전투 공간 뒤를 나눈다.
 - 제작 패턴: P04, P11, P15 — 목표에 모이는 빛 / 전투방의 넓은 판독 공간 / 적 실루엣과 공격 방향
-- 적용 후보: 문양의 성소, 보스방, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B04, B05, B13, B16
+- 적용 후보: 전투방, 보스방 · 자산 명세 B04, B05, B13, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/5d/Screenshot_HK_Greenpath_05.png/800px-Screenshot_HK_Greenpath_05.png)
 
 ### HK-GP06 유적 기둥과 매달린 검은 발판
@@ -155,7 +155,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 발판 검정은 충돌 지형의 내부이며 원경의 아치와 다르다.
 - 조명: 기둥 뒤의 수직 광막과 앞쪽 작은 등불이 깊이를 만든다.
 - 제작 패턴: P01, P02, P03, P16 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B02, B03, B17
+- 적용 후보: 중앙 통로 · 자산 명세 B01, B02, B03, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/df/Screenshot_HK_Greenpath_06.png/800px-Screenshot_HK_Greenpath_06.png)
 
 ### HK-GP07 호넷 공간의 문양 비석
@@ -166,7 +166,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 뒤의 식물과 수직 줄기는 비석보다 흐리고 덜 선명하다.
 - 조명: 비스듬한 밝은 기둥이 비석과 빈 전투 공간을 비춘다.
 - 제작 패턴: P04, P11, P16 — 목표에 모이는 빛 / 전투방의 넓은 판독 공간 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B13, B17
+- 적용 후보: 전투방, 보스방 · 자산 명세 B04, B05, B13, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_07.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/81/Screenshot_HK_Greenpath_07.png/800px-Screenshot_HK_Greenpath_07.png)
 
 ### HK-GP08 대각선 가시와 낮은 유적 통로
@@ -177,7 +177,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 상부 검은 지형 밑으로 뿌리가 매달리고 뒤 회랑이 비친다.
 - 조명: 배경은 푸르게 눌러 가시 끝과 이동면이 먼저 읽힌다.
 - 제작 패턴: P05, P07, P16 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 보스방, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B17
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_08.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/6a/Screenshot_HK_Greenpath_08.png/800px-Screenshot_HK_Greenpath_08.png)
 
 ### HK-GP09 역 입구와 벤치
@@ -188,7 +188,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 아래 전경 난간과 뒤 기둥 사이에 보행면이 놓인다.
 - 조명: 문과 벤치 근처의 작은 등불이 기능 지점을 표시한다.
 - 제작 패턴: P10, P16 — 작고 명료한 휴식 포켓 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B12, B17
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B12, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_09.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/98/Screenshot_HK_Greenpath_09.png/800px-Screenshot_HK_Greenpath_09.png)
 
 ### HK-GP10 낮은 천장 아래 고립된 벤치
@@ -199,7 +199,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 상부 코어와 가까운 뿌리, 푸른 배경을 구별한다.
 - 조명: 벤치 주변만 낮은 대비의 푸른 빛으로 드러낸다.
 - 제작 패턴: P01, P02, P03, P10 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 작고 명료한 휴식 포켓
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B02, B03, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B01, B02, B03, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_10.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c9/Screenshot_HK_Greenpath_10.png/800px-Screenshot_HK_Greenpath_10.png)
 
 ### HK-GP11 안개 협곡으로 바뀌는 경계
@@ -210,7 +210,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 바닥 내부와 뒤의 식물층이 명확히 분리된다.
 - 조명: 푸른 공간에 흰 둥근 발광체가 점진적으로 늘어난다.
 - 제작 패턴: P03, P05, P09 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 지역 문턱과 문양 입구
-- 적용 후보: 고대 장치 구역, 문양의 성소, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B11
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B06, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_11.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/df/Screenshot_HK_Greenpath_11.png/800px-Screenshot_HK_Greenpath_11.png)
 
 ### HK-GP12 사냥꾼의 식생 위장 은신처
@@ -221,7 +221,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 멀리 가는 큰 줄기와 가까운 둥근 잎 덩어리가 겹친다.
 - 조명: 위에서 내려오는 사선 광선은 눈과 잎 표면을 읽히게 한다.
 - 제작 패턴: P04, P15, P16 — 목표에 모이는 빛 / 적 실루엣과 공격 방향 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보스방, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B04, B05, B16, B17
+- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B04, B05, B16, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_The_Hunter_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8f/Screenshot_HK_The_Hunter_01.png/800px-Screenshot_HK_The_Hunter_01.png)
 
 ### HK-GP13 쉐오의 집과 가시 경계
@@ -232,7 +232,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 어두운 전경 아래로 집 입구가 밝게 열린다.
 - 조명: 하얀 출입구 빛과 차가운 외부 청록빛이 대비된다.
 - 제작 패턴: P07, P16 — 안전면과 위험면의 다른 형태 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 보스방, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B09, B17
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B09, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Nailmaster_Sheo_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/da/Screenshot_HK_Nailmaster_Sheo_01.png/800px-Screenshot_HK_Nailmaster_Sheo_01.png)
 
 ### HK-GP14 산성 호수 위 넓은 다리
@@ -243,7 +243,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 다리 아래 검은 코어와 뒤의 큰 줄기는 서로 다른 깊이다.
 - 조명: 등불은 국소광이고 산성 수면은 넓은 가로 발광면이다.
 - 제작 패턴: P04, P05, P07 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B04, B05, B06, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Greenpath_South_Area.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/7f/Greenpath_South_Area.png/800px-Greenpath_South_Area.png)
 
 ### HK-GP15 우운 사당 안의 어두운 휴식 공간
@@ -254,7 +254,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 입구를 두르는 검은 프레임과 뒤 벽의 푸른 층이 구분된다.
 - 조명: 천장 틈의 좁은 빛이 벤치로 내려오고 주변은 깊게 어둡다.
 - 제작 패턴: P01, P02, P04, P10 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B02, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B01, B02, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Lake_of_Unn_Shrine_Interior.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/72/Lake_of_Unn_Shrine_Interior.png/800px-Lake_of_Unn_Shrine_Interior.png)
 
 ### HK-GP16 이층 유적의 벤치 포켓
@@ -265,7 +265,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 전경 아래 실루엣과 여러 층의 유적 기둥이 깊이를 만든다.
 - 조명: 벤치 뒤의 푸른 빛이 복잡한 건축에서 쉬는 지점을 분리한다.
 - 제작 패턴: P05, P10, P16 — 다음 착지면이 보이는 수직 이동 / 작고 명료한 휴식 포켓 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 보스방, 전투 후 휴식 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B12, B17
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B06, B12, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Greenpath_Central_Bench%282%29.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/88/Greenpath_Central_Bench%282%29.png/800px-Greenpath_Central_Bench%282%29.png)
 
 ### HK-GP17 오블 구역의 수직 발판
@@ -276,7 +276,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 뒤 줄기는 흐리고 전면의 발판·벽 가장자리는 선명하다.
 - 조명: 점 형태 포자와 부드러운 청록 광막이 빈 공중을 채운다.
 - 제작 패턴: P03, P05 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동
-- 적용 후보: 고대 장치 구역, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B03, B06
 - [출처 페이지](https://hollowknight.wiki/w/File:Greenpath_Obble_Area%282%29.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/30/Greenpath_Obble_Area%282%29.png/800px-Greenpath_Obble_Area%282%29.png)
 
 ### HK-GP18 여왕의 정원으로 통하는 경계
@@ -287,7 +287,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 중앙 위의 검은 코어와 먼 배경의 아치를 구분한다.
 - 조명: 양옆 푸른 광막이 중앙 어두운 문양석을 감싼다.
 - 제작 패턴: P01, P02, P05, P09 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 다음 착지면이 보이는 수직 이동 / 지역 문턱과 문양 입구
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B02, B06, B11
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B01, B02, B06, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Greenpath_Queen%27s_Gardens_Connection.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/97/Greenpath_Queen%27s_Gardens_Connection.png/800px-Greenpath_Queen%27s_Gardens_Connection.png)
 
 ### HK-GP19 초기 개발판의 낮은 물가
@@ -298,7 +298,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 덩어리와 뒤의 푸른 돌층이 겹친다.
 - 조명: 사선으로 내려오는 넓은 빛과 밝은 수면이 보인다.
 - 제작 패턴: P04, P12 — 목표에 모이는 빛 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B04, B05, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B04, B05, B14
 - [출처 페이지](https://www.teamcherry.com.au/blog/the-green-path-a-hollow-knight-tour) · [제공 이미지](https://images.squarespace-cdn.com/content/v1/606d4deb4db8c15ea53b3624/1618900856929-F475LO4VJ8XCI406TX0X/Fungus_05.jpg)
 
 ### HK-GP20 초기 개발판의 거대 유해
@@ -309,7 +309,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 어둠과 뒤의 푸른 큰 형태 사이에 작은 캐릭터가 있다.
 - 조명: 차가운 대기광이 유해의 윤곽만 드러낸다.
 - 제작 패턴: P03, P12, P16 — 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B14, B17
+- 적용 후보: 중앙 통로 · 자산 명세 B03, B14, B17
 - [출처 페이지](https://www.teamcherry.com.au/blog/the-green-path-a-hollow-knight-tour) · [제공 이미지](https://images.squarespace-cdn.com/content/v1/606d4deb4db8c15ea53b3624/1618900873629-BB8YVWYVVEMOZ7XQHEAF/Fungus_04.jpg)
 
 ### HK-GP21 초기 개발판의 호숫가 난간
@@ -320,7 +320,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 난간·중앙 보행면·뒤 큰 유기체가 분리된다.
 - 조명: 청록빛 수면과 사선 빛이 화면 아래와 위를 연결한다.
 - 제작 패턴: P04, P05, P12 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B04, B05, B06, B14
 - [출처 페이지](https://www.teamcherry.com.au/blog/the-green-path-a-hollow-knight-tour) · [제공 이미지](https://images.squarespace-cdn.com/content/v1/606d4deb4db8c15ea53b3624/1618900771877-ZNK32GKBU2AR3OGN1EUO/Fungus_03.jpg)
 
 ### HK-GP22 비행 적과 수직 발판
@@ -331,7 +331,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 오른쪽 검은 벽과 뒤 큰 식물의 대비가 뚜렷하다.
 - 조명: 청록색 밝은 공간 안에 캐릭터와 비행 적이 보인다.
 - 제작 패턴: P05, P15 — 다음 착지면이 보이는 수직 이동 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스방, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B16
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B06, B16
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/7f/7d/14249-hollow-knight-077-grub-1-verchemin-1.jpg)
 
 ### HK-GP23 잎 단서가 있는 높은 길
@@ -342,7 +342,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 중앙 검은 지형 속과 그 아래 선명한 뿌리가 보인다.
 - 조명: 화면 우측 위의 작은 밝은 영역이 열린 길을 읽히게 한다.
 - 제작 패턴: P01, P02, P08, P12 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 보상의 선노출과 우회 경로 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B02, B10, B14
+- 적용 후보: 보상 포켓, 유물 획득 지점 · 자산 명세 B01, B02, B10, B14
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/8a/24/14250-hollow-knight-077-grub-1-verchemin-2-bis.jpg)
 
 ### HK-GP24 덩굴을 타격하는 장면
@@ -353,7 +353,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 상부 코어 뒤로 큰 푸른 줄기가 있다.
 - 조명: 짧은 흰 공격선과 주황색 타격 광점이 배경보다 강하다.
 - 제작 패턴: P04, P05, P06 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B07, B08
+- 적용 후보: 고대 장치 구역 · 자산 명세 B04, B05, B06, B07, B08
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/48/77/14251-hollow-knight-077-grub-1-verchemin-2.jpg)
 
 ### HK-GP25 높은 곳의 구출 보상
@@ -364,7 +364,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 위쪽 천장과 아래 푸른 원경이 열린다.
 - 조명: 목표 부근이 주변 잎보다 밝게 보여 보상을 찾게 한다.
 - 제작 패턴: P04, P05, P08 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 보상의 선노출과 우회 경로
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B10
+- 적용 후보: 보상 포켓, 유물 획득 지점 · 자산 명세 B04, B05, B06, B10
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/ff/87/14252-hollow-knight-077-grub-1-verchemin-3.jpg)
 
 ### HK-GP26 잘린 덩굴 아래 이동 발판
@@ -375,7 +375,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 위 검은 천장과 뒤 청록색 여백이 충돌면을 둘러싼다.
 - 조명: 착지할 발판을 둘러싼 배경이 밝아 외곽이 잘 읽힌다.
 - 제작 패턴: P05, P06, P12 — 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B07, B08, B14
+- 적용 후보: 고대 장치 구역 · 자산 명세 B06, B07, B08, B14
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/22/00/14253-hollow-knight-078-grub-2-verchemin-1.jpg)
 
 ### HK-GP27 가시 위에 남는 안전 공간
@@ -386,7 +386,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 오른쪽과 아래 검은 지형 내부가 통로의 끝을 만든다.
 - 조명: 위험물 끝은 흐리지 않고 중앙만 청록색으로 연다.
 - 제작 패턴: P05, P07, P12 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B14
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B14
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/57/30/14254-hollow-knight-078-grub-2-verchemin-2.jpg)
 
 ### HK-GP28 가시 구덩이를 건너는 발판
@@ -397,7 +397,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 상하 검은 덩어리가 가운데 밝은 통로를 감싼다.
 - 조명: 경로 중앙의 부드러운 푸른 빛이 이동 공간을 드러낸다.
 - 제작 패턴: P05, P07 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/54/53/14255-hollow-knight-078-grub-2-verchemin-3.jpg)
 
 ### HK-GP29 산성 웅덩이의 작은 섬
@@ -408,7 +408,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 아래 수면은 넓고 상부 천장은 검은 실루엣이다.
 - 조명: 밝은 액체 면과 어두운 발판의 명암 대비가 위험을 알린다.
 - 제작 패턴: P04, P05, P07 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B04, B05, B06, B09
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/e8/19/14256-hollow-knight-078-grub-2-verchemin-4.jpg)
 
 ### HK-GP30 구출 직후의 작은 보상방
@@ -419,7 +419,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 바닥 속은 검고 배경은 푸른 대기층으로 물러난다.
 - 조명: 보상 주변의 밝기를 유지하고 위 천장은 어둡게 닫는다.
 - 제작 패턴: P05, P08, P10 — 다음 착지면이 보이는 수직 이동 / 보상의 선노출과 우회 경로 / 작고 명료한 휴식 포켓
-- 적용 후보: 고대 장치 구역, 보상 포켓, 이끼 통로, 전투 후 휴식 지점, 중앙 통로, 하강 통로 · 자산 명세 B06, B10, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B06, B10, B12
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/90/5b/14257-hollow-knight-078-grub-2-verchemin-5.jpg)
 
 ### HK-GP31 이끼 돌진충의 큰 잎 덩어리
@@ -430,7 +430,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 위 유적 발판의 검은 코어와 하단 적의 밝은 외곽이 대비된다.
 - 조명: 차가운 빛 속에서 적 얼굴의 밝은 점이 시선을 끈다.
 - 제작 패턴: P11, P12, P15 — 전투방의 넓은 판독 공간 / 재질의 군집과 빈 구간 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스방, 이끼 통로, 전투방 · 자산 명세 B13, B14, B16
+- 적용 후보: 전투방, 보스방 · 자산 명세 B13, B14, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Moss_Charger_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8d/Screenshot_HK_Moss_Charger_01.png/800px-Screenshot_HK_Moss_Charger_01.png)
 
 ### HK-GP32 작은 이끼족 무리
@@ -441,7 +441,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 중간 지형 때문에 적은 아래 통로에 또렷하게 보인다.
 - 조명: 큰 원형 효과 없이 몸통 명암만으로 적을 분리한다.
 - 제작 패턴: P03, P11, P15 — 중경과 원경의 다른 대비 / 전투방의 넓은 판독 공간 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B13, B16
+- 적용 후보: 전투방, 보스방 · 자산 명세 B03, B13, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Mosskin_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/55/Screenshot_HK_Mosskin_01.png/800px-Screenshot_HK_Mosskin_01.png)
 
 ### HK-GP33 폭발하는 이끼족의 주황 신호
@@ -452,7 +452,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 천장과 푸른 배경이 폭발 신호의 대비를 높인다.
 - 조명: 따뜻한 주황색은 차가운 지역 팔레트에서 위험 신호가 된다.
 - 제작 패턴: P04, P07, P14, P15 — 목표에 모이는 빛 / 안전면과 위험면의 다른 형태 / 기능색과 장식색의 분리 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 보스방, 유물 획득 지점, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B04, B05, B09, B16, B18
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B04, B05, B09, B16, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Volatile_Mosskin_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/a3/Screenshot_HK_Volatile_Mosskin_01.png/800px-Screenshot_HK_Volatile_Mosskin_01.png)
 
 ### HK-GP34 방패와 긴 무기의 이끼 기사
@@ -463,7 +463,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 뒤 큰 나무줄기는 어두워 무기 윤곽을 과도하게 방해하지 않는다.
 - 조명: 낮은 채도의 배경 위 밝은 갑옷과 흰 무기가 보인다.
 - 제작 패턴: P11, P12, P15 — 전투방의 넓은 판독 공간 / 재질의 군집과 빈 구간 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스방, 이끼 통로, 전투방 · 자산 명세 B13, B14, B16
+- 적용 후보: 전투방, 보스방 · 자산 명세 B13, B14, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Moss_Knight_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/0/0e/Screenshot_HK_Moss_Knight_01.png/800px-Screenshot_HK_Moss_Knight_01.png)
 
 ### HK-GP35 통로 옆 고정형 식물 적
@@ -474,7 +474,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 검은 중앙 코어가 통로를 위아래로 나눈다.
 - 조명: 푸른 주변광 위로 적의 작은 밝은 얼굴이 대비된다.
 - 제작 패턴: P01, P02, P05, P15 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 다음 착지면이 보이는 수직 이동 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B02, B06, B16
+- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B01, B02, B06, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Gulka_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/cd/Screenshot_HK_Gulka_01.png/800px-Screenshot_HK_Gulka_01.png)
 
 ### HK-GP36 상하 지형 사이 바보잡이풀
@@ -485,7 +485,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 지형 내부와 입의 밝은 면이 대비되어 위치가 드러난다.
 - 조명: 밝은 입 내부가 푸른 배경에서 눈에 띈다.
 - 제작 패턴: P03, P07, P15 — 중경과 원경의 다른 대비 / 안전면과 위험면의 다른 형태 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 보스방, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B09, B16
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B03, B09, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fool_Eater_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/7f/Screenshot_HK_Fool_Eater_01.png/800px-Screenshot_HK_Fool_Eater_01.png)
 
 ### HK-GP37 오블의 공중 탄막
@@ -496,7 +496,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 뒤 수직 빛줄기는 흐리고 탄환 가장자리는 선명하다.
 - 조명: 따뜻한 발사체가 차가운 청록 배경에서 강하게 보인다.
 - 제작 패턴: P04, P11, P14, P15 — 목표에 모이는 빛 / 전투방의 넓은 판독 공간 / 기능색과 장식색의 분리 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B04, B05, B13, B16, B18
+- 적용 후보: 전투방, 보스방 · 자산 명세 B04, B05, B13, B16, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Obble_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/ca/Screenshot_HK_Obble_01.png/800px-Screenshot_HK_Obble_01.png)
 
 ### HK-GP38 모기의 가늘고 뾰족한 몸
@@ -507,7 +507,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 오른쪽 검은 지형 코어가 비행 경로의 끝을 또렷하게 한다.
 - 조명: 별도 강한 광원보다 가는 밝은 몸체 윤곽이 중요하다.
 - 제작 패턴: P05, P11, P15 — 다음 착지면이 보이는 수직 이동 / 전투방의 넓은 판독 공간 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스방, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B13, B16
+- 적용 후보: 전투방, 보스방 · 자산 명세 B06, B13, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Squit_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/11/Screenshot_HK_Squit_01.png/800px-Screenshot_HK_Squit_01.png)
 
 ### HK-GP39 가시 틈의 단단한 비행체
@@ -518,7 +518,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 배경의 흐린 유적과 선명한 적 껍질이 분리된다.
 - 조명: 밝은 주황색 눈과 차가운 껍질이 구별된다.
 - 제작 패턴: P07, P12, P15 — 안전면과 위험면의 다른 형태 / 재질의 군집과 빈 구간 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 보스방, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B09, B14, B16
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B09, B14, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Duranda_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c6/Screenshot_HK_Duranda_01.png/800px-Screenshot_HK_Duranda_01.png)
 
 ### HK-EX01 여왕의 정원의 큰 전경 잎
@@ -529,7 +529,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 하단의 거의 검은 큰 잎은 카메라 가까운 가림물로 읽힌다.
 - 조명: 중앙 청록 빛과 점 발광 식물이 겹친다.
 - 제작 패턴: P01, P02, P03 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B02, B03
+- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B01, B02, B03
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Queen%27s_Gardens_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/91/Screenshot_HK_Queen%27s_Gardens_01.png/800px-Screenshot_HK_Queen%27s_Gardens_01.png)
 
 ### HK-EX02 여왕의 정원의 매달린 발판
@@ -540,7 +540,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 검은 식물, 중앙 매달린 구조, 흐린 초록 배경을 구분한다.
 - 조명: 여러 작은 발광체가 층마다 다른 크기로 배치된다.
 - 제작 패턴: P03, P04, P05 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B04, B05, B06
+- 적용 후보: 중앙 통로 · 자산 명세 B03, B04, B05, B06
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Queen%27s_Gardens_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/94/Screenshot_HK_Queen%27s_Gardens_02.png/800px-Screenshot_HK_Queen%27s_Gardens_02.png)
 
 ### HK-EX03 안개 협곡의 발광 생물과 흐린 전경
@@ -551,7 +551,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 크고 흐린 원은 가까운 입자처럼 읽히며 지형 속의 검정과 다르다.
 - 조명: 흰 중심·분홍 후광·보랏빛 안개가 겹친다.
 - 제작 패턴: P03, P04 — 중경과 원경의 다른 대비 / 목표에 모이는 빛
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05
+- 적용 후보: 중앙 통로 · 자산 명세 B03, B04, B05
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fog_Canyon_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/b3/Screenshot_HK_Fog_Canyon_01.png/800px-Screenshot_HK_Fog_Canyon_01.png)
 
 ### HK-EX04 버섯 황무지의 하단 실루엣
@@ -562,7 +562,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 하단 버섯은 검고 뒤 버섯은 청록색으로 물러난다.
 - 조명: 중앙 황록색 작은 빛무리가 깊이를 만든다.
 - 제작 패턴: P01, P02, P03 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B02, B03
+- 적용 후보: 중앙 통로 · 자산 명세 B01, B02, B03
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fungal_Wastes_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/1f/Screenshot_HK_Fungal_Wastes_01.png/800px-Screenshot_HK_Fungal_Wastes_01.png)
 
 ### HK-EX05 눈물의 도시의 층진 건축
@@ -573,7 +573,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 난간·중앙 가로등·먼 건물의 명암 차가 뚜렷하다.
 - 조명: 흰 작은 가로등 주변으로 푸른 안개가 번진다.
 - 제작 패턴: P03, P04, P16 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B17
+- 적용 후보: 중앙 통로 · 자산 명세 B03, B04, B05, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_City_of_Tears_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/2b/Screenshot_HK_City_of_Tears_01.png/800px-Screenshot_HK_City_of_Tears_01.png)
 
 ### HK-EX06 수정 봉우리의 보랏빛 광막
@@ -584,7 +584,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 사슬·중앙 발판·보라 원경이 층으로 겹친다.
 - 조명: 넓은 보라 빛과 작은 흰 등불은 서로 다른 범위를 갖는다.
 - 제작 패턴: P04, P16 — 목표에 모이는 빛 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B17
+- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B04, B05, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Crystal_Peak_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/60/Screenshot_HK_Crystal_Peak_01.png/800px-Screenshot_HK_Crystal_Peak_01.png)
 
 ### HK-FC-01 빛기둥과 낮은 유적
@@ -595,7 +595,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 하단 검은 잎 앞에 선명한 상면, 뒤에 흐린 아치가 놓인다.
 - 조명: 가느다란 수직 광막이 중앙의 빈 공간을 나눈다.
 - 제작 패턴: P01, P03, P12 — 검은 지형 속과 읽히는 테두리 / 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B03, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B01, B03, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Forgotten_Crossroads_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/f0/Screenshot_HK_Forgotten_Crossroads_01.png/800px-Screenshot_HK_Forgotten_Crossroads_01.png)
 
 ### HK-FC-02 사슬 옆 작은 누각
@@ -606,7 +606,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가까운 사슬은 검고 뒤 기둥은 푸르게 물러난다.
 - 조명: 작은 흰 등불과 차가운 배경광을 분리한다.
 - 제작 패턴: P03, P06, P16 — 중경과 원경의 다른 대비 / 장치 경로와 작동부의 명료함 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 전투방, 중앙 통로 · 자산 명세 B03, B07, B08, B17
+- 적용 후보: 고대 장치 구역 · 자산 명세 B03, B07, B08, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Forgotten_Crossroads_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/89/Screenshot_HK_Forgotten_Crossroads_02.png/800px-Screenshot_HK_Forgotten_Crossroads_02.png)
 
 ### HK-FC-03 상하층의 둥근 출입구
@@ -617,7 +617,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 상부 검은 지형 코어와 하부 문 표면이 구별된다.
 - 조명: 푸른 빛이 열린 통로만 드러낸다.
 - 제작 패턴: P01, P05, P09 — 검은 지형 속과 읽히는 테두리 / 다음 착지면이 보이는 수직 이동 / 지역 문턱과 문양 입구
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B06, B11
+- 적용 후보: 중앙 통로, 고대 장치 구역 · 자산 명세 B01, B06, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Forgotten_Crossroads_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/40/Screenshot_HK_Forgotten_Crossroads_03.png/800px-Screenshot_HK_Forgotten_Crossroads_03.png)
 
 ### HK-FC-04 큰 문과 따뜻한 등불
@@ -628,7 +628,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 외곽 검은 실루엣이 문 앞 넓은 바닥을 감싼다.
 - 조명: 흰 보라색 문과 양옆 주황빛이 크기 차를 만든다.
 - 제작 패턴: P04, P09, P16 — 목표에 모이는 빛 / 지역 문턱과 문양 입구 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B11, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B04, B05, B11, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Forgotten_Crossroads_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/b5/Screenshot_HK_Forgotten_Crossroads_04.png/800px-Screenshot_HK_Forgotten_Crossroads_04.png)
 
 ### HK-FC-05 큰 껍질 건물의 문
@@ -639,7 +639,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 가는 난간과 뒤 큰 건물의 덩어리 크기가 다르다.
 - 조명: 건물 전체보다 문틈만 흰색으로 밝다.
 - 제작 패턴: P04, P09, P16 — 목표에 모이는 빛 / 지역 문턱과 문양 입구 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B11, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B04, B05, B11, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Forgotten_Crossroads_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/6f/Screenshot_HK_Forgotten_Crossroads_05.png/800px-Screenshot_HK_Forgotten_Crossroads_05.png)
 
 ### HK-FC-06 감염색으로 바뀐 회랑
@@ -650,7 +650,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 보행면 위 밝은 주황 형체가 분리된다.
 - 조명: 차가운 회랑 안 주황색이 강한 신호를 만든다.
 - 제작 패턴: P15, P19 — 적 실루엣과 공격 방향 / 공간 골격을 유지한 상태 변화
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 처치 후, 보스방, 이끼 통로, 전투방 · 자산 명세 B16, B19
+- 적용 후보: 전투방, 보스방 · 자산 명세 B16, B19
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Forgotten_Crossroads_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/82/Screenshot_HK_Forgotten_Crossroads_06.png/800px-Screenshot_HK_Forgotten_Crossroads_06.png)
 
 ### HK-FW-02 폭포 아래 작은 발판
@@ -661,7 +661,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 두꺼운 검은 지형 속과 뒤 점무늬 식물이 분리된다.
 - 조명: 세로 낙수와 밝은 수평 액체가 만난다.
 - 제작 패턴: P05, P07, P13 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B15
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fungal_Wastes_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/f5/Screenshot_HK_Fungal_Wastes_02.png/800px-Screenshot_HK_Fungal_Wastes_02.png)
 
 ### HK-FW-03 액체 위 쌍둥이 섬
@@ -672,7 +672,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 식물은 검고 뒤 식물 군집은 밝고 흐리다.
 - 조명: 황록색 수면이 안전면의 어두운 외곽을 드러낸다.
 - 제작 패턴: P05, P07, P18 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B18
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fungal_Wastes_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/0/07/Screenshot_HK_Fungal_Wastes_03.png/800px-Screenshot_HK_Fungal_Wastes_03.png)
 
 ### HK-FW-04 작은 밝은 둥지
@@ -683,7 +683,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 주변 검은 코어가 작은 중앙 포켓을 감싼다.
 - 조명: 국소 황금빛이 주변보다 훨씬 밝다.
 - 제작 패턴: P04, P08 — 목표에 모이는 빛 / 보상의 선노출과 우회 경로
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B04, B05, B10
+- 적용 후보: 보상 포켓, 유물 획득 지점 · 자산 명세 B04, B05, B10
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fungal_Wastes_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/58/Screenshot_HK_Fungal_Wastes_04.png/800px-Screenshot_HK_Fungal_Wastes_04.png)
 
 ### HK-FW-05 높은 버섯과 작은 건물
@@ -694,7 +694,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가까운 식물과 뒤 포자 무리의 크기 차가 있다.
 - 조명: 뒤의 작은 빛무리는 건물의 선명한 선보다 약하다.
 - 제작 패턴: P03, P12, P16 — 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B14, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B14, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fungal_Wastes_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/b3/Screenshot_HK_Fungal_Wastes_05.png/800px-Screenshot_HK_Fungal_Wastes_05.png)
 
 ### HK-FW-06 산성 웅덩이를 잇는 다리
@@ -705,7 +705,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 위 검은 지형 아래 가시 테두리와 뒤 유적이 겹친다.
 - 조명: 밝은 수면과 낮은 대비의 배경으로 다리 윤곽을 읽힌다.
 - 제작 패턴: P07, P09, P16 — 안전면과 위험면의 다른 형태 / 지역 문턱과 문양 입구 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 보스방, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B09, B11, B17
+- 적용 후보: 중앙 통로 · 자산 명세 B09, B11, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fungal_Wastes_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/4f/Screenshot_HK_Fungal_Wastes_06.png/800px-Screenshot_HK_Fungal_Wastes_06.png)
 
 ### HK-CT-02 분수와 먼 기둥
@@ -716,7 +716,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 하단 검은 난간과 뒤 흐린 도시 기둥이 여러 깊이로 읽힌다.
 - 조명: 청색의 낮은 대비와 작은 물빛이 중심을 만든다.
 - 제작 패턴: P03, P13, P16 — 중경과 원경의 다른 대비 / 대기광과 입자의 깊이 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B15, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B15, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_City_of_Tears_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/25/Screenshot_HK_City_of_Tears_02.png/800px-Screenshot_HK_City_of_Tears_02.png)
 
 ### HK-CT-03 큰 창 아래 벤치
@@ -727,7 +727,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 바닥은 선명하고 양옆 구조는 어둡게 감싼다.
 - 조명: 창의 넓은 푸른빛과 작은 흰 등불이 겹친다.
 - 제작 패턴: P04, P10, P16 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B12, B17
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_City_of_Tears_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/b5/Screenshot_HK_City_of_Tears_03.png/800px-Screenshot_HK_City_of_Tears_03.png)
 
 ### HK-CT-04 반복 창과 긴 회랑
@@ -738,7 +738,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가까운 프레임과 먼 창 면의 대비가 다르다.
 - 조명: 균일한 청색 창빛 안 작은 등불을 띄엄띄엄 둔다.
 - 제작 패턴: P03, P12, P18 — 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B14, B18
+- 적용 후보: 중앙 통로 · 자산 명세 B03, B14, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_City_of_Tears_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/2a/Screenshot_HK_City_of_Tears_04.png/800px-Screenshot_HK_City_of_Tears_04.png)
 
 ### HK-CT-05 도시의 수직 연결
@@ -749,7 +749,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 선명한 발판 뒤에 낮은 대비의 큰 창들이 반복된다.
 - 조명: 등불은 작은 지점, 배경은 넓은 푸른 면으로 구분된다.
 - 제작 패턴: P03, P05, P06 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함
-- 적용 후보: 고대 장치 구역, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B07, B08
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B07, B08
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_City_of_Tears_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/1d/Screenshot_HK_City_of_Tears_05.png/800px-Screenshot_HK_City_of_Tears_05.png)
 
 ### HK-CT-06 작은 문양빛과 어두운 바닥
@@ -760,7 +760,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 둥근 가림물과 뒤의 문양빛이 겹친다.
 - 조명: 밝은 국소 문양을 중심으로 나머지 공간은 어둡다.
 - 제작 패턴: P02, P04, P08 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 보상의 선노출과 우회 경로
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B02, B04, B05, B10
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B02, B04, B05, B10
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_City_of_Tears_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/93/Screenshot_HK_City_of_Tears_06.png/800px-Screenshot_HK_City_of_Tears_06.png)
 
 ### HK-CP-02 수정과 공업 발판
@@ -771,7 +771,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 지형 속과 앞 사슬, 뒤의 밝은 수정 면을 구분한다.
 - 조명: 보랏빛 넓은 배경 앞 실제 발판은 어둡게 읽힌다.
 - 제작 패턴: P05, P06, P18 — 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 중앙 통로, 하강 통로 · 자산 명세 B06, B07, B08, B18
+- 적용 후보: 고대 장치 구역 · 자산 명세 B06, B07, B08, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Crystal_Peak_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9d/Screenshot_HK_Crystal_Peak_02.png/800px-Screenshot_HK_Crystal_Peak_02.png)
 
 ### HK-CP-03 두 등불 아래 벤치
@@ -782,7 +782,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 큰 검은 가림물과 뒤 둥근 벽의 선명도가 다르다.
 - 조명: 작은 등불의 중심과 보라색 대기광이 분리된다.
 - 제작 패턴: P04, P10, P13, P14 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓 / 대기광과 입자의 깊이 / 기능색과 장식색의 분리
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B12, B15, B18
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12, B15, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Crystal_Peak_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/0/0f/Screenshot_HK_Crystal_Peak_03.png/800px-Screenshot_HK_Crystal_Peak_03.png)
 
 ### HK-CP-04 수정 방의 작은 기둥들
@@ -793,7 +793,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 상하 검은 코어 사이로 각진 벽 패턴이 드러난다.
 - 조명: 배경 보라색을 낮춰 작은 기둥의 상면을 읽힌다.
 - 제작 패턴: P01, P12 — 검은 지형 속과 읽히는 테두리 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B01, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Crystal_Peak_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/d0/Screenshot_HK_Crystal_Peak_04.png/800px-Screenshot_HK_Crystal_Peak_04.png)
 
 ### HK-CP-05 거대한 수정 면
@@ -804,7 +804,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 선명한 수정 끝과 뒤의 흐린 밝은 면이 겹친다.
 - 조명: 흰 중심과 넓은 분홍 보라색 번짐이 재질을 만든다.
 - 제작 패턴: P12, P18 — 재질의 군집과 빈 구간 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방 · 자산 명세 B14, B18
+- 적용 후보: 고대 장치 구역 · 자산 명세 B14, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Crystal_Peak_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/e3/Screenshot_HK_Crystal_Peak_05.png/800px-Screenshot_HK_Crystal_Peak_05.png)
 
 ### HK-CP-06 수정 구덩이 옆 통로
@@ -815,7 +815,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가까운 검은 천장과 뒤 밝은 수정 면이 대비된다.
 - 조명: 밝은 위험 재질을 실제 안전 발판과 다른 실루엣으로 구별한다.
 - 제작 패턴: P05, P07, P18 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B18
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Crystal_Peak_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/b5/Screenshot_HK_Crystal_Peak_06.png/800px-Screenshot_HK_Crystal_Peak_06.png)
 
 ### HK-DN-01 뿌리와 잔해의 평평한 길
@@ -826,7 +826,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 거의 검은 앞 뿌리와 푸른 뒤 벽이 겹친다.
 - 조명: 넓고 약한 청색 대기광만 남긴다.
 - 제작 패턴: P02, P03, P12 — 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B03, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B02, B03, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Deepnest_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/48/Screenshot_HK_Deepnest_01.png/800px-Screenshot_HK_Deepnest_01.png)
 
 ### HK-DN-02 가시 사이 좁은 기둥
@@ -837,7 +837,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 줄기와 뒤 부드러운 벽 사이 안전면이 놓인다.
 - 조명: 가시 끝과 기둥 상면이 주변보다 밝다.
 - 제작 패턴: P05, P07 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Deepnest_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/41/Screenshot_HK_Deepnest_02.png/800px-Screenshot_HK_Deepnest_02.png)
 
 ### HK-DN-03 무너진 지형 아래 먼 문
@@ -848,7 +848,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가까운 코어가 위를 가리고 건물 입구는 뒤로 물러난다.
 - 조명: 입구의 작은 밝은 면이 어두운 길의 방향을 표시한다.
 - 제작 패턴: P01, P03, P09 — 검은 지형 속과 읽히는 테두리 / 중경과 원경의 다른 대비 / 지역 문턱과 문양 입구
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B03, B11
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B01, B03, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Deepnest_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/f5/Screenshot_HK_Deepnest_03.png/800px-Screenshot_HK_Deepnest_03.png)
 
 ### HK-DN-04 실로 둘러싼 높은 건물
@@ -859,7 +859,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 가는 실과 뒤의 흐린 빈 공간을 분리한다.
 - 조명: 문틈은 흰색이고 주변은 차가운 보라색 안개다.
 - 제작 패턴: P04, P05, P16 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B17
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Deepnest_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/43/Screenshot_HK_Deepnest_04.png/800px-Screenshot_HK_Deepnest_04.png)
 
 ### HK-DN-05 긴 뿌리 사이 낮은 벤치
@@ -870,7 +870,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 검은 줄기가 큰 프레임, 뒤쪽 바위가 작은 질감이다.
 - 조명: 한쪽 뒤의 푸른 밝기가 벤치 주변 여백을 드러낸다.
 - 제작 패턴: P02, P10, P17 — 근접 전경과 중앙 시야 여백 / 작고 명료한 휴식 포켓 / 비대칭 공간의 무게 배분
-- 적용 후보: 문양의 성소, 보상 포켓, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B02, B03, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B02, B03, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Deepnest_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c7/Screenshot_HK_Deepnest_05.png/800px-Screenshot_HK_Deepnest_05.png)
 
 ### HK-DN-06 어두운 좌우 기둥과 중앙 의자
@@ -881,7 +881,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 선과 뒤 회색 공간이 극단적으로 분리된다.
 - 조명: 낮은 회색 조명에서 중앙 외곽만 또렷하다.
 - 제작 패턴: P02, P11, P16 — 근접 전경과 중앙 시야 여백 / 전투방의 넓은 판독 공간 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B13, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B02, B13, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Deepnest_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/14/Screenshot_HK_Deepnest_06.png/800px-Screenshot_HK_Deepnest_06.png)
 
 ### HK-QG-03 덩굴이 감싼 휴식점
@@ -892,7 +892,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 굵은 검은 줄기와 뒤 부드러운 초록 공간이 겹친다.
 - 조명: 부드러운 넓은 빛과 작은 흰 점이 공존한다.
 - 제작 패턴: P02, P10, P13 — 근접 전경과 중앙 시야 여백 / 작고 명료한 휴식 포켓 / 대기광과 입자의 깊이
-- 적용 후보: 문양의 성소, 보상 포켓, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B02, B12, B15
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B02, B12, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Queen%27s_Gardens_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/74/Screenshot_HK_Queen%27s_Gardens_03.png/800px-Screenshot_HK_Queen%27s_Gardens_03.png)
 
 ### HK-QG-04 가시 벽 옆 매달린 발판
@@ -903,7 +903,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 코어와 가까운 식물 뒤로 초록 원경이 열린다.
 - 조명: 가시의 따뜻한 끝을 청록 배경에서 구분한다.
 - 제작 패턴: P05, P06, P07 — 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B07, B08, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B07, B08, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Queen%27s_Gardens_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9c/Screenshot_HK_Queen%27s_Gardens_04.png/800px-Screenshot_HK_Queen%27s_Gardens_04.png)
 
 ### HK-QG-05 가려진 작은 쉼터
@@ -914,7 +914,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 전경의 긴 선이 중앙을 나누지만 기능점은 틈으로 보인다.
 - 조명: 약한 뒤쪽 빛만 남겨 작은 포켓을 드러낸다.
 - 제작 패턴: P02, P10 — 근접 전경과 중앙 시야 여백 / 작고 명료한 휴식 포켓
-- 적용 후보: 문양의 성소, 보상 포켓, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B02, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B02, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Queen%27s_Gardens_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/4b/Screenshot_HK_Queen%27s_Gardens_05.png/800px-Screenshot_HK_Queen%27s_Gardens_05.png)
 
 ### HK-QG-06 식생과 유적이 만나는 길
@@ -925,7 +925,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 하단 검은 풀과 중앙 잎, 뒤 밝은 초록 면이 분리된다.
 - 조명: 흰 등불이 재질 전환 부근의 주목점이 된다.
 - 제작 패턴: P03, P09, P12 — 중경과 원경의 다른 대비 / 지역 문턱과 문양 입구 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B11, B14
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B11, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Queen%27s_Gardens_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/17/Screenshot_HK_Queen%27s_Gardens_06.png/800px-Screenshot_HK_Queen%27s_Gardens_06.png)
 
 ### HK-FCY-02 산성 웅덩이 위 작은 섬
@@ -936,7 +936,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 지형 코어와 둥근 뒤 식물이 다른 깊이를 만든다.
 - 조명: 분홍 후광과 황록 수면이 서로 다른 범위로 빛난다.
 - 제작 패턴: P05, P07, P13 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B15
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fog_Canyon_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c3/Screenshot_HK_Fog_Canyon_02.png/800px-Screenshot_HK_Fog_Canyon_02.png)
 
 ### HK-FCY-03 가시 뿌리와 푸른 수면
@@ -947,7 +947,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 검은 낮은 실루엣과 뒤의 흐린 둥근 입자가 겹친다.
 - 조명: 밝은 수평 수면과 분홍 보라색 산란광을 분리한다.
 - 제작 패턴: P02, P07, P13 — 근접 전경과 중앙 시야 여백 / 안전면과 위험면의 다른 형태 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B02, B09, B15
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B02, B09, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fog_Canyon_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9b/Screenshot_HK_Fog_Canyon_03.png/800px-Screenshot_HK_Fog_Canyon_03.png)
 
 ### HK-FCY-04 초록 정원과 층진 발판
@@ -958,7 +958,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 검은 식물과 뒤의 넓은 잎 면이 크기로 나뉜다.
 - 조명: 초록 지역광에 작고 흰 발광점이 흩어진다.
 - 제작 패턴: P03, P05, P09 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 지역 문턱과 문양 입구
-- 적용 후보: 고대 장치 구역, 문양의 성소, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B11
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B06, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fog_Canyon_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8f/Screenshot_HK_Fog_Canyon_04.png/800px-Screenshot_HK_Fog_Canyon_04.png)
 
 ### HK-FCY-05 밝은 안개 속 중앙 건물
@@ -969,7 +969,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 풀과 중앙 문, 뒤 흐린 큰 형태가 겹친다.
 - 조명: 강한 분홍 흰 안개 앞에 건물 윤곽이 어둡게 남는다.
 - 제작 패턴: P04, P13, P16 — 목표에 모이는 빛 / 대기광과 입자의 깊이 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B15, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B04, B05, B15, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fog_Canyon_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/ec/Screenshot_HK_Fog_Canyon_05.png/800px-Screenshot_HK_Fog_Canyon_05.png)
 
 ### HK-FCY-06 발광 용기와 실내 통로
@@ -980,7 +980,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 상부 코어와 낮은 대비의 뒤 실내 구조가 분리된다.
 - 조명: 녹색 용기 면과 약한 실내 대기광이 겹친다.
 - 제작 패턴: P03, P06, P12 — 중경과 원경의 다른 대비 / 장치 경로와 작동부의 명료함 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B07, B08, B14
+- 적용 후보: 고대 장치 구역 · 자산 명세 B03, B07, B08, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fog_Canyon_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9f/Screenshot_HK_Fog_Canyon_06.png/800px-Screenshot_HK_Fog_Canyon_06.png)
 
 ### HK-RW-01 물가 위 세로 빛
@@ -991,7 +991,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 뿌리와 뒤 푸른 관이 층을 이룬다.
 - 조명: 천장 틈의 좁은 빛을 중앙에 집중한다.
 - 제작 패턴: P02, P04, P13 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 대기광과 입자의 깊이
-- 적용 후보: 문양의 성소, 유물 획득 지점, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B02, B04, B05, B15
+- 적용 후보: 중앙 통로 · 자산 명세 B02, B04, B05, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Royal_Waterways_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/90/Screenshot_HK_Royal_Waterways_01.png/800px-Screenshot_HK_Royal_Waterways_01.png)
 
 ### HK-RW-02 철문 뒤 푸른 통로
@@ -1002,7 +1002,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 검은 기둥과 뒤 밝은 청록 면이 분리된다.
 - 조명: 작은 흰 광점과 넓은 푸른 후경광이 공존한다.
 - 제작 패턴: P03, P09, P12 — 중경과 원경의 다른 대비 / 지역 문턱과 문양 입구 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B11, B14
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B11, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Royal_Waterways_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/36/Screenshot_HK_Royal_Waterways_02.png/800px-Screenshot_HK_Royal_Waterways_02.png)
 
 ### HK-RW-03 목재 발판과 가시 천장
@@ -1013,7 +1013,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 굵은 검은 전경과 뒤 회색 안개가 대비된다.
 - 조명: 낮은 회색 배경빛으로 발판과 가시 외곽을 읽힌다.
 - 제작 패턴: P05, P06, P07 — 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B07, B08, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B07, B08, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Royal_Waterways_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/1b/Screenshot_HK_Royal_Waterways_03.png/800px-Screenshot_HK_Royal_Waterways_03.png)
 
 ### HK-RW-04 물가의 돔 구조물
@@ -1024,7 +1024,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 보행면과 뒤 회색 구조의 크기가 다르다.
 - 조명: 두 흰 등불이 중앙 구조물의 위치를 표시한다.
 - 제작 패턴: P04, P16, P17 — 목표에 모이는 빛 / 방마다 하나의 큰 기억점 / 비대칭 공간의 무게 배분
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B02, B03, B04, B05, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B02, B03, B04, B05, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Royal_Waterways_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9d/Screenshot_HK_Royal_Waterways_04.png/800px-Screenshot_HK_Royal_Waterways_04.png)
 
 ### HK-RW-05 어두운 통로 안 작은 벤치
@@ -1035,7 +1035,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 코어 사이로 안쪽 푸른 작은 공간이 열린다.
 - 조명: 벤치 양옆의 작은 청색 빛이 안전한 포켓을 드러낸다.
 - 제작 패턴: P04, P10 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Royal_Waterways_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/1a/Screenshot_HK_Royal_Waterways_05.png/800px-Screenshot_HK_Royal_Waterways_05.png)
 
 ### HK-RW-06 깊은 물 위 줄기 실루엣
@@ -1046,7 +1046,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 세로줄과 뒤의 희미한 녹색 물빛이 분리된다.
 - 조명: 수면의 가는 밝은 선과 아래 넓은 번짐이 다르다.
 - 제작 패턴: P02, P03, P13 — 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B02, B03, B15
+- 적용 후보: 중앙 통로 · 자산 명세 B02, B03, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Royal_Waterways_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/83/Screenshot_HK_Royal_Waterways_06.png/800px-Screenshot_HK_Royal_Waterways_06.png)
 
 ### HK-AB-01 큰 껍질 문과 둥근 바닥
@@ -1057,7 +1057,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 가는 검은 장식이 중앙 문과 겹친다.
 - 조명: 낮은 회색 빛이 문양의 홈과 외곽만 드러낸다.
 - 제작 패턴: P09, P12, P16 — 지역 문턱과 문양 입구 / 재질의 군집과 빈 구간 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B11, B14, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B11, B14, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Ancient_Basin_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/3f/Screenshot_HK_Ancient_Basin_01.png/800px-Screenshot_HK_Ancient_Basin_01.png)
 
 ### HK-AB-02 깊은 구덩이의 작은 빛
@@ -1068,7 +1068,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 위의 어두운 벽과 아래 밝은 작은 공간이 대비된다.
 - 조명: 흰 청색 국소빛이 깊은 틈의 중심을 표시한다.
 - 제작 패턴: P04, P05, P08 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 보상의 선노출과 우회 경로
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B10
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B04, B05, B06, B10
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Ancient_Basin_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8c/Screenshot_HK_Ancient_Basin_02.png/800px-Screenshot_HK_Ancient_Basin_02.png)
 
 ### HK-AB-03 희미한 실내와 중앙 등불
@@ -1079,7 +1079,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 덩굴과 뒤 회색 구조를 분리한다.
 - 조명: 중앙 흰 등불 하나가 주변 넓은 어둠과 대비된다.
 - 제작 패턴: P03, P04, P05 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B04, B05, B06
+- 적용 후보: 중앙 통로, 고대 장치 구역 · 자산 명세 B03, B04, B05, B06
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Ancient_Basin_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/95/Screenshot_HK_Ancient_Basin_03.png/800px-Screenshot_HK_Ancient_Basin_03.png)
 
 ### HK-AB-04 위아래 흰 가시 사이
@@ -1090,7 +1090,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 긴 뿌리와 뒤 회색 벽 사이에 가시가 선명하다.
 - 조명: 흰 가시 끝이 낮은 채도 배경보다 먼저 보인다.
 - 제작 패턴: P07, P18 — 안전면과 위험면의 다른 형태 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 하강 통로 · 자산 명세 B09, B18
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B09, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Ancient_Basin_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9f/Screenshot_HK_Ancient_Basin_04.png/800px-Screenshot_HK_Ancient_Basin_04.png)
 
 ### HK-AB-05 암흑 속 작은 붉은 방
@@ -1101,7 +1101,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 검은 코어가 작은 플레이 공간을 둘러싼다.
 - 조명: 주황 적의 신호가 주변보다 훨씬 밝다.
 - 제작 패턴: P04, P15, P20 — 목표에 모이는 빛 / 적 실루엣과 공격 방향 / 시야 제한과 집중 연출
-- 적용 후보: 문양의 성소, 보스 등장 연출, 보스방, 유물 획득 연출, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B04, B05, B16, B20
+- 적용 후보: 전투방, 보스방 · 자산 명세 B04, B05, B16, B20
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Ancient_Basin_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/47/Screenshot_HK_Ancient_Basin_05.png/800px-Screenshot_HK_Ancient_Basin_05.png)
 
 ### HK-AY-01 거대 관 옆 매달린 길
@@ -1112,7 +1112,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 줄기와 뒤의 흐린 원형 벽무늬가 겹친다.
 - 조명: 약한 회색빛으로 발판과 뒤 거대 형체를 구별한다.
 - 제작 패턴: P03, P05 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동
-- 적용 후보: 고대 장치 구역, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B03, B06
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Abyss_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c9/Screenshot_HK_Abyss_01.png/800px-Screenshot_HK_Abyss_01.png)
 
 ### HK-AY-02 가시로 둘러싼 작은 착지면
@@ -1123,7 +1123,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 발판 속 검정과 뒤 큰 돌 표면의 대비가 다르다.
 - 조명: 가시 끝만 밝아 실제 안전면이 짧게 보인다.
 - 제작 패턴: P05, P07 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Abyss_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/66/Screenshot_HK_Abyss_02.png/800px-Screenshot_HK_Abyss_02.png)
 
 ### HK-AY-03 그림자 형체와 넓은 바닥
@@ -1134,7 +1134,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 뼈무더기와 뒤 큰 둥근 면이 크기로 분리된다.
 - 조명: 낮은 회색 대기광 속 밝은 눈 같은 작은 신호가 보인다.
 - 제작 패턴: P03, P11, P15 — 중경과 원경의 다른 대비 / 전투방의 넓은 판독 공간 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B13, B16
+- 적용 후보: 전투방, 보스방 · 자산 명세 B03, B13, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Abyss_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/36/Screenshot_HK_Abyss_03.png/800px-Screenshot_HK_Abyss_03.png)
 
 ### HK-AY-04 세 기둥 사이의 깊이
@@ -1145,7 +1145,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 줄기와 뒤의 부드러운 세로 면이 겹친다.
 - 조명: 뒤의 희미한 회색빛이 기둥 외곽을 드러낸다.
 - 제작 패턴: P02, P05, P07 — 근접 전경과 중앙 시야 여백 / 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B02, B06, B09
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B02, B06, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Abyss_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/25/Screenshot_HK_Abyss_04.png/800px-Screenshot_HK_Abyss_04.png)
 
 ### HK-AY-05 탑에서 뻗는 큰 광선
@@ -1156,7 +1156,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 탑이 밝은 광선 앞의 큰 실루엣으로 남는다.
 - 조명: 작은 광원 입구에서 멀리 갈수록 넓어지는 강한 빛이다.
 - 제작 패턴: P04, P16, P18 — 목표에 모이는 빛 / 방마다 하나의 큰 기억점 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B17, B18
+- 적용 후보: 문양의 성소, 유물 획득 지점 · 자산 명세 B04, B05, B17, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Abyss_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/6e/Screenshot_HK_Abyss_05.png/800px-Screenshot_HK_Abyss_05.png)
 
 ### HK-AY-06 작은 방 안 큰 백색 광원
@@ -1167,7 +1167,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 바깥 지형과 작은 안쪽 기능점이 극단적으로 나뉜다.
 - 조명: 광원 중심은 희고 주변 후광은 부드럽다.
 - 제작 패턴: P04, P08, P18 — 목표에 모이는 빛 / 보상의 선노출과 우회 경로 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B04, B05, B10, B18
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B04, B05, B10, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Abyss_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/b3/Screenshot_HK_Abyss_06.png/800px-Screenshot_HK_Abyss_06.png)
 
 ### HK-KE-01 밝은 뿌리 옆 발판 사다리
@@ -1178,7 +1178,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 작은 검은 발판과 뒤 큰 곡면의 크기가 다르다.
 - 조명: 밝은 흰 뿌리와 낮은 채도 대기광을 구별한다.
 - 제작 패턴: P03, P05, P18 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B18
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Kingdom%27s_Edge_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/3e/Screenshot_HK_Kingdom%27s_Edge_01.png/800px-Screenshot_HK_Kingdom%27s_Edge_01.png)
 
 ### HK-KE-02 밝은 배경과 검은 앞 가시
@@ -1189,7 +1189,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 아래의 검은 앞 가시와 뒤의 희고 큰 뿌리가 대비된다.
 - 조명: 밝은 원경 위 플레이 경계는 어둡게 읽힌다.
 - 제작 패턴: P02, P07, P18 — 근접 전경과 중앙 시야 여백 / 안전면과 위험면의 다른 형태 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B02, B09, B18
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B02, B09, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Kingdom%27s_Edge_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/14/Screenshot_HK_Kingdom%27s_Edge_02.png/800px-Screenshot_HK_Kingdom%27s_Edge_02.png)
 
 ### HK-KE-03 거대한 뒤 관과 좁은 발판
@@ -1200,7 +1200,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 배경 구조는 크고 부드러우며 발판은 작고 선명하다.
 - 조명: 흰 뿌리의 넓은 빛이 다음 발판의 외곽을 드러낸다.
 - 제작 패턴: P03, P05 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동
-- 적용 후보: 고대 장치 구역, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B03, B06
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Kingdom%27s_Edge_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/20/Screenshot_HK_Kingdom%27s_Edge_03.png/800px-Screenshot_HK_Kingdom%27s_Edge_03.png)
 
 ### HK-KE-04 거대한 유해의 입구
@@ -1211,7 +1211,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 돌기 사이에 거대한 중경 실루엣이 놓인다.
 - 조명: 매우 낮은 청색 빛으로 큰 외곽만 드러낸다.
 - 제작 패턴: P03, P09, P16 — 중경과 원경의 다른 대비 / 지역 문턱과 문양 입구 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 전투방, 중앙 통로 · 자산 명세 B03, B11, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B11, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Kingdom%27s_Edge_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c4/Screenshot_HK_Kingdom%27s_Edge_04.png/800px-Screenshot_HK_Kingdom%27s_Edge_04.png)
 
 ### HK-KE-05 낮은 가시 틈과 검은 천장
@@ -1222,7 +1222,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 돌기와 뒤 둥근 벽이 통로를 감싼다.
 - 조명: 중앙의 약한 회색 여백이 통과 공간을 드러낸다.
 - 제작 패턴: P02, P07 — 근접 전경과 중앙 시야 여백 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B02, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B02, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Kingdom%27s_Edge_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/ee/Screenshot_HK_Kingdom%27s_Edge_05.png/800px-Screenshot_HK_Kingdom%27s_Edge_05.png)
 
 ### HK-KE-06 낡은 천막 아래 휴식
@@ -1233,7 +1233,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 지지대와 뒤 열린 밝은 공간이 겹친다.
 - 조명: 넓고 약한 바깥빛과 작은 내부 밝기가 대비된다.
 - 제작 패턴: P02, P10, P16 — 근접 전경과 중앙 시야 여백 / 작고 명료한 휴식 포켓 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B02, B12, B17
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B02, B12, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Kingdom%27s_Edge_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/de/Screenshot_HK_Kingdom%27s_Edge_06.png/800px-Screenshot_HK_Kingdom%27s_Edge_06.png)
 
 ### HK-HI-01 벌집 기하와 넓은 바닥
@@ -1244,7 +1244,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 코어와 뒤 황금빛 벽 패턴이 분리된다.
 - 조명: 넓은 금색 지역광에 작은 밝은 결정 모서리가 있다.
 - 제작 패턴: P12, P18 — 재질의 군집과 빈 구간 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방 · 자산 명세 B14, B18
+- 적용 후보: 중앙 통로 · 자산 명세 B14, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Hive_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/63/Screenshot_HK_Hive_01.png/800px-Screenshot_HK_Hive_01.png)
 
 ### HK-HI-02 중앙 고치와 황금 안개
@@ -1255,7 +1255,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 둘레와 뒤 밝은 육각 벽이 대비된다.
 - 조명: 백색에 가까운 중앙 빛과 넓은 황금빛 산란이 겹친다.
 - 제작 패턴: P04, P13, P16 — 목표에 모이는 빛 / 대기광과 입자의 깊이 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B15, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B04, B05, B15, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Hive_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8e/Screenshot_HK_Hive_02.png/800px-Screenshot_HK_Hive_02.png)
 
 ### HK-HI-03 밝은 벽 앞의 작은 발판
@@ -1266,7 +1266,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 어두운 발판과 뒤의 매우 밝은 반복벽이 분리된다.
 - 조명: 밝은 지역에서 작은 어두운 실루엣이 이동 경계가 된다.
 - 제작 패턴: P05, P15, P18 — 다음 착지면이 보이는 수직 이동 / 적 실루엣과 공격 방향 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B16, B18
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B06, B16, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Hive_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/fd/Screenshot_HK_Hive_03.png/800px-Screenshot_HK_Hive_03.png)
 
 ### HK-HI-04 큰 기둥 사이 비행 공간
@@ -1277,7 +1277,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 큰 기둥과 뒤 흐린 금빛 면이 겹친다.
 - 조명: 적의 밝은 얼굴과 뒤의 넓은 황금빛은 범위가 다르다.
 - 제작 패턴: P05, P11, P15 — 다음 착지면이 보이는 수직 이동 / 전투방의 넓은 판독 공간 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스방, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B13, B16
+- 적용 후보: 전투방, 보스방 · 자산 명세 B06, B13, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Hive_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/3e/Screenshot_HK_Hive_04.png/800px-Screenshot_HK_Hive_04.png)
 
 ### HK-HI-05 밀랍 천장의 긴 실루엣
@@ -1288,7 +1288,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 큰 천장 덩어리 아래 밝은 가는 끝들이 내려온다.
 - 조명: 아래 금빛 여백과 어두운 천장이 강하게 대비된다.
 - 제작 패턴: P01, P02, P12 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B02, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B01, B02, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Hive_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/14/Screenshot_HK_Hive_05.png/800px-Screenshot_HK_Hive_05.png)
 
 ### HK-HI-06 빛나는 뒤 형체와 긴 전투면
@@ -1299,7 +1299,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 보행면은 어둡고 뒤 형체는 크고 흐리다.
 - 조명: 따뜻한 전체빛 속에서 앞쪽 공격 공간은 단순하다.
 - 제작 패턴: P03, P11, P18 — 중경과 원경의 다른 대비 / 전투방의 넓은 판독 공간 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 전투방, 중앙 통로 · 자산 명세 B03, B13, B18
+- 적용 후보: 전투방, 보스방 · 자산 명세 B03, B13, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Hive_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/a4/Screenshot_HK_Hive_06.png/800px-Screenshot_HK_Hive_06.png)
 
 ### HK-RG-01 어둠 속 큰 수직 창
@@ -1310,7 +1310,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 기둥과 중앙 창, 뒤 안개가 층을 만든다.
 - 조명: 좁고 긴 흰 빛이 주변 어둠의 중심이다.
 - 제작 패턴: P04, P08, P16 — 목표에 모이는 빛 / 보상의 선노출과 우회 경로 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B04, B05, B10, B17
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B04, B05, B10, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Resting_Grounds_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/ae/Screenshot_HK_Resting_Grounds_01.png/800px-Screenshot_HK_Resting_Grounds_01.png)
 
 ### HK-RG-02 묘석과 떠 있는 짧은 발판
@@ -1321,7 +1321,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 풀과 뒤 푸른 둥근 형체가 분리된다.
 - 조명: 큰 청색 면 위 작은 흰 입자가 떠 있다.
 - 제작 패턴: P03, P05, P13 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B15
+- 적용 후보: 중앙 통로, 고대 장치 구역 · 자산 명세 B03, B06, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Resting_Grounds_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/a5/Screenshot_HK_Resting_Grounds_02.png/800px-Screenshot_HK_Resting_Grounds_02.png)
 
 ### HK-RG-03 낮고 어두운 묘지 통로
@@ -1332,7 +1332,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가까운 검은 묘석과 뒤 보랏빛 무늬가 겹친다.
 - 조명: 매우 낮은 보라색 대기광으로 길의 실루엣을 읽힌다.
 - 제작 패턴: P01, P02, P20 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 시야 제한과 집중 연출
-- 적용 후보: 문양의 성소, 보스 등장 연출, 유물 획득 연출, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B02, B20
+- 적용 후보: 중앙 통로 · 자산 명세 B01, B02, B20
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Resting_Grounds_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/e6/Screenshot_HK_Resting_Grounds_03.png/800px-Screenshot_HK_Resting_Grounds_03.png)
 
 ### HK-RG-04 작은 따뜻한 방의 인물
@@ -1343,7 +1343,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 밝은 안쪽 방을 검은 코어가 둘러싼다.
 - 조명: 국소 주황색 후광이 기능점과 주변 재질을 함께 드러낸다.
 - 제작 패턴: P04, P10, P15 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓 / 적 실루엣과 공격 방향
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B12, B16
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Resting_Grounds_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/dc/Screenshot_HK_Resting_Grounds_04.png/800px-Screenshot_HK_Resting_Grounds_04.png)
 
 ### HK-RG-05 긴 회랑의 작은 무덤들
@@ -1354,7 +1354,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 하단 검은 실루엣과 뒤 청색 무덤 무늬가 나뉜다.
 - 조명: 작은 흰 입자와 낮은 대비의 푸른 지역광이 겹친다.
 - 제작 패턴: P03, P12, P13 — 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B14, B15
+- 적용 후보: 중앙 통로 · 자산 명세 B03, B14, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Resting_Grounds_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/96/Screenshot_HK_Resting_Grounds_05.png/800px-Screenshot_HK_Resting_Grounds_05.png)
 
 ### HK-RG-06 밝은 세로 틈의 유령 형체
@@ -1365,7 +1365,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 양옆 검은 지형과 뒤의 부드러운 밝은 면이 대비된다.
 - 조명: 흰 청색 중심과 넓은 후광이 시선을 모은다.
 - 제작 패턴: P04, P13, P20 — 목표에 모이는 빛 / 대기광과 입자의 깊이 / 시야 제한과 집중 연출
-- 적용 후보: 문양의 성소, 보스 등장 연출, 유물 획득 연출, 유물 획득 지점, 전투방, 하강 통로 · 자산 명세 B04, B05, B15, B20
+- 적용 후보: 유물 획득 연출, 보스 등장 연출 · 자산 명세 B04, B05, B15, B20
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Resting_Grounds_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9d/Screenshot_HK_Resting_Grounds_06.png/800px-Screenshot_HK_Resting_Grounds_06.png)
 
 ### HK-HC-01 절벽 끝의 작은 등불
@@ -1376,7 +1376,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 돌 테두리와 뒤 흐린 큰 곡면이 분리된다.
 - 조명: 작은 흰 등불이 절벽 경계를 표시한다.
 - 제작 패턴: P04, P05, P09 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 지역 문턱과 문양 입구
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B11
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B04, B05, B06, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Howling_Cliffs_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/80/Screenshot_HK_Howling_Cliffs_01.png/800px-Screenshot_HK_Howling_Cliffs_01.png)
 
 ### HK-HC-02 고리처럼 둘러싼 돌 통로
@@ -1387,7 +1387,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 지형 코어와 푸른 뒤 바위 면이 나뉜다.
 - 조명: 낮은 청색빛이 상면과 통과 공간을 드러낸다.
 - 제작 패턴: P01, P05, P12 — 검은 지형 속과 읽히는 테두리 / 다음 착지면이 보이는 수직 이동 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B06, B14
+- 적용 후보: 중앙 통로, 고대 장치 구역 · 자산 명세 B01, B06, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Howling_Cliffs_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/4f/Screenshot_HK_Howling_Cliffs_02.png/800px-Screenshot_HK_Howling_Cliffs_02.png)
 
 ### HK-HC-03 큰 잔해와 안개 낀 바깥
@@ -1398,7 +1398,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 선과 뒤 흐린 큰 구조가 크기로 분리된다.
 - 조명: 차가운 회색 안개가 먼 윤곽의 대비를 낮춘다.
 - 제작 패턴: P03, P13, P16 — 중경과 원경의 다른 대비 / 대기광과 입자의 깊이 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B15, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B15, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Howling_Cliffs_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/ec/Screenshot_HK_Howling_Cliffs_03.png/800px-Screenshot_HK_Howling_Cliffs_03.png)
 
 ### HK-HC-04 천장 틈 아래 단일 빛
@@ -1409,7 +1409,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 하단 검은 풀과 위 검은 코어가 공간을 감싼다.
 - 조명: 좁은 천장 틈의 흰 청색 광막이 중앙으로 내려온다.
 - 제작 패턴: P01, P02, P04 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛
-- 적용 후보: 문양의 성소, 유물 획득 지점, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B02, B04, B05
+- 적용 후보: 중앙 통로 · 자산 명세 B01, B02, B04, B05
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Howling_Cliffs_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/eb/Screenshot_HK_Howling_Cliffs_04.png/800px-Screenshot_HK_Howling_Cliffs_04.png)
 
 ### HK-HC-05 푸른 나비와 작은 발판
@@ -1420,7 +1420,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 나비와 뒤 푸른 형체가 크기·밝기로 나뉜다.
 - 조명: 작은 발광 나비들이 한쪽 길을 강조한다.
 - 제작 패턴: P04, P05, P08 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 보상의 선노출과 우회 경로
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B10
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B04, B05, B06, B10
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Howling_Cliffs_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/bf/Screenshot_HK_Howling_Cliffs_05.png/800px-Screenshot_HK_Howling_Cliffs_05.png)
 
 ### HK-HC-06 발광 나비가 채운 세로 공간
@@ -1431,7 +1431,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가까운 큰 어두운 나비와 뒤 작은 빛을 구별한다.
 - 조명: 푸른 발광점은 배경과 발판의 깊이를 나눈다.
 - 제작 패턴: P05, P08, P13 — 다음 착지면이 보이는 수직 이동 / 보상의 선노출과 우회 경로 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B10, B15
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B06, B10, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Howling_Cliffs_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9a/Screenshot_HK_Howling_Cliffs_06.png/800px-Screenshot_HK_Howling_Cliffs_06.png)
 
 ### HK-WP-01 밝은 창 앞의 왕좌
@@ -1442,7 +1442,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 어두운 중앙 물체와 밝은 뒤 창이 대비된다.
 - 조명: 백색 지역광 속에도 왕좌의 홈과 윤곽을 남긴다.
 - 제작 패턴: P04, P16, P18 — 목표에 모이는 빛 / 방마다 하나의 큰 기억점 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B17, B18
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B04, B05, B17, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_White_Palace_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/fb/Screenshot_HK_White_Palace_01.png/800px-Screenshot_HK_White_Palace_01.png)
 
 ### HK-WP-02 흰 식생과 좁은 길
@@ -1453,7 +1453,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 어두운 가림과 뒤의 흰 식생이 서로 다른 깊이다.
 - 조명: 밝은 지역에서 앞의 어두운 테두리로 길을 읽힌다.
 - 제작 패턴: P01, P12, P18 — 검은 지형 속과 읽히는 테두리 / 재질의 군집과 빈 구간 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B14, B18
+- 적용 후보: 중앙 통로 · 자산 명세 B01, B14, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_White_Palace_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/d1/Screenshot_HK_White_Palace_02.png/800px-Screenshot_HK_White_Palace_02.png)
 
 ### HK-WP-03 큰 흰 아치 아래 제단
@@ -1464,7 +1464,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 지형 내부와 뒤 흰 창을 명확하게 나눈다.
 - 조명: 넓은 백색광 가운데 작은 구조의 외곽을 유지한다.
 - 제작 패턴: P01, P04, P18 — 검은 지형 속과 읽히는 테두리 / 목표에 모이는 빛 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B04, B05, B18
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B01, B04, B05, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_White_Palace_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/ac/Screenshot_HK_White_Palace_03.png/800px-Screenshot_HK_White_Palace_03.png)
 
 ### HK-WP-04 톱니 원판과 검은 천장
@@ -1475,7 +1475,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 위의 검은 코어와 아래 밝은 배경이 반대 명암을 만든다.
 - 조명: 밝은 원판 테두리를 주변 식생과 다른 형태로 읽힌다.
 - 제작 패턴: P06, P07, P18 — 장치 경로와 작동부의 명료함 / 안전면과 위험면의 다른 형태 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B07, B08, B09, B18
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B07, B08, B09, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_White_Palace_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/46/Screenshot_HK_White_Palace_04.png/800px-Screenshot_HK_White_Palace_04.png)
 
 ### HK-WP-05 밝은 정원 옆 낙하 경계
@@ -1486,7 +1486,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 아래 검은 지형 속과 뒤의 흰 식생 군집이 분리된다.
 - 조명: 흰 후경광 앞 어두운 상면을 착지 기준으로 남긴다.
 - 제작 패턴: P05, P07, P18 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B18
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_White_Palace_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/47/Screenshot_HK_White_Palace_05.png/800px-Screenshot_HK_White_Palace_05.png)
 
 ### HK-WP-06 원판 사이 작은 발판
@@ -1497,7 +1497,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 크고 흐린 뒤 원판과 선명한 앞 원판을 구분한다.
 - 조명: 백색 윤곽과 어두운 안전면이 번갈아 보인다.
 - 제작 패턴: P05, P06, P07 — 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B07, B08, B09
+- 적용 후보: 고대 장치 구역 · 자산 명세 B06, B07, B08, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_White_Palace_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/d5/Screenshot_HK_White_Palace_06.png/800px-Screenshot_HK_White_Palace_06.png)
 
 ### SS-MG-01 무성한 바닥과 둥근 잔해
@@ -1508,18 +1508,18 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 큰 잎과 뒤 흐린 이끼 언덕이 나뉜다.
 - 조명: 위에서 내려오는 황록빛이 바닥과 잔해의 일부만 비춘다.
 - 제작 패턴: P02, P03, P12, P16 — 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B03, B14, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B02, B03, B14, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Moss_Grotto_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/a2/Screenshot_SS_Moss_Grotto_01.png/800px-Screenshot_SS_Moss_Grotto_01.png)
 
 ### SS-MG-02 이끼 언덕과 열린 중앙
 
 [이미지 보기](images/ss-mg-02.png) · SS / Moss Grotto · 수평 통로 · 이끼, 석재, 잎
 
-- 관찰: 낮은 보행 띠 뒤로 큰 둥근 이끼 언덕이 겹친다.
+- 관찰: 낮은 지면의 작은 이끼 벌레 둘 뒤로 큰 둥근 언덕이 겹친다.
 - 전경과 배경: 양옆의 큰 검은 잎과 뒤의 부드러운 초록 덩어리가 크기로 나뉜다.
 - 조명: 넓은 황록색 빛이 중앙 위쪽 여백에 모인다.
-- 제작 패턴: P02, P03, P12, P17 — 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 비대칭 공간의 무게 배분
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B03, B14
+- 제작 패턴: P02, P03, P12, P15, P17 — 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 적 실루엣과 공격 방향 / 비대칭 공간의 무게 배분
+- 적용 후보: 이끼 통로 · 자산 명세 B02, B03, B14, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Moss_Grotto_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/5c/Screenshot_SS_Moss_Grotto_02.png/800px-Screenshot_SS_Moss_Grotto_02.png)
 
 ### SS-MG-03 큰 이끼 천장과 단층 발판
@@ -1530,7 +1530,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 검은 천장 끝과 멀리 겹친 초록 덩어리가 분리된다.
 - 조명: 원경의 약한 초록빛으로 발판 외곽을 읽힌다.
 - 제작 패턴: P01, P05, P12 — 검은 지형 속과 읽히는 테두리 / 다음 착지면이 보이는 수직 이동 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B06, B14
+- 적용 후보: 이끼 통로, 하강 통로 · 자산 명세 B01, B06, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Moss_Grotto_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/84/Screenshot_SS_Moss_Grotto_03.png/800px-Screenshot_SS_Moss_Grotto_03.png)
 
 ### SS-MG-04 큰 잎 아래 넓은 바닥
@@ -1541,7 +1541,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 하단 검은 풀과 중앙 큰 잎, 뒤 흐린 숲이 겹친다.
 - 조명: 넓고 약한 수직 빛이 중앙 바닥으로 내려온다.
 - 제작 패턴: P02, P04, P11 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 전투방의 넓은 판독 공간
-- 적용 후보: 문양의 성소, 보스방, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B02, B04, B05, B13
+- 적용 후보: 전투방, 보스방 · 자산 명세 B02, B04, B05, B13
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Moss_Grotto_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9b/Screenshot_SS_Moss_Grotto_04.png/800px-Screenshot_SS_Moss_Grotto_04.png)
 
 ### SS-MG-05 작은 반원 포켓
@@ -1552,7 +1552,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 외곽 안에서만 작은 보행면이 드러난다.
 - 조명: 뒤의 희미한 초록빛과 작은 광점이 포켓을 읽힌다.
 - 제작 패턴: P01, P04, P10 — 검은 지형 속과 읽히는 테두리 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B01, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Moss_Grotto_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8d/Screenshot_SS_Moss_Grotto_05.png/800px-Screenshot_SS_Moss_Grotto_05.png)
 
 ### SS-MG-06 가시 절벽 옆 높은 문
@@ -1563,7 +1563,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 상부 코어 아래 오른쪽 구조의 선이 선명하다.
 - 조명: 낮은 푸른빛이 발판과 문 외곽을 남긴다.
 - 제작 패턴: P05, P07, P09 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 지역 문턱과 문양 입구
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B11
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B06, B09, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Moss_Grotto_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/e8/Screenshot_SS_Moss_Grotto_06.png/800px-Screenshot_SS_Moss_Grotto_06.png)
 
 ### SS-BB-02 이끼에 묻힌 작은 집
@@ -1574,7 +1574,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 가는 풀과 뒤쪽 큰 둥근 지붕의 크기가 다르다.
 - 조명: 작은 포자와 약한 초록 주변광을 사용한다.
 - 제작 패턴: P03, P12, P16 — 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B14, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B14, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bone_Bottom_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c1/Screenshot_SS_Bone_Bottom_02.png/800px-Screenshot_SS_Bone_Bottom_02.png)
 
 ### SS-BB-03 매달린 종과 낮은 대기 공간
@@ -1585,7 +1585,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞쪽 바닥은 어둡고 뒤의 둥근 껍질 군집은 흐리다.
 - 조명: 좁은 사선 빛과 작은 따뜻한 광점이 겹친다.
 - 제작 패턴: P03, P04, P06 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 장치 경로와 작동부의 명료함
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B07, B08
+- 적용 후보: 전투방, 보스방 · 자산 명세 B03, B04, B05, B07, B08
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bone_Bottom_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/54/Screenshot_SS_Bone_Bottom_03.png/800px-Screenshot_SS_Bone_Bottom_03.png)
 
 ### SS-BB-05 천막 사이 작은 인물
@@ -1596,7 +1596,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 전경 천막이 작은 인물을 감싸는 크기 차가 있다.
 - 조명: 인물 옆 작은 따뜻한 후광이 기능점을 표시한다.
 - 제작 패턴: P04, P10, P15 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓 / 적 실루엣과 공격 방향
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B12, B16
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bone_Bottom_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/59/Screenshot_SS_Bone_Bottom_05.png/800px-Screenshot_SS_Bone_Bottom_05.png)
 
 ### SS-DD-01 덩굴이 감싼 원형 장치
@@ -1607,7 +1607,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 바닥과 중경 원형 구조, 뒤 주황빛이 분리된다.
 - 조명: 장치 중앙의 약한 청록빛과 아래 열기의 색이 다르다.
 - 제작 패턴: P04, P06, P09, P14 — 목표에 모이는 빛 / 장치 경로와 작동부의 명료함 / 지역 문턱과 문양 입구 / 기능색과 장식색의 분리
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B07, B08, B11, B18
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B04, B05, B07, B08, B11, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Deep_Docks_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/0/06/Screenshot_SS_Deep_Docks_01.png/800px-Screenshot_SS_Deep_Docks_01.png)
 
 ### SS-DD-02 불빛 위 긴 다리
@@ -1618,7 +1618,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 어두운 보행면과 뒤의 거대 흐린 기계가 분리된다.
 - 조명: 수평의 강한 주황빛과 작은 불티가 깊이를 만든다.
 - 제작 패턴: P03, P06, P07 — 중경과 원경의 다른 대비 / 장치 경로와 작동부의 명료함 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B07, B08, B09
+- 적용 후보: 고대 장치 구역 · 자산 명세 B03, B07, B08, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Deep_Docks_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/64/Screenshot_SS_Deep_Docks_02.png/800px-Screenshot_SS_Deep_Docks_02.png)
 
 ### SS-DD-03 뜨거운 벽 옆 단단한 문
@@ -1629,7 +1629,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 왼쪽 큰 검은 덩어리와 오른쪽 밝은 균열면이 대비된다.
 - 조명: 주황 균열과 작은 적색 중심광이 다른 범위를 갖는다.
 - 제작 패턴: P04, P09, P17 — 목표에 모이는 빛 / 지역 문턱과 문양 입구 / 비대칭 공간의 무게 배분
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B02, B03, B04, B05, B11
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B02, B03, B04, B05, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Deep_Docks_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/f5/Screenshot_SS_Deep_Docks_03.png/800px-Screenshot_SS_Deep_Docks_03.png)
 
 ### SS-DD-04 뜨거운 바닥 위 높은 턱
@@ -1640,18 +1640,18 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가까운 검은 발판과 뒤의 희미한 큰 원형 면이 겹친다.
 - 조명: 하단의 넓은 열기빛 위로 작은 불티가 떠 있다.
 - 제작 패턴: P05, P07, P13 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B15
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Deep_Docks_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/f4/Screenshot_SS_Deep_Docks_04.png/800px-Screenshot_SS_Deep_Docks_04.png)
 
-### SS-DD-05 사슬에 매달린 여러 발판
+### SS-DD-05 사슬에 매달린 여러 화로
 
-[이미지 보기](images/ss-dd-05.png) · SS / Deep Docks · 장치 공간 · 금속, 사슬, 용암
+[이미지 보기](images/ss-dd-05.png) · SS / Deep Docks · 장치 외형 · 금속, 사슬, 용암
 
-- 관찰: 높이가 다른 매달린 바구니형 발판들이 위험면 위에 놓인다.
-- 전경과 배경: 선명한 앞 사슬과 뒤 흐린 사슬의 대비가 다르다.
-- 조명: 뒤의 넓은 주황빛에 실제 발판은 어두운 외곽을 남긴다.
-- 제작 패턴: P05, P06, P07 — 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B07, B08, B09
+- 관찰: 높이가 다른 사슬 화로들이 밝은 용암면 위에 매달려 있다.
+- 전경과 배경: 선명한 앞 사슬·화로와 뒤 흐린 사슬의 대비가 다르다.
+- 조명: 넓은 주황빛과 어두운 화로 몸체, 붉은 내용물의 범위가 다르다.
+- 제작 패턴: P03, P06, P07, P12 — 중경과 원경의 다른 대비 / 장치 경로와 작동부의 명료함 / 안전면과 위험면의 다른 형태 / 재질의 군집과 빈 구간
+- 적용 후보: 고대 장치 구역 · 자산 명세 B03, B07, B08, B09, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Deep_Docks_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/5a/Screenshot_SS_Deep_Docks_05.png/800px-Screenshot_SS_Deep_Docks_05.png)
 
 ### SS-DD-06 어두운 아치 안 중앙 의자
@@ -1662,7 +1662,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 검은 외곽과 중앙 낮은 구조, 뒤 흐린 실내가 분리된다.
 - 조명: 중앙 뒤쪽 약한 빛과 양옆 작은 수직빛이 겹친다.
 - 제작 패턴: P03, P04, P10 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B03, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Deep_Docks_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/5e/Screenshot_SS_Deep_Docks_06.png/800px-Screenshot_SS_Deep_Docks_06.png)
 
 ### SS-FF-01 큰 종 아래 열린 바닥
@@ -1673,7 +1673,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 가장자리와 뒤의 부드러운 녹색 대기층이 나뉜다.
 - 조명: 한쪽 위의 사선 광막과 작은 불티가 보인다.
 - 제작 패턴: P04, P06, P11 — 목표에 모이는 빛 / 장치 경로와 작동부의 명료함 / 전투방의 넓은 판독 공간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B07, B08, B13
+- 적용 후보: 전투방, 보스방 · 자산 명세 B04, B05, B07, B08, B13
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Far_Fields_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/b7/Screenshot_SS_Far_Fields_01.png/800px-Screenshot_SS_Far_Fields_01.png)
 
 ### SS-FF-02 불타는 지면 옆 둥근 문
@@ -1684,7 +1684,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 줄기와 뒤 붉은 균열벽이 대비된다.
 - 조명: 주황 세로빛과 수평 발광면이 함께 보인다.
 - 제작 패턴: P07, P09, P17 — 안전면과 위험면의 다른 형태 / 지역 문턱과 문양 입구 / 비대칭 공간의 무게 배분
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 보스 접근 구간, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B02, B03, B09, B11
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B02, B03, B09, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Far_Fields_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/95/Screenshot_SS_Far_Fields_02.png/800px-Screenshot_SS_Far_Fields_02.png)
 
 ### SS-FF-03 넓은 열기와 작은 안전면
@@ -1695,7 +1695,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 상부와 하단의 검은 실루엣 사이 주황 공간이 열린다.
 - 조명: 강한 열기빛과 밝은 불티를 위험 재질의 신호로 쓴다.
 - 제작 패턴: P02, P07, P18 — 근접 전경과 중앙 시야 여백 / 안전면과 위험면의 다른 형태 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B02, B09, B18
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B02, B09, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Far_Fields_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8d/Screenshot_SS_Far_Fields_03.png/800px-Screenshot_SS_Far_Fields_03.png)
 
 ### SS-FF-04 큰 천막 둘레의 가로길
@@ -1706,7 +1706,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 뒤의 큰 천막 면과 앞의 작은 발판이 크기로 구분된다.
 - 조명: 주황 주변광과 천막의 작은 밝은 틈이 겹친다.
 - 제작 패턴: P03, P12, P16 — 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B14, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B14, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Far_Fields_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/fe/Screenshot_SS_Far_Fields_04.png/800px-Screenshot_SS_Far_Fields_04.png)
 
 ### SS-FF-05 따뜻한 천막 실내
@@ -1717,7 +1717,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 실내 가장자리가 작은 밝은 활동 공간을 감싼다.
 - 조명: 따뜻한 타원 창빛이 실내 물체 윤곽을 드러낸다.
 - 제작 패턴: P04, P10, P15 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓 / 적 실루엣과 공격 방향
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B12, B16
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Far_Fields_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/0/05/Screenshot_SS_Far_Fields_05.png/800px-Screenshot_SS_Far_Fields_05.png)
 
 ### SS-FF-06 바위집의 따뜻한 문
@@ -1728,7 +1728,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 작은 잎과 중간 집, 뒤 어두운 식생을 분리한다.
 - 조명: 집 전체보다 문과 둥근 창만 밝다.
 - 제작 패턴: P04, P09, P16 — 목표에 모이는 빛 / 지역 문턱과 문양 입구 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B11, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B04, B05, B11, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Far_Fields_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/1a/Screenshot_SS_Far_Fields_06.png/800px-Screenshot_SS_Far_Fields_06.png)
 
 ### SS-HM-01 어두운 천장 아래 빛나는 고치
@@ -1739,7 +1739,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 큰 천장과 뒤 녹색 여백이 작은 목표를 둘러싼다.
 - 조명: 약한 사선빛과 고치의 따뜻한 중심광이 겹친다.
 - 제작 패턴: P01, P04, P08 — 검은 지형 속과 읽히는 테두리 / 목표에 모이는 빛 / 보상의 선노출과 우회 경로
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B04, B05, B10
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B01, B04, B05, B10
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Hunter%27s_March_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/41/Screenshot_SS_Hunter%27s_March_01.png/800px-Screenshot_SS_Hunter%27s_March_01.png)
 
 ### SS-HM-02 매달린 작은 빛과 바닥 잔해
@@ -1750,7 +1750,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 낮은 검은 실루엣과 뒤의 어두운 녹색 면이 나뉜다.
 - 조명: 작은 따뜻한 광점을 높이와 간격으로 분산한다.
 - 제작 패턴: P04, P12, P13 — 목표에 모이는 빛 / 재질의 군집과 빈 구간 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B04, B05, B14, B15
+- 적용 후보: 중앙 통로 · 자산 명세 B04, B05, B14, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Hunter%27s_March_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/bb/Screenshot_SS_Hunter%27s_March_02.png/800px-Screenshot_SS_Hunter%27s_March_02.png)
 
 ### SS-HM-03 새장과 높은 광점 무리
@@ -1761,7 +1761,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 하단 새장 실루엣은 선명하고 위쪽 불빛은 부드럽다.
 - 조명: 빛의 군집을 한쪽 수직 축에 모은다.
 - 제작 패턴: P03, P04, P16 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B04, B05, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Hunter%27s_March_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/4e/Screenshot_SS_Hunter%27s_March_03.png/800px-Screenshot_SS_Hunter%27s_March_03.png)
 
 ### SS-HM-04 비어 있는 작은 벤치방
@@ -1772,7 +1772,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가까운 검은 줄기와 뒤의 약한 녹색 면이 겹친다.
 - 조명: 넓은 약한 사선빛이 벤치 주변 여백을 만든다.
 - 제작 패턴: P02, P10, P17 — 근접 전경과 중앙 시야 여백 / 작고 명료한 휴식 포켓 / 비대칭 공간의 무게 배분
-- 적용 후보: 문양의 성소, 보상 포켓, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B02, B03, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B02, B03, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Hunter%27s_March_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/da/Screenshot_SS_Hunter%27s_March_04.png/800px-Screenshot_SS_Hunter%27s_March_04.png)
 
 ### SS-HM-05 가시 천장 아래 걸린 돌판
@@ -1783,7 +1783,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 새장과 중간 돌판, 뒤 흐린 틈이 나뉜다.
 - 조명: 위쪽 좁은 빛으로 돌판 상면만 남긴다.
 - 제작 패턴: P05, P06, P07 — 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B07, B08, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B07, B08, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Hunter%27s_March_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/ea/Screenshot_SS_Hunter%27s_March_05.png/800px-Screenshot_SS_Hunter%27s_March_05.png)
 
 ### SS-HM-06 낮은 발판 위 작은 벌레
@@ -1794,7 +1794,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 적의 밝은 얼굴과 뒤의 어두운 녹색 식생이 분리된다.
 - 조명: 작은 얼굴의 명암을 주변 광점보다 강하게 둔다.
 - 제작 패턴: P11, P15, P17 — 전투방의 넓은 판독 공간 / 적 실루엣과 공격 방향 / 비대칭 공간의 무게 배분
-- 적용 후보: 보상 포켓, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B03, B13, B16
+- 적용 후보: 전투방, 보스방 · 자산 명세 B02, B03, B13, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Hunter%27s_March_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c5/Screenshot_SS_Hunter%27s_March_06.png/800px-Screenshot_SS_Hunter%27s_March_06.png)
 
 ### SS-SH-01 깊은 숲의 원형 문
@@ -1805,7 +1805,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 코어와 중간 문, 뒤의 큰 숲줄기가 겹친다.
 - 조명: 위쪽 청록빛과 작은 포자가 문 주위 빈 공간을 드러낸다.
 - 제작 패턴: P03, P09, P16 — 중경과 원경의 다른 대비 / 지역 문턱과 문양 입구 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 전투방, 중앙 통로 · 자산 명세 B03, B11, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B11, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Shellwood_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/83/Screenshot_SS_Shellwood_01.png/800px-Screenshot_SS_Shellwood_01.png)
 
 ### SS-SH-02 높은 아치 아래 작은 휴식점
@@ -1816,7 +1816,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 양옆 프레임과 중앙 실내의 대비가 다르다.
 - 조명: 양옆 작은 빛보다 중앙 뒤의 약한 광막이 넓다.
 - 제작 패턴: P03, P04, P10 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B03, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Shellwood_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c7/Screenshot_SS_Shellwood_02.png/800px-Screenshot_SS_Shellwood_02.png)
 
 ### SS-SH-03 버섯처럼 생긴 높은 쉼터
@@ -1827,7 +1827,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 상부 종과 뒤 둥근 식생 군집이 다른 크기로 겹친다.
 - 조명: 넓고 약한 사선빛이 중앙의 비어 있는 공기를 보여 준다.
 - 제작 패턴: P03, P05, P06 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함
-- 적용 후보: 고대 장치 구역, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B07, B08
+- 적용 후보: 중앙 통로, 고대 장치 구역 · 자산 명세 B03, B06, B07, B08
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Shellwood_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/70/Screenshot_SS_Shellwood_03.png/800px-Screenshot_SS_Shellwood_03.png)
 
 ### SS-SH-04 어두운 천장 아래 밝은 출구
@@ -1838,7 +1838,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 검은 코어가 위를 가리고 먼 출구의 빛만 남는다.
 - 조명: 밝은 출구와 낮은 청록 주변광이 대비된다.
 - 제작 패턴: P01, P04, P09 — 검은 지형 속과 읽히는 테두리 / 목표에 모이는 빛 / 지역 문턱과 문양 입구
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B04, B05, B11
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B01, B04, B05, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Shellwood_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/b7/Screenshot_SS_Shellwood_04.png/800px-Screenshot_SS_Shellwood_04.png)
 
 ### SS-SH-05 낮은 물가와 큰 잎 천장
@@ -1849,7 +1849,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 풀과 중간 수면, 뒤 숲기둥을 구분한다.
 - 조명: 넓은 녹색빛을 배경에 두고 상면은 어둡게 남긴다.
 - 제작 패턴: P02, P03, P12 — 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B03, B14
+- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B02, B03, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Shellwood_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/41/Screenshot_SS_Shellwood_05.png/800px-Screenshot_SS_Shellwood_05.png)
 
 ### SS-SH-06 거대한 나무와 사선 빛
@@ -1860,7 +1860,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 줄기와 뒤 큰 나무 사이 공기층이 보인다.
 - 조명: 부드러운 사선 빛 안에 작은 밝은 입자가 모인다.
 - 제작 패턴: P02, P04, P13, P16 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 대기광과 입자의 깊이 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보스방, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B02, B04, B05, B15, B17
+- 적용 후보: 유물 획득 지점, 이끼 통로 · 자산 명세 B02, B04, B05, B15, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Shellwood_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/df/Screenshot_SS_Shellwood_06.png/800px-Screenshot_SS_Shellwood_06.png)
 
 ### SS-GM-01 밝은 인물과 복층 발판
@@ -1871,7 +1871,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 상부 검은 천장과 뒤 따뜻한 실내 면이 나뉜다.
 - 조명: 인물 뒤 국소 주황빛과 작은 등불이 서로 다른 높이에 있다.
 - 제작 패턴: P04, P05, P15 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B16
+- 적용 후보: 중앙 통로, 고대 장치 구역 · 자산 명세 B04, B05, B06, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Greymoor_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/a8/Screenshot_SS_Greymoor_01.png/800px-Screenshot_SS_Greymoor_01.png)
 
 ### SS-GM-02 촛불 기둥과 짧은 발판
@@ -1882,7 +1882,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 어두운 발판과 뒤의 흐린 촛불 군집이 분리된다.
 - 조명: 여러 따뜻한 빛을 묶어 큰 밝기 덩어리로 읽힌다.
 - 제작 패턴: P03, P04, P05 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B04, B05, B06
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B03, B04, B05, B06
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Greymoor_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/60/Screenshot_SS_Greymoor_02.png/800px-Screenshot_SS_Greymoor_02.png)
 
 ### SS-GM-03 넓은 바닥과 먼 천막
@@ -1893,7 +1893,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 어두운 바닥과 뒤 거의 흐려진 큰 형태를 구분한다.
 - 조명: 낮은 청록 대기광으로 먼 공간의 대비를 낮춘다.
 - 제작 패턴: P03, P11, P13 — 중경과 원경의 다른 대비 / 전투방의 넓은 판독 공간 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B13, B15
+- 적용 후보: 중앙 통로 · 자산 명세 B03, B13, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Greymoor_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/11/Screenshot_SS_Greymoor_03.png/800px-Screenshot_SS_Greymoor_03.png)
 
 ### SS-GM-04 문양 판 아래 휴식점
@@ -1904,7 +1904,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 외곽과 중앙 낮은 구조, 뒤 아치가 겹친다.
 - 조명: 중앙 뒤쪽 약한 빛이 기능점을 읽힌다.
 - 제작 패턴: P03, P04, P10 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B03, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Greymoor_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/e5/Screenshot_SS_Greymoor_04.png/800px-Screenshot_SS_Greymoor_04.png)
 
 ### SS-GM-05 바람개비 뒤의 낮은 다리
@@ -1915,7 +1915,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 작은 난간과 뒤 거대 흐린 구조가 크기로 나뉜다.
 - 조명: 한쪽 작은 등불과 약한 수직 광막을 분리한다.
 - 제작 패턴: P03, P06, P16 — 중경과 원경의 다른 대비 / 장치 경로와 작동부의 명료함 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 전투방, 중앙 통로 · 자산 명세 B03, B07, B08, B17
+- 적용 후보: 중앙 통로 · 자산 명세 B03, B07, B08, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Greymoor_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/b1/Screenshot_SS_Greymoor_05.png/800px-Screenshot_SS_Greymoor_05.png)
 
 ### SS-GM-06 좁은 샛길의 따뜻한 공간
@@ -1926,7 +1926,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 검은 코어가 좁은 활동 공간을 둘러싼다.
 - 조명: 작고 따뜻한 벽빛으로 샛길의 목적을 표시한다.
 - 제작 패턴: P01, P04, P08 — 검은 지형 속과 읽히는 테두리 / 목표에 모이는 빛 / 보상의 선노출과 우회 경로
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B04, B05, B10
+- 적용 후보: 보상 포켓, 유물 획득 지점 · 자산 명세 B01, B04, B05, B10
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Greymoor_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/63/Screenshot_SS_Greymoor_06.png/800px-Screenshot_SS_Greymoor_06.png)
 
 ### SS-BH-01 종과 풍선이 있는 거리
@@ -1937,7 +1937,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 작은 인물과 중간 종, 뒤 높은 건물이 크기로 나뉜다.
 - 조명: 작은 따뜻한 등불들을 길의 높이에 분산한다.
 - 제작 패턴: P03, P12, P16 — 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B14, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B14, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bellhart_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/49/Screenshot_SS_Bellhart_01.png/800px-Screenshot_SS_Bellhart_01.png)
 
 ### SS-BH-02 큰 종 옆 평평한 쉼터
@@ -1948,7 +1948,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 뒤 거대 종 구조와 앞 낮은 물체의 크기 차가 뚜렷하다.
 - 조명: 작은 등불로 기능점을 표시하고 전체는 낮은 채도로 둔다.
 - 제작 패턴: P04, P10, P16 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B12, B17
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bellhart_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/cd/Screenshot_SS_Bellhart_02.png/800px-Screenshot_SS_Bellhart_02.png)
 
 ### SS-BH-03 종 아래 둥근 빈 공간
@@ -1959,7 +1959,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 어두운 껍질 바닥과 뒤의 부드러운 공기가 나뉜다.
 - 조명: 넓은 사선빛과 작은 따뜻한 광점이 깊이를 만든다.
 - 제작 패턴: P03, P04, P06 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 장치 경로와 작동부의 명료함
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B07, B08
+- 적용 후보: 전투방, 보스방 · 자산 명세 B03, B04, B05, B07, B08
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bellhart_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/91/Screenshot_SS_Bellhart_03.png/800px-Screenshot_SS_Bellhart_03.png)
 
 ### SS-BH-04 중앙 인물로 모이는 방사 효과
@@ -1970,7 +1970,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 선명한 중앙 형체와 흐린 주변의 차이가 크다.
 - 조명: 따뜻한 중심광과 바깥 암전이 강한 집중을 만든다.
 - 제작 패턴: P04, P15, P20 — 목표에 모이는 빛 / 적 실루엣과 공격 방향 / 시야 제한과 집중 연출
-- 적용 후보: 문양의 성소, 보스 등장 연출, 보스방, 유물 획득 연출, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B04, B05, B16, B20
+- 적용 후보: 유물 획득 연출, 보스 등장 연출 · 자산 명세 B04, B05, B16, B20
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bellhart_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9e/Screenshot_SS_Bellhart_04.png/800px-Screenshot_SS_Bellhart_04.png)
 
 ### SS-BH-05 쓰러진 종이 있는 거리
@@ -1981,7 +1981,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 장식이 바뀌어도 앞의 낮은 보행선은 남는다.
 - 조명: 작은 등불의 높이는 유지하고 전체 밝기는 낮춘다.
 - 제작 패턴: P16, P19 — 방마다 하나의 큰 기억점 / 공간 골격을 유지한 상태 변화
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 처치 후, 보스방, 전투방, 중앙 통로 · 자산 명세 B17, B19
+- 적용 후보: 고대 장치 구역, 보스 처치 후 · 자산 명세 B17, B19
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bellhart_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/e9/Screenshot_SS_Bellhart_05.png/800px-Screenshot_SS_Bellhart_05.png)
 
 ### SS-BH-06 어두운 작은 방의 입구
@@ -1992,7 +1992,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 주변 검은 코어 안쪽 테두리만 푸르게 드러난다.
 - 조명: 약한 청록빛과 작은 밝은 얼굴이 위치를 표시한다.
 - 제작 패턴: P01, P08, P15 — 검은 지형 속과 읽히는 테두리 / 보상의 선노출과 우회 경로 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보상 포켓, 보스방, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B10, B16
+- 적용 후보: 보상 포켓, 유물 획득 지점 · 자산 명세 B01, B10, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bellhart_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9b/Screenshot_SS_Bellhart_06.png/800px-Screenshot_SS_Bellhart_06.png)
 
 ### SS-BW-01 진흙색 안개의 긴 길
@@ -2003,7 +2003,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 기둥과 뒤 둥근 흐린 덩어리가 나뉜다.
 - 조명: 황록색 안개와 어두운 재질로 눅눅한 공간을 만든다.
 - 제작 패턴: P03, P12, P13 — 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B14, B15
+- 적용 후보: 중앙 통로 · 자산 명세 B03, B14, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bilewater_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/60/Screenshot_SS_Bilewater_01.png/800px-Screenshot_SS_Bilewater_01.png)
 
 ### SS-BW-02 유기체가 늘어진 쉼터
@@ -2014,7 +2014,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 잎과 뒤의 얇은 구조를 분리한다.
 - 조명: 중앙의 낮은 황록빛만 남기고 둘레를 어둡게 둔다.
 - 제작 패턴: P02, P10, P12 — 근접 전경과 중앙 시야 여백 / 작고 명료한 휴식 포켓 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B02, B12, B14
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B02, B12, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bilewater_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/22/Screenshot_SS_Bilewater_02.png/800px-Screenshot_SS_Bilewater_02.png)
 
 ### SS-BW-03 늘어진 벽 사이 가는 다리
@@ -2025,7 +2025,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 가장자리와 중간 다리, 뒤 녹색 안개가 겹친다.
 - 조명: 윗부분 작은 빛과 아래 넓은 흐림으로 다리 외곽을 드러낸다.
 - 제작 패턴: P05, P07, P13 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B15
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bilewater_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8a/Screenshot_SS_Bilewater_03.png/800px-Screenshot_SS_Bilewater_03.png)
 
 ### SS-BW-04 큰 매달린 형체와 아래 국소빛
@@ -2036,7 +2036,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 굵은 교차 줄기와 뒤 흐린 벽 사이 목표가 보인다.
 - 조명: 아래의 흰 녹색 빛과 위의 어두운 큰 형체가 대비된다.
 - 제작 패턴: P02, P04, P08 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 보상의 선노출과 우회 경로
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B02, B04, B05, B10
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B02, B04, B05, B10
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bilewater_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/d9/Screenshot_SS_Bilewater_04.png/800px-Screenshot_SS_Bilewater_04.png)
 
 ### SS-BW-05 같은 동굴 구도의 변형
@@ -2047,7 +2047,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 교차하는 앞 줄기와 뒤 안개 구조를 비교할 수 있다.
 - 조명: 중앙 아래의 국소빛과 주변 어둠의 관계가 유지된다.
 - 제작 패턴: P04, P19 — 목표에 모이는 빛 / 공간 골격을 유지한 상태 변화
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 처치 후, 유물 획득 지점, 전투방 · 자산 명세 B04, B05, B19
+- 적용 후보: 고대 장치 구역, 보스 처치 후 · 자산 명세 B04, B05, B19
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bilewater_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/a6/Screenshot_SS_Bilewater_05.png/800px-Screenshot_SS_Bilewater_05.png)
 
 ### SS-BW-06 낮은 껍질 더미와 뿌리 천장
@@ -2058,7 +2058,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 하단 검은 잎과 중간 더미, 뒤 녹색 흐림이 나뉜다.
 - 조명: 낮은 황록 대기광이 바닥의 외곽만 드러낸다.
 - 제작 패턴: P01, P02, P12 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B02, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B01, B02, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Bilewater_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c7/Screenshot_SS_Bilewater_06.png/800px-Screenshot_SS_Bilewater_06.png)
 
 ### SS-SR-01 긴 창살 같은 교차 구조
@@ -2069,7 +2069,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 왼쪽 큰 검은 전경과 뒤 긴 창살을 구분한다.
 - 조명: 낮은 녹색빛으로 날카로운 외곽을 남긴다.
 - 제작 패턴: P02, P07, P12 — 근접 전경과 중앙 시야 여백 / 안전면과 위험면의 다른 형태 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B02, B09, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B02, B09, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sinner%27s_Road_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/78/Screenshot_SS_Sinner%27s_Road_01.png/800px-Screenshot_SS_Sinner%27s_Road_01.png)
 
 ### SS-SR-02 가시 천장 아래 낮은 길
@@ -2080,7 +2080,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 어두운 바닥과 뒤의 흐린 원형 구조가 나뉜다.
 - 조명: 가시 끝의 밝기를 낮은 채도 배경에서 읽힌다.
 - 제작 패턴: P05, P07 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sinner%27s_Road_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/fa/Screenshot_SS_Sinner%27s_Road_02.png/800px-Screenshot_SS_Sinner%27s_Road_02.png)
 
 ### SS-SR-03 따뜻한 금속 문과 작은 인물
@@ -2091,7 +2091,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 작은 인물과 중간 문, 뒤 큰 어두운 고리가 겹친다.
 - 조명: 약한 주황빛이 문양 외곽과 얼굴을 드러낸다.
 - 제작 패턴: P04, P09, P15 — 목표에 모이는 빛 / 지역 문턱과 문양 입구 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B04, B05, B11, B16
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B04, B05, B11, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sinner%27s_Road_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/33/Screenshot_SS_Sinner%27s_Road_03.png/800px-Screenshot_SS_Sinner%27s_Road_03.png)
 
 ### SS-SR-04 지형으로 감싼 작은 밝은 틈
@@ -2102,7 +2102,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 교차 줄기와 뒤 밝은 작은 틈이 대비된다.
 - 조명: 끝부분의 따뜻한 빛이 좁은 방의 방향을 만든다.
 - 제작 패턴: P01, P04, P08 — 검은 지형 속과 읽히는 테두리 / 목표에 모이는 빛 / 보상의 선노출과 우회 경로
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B04, B05, B10
+- 적용 후보: 보상 포켓, 유물 획득 지점 · 자산 명세 B01, B04, B05, B10
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sinner%27s_Road_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/4/44/Screenshot_SS_Sinner%27s_Road_04.png/800px-Screenshot_SS_Sinner%27s_Road_04.png)
 
 ### SS-SR-05 작은 굴 안 둥근 적 무리
@@ -2113,7 +2113,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 큰 코어와 작은 밝은 몸체의 크기가 대비된다.
 - 조명: 한쪽 작은 등불과 적의 흰 몸체를 구분한다.
 - 제작 패턴: P01, P15, P20 — 검은 지형 속과 읽히는 테두리 / 적 실루엣과 공격 방향 / 시야 제한과 집중 연출
-- 적용 후보: 보스 등장 연출, 보스방, 유물 획득 연출, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B16, B20
+- 적용 후보: 전투방, 보스방 · 자산 명세 B01, B16, B20
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sinner%27s_Road_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/82/Screenshot_SS_Sinner%27s_Road_05.png/800px-Screenshot_SS_Sinner%27s_Road_05.png)
 
 ### SS-SR-06 끝빛이 남은 동굴 변형
@@ -2124,7 +2124,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 앞줄기와 뒤의 좁은 틈은 같은 공간 골격을 이룬다.
 - 조명: 안쪽의 작은 주황빛을 상태 비교의 기준으로 남긴다.
 - 제작 패턴: P08, P19 — 보상의 선노출과 우회 경로 / 공간 골격을 유지한 상태 변화
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 보스 처치 후, 이끼 통로 · 자산 명세 B10, B19
+- 적용 후보: 고대 장치 구역, 보스 처치 후 · 자산 명세 B10, B19
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sinner%27s_Road_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/a3/Screenshot_SS_Sinner%27s_Road_06.png/800px-Screenshot_SS_Sinner%27s_Road_06.png)
 
 ### SS-MF-01 눈빛 동굴의 작은 주황 광원
@@ -2135,7 +2135,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 위 검은 천장 끝과 뒤 푸른 대기층이 분리된다.
 - 조명: 차가운 공간 속 작은 주황빛이 기능점을 강조한다.
 - 제작 패턴: P04, P12, P14, P17 — 목표에 모이는 빛 / 재질의 군집과 빈 구간 / 기능색과 장식색의 분리 / 비대칭 공간의 무게 배분
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B03, B04, B05, B14, B18
+- 적용 후보: 중앙 통로 · 자산 명세 B02, B03, B04, B05, B14, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Mount_Fay_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/e5/Screenshot_SS_Mount_Fay_01.png/800px-Screenshot_SS_Mount_Fay_01.png)
 
 ### SS-MF-02 큰 등 아래 중앙 구조
@@ -2146,7 +2146,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 기둥과 뒤 흐린 얼음벽이 겹친다.
 - 조명: 위의 흰 빛과 중앙의 작은 촛불 무리가 다른 크기로 보인다.
 - 제작 패턴: P03, P04, P16 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B04, B05, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Mount_Fay_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/67/Screenshot_SS_Mount_Fay_02.png/800px-Screenshot_SS_Mount_Fay_02.png)
 
 ### SS-MF-03 큰 금속 문양 아래 휴식점
@@ -2157,7 +2157,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 검은 외곽과 뒤의 낮은 주황 면이 나뉜다.
 - 조명: 국소 따뜻한 빛을 중앙 세로 영역에 제한한다.
 - 제작 패턴: P04, P10, P16 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B12, B17
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Mount_Fay_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/7a/Screenshot_SS_Mount_Fay_03.png/800px-Screenshot_SS_Mount_Fay_03.png)
 
 ### SS-MF-04 차가운 길 옆 따뜻한 벤치
@@ -2168,7 +2168,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 왼쪽 검은 천장과 오른쪽 밝은 냉색 공간이 비대칭이다.
 - 조명: 따뜻한 작은 등불과 차가운 넓은 바깥빛이 대비된다.
 - 제작 패턴: P04, P10, P17 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓 / 비대칭 공간의 무게 배분
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B02, B03, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B02, B03, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Mount_Fay_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/dd/Screenshot_SS_Mount_Fay_04.png/800px-Screenshot_SS_Mount_Fay_04.png)
 
 ### SS-MF-05 눈 덩어리와 먼 바위기둥
@@ -2179,7 +2179,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 가는 식물과 뒤 흐린 큰 기둥이 나뉜다.
 - 조명: 밝은 회청색 대기광이 먼 윤곽을 흐리게 만든다.
 - 제작 패턴: P03, P12, P18 — 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B14, B18
+- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B03, B14, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Mount_Fay_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/1f/Screenshot_SS_Mount_Fay_05.png/800px-Screenshot_SS_Mount_Fay_05.png)
 
 ### SS-MF-06 차가운 실내의 고립된 벤치
@@ -2190,7 +2190,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 하단 가림과 뒤의 큰 푸른 형체가 겹친다.
 - 조명: 천장등에서 아래로 떨어지는 좁은 흰 빛이 벤치를 향한다.
 - 제작 패턴: P02, P04, P10 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B02, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B02, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Mount_Fay_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c9/Screenshot_SS_Mount_Fay_06.png/800px-Screenshot_SS_Mount_Fay_06.png)
 
 ### SS-SK-01 높은 석조 기둥과 붉은 군집
@@ -2201,7 +2201,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 오른쪽 큰 검은 기둥과 뒤의 흐린 벽면이 나뉜다.
 - 조명: 약한 청록 주변광 속 붉은 작은 부분을 구별한다.
 - 제작 패턴: P03, P05, P12 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B14
+- 적용 후보: 중앙 통로, 고대 장치 구역 · 자산 명세 B03, B06, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sands_of_Karak_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/e7/Screenshot_SS_Sands_of_Karak_01.png/800px-Screenshot_SS_Sands_of_Karak_01.png)
 
 ### SS-SK-02 붉은 가시 옆 작은 턱
@@ -2212,7 +2212,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 상부 검은 코어와 뒤의 낮은 보랏빛 여백을 구분한다.
 - 조명: 따뜻한 가시 끝과 작은 황색 광원이 서로 다른 신호다.
 - 제작 패턴: P05, P07, P08 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 보상의 선노출과 우회 경로
-- 적용 후보: 고대 장치 구역, 보상 포켓, 보스 접근 구간, 이끼 통로, 중앙 통로, 하강 통로 · 자산 명세 B06, B09, B10
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B10
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sands_of_Karak_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/27/Screenshot_SS_Sands_of_Karak_02.png/800px-Screenshot_SS_Sands_of_Karak_02.png)
 
 ### SS-SK-03 굵은 문기둥 옆 작은 적
@@ -2223,7 +2223,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 문기둥과 작은 밝은 적을 크기 차로 분리한다.
 - 조명: 밝은 뒤 공간 앞에서 적의 외곽을 남긴다.
 - 제작 패턴: P09, P15, P18 — 지역 문턱과 문양 입구 / 적 실루엣과 공격 방향 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B11, B16, B18
+- 적용 후보: 전투방, 보스방 · 자산 명세 B11, B16, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sands_of_Karak_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/34/Screenshot_SS_Sands_of_Karak_03.png/800px-Screenshot_SS_Sands_of_Karak_03.png)
 
 ### SS-SK-04 붉은 식생이 감싼 빈 방
@@ -2234,7 +2234,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 풀과 중간 붉은 테두리, 뒤 푸른 공간이 나뉜다.
 - 조명: 부드러운 푸른 중앙광과 따뜻한 가장자리 재질을 대비한다.
 - 제작 패턴: P02, P11, P17 — 근접 전경과 중앙 시야 여백 / 전투방의 넓은 판독 공간 / 비대칭 공간의 무게 배분
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B03, B13
+- 적용 후보: 전투방, 보스방 · 자산 명세 B02, B03, B13
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sands_of_Karak_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/54/Screenshot_SS_Sands_of_Karak_04.png/800px-Screenshot_SS_Sands_of_Karak_04.png)
 
 ### SS-SK-05 분홍 군집이 빛나는 작은 틈
@@ -2245,7 +2245,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 외곽과 중간 발광 덩어리, 뒤의 작은 틈이 구분된다.
 - 조명: 강한 분홍 중심과 보라색 번짐을 국소적으로 사용한다.
 - 제작 패턴: P04, P08, P18 — 목표에 모이는 빛 / 보상의 선노출과 우회 경로 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B04, B05, B10, B18
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B04, B05, B10, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sands_of_Karak_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/75/Screenshot_SS_Sands_of_Karak_05.png/800px-Screenshot_SS_Sands_of_Karak_05.png)
 
 ### SS-SK-06 큰 검은 가림 뒤 분홍빛
@@ -2256,7 +2256,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 실루엣과 뒤 밝은 식생 군집의 겹침이 뚜렷하다.
 - 조명: 차가운 길과 분홍 광원이 만나는 경계를 만든다.
 - 제작 패턴: P02, P09, P13 — 근접 전경과 중앙 시야 여백 / 지역 문턱과 문양 입구 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B02, B11, B15
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B02, B11, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Sands_of_Karak_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/e7/Screenshot_SS_Sands_of_Karak_06.png/800px-Screenshot_SS_Sands_of_Karak_06.png)
 
 ### SS-WW-01 갈색 동굴의 사선 틈빛
@@ -2267,7 +2267,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 줄기와 뒤 흐린 갈색 큰 면이 나뉜다.
 - 조명: 한쪽 위에서 좁은 따뜻한 빛이 내려온다.
 - 제작 패턴: P02, P04, P12 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B02, B04, B05, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B02, B04, B05, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Wormways_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c4/Screenshot_SS_Wormways_01.png/800px-Screenshot_SS_Wormways_01.png)
 
 ### SS-WW-02 작은 조형물과 둘레 뿌리
@@ -2278,7 +2278,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 줄기 사이로 중앙 물체와 뒤 큰 면이 보인다.
 - 조명: 약한 따뜻한 광막을 중앙에 제한한다.
 - 제작 패턴: P02, P04, P16 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보스방, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B04, B05, B17
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B02, B04, B05, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Wormways_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/0/05/Screenshot_SS_Wormways_02.png/800px-Screenshot_SS_Wormways_02.png)
 
 ### SS-WW-03 이끼 벽 옆 세로 발판
@@ -2289,7 +2289,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 오른쪽 큰 검은 잎과 뒤 낮은 대비의 이끼벽이 나뉜다.
 - 조명: 작은 포자와 약한 녹색빛이 세로 공기를 드러낸다.
 - 제작 패턴: P02, P05, P12 — 근접 전경과 중앙 시야 여백 / 다음 착지면이 보이는 수직 이동 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B02, B06, B14
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B02, B06, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Wormways_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/3b/Screenshot_SS_Wormways_03.png/800px-Screenshot_SS_Wormways_03.png)
 
 ### SS-WW-04 푸른 작은 방의 인물과 벤치
@@ -2300,7 +2300,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 기둥과 인물, 뒤 흐린 용기들이 층을 만든다.
 - 조명: 차가운 청색 주변광과 작은 흰 등불을 구분한다.
 - 제작 패턴: P03, P10, P15 — 중경과 원경의 다른 대비 / 작고 명료한 휴식 포켓 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보상 포켓, 보스방, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B03, B12, B16
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B03, B12, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Wormways_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/2e/Screenshot_SS_Wormways_04.png/800px-Screenshot_SS_Wormways_04.png)
 
 ### SS-WW-05 푸른 생명빛이 모인 중앙
@@ -2311,7 +2311,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 하단 검은 가림과 뒤 부드러운 청색 면이 겹친다.
 - 조명: 작은 푸른 발광체의 군집이 목표를 만든다.
 - 제작 패턴: P04, P08, P13 — 목표에 모이는 빛 / 보상의 선노출과 우회 경로 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B04, B05, B10, B15
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B04, B05, B10, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Wormways_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9f/Screenshot_SS_Wormways_05.png/800px-Screenshot_SS_Wormways_05.png)
 
 ### SS-WW-06 어두운 벤치 옆 작은 나비빛
@@ -2322,7 +2322,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 기둥과 뒤의 매우 어두운 큰 구조가 나뉜다.
 - 조명: 큰 전체광 없이 작은 청색빛으로 기능점을 표시한다.
 - 제작 패턴: P04, P10 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Wormways_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/57/Screenshot_SS_Wormways_06.png/800px-Screenshot_SS_Wormways_06.png)
 
 ### SS-UW-01 천장 광원 아래 두 조형물
@@ -2333,7 +2333,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 뼈무더기와 뒤 큰 벽면, 위 검은 천장이 나뉜다.
 - 조명: 천장의 둥근 빛에서 아래로 좁은 광막이 내려온다.
 - 제작 패턴: P04, P11, P17 — 목표에 모이는 빛 / 전투방의 넓은 판독 공간 / 비대칭 공간의 무게 배분
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B02, B03, B04, B05, B13
+- 적용 후보: 유물 획득 지점, 문양의 성소 · 자산 명세 B02, B03, B04, B05, B13
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Underworks_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/e/e3/Screenshot_SS_Underworks_01.png/800px-Screenshot_SS_Underworks_01.png)
 
 ### SS-UW-02 중앙 조형물이 바뀐 방
@@ -2344,7 +2344,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 천장과 뒤 벽의 큰 구조는 유지되어 상태 비교가 쉽다.
 - 조명: 중앙의 수직빛을 상태 변화 전후의 공통 기준으로 쓴다.
 - 제작 패턴: P04, P19 — 목표에 모이는 빛 / 공간 골격을 유지한 상태 변화
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 처치 후, 유물 획득 지점, 전투방 · 자산 명세 B04, B05, B19
+- 적용 후보: 고대 장치 구역, 보스 처치 후 · 자산 명세 B04, B05, B19
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Underworks_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/85/Screenshot_SS_Underworks_02.png/800px-Screenshot_SS_Underworks_02.png)
 
 ### SS-UW-03 낮은 길 뒤 둥근 금속문
@@ -2355,7 +2355,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 기둥과 뒤 원형 구조의 크기가 다르다.
 - 조명: 위쪽 작은 주황 등불과 뒤의 청록 어둠이 대비된다.
 - 제작 패턴: P04, P09, P16 — 목표에 모이는 빛 / 지역 문턱과 문양 입구 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B11, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B04, B05, B11, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Underworks_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/6c/Screenshot_SS_Underworks_03.png/800px-Screenshot_SS_Underworks_03.png)
 
 ### SS-UW-04 나무판과 잔해의 어두운 길
@@ -2366,7 +2366,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 식생과 중간 판자, 뒤 흐린 구조가 겹친다.
 - 조명: 작은 위쪽 등불만 남겨 바닥의 상면을 읽힌다.
 - 제작 패턴: P01, P03, P12 — 검은 지형 속과 읽히는 테두리 / 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B03, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B01, B03, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Underworks_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/6c/Screenshot_SS_Underworks_04.png/800px-Screenshot_SS_Underworks_04.png)
 
 ### SS-UW-05 기울어진 프레임과 낮은 물가
@@ -2377,7 +2377,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 프레임과 뒤의 약한 청록 공간이 나뉜다.
 - 조명: 한쪽 위 작은 빛과 넓은 사선 산란광을 분리한다.
 - 제작 패턴: P02, P04, P17 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 비대칭 공간의 무게 배분
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B03, B04, B05
+- 적용 후보: 중앙 통로 · 자산 명세 B02, B03, B04, B05
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Underworks_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/6c/Screenshot_SS_Underworks_05.png/800px-Screenshot_SS_Underworks_05.png)
 
 ### SS-UW-06 양옆 발판 사이 아래 위험
@@ -2388,7 +2388,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 상부 검은 코어가 중앙의 깊은 틈을 강조한다.
 - 조명: 좁은 위쪽 빛으로 위·아래 경계를 드러낸다.
 - 제작 패턴: P05, P07 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간, 중앙 통로, 하강 통로 · 자산 명세 B06, B09
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Underworks_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/10/Screenshot_SS_Underworks_06.png/800px-Screenshot_SS_Underworks_06.png)
 
 ### SS-CC-01 높은 빈 공간의 종
@@ -2399,7 +2399,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 지면과 뒤 수직으로 큰 흐린 구조가 구분된다.
 - 조명: 좁고 긴 따뜻한 광막으로 세로 규모를 만든다.
 - 제작 패턴: P03, P05, P06 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함
-- 적용 후보: 고대 장치 구역, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B07, B08
+- 적용 후보: 전투방, 보스방 · 자산 명세 B03, B06, B07, B08
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Choral_Chambers_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c8/Screenshot_SS_Choral_Chambers_01.png/800px-Screenshot_SS_Choral_Chambers_01.png)
 
 ### SS-CC-02 밝은 뒤 울타리와 작은 의자
@@ -2410,7 +2410,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 인물 실루엣과 뒤 큰 창살이 크기로 나뉜다.
 - 조명: 부드러운 밝은 뒤 면 앞에 기능점은 어두운 윤곽으로 남는다.
 - 제작 패턴: P03, P10, P18 — 중경과 원경의 다른 대비 / 작고 명료한 휴식 포켓 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B03, B12, B18
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B03, B12, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Choral_Chambers_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/aa/Screenshot_SS_Choral_Chambers_02.png/800px-Screenshot_SS_Choral_Chambers_02.png)
 
 ### SS-CC-03 희미한 제단과 높은 문양
@@ -2421,7 +2421,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 상부 검은 천장과 뒤 낮은 청록 면 사이 목표가 놓인다.
 - 조명: 작은 따뜻한 위쪽 빛이 중앙 수직 축을 만든다.
 - 제작 패턴: P04, P08, P16 — 목표에 모이는 빛 / 보상의 선노출과 우회 경로 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B04, B05, B10, B17
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B04, B05, B10, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Choral_Chambers_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/29/Screenshot_SS_Choral_Chambers_03.png/800px-Screenshot_SS_Choral_Chambers_03.png)
 
 ### SS-CC-04 관 같은 천장 아래 층진 발판
@@ -2432,7 +2432,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가까운 검은 줄기와 뒤의 흐린 세로 기둥을 구별한다.
 - 조명: 높은 창에서 들어오는 약한 빛이 발판 외곽을 드러낸다.
 - 제작 패턴: P03, P05, P12 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B14
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Choral_Chambers_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8a/Screenshot_SS_Choral_Chambers_04.png/800px-Screenshot_SS_Choral_Chambers_04.png)
 
 ### SS-CC-05 따뜻한 배경의 중앙 의자
@@ -2443,7 +2443,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 양옆 검은 구조와 중앙 뒤의 밝은 면이 대비된다.
 - 조명: 작은 촛불과 넓은 주황빛 면을 함께 사용한다.
 - 제작 패턴: P04, P10, P16 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B12, B17
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Choral_Chambers_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/d6/Screenshot_SS_Choral_Chambers_05.png/800px-Screenshot_SS_Choral_Chambers_05.png)
 
 ### SS-CC-06 천장등 아래 두 검은 기둥
@@ -2454,7 +2454,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 기둥과 중간 대상, 뒤 아치의 선명도가 다르다.
 - 조명: 위쪽 쌍등불과 한쪽 사선 광막이 겹친다.
 - 제작 패턴: P02, P04, P17 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 비대칭 공간의 무게 배분
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B03, B04, B05
+- 적용 후보: 중앙 통로 · 자산 명세 B02, B03, B04, B05
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Choral_Chambers_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8b/Screenshot_SS_Choral_Chambers_06.png/800px-Screenshot_SS_Choral_Chambers_06.png)
 
 ### SS-WV-01 세로 벽과 천의 깊은 공간
@@ -2465,7 +2465,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 줄기와 뒤의 흐린 세로 면이 층을 만든다.
 - 조명: 좁은 수직 대기광이 뒤 공간만 드러낸다.
 - 제작 패턴: P02, P03, P13 — 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B02, B03, B15
+- 적용 후보: 중앙 통로 · 자산 명세 B02, B03, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Whispering_Vaults_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/0/02/Screenshot_SS_Whispering_Vaults_01.png/800px-Screenshot_SS_Whispering_Vaults_01.png)
 
 ### SS-WV-02 뜨거운 색 장식과 낮은 방
@@ -2476,7 +2476,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 물체와 뒤의 낮은 청록 면이 구별된다.
 - 조명: 한쪽 작은 주황빛과 넓은 어두운 공간이 대비된다.
 - 제작 패턴: P04, P08, P17 — 목표에 모이는 빛 / 보상의 선노출과 우회 경로 / 비대칭 공간의 무게 배분
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B03, B04, B05, B10
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B02, B03, B04, B05, B10
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Whispering_Vaults_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8d/Screenshot_SS_Whispering_Vaults_02.png/800px-Screenshot_SS_Whispering_Vaults_02.png)
 
 ### SS-WV-03 매달린 등 아래 작은 의자
@@ -2487,7 +2487,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 외곽과 뒤 따뜻한 작은 면이 포켓을 만든다.
 - 조명: 중심이 밝고 외곽으로 약해지는 주황 국소빛이다.
 - 제작 패턴: P04, P10 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Whispering_Vaults_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/3d/Screenshot_SS_Whispering_Vaults_03.png/800px-Screenshot_SS_Whispering_Vaults_03.png)
 
 ### SS-WV-04 여러 천장 틈의 세로 광막
@@ -2498,7 +2498,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 상부 검은 실루엣과 뒤의 흐린 긴 벽이 나뉜다.
 - 조명: 여러 수직 광막을 떨어뜨려 층과 간격을 보여준다.
 - 제작 패턴: P03, P04, P05 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B04, B05, B06
+- 적용 후보: 중앙 통로, 고대 장치 구역 · 자산 명세 B03, B04, B05, B06
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Whispering_Vaults_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/5b/Screenshot_SS_Whispering_Vaults_04.png/800px-Screenshot_SS_Whispering_Vaults_04.png)
 
 ### SS-WV-05 중앙 문양과 여러 작은 등
@@ -2509,7 +2509,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 어두운 전경과 중간 문양, 뒤 세로벽이 겹친다.
 - 조명: 작은 주황 광원 군집과 중앙 위의 넓은 빛을 구별한다.
 - 제작 패턴: P04, P06, P16 — 목표에 모이는 빛 / 장치 경로와 작동부의 명료함 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B07, B08, B17
+- 적용 후보: 문양의 성소 · 자산 명세 B04, B05, B07, B08, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Whispering_Vaults_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/a8/Screenshot_SS_Whispering_Vaults_05.png/800px-Screenshot_SS_Whispering_Vaults_05.png)
 
 ### SS-WV-06 비대칭 틈 아래 작은 벤치
@@ -2520,7 +2520,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 왼쪽 큰 검은 코어와 오른쪽 작은 기능점이 대비된다.
 - 조명: 따뜻한 국소 등불로 좁은 공간의 중심을 표시한다.
 - 제작 패턴: P01, P04, P10 — 검은 지형 속과 읽히는 테두리 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B01, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Whispering_Vaults_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/87/Screenshot_SS_Whispering_Vaults_06.png/800px-Screenshot_SS_Whispering_Vaults_06.png)
 
 ### SS-WH-01 거대한 가시 고리와 작은 빛
@@ -2531,7 +2531,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 굵은 가시 고리와 뒤 흐린 청록 면이 분리된다.
 - 조명: 작은 분홍빛은 큰 어두운 위험 실루엣과 대비된다.
 - 제작 패턴: P07, P15, P16 — 안전면과 위험면의 다른 형태 / 적 실루엣과 공격 방향 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 보스방, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B09, B16, B17
+- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B09, B16, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Whiteward_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/71/Screenshot_SS_Whiteward_01.png/800px-Screenshot_SS_Whiteward_01.png)
 
 ### SS-WH-02 둥근 잔해가 쌓인 낮은 길
@@ -2542,7 +2542,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 위 검은 코어와 아래 잔해, 뒤 녹색 공기가 나뉜다.
 - 조명: 전체는 어둡게 유지하고 잔해 외곽만 약하게 드러낸다.
 - 제작 패턴: P01, P12, P20 — 검은 지형 속과 읽히는 테두리 / 재질의 군집과 빈 구간 / 시야 제한과 집중 연출
-- 적용 후보: 고대 장치 구역, 보스 등장 연출, 유물 획득 연출, 이끼 통로, 전투방, 하강 통로 · 자산 명세 B01, B14, B20
+- 적용 후보: 중앙 통로 · 자산 명세 B01, B14, B20
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Whiteward_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/55/Screenshot_SS_Whiteward_02.png/800px-Screenshot_SS_Whiteward_02.png)
 
 ### SS-WH-03 천장빛 아래 작은 몸체
@@ -2553,7 +2553,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 큰 기둥과 밝은 작은 몸체가 크기로 분리된다.
 - 조명: 좁은 흰 천장빛 안에서 몸체의 밝은 면이 읽힌다.
 - 제작 패턴: P04, P11, P15 — 목표에 모이는 빛 / 전투방의 넓은 판독 공간 / 적 실루엣과 공격 방향
-- 적용 후보: 문양의 성소, 보스방, 유물 획득 지점, 이끼 통로, 전투방 · 자산 명세 B04, B05, B13, B16
+- 적용 후보: 전투방, 보스방 · 자산 명세 B04, B05, B13, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Whiteward_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/a1/Screenshot_SS_Whiteward_03.png/800px-Screenshot_SS_Whiteward_03.png)
 
 ### SS-WH-04 밝은 틈과 여러 겹의 구조
@@ -2564,7 +2564,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 검은 세로 구조와 뒤의 큰 둥근 면이 겹친다.
 - 조명: 상부 흰 빛이 아래로 갈수록 약해진다.
 - 제작 패턴: P03, P04, P05 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B04, B05, B06
+- 적용 후보: 중앙 통로, 고대 장치 구역 · 자산 명세 B03, B04, B05, B06
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Whiteward_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/a7/Screenshot_SS_Whiteward_04.png/800px-Screenshot_SS_Whiteward_04.png)
 
 ### SS-WH-06 기울어진 큰 물체의 작은 방
@@ -2575,7 +2575,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 큰 검은 코어 안 작은 활동 공간만 드러난다.
 - 조명: 뒤의 약한 청록빛이 큰 물체의 외곽을 남긴다.
 - 제작 패턴: P01, P08, P16 — 검은 지형 속과 읽히는 테두리 / 보상의 선노출과 우회 경로 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 보스방, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B10, B17
+- 적용 후보: 보상 포켓, 유물 획득 지점 · 자산 명세 B01, B10, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Whiteward_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/81/Screenshot_SS_Whiteward_06.png/800px-Screenshot_SS_Whiteward_06.png)
 
 ### SS-HH-01 큰 원형 장식과 밝은 수면
@@ -2586,7 +2586,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 큰 장식과 뒤 흐린 기둥의 대비가 다르다.
 - 조명: 넓은 따뜻한 배경광과 수면 반사 같은 밝은 띠가 겹친다.
 - 제작 패턴: P03, P04, P16 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B04, B05, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_High_Halls_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/5a/Screenshot_SS_High_Halls_01.png/800px-Screenshot_SS_High_Halls_01.png)
 
 ### SS-HH-02 둥근 누각과 중앙 광원
@@ -2597,7 +2597,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 프레임과 뒤 흐린 도시 구조가 여러 깊이로 나뉜다.
 - 조명: 누각 중앙의 작은 빛을 넓은 회색 대기광과 구분한다.
 - 제작 패턴: P03, P04, P16 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B04, B05, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_High_Halls_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/fe/Screenshot_SS_High_Halls_02.png/800px-Screenshot_SS_High_Halls_02.png)
 
 ### SS-HH-03 작은 벤치와 쌍등불
@@ -2608,7 +2608,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 하단 가림과 뒤 청록 벽이 포켓을 만든다.
 - 조명: 두 작은 따뜻한 등불의 간격이 기능점을 감싼다.
 - 제작 패턴: P02, P04, P10 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B02, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B02, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_High_Halls_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/1d/Screenshot_SS_High_Halls_03.png/800px-Screenshot_SS_High_Halls_03.png)
 
 ### SS-HH-04 커튼 뒤 부드러운 형체
@@ -2619,7 +2619,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가까운 천은 검고 뒤 구조는 낮은 대비로 흐리다.
 - 조명: 낮은 청록 주변광으로 커튼 사이 틈만 드러낸다.
 - 제작 패턴: P02, P03, P12 — 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B03, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B02, B03, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_High_Halls_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/f3/Screenshot_SS_High_Halls_04.png/800px-Screenshot_SS_High_Halls_04.png)
 
 ### SS-HH-05 긴 실이 비스듬히 지난 세로 틈
@@ -2630,7 +2630,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 가는 선과 뒤 밝은 긴 틈이 크기로 대비된다.
 - 조명: 위쪽 빛이 실의 일부를 따뜻하게 강조한다.
 - 제작 패턴: P05, P06, P13 — 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함 / 대기광과 입자의 깊이
-- 적용 후보: 고대 장치 구역, 문양의 성소, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B06, B07, B08, B15
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B06, B07, B08, B15
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_High_Halls_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/69/Screenshot_SS_High_Halls_05.png/800px-Screenshot_SS_High_Halls_05.png)
 
 ### SS-HH-06 위 장식빛 아래 작은 중앙 발판
@@ -2641,7 +2641,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 작은 발판과 뒤의 큰 흐린 원형 무늬가 나뉜다.
 - 조명: 위의 따뜻한 장식빛과 어두운 앞 공간이 대비된다.
 - 제작 패턴: P03, P11, P16 — 중경과 원경의 다른 대비 / 전투방의 넓은 판독 공간 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 전투방, 중앙 통로 · 자산 명세 B03, B13, B17
+- 적용 후보: 전투방, 보스방 · 자산 명세 B03, B13, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_High_Halls_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/3e/Screenshot_SS_High_Halls_06.png/800px-Screenshot_SS_High_Halls_06.png)
 
 ### SS-CK-01 대칭 장치와 높은 빛
@@ -2652,7 +2652,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 선명한 기둥과 뒤 흐린 원형 무늬가 층을 만든다.
 - 조명: 천장 틈의 넓은 빛과 작은 밝은 점들이 세로로 모인다.
 - 제작 패턴: P03, P04, P06 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 장치 경로와 작동부의 명료함
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B03, B04, B05, B07, B08
+- 적용 후보: 고대 장치 구역 · 자산 명세 B03, B04, B05, B07, B08
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Cogwork_Core_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/30/Screenshot_SS_Cogwork_Core_01.png/800px-Screenshot_SS_Cogwork_Core_01.png)
 
 ### SS-CK-02 중앙에 놓인 큰 철망
@@ -2663,7 +2663,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 가는 철망과 뒤 큰 둥근 무늬의 선명도가 다르다.
 - 조명: 중앙의 약한 청록빛으로 구조의 외곽을 읽힌다.
 - 제작 패턴: P06, P12, P16 — 장치 경로와 작동부의 명료함 / 재질의 군집과 빈 구간 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B07, B08, B14, B17
+- 적용 후보: 고대 장치 구역 · 자산 명세 B07, B08, B14, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Cogwork_Core_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/f1/Screenshot_SS_Cogwork_Core_02.png/800px-Screenshot_SS_Cogwork_Core_02.png)
 
 ### SS-CK-03 어두운 방의 큰 잔해
@@ -2674,7 +2674,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 전경 기둥과 뒤 잔해 더미가 크기 차를 만든다.
 - 조명: 강한 광원 없이 낮은 청록빛으로 윤곽만 남긴다.
 - 제작 패턴: P03, P11, P16 — 중경과 원경의 다른 대비 / 전투방의 넓은 판독 공간 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 전투방, 중앙 통로 · 자산 명세 B03, B13, B17
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B13, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Cogwork_Core_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/f6/Screenshot_SS_Cogwork_Core_03.png/800px-Screenshot_SS_Cogwork_Core_03.png)
 
 ### SS-CK-04 등불 아래 작은 쉼터
@@ -2685,7 +2685,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 오른쪽 기둥과 뒤 큰 기계 무늬가 겹친다.
 - 조명: 작은 흰 등불이 쉬는 지점을 분명하게 표시한다.
 - 제작 패턴: P04, P10, P16 — 목표에 모이는 빛 / 작고 명료한 휴식 포켓 / 방마다 하나의 큰 기억점
-- 적용 후보: 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B12, B17
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B04, B05, B12, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Cogwork_Core_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/65/Screenshot_SS_Cogwork_Core_04.png/800px-Screenshot_SS_Cogwork_Core_04.png)
 
 ### SS-CK-05 톱니 둘레의 넓은 전투면
@@ -2696,7 +2696,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞의 가는 기둥과 뒤의 부드러운 기계 면이 분리된다.
 - 조명: 좁은 사선빛으로 가운데를 강조하고 둘레는 어둡게 둔다.
 - 제작 패턴: P04, P06, P11 — 목표에 모이는 빛 / 장치 경로와 작동부의 명료함 / 전투방의 넓은 판독 공간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스방, 유물 획득 지점, 전투방, 중앙 통로 · 자산 명세 B04, B05, B07, B08, B13
+- 적용 후보: 고대 장치 구역 · 자산 명세 B04, B05, B07, B08, B13
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Cogwork_Core_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/5b/Screenshot_SS_Cogwork_Core_05.png/800px-Screenshot_SS_Cogwork_Core_05.png)
 
 ### SS-CK-06 거대 기어 앞 작은 발판
@@ -2707,7 +2707,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 실제 앞 난간은 선명하고 뒤 기어는 흐리고 거대하다.
 - 조명: 밝은 뒤 면 앞에 어두운 발판의 윤곽을 남긴다.
 - 제작 패턴: P03, P05, P06, P18 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함 / 밝은 지역에서의 대비 반전
-- 적용 후보: 고대 장치 구역, 문양의 성소, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B07, B08, B18
+- 적용 후보: 고대 장치 구역, 중앙 통로 · 자산 명세 B03, B06, B07, B08, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Cogwork_Core_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9d/Screenshot_SS_Cogwork_Core_06.png/800px-Screenshot_SS_Cogwork_Core_06.png)
 
 ### SS-ME-01 이끼 양옆 벽과 중앙 문
@@ -2718,7 +2718,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 검은 지형 속과 선명한 이끼 테두리, 뒤 숲이 분리된다.
 - 조명: 중앙 위의 약한 빛과 왼쪽 붉은 가시가 다른 역할을 한다.
 - 제작 패턴: P01, P05, P07, P09 — 검은 지형 속과 읽히는 테두리 / 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 지역 문턱과 문양 입구
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보스 접근 구간, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B01, B06, B09, B11
+- 적용 후보: 문양의 성소, 중앙 통로 · 자산 명세 B01, B06, B09, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Memorium_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/b7/Screenshot_SS_Memorium_01.png/800px-Screenshot_SS_Memorium_01.png)
 
 ### SS-ME-02 큰 천장등 아래 작은 벤치
@@ -2729,7 +2729,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 큰 검은 줄기와 뒤 밝은 공간이 층을 만든다.
 - 조명: 한 개의 넓은 천장빛이 벤치로 내려온다.
 - 제작 패턴: P02, P04, P10 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 문양의 성소, 보상 포켓, 유물 획득 지점, 이끼 통로, 전투 후 휴식 지점, 전투방, 중앙 통로 · 자산 명세 B02, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B02, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Memorium_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/be/Screenshot_SS_Memorium_02.png/800px-Screenshot_SS_Memorium_02.png)
 
 ### SS-ME-03 짧은 길 끝의 수직 경계
@@ -2740,7 +2740,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 왼쪽의 검은 덩어리와 뒤의 큰 밝은 세로 면이 대비된다.
 - 조명: 한쪽의 따뜻한 대기광이 출구 방향을 만든다.
 - 제작 패턴: P03, P05, P09 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 지역 문턱과 문양 입구
-- 적용 후보: 고대 장치 구역, 문양의 성소, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B03, B06, B11
+- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B06, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Memorium_03.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/7e/Screenshot_SS_Memorium_03.png/800px-Screenshot_SS_Memorium_03.png)
 
 ### SS-ME-04 기둥과 뿌리가 감싼 밝은 대상
@@ -2751,7 +2751,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 기둥 사이로 중앙 대상과 뒤 뿌리가 겹친다.
 - 조명: 대상 위쪽 따뜻한 빛과 아래 초록 반사색이 나뉜다.
 - 제작 패턴: P02, P04, P08, P16 — 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 보상의 선노출과 우회 경로 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 문양의 성소, 보상 포켓, 보스방, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B02, B04, B05, B10, B17
+- 적용 후보: 유물 획득 지점, 문양의 성소 · 자산 명세 B02, B04, B05, B10, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Memorium_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/f/fd/Screenshot_SS_Memorium_04.png/800px-Screenshot_SS_Memorium_04.png)
 
 ### SS-ME-05 매달린 관과 가로 통로
@@ -2762,7 +2762,7 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 앞 검은 기둥과 중간 매달린 물체, 뒤 낮은 대기층이 겹친다.
 - 조명: 작고 약한 따뜻한 빛을 간격을 두고 반복한다.
 - 제작 패턴: P03, P06, P12 — 중경과 원경의 다른 대비 / 장치 경로와 작동부의 명료함 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 이끼 통로, 전투방, 중앙 통로 · 자산 명세 B03, B07, B08, B14
+- 적용 후보: 중앙 통로 · 자산 명세 B03, B07, B08, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Memorium_05.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/22/Screenshot_SS_Memorium_05.png/800px-Screenshot_SS_Memorium_05.png)
 
 ### SS-ME-06 두 층 사이 작은 분홍 등
@@ -2773,6 +2773,6 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 위의 선명한 발판과 아래 뒤 구조가 다른 깊이다.
 - 조명: 작은 분홍빛이 넓은 청록 어둠 속 중심이 된다.
 - 제작 패턴: P04, P05, P12 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 문양의 성소, 유물 획득 지점, 이끼 통로, 전투방, 중앙 통로, 하강 통로 · 자산 명세 B04, B05, B06, B14
+- 적용 후보: 중앙 통로, 고대 장치 구역 · 자산 명세 B04, B05, B06, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_SS_Memorium_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8e/Screenshot_SS_Memorium_06.png/800px-Screenshot_SS_Memorium_06.png)
 

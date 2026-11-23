@@ -1,0 +1,91 @@
+{
+  "format_version": "1.0",
+  "title": "RelicEscape 맵 제작용 참고 데이터",
+  "snapshot_date": "2026-11-23",
+  "counts": {
+    "total": 244,
+    "new": 199,
+    "legacy": 45,
+    "games": {
+      "HK": 128,
+      "SS": 116
+    },
+    "regions": 36,
+    "by_region": {
+      "HK / Greenpath": 39,
+      "HK / Queen's Gardens": 6,
+      "HK / Fog Canyon": 6,
+      "HK / Fungal Wastes": 6,
+      "HK / City of Tears": 6,
+      "HK / Crystal Peak": 6,
+      "HK / Forgotten Crossroads": 6,
+      "HK / Deepnest": 6,
+      "HK / Royal Waterways": 6,
+      "HK / Ancient Basin": 5,
+      "HK / The Abyss": 6,
+      "HK / Kingdom's Edge": 6,
+      "HK / The Hive": 6,
+      "HK / Resting Grounds": 6,
+      "HK / Howling Cliffs": 6,
+      "HK / White Palace": 6,
+      "SS / Moss Grotto": 6,
+      "SS / Bone Bottom": 3,
+      "SS / Deep Docks": 6,
+      "SS / Far Fields": 6,
+      "SS / Hunter's March": 6,
+      "SS / Shellwood": 6,
+      "SS / Greymoor": 6,
+      "SS / Bellhart": 6,
+      "SS / Bilewater": 6,
+      "SS / Sinner's Road": 6,
+      "SS / Mount Fay": 6,
+      "SS / Sands of Karak": 6,
+      "SS / Wormways": 6,
+      "SS / Underworks": 6,
+      "SS / Choral Chambers": 6,
+      "SS / Whispering Vaults": 6,
+      "SS / Whiteward": 5,
+      "SS / High Halls": 6,
+      "SS / Cogwork Core": 6,
+      "SS / Memorium": 6
+    },
+    "scopes": {
+      "scene": 233,
+      "pre_release": 3,
+      "detail": 2,
+      "effect": 2,
+      "state_variant": 4
+    },
+    "patterns": 20,
+    "asset_briefs": 20,
+    "similar_frame_records": 1,
+    "bytes_new": 76401436
+  },
+  "files": {
+    "records": "analysis.json",
+    "jsonl": "analysis.jsonl",
+    "csv": "catalog.csv",
+    "sources": "sources.json",
+    "patterns": "patterns.json",
+    "asset_briefs": "asset-briefs.json",
+    "annotations": "annotations.json",
+    "gallery": "index.html",
+    "guide": "../../reference-production-guide.md"
+  },
+  "interpretation": {
+    "observation": "이미지에서 읽히는 형태·재질·명암의 시각적 관찰",
+    "application": "프로젝트 적용 제안. 구현 여부는 패턴의 project_status와 최신 소스 확인",
+    "spatial_labels": "시각적 관심 영역이며 실제 엔진 레이어·충돌·세그멘테이션 아님",
+    "metrics": "UI 포함 전체 화면 RGB160x90의 계산값. 원작의 재질색·광량·카메라 설정 아님"
+  },
+  "project_constraints": [
+    "시작 동굴과 최초 착지방 보존",
+    "승인된 벽·발판과 현재 충돌·이동감 유지",
+    "천장 전경은 월드 천장에 고정",
+    "문틀 끝에 별도 덩굴을 붙이지 않음",
+    "현재 전투방 적4·발판3·덮개112·개방/접근 조명 유지",
+    "유물은 청색 기능 신호를 장식과 구별",
+    "연구 이미지를 게임 자산으로 직접 사용하지 않고 프로젝트 고유 자산 제작"
+  ],
+  "continuation": "collect_references.py는 이전 배치를 보존. 신규 항목의 시각 관찰 없이는 build_database.py가 실패함"
+}

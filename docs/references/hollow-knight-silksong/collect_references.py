@@ -1,5 +1,6 @@
 """Collect and deduplicate attributed map references; never exports game assets."""
 from concurrent.futures import ThreadPoolExecutor
+import argparse
 import hashlib
 import io
 import json
@@ -54,11 +55,12 @@ def signatures(data):
     with Image.open(io.BytesIO(data)) as source:
         im = source.convert("RGB")
         gray = im.convert("L").resize((9, 8))
-        values = list(gray.getdata())
+        values = gray.tobytes()
         bits = [values[y * 9 + x] > values[y * 9 + x + 1] for y in range(8) for x in range(8)]
         dhash = sum(int(bit) << n for n, bit in enumerate(bits))
         small = im.resize((160, 90))
-        pixels = list(small.getdata())
+        rgb_bytes = small.tobytes()
+        pixels = [rgb_bytes[i:i+3] for i in range(0,len(rgb_bytes),3)]
         dark = sum(max(p) < 28 for p in pixels) / len(pixels)
         bright = sum(min(p) > 200 for p in pixels) / len(pixels)
         # Dominant swatches describe the whole frame, including UI and dark terrain.
@@ -108,6 +110,13 @@ def contacts(rows):
 
 
 def main():
+    parser=argparse.ArgumentParser(description="공개 맵 이미지를 기존 자료에 누적 수집")
+    parser.add_argument("--max-per-region",type=int,default=6)
+    parser.add_argument("--game",choices=["HK","SS","both"],default="both")
+    parser.add_argument("--region",default="")
+    parser.add_argument("--accessed",default="2026-11-23")
+    args=parser.parse_args()
+    if not 1<=args.max_per_region<=30:parser.error("--max-per-region must be 1..30")
     (ROOT/"images").mkdir(parents=True,exist_ok=True)
     rows=[]
     for old in json.loads((LEGACY/"analysis.json").read_text(encoding="utf-8")):
@@ -115,10 +124,22 @@ def main():
         rows.append(dict(old, id="HK-"+old["id"], game="HK", source_title=old["title"],
                          local_file="../hollow-knight-greenpath/"+old["local_file"],
                          origin="legacy", **signatures(data)))
+    # Retain earlier batches even when a follow-up collects just one region.
+    previous_file=ROOT/"sources.json"
+    if previous_file.exists():
+        for previous in json.loads(previous_file.read_text(encoding="utf-8")):
+            if previous["origin"]=="new":
+                if not (ROOT/previous["local_file"]).exists():
+                    raise FileNotFoundError(previous["local_file"])
+                rows.append(previous)
+    initial_count=len(rows)
     known={row["image_url"] for row in rows}
     candidates=[wiki(game,code,region,n) for game,regions in (("HK",HK),("SS",SS))
-                for code,region in regions for n in range(1,7)]
+                if args.game in (game,"both") for code,region in regions
+                if args.region.casefold() in region.casefold()
+                for n in range(1,args.max_per_region+1)]
     candidates=[row for row in candidates if row["image_url"] not in known]
+    for row in candidates:row["accessed"]=args.accessed
     with ThreadPoolExecutor(max_workers=6) as pool:
         results=list(pool.map(download,candidates))
     log=[];seen_bytes={row["sha256"]:row["id"] for row in rows};seen_pixels={row["pixel_sha256"]:row["id"] for row in rows}
@@ -138,9 +159,13 @@ def main():
                 if distance<=4:nearest.append(dict(id=previous["id"],dhash_distance=distance))
         row["similar_frames"]=nearest
     (ROOT/"sources.json").write_text(json.dumps(rows,ensure_ascii=False,indent=2),encoding="utf-8")
-    (ROOT/"download-log.json").write_text(json.dumps(log,ensure_ascii=False,indent=2),encoding="utf-8")
+    log_path=ROOT/"download-log.json"
+    old_log=json.loads(log_path.read_text(encoding="utf-8")) if log_path.exists() else []
+    combined={row["id"]:row for row in old_log}
+    combined.update({row["id"]:row for row in log})
+    log_path.write_text(json.dumps(list(combined.values()),ensure_ascii=False,indent=2),encoding="utf-8")
     contacts(rows)
-    print(json.dumps(dict(total=len(rows),legacy=sum(r["origin"]=="legacy" for r in rows),new=sum(r["origin"]=="new" for r in rows),
+    print(json.dumps(dict(total=len(rows),added_this_run=len(rows)-initial_count,legacy=sum(r["origin"]=="legacy" for r in rows),new=sum(r["origin"]=="new" for r in rows),
         HK=sum(r["game"]=="HK" for r in rows),SS=sum(r["game"]=="SS" for r in rows),
         failed=[dict(id=r["id"],error=r.get("error")) for r in log if r["status"]=="failed"],
         duplicates=[dict(id=r["id"],duplicate_of=r["duplicate_of"]) for r in log if r["status"]=="duplicate"]),ensure_ascii=True))

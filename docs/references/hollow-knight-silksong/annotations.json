@@ -1,0 +1,600 @@
+[
+  {
+    "id": "SS-MG-02",
+    "image": "images/ss-mg-02.png",
+    "annotated_image": "analysis/ss-mg-02-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "전경 큰 잎",
+        "kind": "foreground",
+        "bbox": [
+          0.02,
+          0.65,
+          0.27,
+          0.99
+        ]
+      },
+      {
+        "label": "보행 띠와 작은 적",
+        "kind": "surface",
+        "bbox": [
+          0.28,
+          0.72,
+          0.62,
+          0.91
+        ]
+      },
+      {
+        "label": "흐린 뒤 이끼 언덕",
+        "kind": "background",
+        "bbox": [
+          0.15,
+          0.12,
+          0.66,
+          0.62
+        ]
+      },
+      {
+        "label": "위쪽 부드러운 빛",
+        "kind": "light",
+        "bbox": [
+          0.43,
+          0.01,
+          0.61,
+          0.51
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SS-SH-06",
+    "image": "images/ss-sh-06.png",
+    "annotated_image": "analysis/ss-sh-06-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "전경 천장 가림",
+        "kind": "foreground",
+        "bbox": [
+          0.57,
+          0.01,
+          0.99,
+          0.46
+        ]
+      },
+      {
+        "label": "중간의 굵은 뿌리",
+        "kind": "midground",
+        "bbox": [
+          0.04,
+          0.38,
+          0.36,
+          0.82
+        ]
+      },
+      {
+        "label": "사선 빛과 입자",
+        "kind": "light",
+        "bbox": [
+          0.34,
+          0.13,
+          0.62,
+          0.7
+        ]
+      },
+      {
+        "label": "읽히는 낮은 길",
+        "kind": "surface",
+        "bbox": [
+          0.12,
+          0.81,
+          0.78,
+          0.91
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SS-UW-01",
+    "image": "images/ss-uw-01.png",
+    "annotated_image": "analysis/ss-uw-01-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "천장 검은 실루엣",
+        "kind": "foreground",
+        "bbox": [
+          0.38,
+          0,
+          0.57,
+          0.3
+        ]
+      },
+      {
+        "label": "지면의 작은 조형물",
+        "kind": "midground",
+        "bbox": [
+          0.22,
+          0.61,
+          0.35,
+          0.84
+        ]
+      },
+      {
+        "label": "먼 석조 벽",
+        "kind": "background",
+        "bbox": [
+          0.28,
+          0.19,
+          0.66,
+          0.65
+        ]
+      },
+      {
+        "label": "천장 틈과 수직빛",
+        "kind": "light",
+        "bbox": [
+          0.37,
+          0.05,
+          0.58,
+          0.79
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SS-DD-05",
+    "image": "images/ss-dd-05.png",
+    "annotated_image": "analysis/ss-dd-05-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "선명한 앞 화로와 사슬",
+        "kind": "midground",
+        "bbox": [
+          0.59,
+          0.04,
+          0.77,
+          0.75
+        ]
+      },
+      {
+        "label": "흐린 뒤 화로",
+        "kind": "background",
+        "bbox": [
+          0.06,
+          0.07,
+          0.17,
+          0.66
+        ]
+      },
+      {
+        "label": "위험 재질의 밝은 면",
+        "kind": "light",
+        "bbox": [
+          0.04,
+          0.84,
+          0.95,
+          0.99
+        ]
+      },
+      {
+        "label": "여러 높이의 기계 외형",
+        "kind": "midground",
+        "bbox": [
+          0.19,
+          0.01,
+          0.56,
+          0.91
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SS-CK-06",
+    "image": "images/ss-ck-06.png",
+    "annotated_image": "analysis/ss-ck-06-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "거대하고 흐린 뒤 기어",
+        "kind": "background",
+        "bbox": [
+          0.02,
+          0.01,
+          0.65,
+          0.94
+        ]
+      },
+      {
+        "label": "작고 선명한 앞 난간",
+        "kind": "midground",
+        "bbox": [
+          0.65,
+          0.44,
+          0.87,
+          0.6
+        ]
+      },
+      {
+        "label": "발판의 검은 내부",
+        "kind": "surface",
+        "bbox": [
+          0.69,
+          0.67,
+          0.98,
+          0.99
+        ]
+      },
+      {
+        "label": "밝은 뒤 대기층",
+        "kind": "light",
+        "bbox": [
+          0.05,
+          0.09,
+          0.25,
+          0.72
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SS-MF-04",
+    "image": "images/ss-mf-04.png",
+    "annotated_image": "analysis/ss-mf-04-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "따뜻한 작은 광원",
+        "kind": "light",
+        "bbox": [
+          0.19,
+          0.33,
+          0.28,
+          0.63
+        ]
+      },
+      {
+        "label": "작은 벤치",
+        "kind": "midground",
+        "bbox": [
+          0.32,
+          0.6,
+          0.44,
+          0.73
+        ]
+      },
+      {
+        "label": "차가운 바깥 재질",
+        "kind": "background",
+        "bbox": [
+          0.81,
+          0.4,
+          0.99,
+          0.86
+        ]
+      },
+      {
+        "label": "어두운 천장 프레임",
+        "kind": "foreground",
+        "bbox": [
+          0.05,
+          0.01,
+          0.56,
+          0.27
+        ]
+      }
+    ]
+  },
+  {
+    "id": "HK-CT-05",
+    "image": "images/hk-ct-05.png",
+    "annotated_image": "analysis/hk-ct-05-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "좌우 다른 높이의 발판",
+        "kind": "surface",
+        "bbox": [
+          0.01,
+          0.26,
+          0.28,
+          0.61
+        ]
+      },
+      {
+        "label": "앞쪽 긴 사슬",
+        "kind": "foreground",
+        "bbox": [
+          0.58,
+          0,
+          0.62,
+          0.98
+        ]
+      },
+      {
+        "label": "먼 큰 창과 기둥",
+        "kind": "background",
+        "bbox": [
+          0.22,
+          0.1,
+          0.56,
+          0.38
+        ]
+      },
+      {
+        "label": "작은 흰 등불",
+        "kind": "light",
+        "bbox": [
+          0.05,
+          0.35,
+          0.15,
+          0.44
+        ]
+      }
+    ]
+  },
+  {
+    "id": "HK-DN-04",
+    "image": "images/hk-dn-04.png",
+    "annotated_image": "analysis/hk-dn-04-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "앞을 가로지르는 실",
+        "kind": "foreground",
+        "bbox": [
+          0.27,
+          0.01,
+          0.44,
+          0.97
+        ]
+      },
+      {
+        "label": "큰 문과 중간 구조",
+        "kind": "midground",
+        "bbox": [
+          0.26,
+          0.05,
+          0.72,
+          0.97
+        ]
+      },
+      {
+        "label": "높이가 다른 작은 발판",
+        "kind": "surface",
+        "bbox": [
+          0.11,
+          0.76,
+          0.3,
+          0.98
+        ]
+      },
+      {
+        "label": "작은 문틈 빛",
+        "kind": "light",
+        "bbox": [
+          0.47,
+          0.42,
+          0.54,
+          0.61
+        ]
+      }
+    ]
+  },
+  {
+    "id": "HK-WP-06",
+    "image": "images/hk-wp-06.png",
+    "annotated_image": "analysis/hk-wp-06-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "선명한 작은 발판",
+        "kind": "surface",
+        "bbox": [
+          0.29,
+          0.63,
+          0.39,
+          0.75
+        ]
+      },
+      {
+        "label": "밝은 원경 창",
+        "kind": "background",
+        "bbox": [
+          0.4,
+          0.64,
+          0.47,
+          0.88
+        ]
+      },
+      {
+        "label": "크기가 다른 원형 신호",
+        "kind": "midground",
+        "bbox": [
+          0.69,
+          0.01,
+          0.98,
+          0.31
+        ]
+      },
+      {
+        "label": "뾰족한 왼쪽 경계",
+        "kind": "surface",
+        "bbox": [
+          0,
+          0.05,
+          0.05,
+          0.91
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SS-SK-02",
+    "image": "images/ss-sk-02.png",
+    "annotated_image": "analysis/ss-sk-02-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "명료한 안전면",
+        "kind": "surface",
+        "bbox": [
+          0.16,
+          0.76,
+          0.51,
+          0.88
+        ]
+      },
+      {
+        "label": "따뜻한 색의 가시",
+        "kind": "surface",
+        "bbox": [
+          0.53,
+          0.72,
+          0.99,
+          0.94
+        ]
+      },
+      {
+        "label": "작은 노란 광원",
+        "kind": "light",
+        "bbox": [
+          0.78,
+          0.2,
+          0.84,
+          0.33
+        ]
+      },
+      {
+        "label": "검은 지형 속",
+        "kind": "foreground",
+        "bbox": [
+          0.01,
+          0.01,
+          0.19,
+          0.52
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SS-WV-05",
+    "image": "images/ss-wv-05.png",
+    "annotated_image": "analysis/ss-wv-05-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "낮은 중앙 장치 외형",
+        "kind": "midground",
+        "bbox": [
+          0.34,
+          0.66,
+          0.68,
+          0.89
+        ]
+      },
+      {
+        "label": "작은 따뜻한 광원 군집",
+        "kind": "light",
+        "bbox": [
+          0.13,
+          0.24,
+          0.92,
+          0.63
+        ]
+      },
+      {
+        "label": "중앙 뒤 세로벽",
+        "kind": "background",
+        "bbox": [
+          0.35,
+          0.03,
+          0.62,
+          0.66
+        ]
+      },
+      {
+        "label": "하단 검은 가림",
+        "kind": "foreground",
+        "bbox": [
+          0.04,
+          0.82,
+          0.21,
+          0.99
+        ]
+      }
+    ]
+  },
+  {
+    "id": "SS-ME-01",
+    "image": "images/ss-me-01.png",
+    "annotated_image": "analysis/ss-me-01-annotated.jpg",
+    "coordinate_space": "normalized xyxy, origin=source top-left",
+    "interpretation": "visual ROI, not segmentation or collision",
+    "regions": [
+      {
+        "label": "검은 코어와 이끼 경계",
+        "kind": "surface",
+        "bbox": [
+          0.06,
+          0.43,
+          0.33,
+          0.82
+        ]
+      },
+      {
+        "label": "높은 실제 모양의 발판",
+        "kind": "surface",
+        "bbox": [
+          0.37,
+          0.01,
+          0.6,
+          0.13
+        ]
+      },
+      {
+        "label": "중앙의 낮은 문",
+        "kind": "midground",
+        "bbox": [
+          0.43,
+          0.66,
+          0.61,
+          0.95
+        ]
+      },
+      {
+        "label": "먼 세로빛과 안개",
+        "kind": "light",
+        "bbox": [
+          0.42,
+          0.22,
+          0.6,
+          0.6
+        ]
+      },
+      {
+        "label": "따뜻한 위험 외곽",
+        "kind": "surface",
+        "bbox": [
+          0.01,
+          0.01,
+          0.14,
+          0.39
+        ]
+      }
+    ]
+  }
+]

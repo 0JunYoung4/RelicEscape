@@ -15,6 +15,21 @@ TAG_PATTERNS={"휴식":["P10"],"조명":["P04"],"레이어":["P03"],"그림자":
               "맵":["P05"],"위험":["P07"],"유적":["P16"],"텍스처":["P12"],"전투":["P11"],
               "몬스터":["P15"],"랜드마크":["P16"],"전이":["P09"],"수직":["P05"],
               "탐색":["P08"],"상호작용":["P06"],"개발판":["P12"]}
+PRIMARY_TARGETS={"수평 통로":["중앙 통로"],"복층 공간":["중앙 통로","고대 장치 구역"],
+    "수직 이동":["중앙 통로","하강 통로"],"전투 공간":["전투방","보스방"],
+    "열린 방":["전투방","보스방"],"휴식 포켓":["전투 후 휴식 지점","보상 포켓"],
+    "보상 포켓":["보상 포켓","유물 획득 지점"],"목표 노출":["유물 획득 지점","보상 포켓"],
+    "지역 경계":["중앙 통로","문양의 성소"],"장치 공간":["고대 장치 구역"],
+    "장치 외형":["고대 장치 구역"],"재질 상세":["고대 장치 구역"],
+    "조명 상세":["유물 획득 지점","문양의 성소"],"시네마틱 효과":["유물 획득 연출","보스 등장 연출"],
+    "상태 변형":["고대 장치 구역","보스 처치 후"],"랜드마크":["중앙 통로","문양의 성소"],
+    "위험 구간":["고대 장치 구역","보스 접근 구간"]}
+TARGET_OVERRIDES={"SS-UW-01":["유물 획득 지점","문양의 성소"],
+    "SS-SH-06":["유물 획득 지점","이끼 통로"],"SS-ME-04":["유물 획득 지점","문양의 성소"],
+    "SS-MG-02":["이끼 통로"],"SS-MG-03":["이끼 통로","하강 통로"],
+    "SS-WV-05":["문양의 성소"],"SS-ME-01":["문양의 성소","중앙 통로"],
+    "SS-CK-06":["고대 장치 구역","중앙 통로"],"HK-CT-05":["중앙 통로","하강 통로"],
+    "HK-AY-05":["문양의 성소","유물 획득 지점"]}
 
 
 def load_records():
@@ -50,7 +65,12 @@ def load_records():
                        "effect" if row["layout"]=="시네마틱 효과" else
                        "detail" if "상세" in row["layout"] else
                        "state_variant" if row["layout"]=="상태 변형" else "scene")
-        row["project_targets"]=sorted({t for p in row["patterns"] for t in pattern_map[p]["targets"]})
+        broad_targets={t for p in row["patterns"] for t in pattern_map[p]["targets"]}
+        row["project_targets"]=list(PRIMARY_TARGETS[row["layout"]])
+        if row["layout"]=="수평 통로" and any(m in row["materials"] for m in ("잎","이끼","덩굴")):
+            row["project_targets"]=["이끼 통로","중앙 통로"]
+        if row["id"] in TARGET_OVERRIDES:row["project_targets"]=TARGET_OVERRIDES[row["id"]]
+        row["secondary_project_targets"]=sorted(broad_targets-set(row["project_targets"]))
         row["asset_briefs"]=sorted({a for p in row["patterns"] for a in pattern_map[p]["asset_briefs"]})
         row["priority"]=min(pattern_map[p]["priority"] for p in row["patterns"])
         light=row["lighting"]
@@ -100,6 +120,20 @@ def write_exports(rows):
                patterns=len(pats),asset_briefs=len(briefs),similar_frame_records=sum(bool(r["similar_frames"]) for r in rows),
                bytes_new=sum(r["bytes"] for r in rows if r["origin"]=="new"))
     save_json("statistics.json",stats)
+    save_json("dataset-manifest.json",dict(format_version="1.0",title="RelicEscape 맵 제작용 참고 데이터",
+        snapshot_date="2026-11-23",counts=stats,
+        files=dict(records="analysis.json",jsonl="analysis.jsonl",csv="catalog.csv",sources="sources.json",
+                   patterns="patterns.json",asset_briefs="asset-briefs.json",annotations="annotations.json",
+                   gallery="index.html",guide="../../reference-production-guide.md"),
+        interpretation=dict(observation="이미지에서 읽히는 형태·재질·명암의 시각적 관찰",
+                            application="프로젝트 적용 제안. 구현 여부는 패턴의 project_status와 최신 소스 확인",
+                            spatial_labels="시각적 관심 영역이며 실제 엔진 레이어·충돌·세그멘테이션 아님",
+                            metrics="UI 포함 전체 화면 RGB160x90의 계산값. 원작의 재질색·광량·카메라 설정 아님"),
+        project_constraints=["시작 동굴과 최초 착지방 보존","승인된 벽·발판과 현재 충돌·이동감 유지",
+            "천장 전경은 월드 천장에 고정","문틀 끝에 별도 덩굴을 붙이지 않음",
+            "현재 전투방 적4·발판3·덮개112·개방/접근 조명 유지","유물은 청색 기능 신호를 장식과 구별",
+            "연구 이미지를 게임 자산으로 직접 사용하지 않고 프로젝트 고유 자산 제작"],
+        continuation="collect_references.py는 이전 배치를 보존. 신규 항목의 시각 관찰 없이는 build_database.py가 실패함"))
     return pats,briefs,stats
 
 
@@ -114,7 +148,7 @@ def write_readme(rows,pats,briefs,stats):
 - [제작 패턴20개](patterns.json) · [자산 제작 명세20개](asset-briefs.json) · [통계](statistics.json)
 - [기존 녹색 거리 자료집](../hollow-knight-greenpath/README.md)
 
-신규199장은 실제 PNG로 저장했고 기존45장은 원래 파일을 참조해 중복 복사를 피했다. 파일 및 디코딩된 RGB 픽셀 해시로 완전 중복을 제외했다. 비슷한 구도는 dHash 거리4 이하 후보를 따로 표시한다. 이 표시는 유사도 후보이며 같은 방·같은 원본이라고 확정하는 판정은 아니다.
+신규{stats['new']}장은 실제 PNG로 저장했고 기존45장은 원래 파일을 참조해 중복 복사를 피했다. 파일 및 디코딩된 RGB 픽셀 해시로 완전 중복을 제외했다. 비슷한 구도는 dHash 거리4 이하 후보를 따로 표시한다. 이 표시는 유사도 후보이며 같은 방·같은 원본이라고 확정하는 판정은 아니다.
 
 개별 관찰은 시각적으로 확인한 화면 내용이고, P01~P20은 RelicEscape 적용 제안이다. 시작 동굴·최초 착지방 보존, 승인된 벽·발판, 현재 전투방 배치·충돌·카메라·덮개112·접근 조명은 유지 기준이다. 게임에 적용한 항목과 미구현 제안은 각 패턴의 현재 상태에서 구별한다.
 
@@ -164,13 +198,12 @@ def write_gallery(rows,pats,briefs,stats):
     cards=[]
     for r in rows:
         uses=" ".join(r["project_targets"])
-        haystack=" ".join([r["id"],r["region"],r["title"],r["observation"],r["depth_interpretation"],r["lighting"],*r["materials"],*r["project_targets"],*r["patterns"]])
+        haystack=" ".join([r["id"],r["region"],r["title"],r["observation"],r["depth_interpretation"],r["lighting"],*r["materials"],*r["project_targets"],*r["patterns"],*r["lighting_types"],*[pmap[p]["title"] for p in r["patterns"]]])
         pattern_links="".join(f'<li><a href="#pattern-{p}">{p} {esc(pmap[p]["title"])}</a></li>' for p in r["patterns"])
         palette="".join(f'<span style="background:{p["hex"]}" title="{p["hex"]} · {p["fraction"]:.1%}"></span>' for p in r["metrics"]["palette"])
         similar="、".join(x["id"] for x in r["similar_frames"])
-        scope_label={"scene":"空間参考","detail":"재질·조명 상세","effect":"연출 효과","state_variant":"상태 비교","pre_release":"개발 중 자료"}[r["scope"]]
-        if scope_label=="空間参考":scope_label="공간 참고"
-        cards.append(f'''<article class="card" id="{r['id']}" data-id="{r['id']}" data-game="{r['game']}" data-region="{esc(r['region'])}" data-layout="{esc(r['layout'])}" data-scope="{r['scope']}" data-materials="{esc(';'.join(r['materials']))}" data-lights="{esc(';'.join(r['lighting_types']))}" data-targets="{esc(';'.join(r['project_targets']))}" data-patterns="{';'.join(r['patterns'])}" data-search="{esc(haystack)}"><a class="picture" href="{esc(r['local_file'])}" data-large><img loading="lazy" src="{esc(r['local_file'])}" alt="{esc(r['id']+' '+r['title'])}" width="{r['width']}" height="{r['height']}"></a><div class="body"><div class="eyebrow">{r['id']} · {r['game']} / {esc(r['region'])}</div><h3>{esc(r['title'])}</h3><p class="meta">{esc(r['layout'])} · {scope_label} · {esc(', '.join(r['materials']))}</p><dl><dt>画面観察</dt><dd>{esc(r['observation'])}</dd><dt>전경과 배경</dt><dd>{esc(r['depth_interpretation'])}</dd><dt>조명</dt><dd>{esc(r['lighting'])}</dd><dt>프로젝트 적용 패턴</dt><dd><ul>{pattern_links}</ul></dd><dt>적용할 구역</dt><dd>{esc(', '.join(r['project_targets']))}</dd></dl><details><summary>색상 수치와 출처 정보</summary><div class="palette">{palette}</div><p class="meta">암부 {r['metrics']['dark_pixel_fraction']:.1%} · 밝은 픽셀 {r['metrics']['bright_pixel_fraction']:.1%}. UI를 포함한 화면 전체의 계산값이며 재질별 팔레트나 원작 렌더 설정이 아니다.</p><p class="meta">유사 구도 후보: {similar or '없음'} · {r['width']}×{r['height']} · 2026-11-23 확인</p><p class="meta">자산 명세: {', '.join(r['asset_briefs'])}</p></details><footer><a href="{esc(r['source_page'])}" target="_blank" rel="noopener">출처 ↗</a><a href="{esc(r['image_url'])}" target="_blank" rel="noopener">제공 이미지 ↗</a><label class="compare-label"><input type="checkbox" data-compare="{r['id']}">비교 담기</label></footer></div></article>''')
+        scope_label={"scene":"공간 참고","detail":"재질·조명 상세","effect":"연출 효과","state_variant":"상태 비교","pre_release":"개발 중 자료"}[r["scope"]]
+        cards.append(f'''<article class="card" id="{r['id']}" data-id="{r['id']}" data-game="{r['game']}" data-region="{esc(r['region'])}" data-layout="{esc(r['layout'])}" data-scope="{r['scope']}" data-materials="{esc(';'.join(r['materials']))}" data-lights="{esc(';'.join(r['lighting_types']))}" data-targets="{esc(';'.join(r['project_targets']))}" data-patterns="{';'.join(r['patterns'])}" data-search="{esc(haystack)}"><a class="picture" href="{esc(r['local_file'])}" data-large><img loading="lazy" src="{esc(r['local_file'])}" alt="{esc(r['id']+' '+r['title'])}" width="{r['width']}" height="{r['height']}"></a><div class="body"><div class="eyebrow">{r['id']} · {r['game']} / {esc(r['region'])}</div><h3>{esc(r['title'])}</h3><p class="meta">{esc(r['layout'])} · {scope_label} · {esc(', '.join(r['materials']))}</p><dl><dt>화면 관찰</dt><dd>{esc(r['observation'])}</dd><dt>전경과 배경</dt><dd>{esc(r['depth_interpretation'])}</dd><dt>조명</dt><dd>{esc(r['lighting'])}</dd><dt>프로젝트 적용 패턴</dt><dd><ul>{pattern_links}</ul></dd><dt>적용할 구역</dt><dd>{esc(', '.join(r['project_targets']))}</dd></dl><details><summary>색상 수치와 출처 정보</summary><div class="palette">{palette}</div><p class="meta">암부 {r['metrics']['dark_pixel_fraction']:.1%} · 밝은 픽셀 {r['metrics']['bright_pixel_fraction']:.1%}. UI를 포함한 화면 전체의 계산값이며 재질별 팔레트나 원작 렌더 설정이 아니다.</p><p class="meta">유사 구도 후보: {similar or '없음'} · {r['width']}×{r['height']} · 2026-11-23 확인</p><p class="meta">자산 명세: {', '.join(r['asset_briefs'])}</p></details><footer><a href="{esc(r['source_page'])}" target="_blank" rel="noopener">출처 ↗</a><a href="{esc(r['image_url'])}" target="_blank" rel="noopener">제공 이미지 ↗</a><label class="compare-label"><input type="checkbox" data-compare="{r['id']}">비교 담기</label></footer></div></article>''')
     pattern_cards=[]
     for p in pats:
         example=" ".join(f'<a href="#{rid}">{rid}</a>' for rid in p["reference_ids"][:10])
@@ -202,7 +235,6 @@ window.addEventListener('hashchange',revealHash);apply();revealHash();
     replacements={"TOTAL":str(stats['total']),"NEW":str(stats['new']),"HKCOUNT":str(stats['games']['HK']),"SSCOUNT":str(stats['games']['SS']),"REGIONCOUNT":str(stats['regions']),
                   "CONTROLS":controls,"CARDS":"".join(cards),"PATTERNS":"".join(pattern_cards),"PLATES":plates,"DATAJSON":json.dumps(slim,ensure_ascii=False).replace("</","<\\/")}
     for key,value in replacements.items():doc=doc.replace(key,value)
-    doc=doc.replace("画面観察","화면 관찰")
     (ROOT/"index.html").write_text(doc,encoding="utf-8")
 
 

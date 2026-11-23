@@ -84,11 +84,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "유물 획득 지점",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -196,7 +198,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -303,13 +307,15 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "이끼 통로",
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B04",
@@ -415,7 +421,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "이끼 통로",
       "전투방",
       "중앙 통로",
@@ -523,11 +531,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스방",
       "유물 획득 지점",
-      "이끼 통로",
-      "전투방"
+      "이끼 통로"
     ],
     "asset_briefs": [
       "B04",
@@ -632,12 +642,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -744,10 +756,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
-      "보스방",
-      "유물 획득 지점",
       "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
+      "유물 획득 지점",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -854,8 +868,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "보스방",
       "전투방",
       "중앙 통로",
@@ -961,10 +977,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
-      "보상 포켓",
-      "보스방",
       "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
+      "보스방",
       "전투방",
       "중앙 통로"
     ],
@@ -1070,11 +1088,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -1181,10 +1201,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "문양의 성소",
-      "전투방",
       "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "전투방",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -1288,12 +1310,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "이끼 통로",
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B04",
@@ -1399,8 +1423,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "보스방",
       "전투방",
       "중앙 통로",
@@ -1508,8 +1534,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "유물 획득 지점",
       "전투방",
       "중앙 통로",
@@ -1619,11 +1647,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "유물 획득 지점",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -1731,11 +1761,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "보스방",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -1841,10 +1873,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "전투방",
       "중앙 통로",
       "하강 통로"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -1948,11 +1982,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -2055,6 +2091,9 @@
     ],
     "scope": "pre_release",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
@@ -2162,12 +2201,14 @@
     ],
     "scope": "pre_release",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -2269,12 +2310,14 @@
     ],
     "scope": "pre_release",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -2380,12 +2423,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "하강 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "보스방",
       "이끼 통로",
-      "전투방",
-      "중앙 통로",
-      "하강 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B06",
@@ -2488,9 +2533,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "보상 포켓",
+      "유물 획득 지점"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "이끼 통로",
       "전투방",
       "하강 통로"
@@ -2597,7 +2645,9 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "유물 획득 지점",
       "전투방",
@@ -2707,10 +2757,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "보상 포켓",
+      "유물 획득 지점"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "중앙 통로",
@@ -2818,7 +2870,9 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "이끼 통로",
       "전투방",
       "중앙 통로",
@@ -2927,7 +2981,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "이끼 통로",
       "전투방",
       "중앙 통로",
@@ -3034,7 +3090,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "중앙 통로",
       "하강 통로"
     ],
@@ -3138,8 +3196,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "유물 획득 지점",
       "전투방",
       "중앙 통로",
@@ -3247,10 +3307,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "보상 포켓",
-      "이끼 통로",
       "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "이끼 통로",
       "중앙 통로",
       "하강 통로"
     ],
@@ -3355,10 +3417,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "보스방",
-      "이끼 통로",
-      "전투방"
+      "이끼 통로"
     ],
     "asset_briefs": [
       "B13",
@@ -3461,10 +3525,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "보스방",
-      "이끼 통로",
       "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "이끼 통로",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -3570,8 +3636,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "보스방",
       "유물 획득 지점",
       "이끼 통로",
@@ -3681,10 +3749,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "보스방",
-      "이끼 통로",
-      "전투방"
+      "이끼 통로"
     ],
     "asset_briefs": [
       "B13",
@@ -3788,12 +3858,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "이끼 통로",
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
-      "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -3899,7 +3971,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "보스방",
       "이끼 통로",
       "전투방",
@@ -4008,12 +4082,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보스방",
       "유물 획득 지점",
-      "이끼 통로",
-      "전투방"
+      "이끼 통로"
     ],
     "asset_briefs": [
       "B04",
@@ -4118,10 +4194,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "보스방",
-      "이끼 통로",
       "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "이끼 통로",
       "중앙 통로",
       "하강 통로"
     ],
@@ -4227,7 +4305,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "보스방",
       "이끼 통로",
       "전투방",
@@ -4335,11 +4415,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "이끼 통로",
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -4444,11 +4526,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -4552,11 +4636,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -4660,11 +4746,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -4769,12 +4857,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -4877,11 +4967,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "이끼 통로",
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B04",
@@ -4974,10 +5067,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -5071,7 +5166,9 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보스방",
       "전투방",
@@ -5169,11 +5266,13 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "중앙 통로",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -5267,12 +5366,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B04",
@@ -5366,12 +5467,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B04",
@@ -5464,12 +5567,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스 처치 후",
-      "보스방",
-      "이끼 통로",
-      "전투방"
+      "이끼 통로"
     ],
     "asset_briefs": [
       "B16",
@@ -5563,8 +5668,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -5662,8 +5769,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "중앙 통로",
       "하강 통로"
     ],
@@ -5757,10 +5866,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "보상 포켓",
+      "유물 획득 지점"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방"
     ],
@@ -5857,12 +5968,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -5956,12 +6069,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스 접근 구간",
       "보스방",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -6056,11 +6171,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -6155,11 +6272,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "보스방",
       "유물 획득 지점",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -6256,11 +6375,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -6353,10 +6474,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "전투방",
       "중앙 통로",
       "하강 통로"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -6450,10 +6573,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방"
     ],
@@ -6550,7 +6675,9 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "중앙 통로",
       "하강 통로"
@@ -6649,11 +6776,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "유물 획득 지점",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -6751,6 +6880,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "이끼 통로",
       "전투방",
@@ -6844,7 +6976,9 @@
     ],
     "scope": "detail",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "이끼 통로",
       "전투방"
@@ -6941,8 +7075,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "중앙 통로",
       "하강 통로"
     ],
@@ -7038,11 +7174,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -7136,7 +7274,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "중앙 통로",
       "하강 통로"
     ],
@@ -7231,11 +7371,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -7330,13 +7472,15 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "하강 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로",
-      "하강 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B04",
@@ -7431,10 +7575,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
-      "보상 포켓",
-      "이끼 통로",
       "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
+      "이끼 통로",
       "전투방",
       "중앙 통로"
     ],
@@ -7529,11 +7675,13 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "보스방",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -7627,10 +7775,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
-      "보상 포켓",
-      "이끼 통로",
       "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
+      "이끼 통로",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -7728,7 +7878,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "중앙 통로",
       "하강 통로"
     ],
@@ -7824,10 +7976,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
-      "보상 포켓",
-      "이끼 통로",
       "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
+      "이끼 통로",
       "전투방",
       "중앙 통로"
     ],
@@ -7922,11 +8076,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -8021,8 +8177,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -8121,8 +8279,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "이끼 통로",
       "전투방",
       "하강 통로"
@@ -8220,10 +8380,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "문양의 성소",
-      "전투방",
       "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "전투방",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -8318,11 +8480,13 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "보스방",
       "유물 획득 지점",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -8418,7 +8582,9 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "이끼 통로",
       "전투방",
       "중앙 통로"
@@ -8516,6 +8682,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "유물 획득 지점",
       "이끼 통로",
@@ -8614,11 +8783,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -8713,7 +8884,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "중앙 통로",
       "하강 통로"
     ],
@@ -8810,12 +8983,14 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "보상 포켓",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -8909,10 +9084,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
+      "유물 획득 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -9007,11 +9184,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -9106,12 +9285,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B11",
@@ -9205,10 +9386,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "중앙 통로",
@@ -9306,11 +9489,13 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "중앙 통로",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "유물 획득 지점",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -9405,8 +9590,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -9499,13 +9686,15 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보스 등장 연출",
-      "보스방",
       "유물 획득 연출",
       "유물 획득 지점",
-      "이끼 통로",
-      "전투방"
+      "이끼 통로"
     ],
     "asset_briefs": [
       "B04",
@@ -9598,10 +9787,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "전투방",
       "중앙 통로",
       "하강 통로"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -9693,7 +9884,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "중앙 통로",
       "하강 통로"
     ],
@@ -9787,10 +9980,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "보스방",
-      "이끼 통로",
       "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "이끼 통로",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -9885,13 +10080,15 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "하강 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스 접근 구간",
       "이끼 통로",
-      "전투방",
-      "중앙 통로",
-      "하강 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -9984,10 +10181,12 @@
     ],
     "scope": "detail",
     "project_targets": [
-      "고대 장치 구역",
       "문양의 성소",
+      "유물 획득 지점"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
       "보스방",
-      "유물 획득 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -10083,10 +10282,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방"
     ],
@@ -10182,11 +10383,13 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "문양의 성소",
-      "전투방",
       "중앙 통로",
       "하강 통로"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "문양의 성소",
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -10281,8 +10484,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "이끼 통로",
       "전투방",
       "하강 통로"
@@ -10377,10 +10582,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "전투방",
       "중앙 통로",
       "하강 통로"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -10472,11 +10679,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -10569,8 +10778,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "이끼 통로",
       "전투방",
       "하강 통로"
@@ -10666,11 +10877,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "보스방",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -10764,6 +10977,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
@@ -10859,11 +11075,13 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "보스방",
       "유물 획득 지점",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -10959,13 +11177,15 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "하강 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
       "이끼 통로",
-      "전투방",
-      "중앙 통로",
-      "하강 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B06",
@@ -11058,10 +11278,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "보스방",
-      "이끼 통로",
       "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "이끼 통로",
       "중앙 통로",
       "하강 통로"
     ],
@@ -11155,6 +11377,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
@@ -11252,10 +11477,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보스방",
-      "전투방",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -11349,11 +11576,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "보스방",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "중앙 통로"
@@ -11450,10 +11679,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "중앙 통로",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -11547,6 +11778,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보스 등장 연출",
       "유물 획득 연출",
@@ -11645,12 +11879,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "보스방",
       "유물 획득 지점",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -11747,11 +11983,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -11845,9 +12083,11 @@
     ],
     "scope": "effect",
     "project_targets": [
-      "문양의 성소",
-      "보스 등장 연출",
       "유물 획득 연출",
+      "보스 등장 연출"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
       "유물 획득 지점",
       "전투방",
       "하강 통로"
@@ -11944,11 +12184,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "유물 획득 지점",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -12042,10 +12284,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "중앙 통로",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -12140,11 +12384,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -12237,6 +12483,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "유물 획득 지점",
       "이끼 통로",
@@ -12336,10 +12585,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "중앙 통로",
@@ -12437,13 +12688,15 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "하강 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보상 포켓",
       "이끼 통로",
-      "전투방",
-      "중앙 통로",
-      "하강 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B06",
@@ -12537,12 +12790,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B04",
@@ -12637,6 +12892,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
@@ -12735,9 +12993,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "하강 통로"
@@ -12836,8 +13097,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "중앙 통로",
       "하강 통로"
     ],
@@ -12935,8 +13198,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "중앙 통로",
       "하강 통로"
     ],
@@ -13032,7 +13297,9 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "보스 접근 구간",
       "중앙 통로",
       "하강 통로"
@@ -13131,12 +13398,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -13216,7 +13485,7 @@
     "similar_frames": [],
     "title": "이끼 언덕과 열린 중앙",
     "layout": "수평 통로",
-    "observation": "낮은 보행 띠 뒤로 큰 둥근 이끼 언덕이 겹친다.",
+    "observation": "낮은 지면의 작은 이끼 벌레 둘 뒤로 큰 둥근 언덕이 겹친다.",
     "materials": [
       "이끼",
       "석재",
@@ -13228,21 +13497,26 @@
       "P02",
       "P03",
       "P12",
+      "P15",
       "P17"
     ],
     "scope": "scene",
     "project_targets": [
+      "이끼 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보상 포켓",
-      "이끼 통로",
+      "보스방",
       "전투방",
       "중앙 통로"
     ],
     "asset_briefs": [
       "B02",
       "B03",
-      "B14"
+      "B14",
+      "B16"
     ],
     "priority": "P0",
     "lighting_types": [
@@ -13331,11 +13605,13 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
       "이끼 통로",
-      "전투방",
-      "중앙 통로",
       "하강 통로"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "전투방",
+      "중앙 통로"
     ],
     "asset_briefs": [
       "B01",
@@ -13429,11 +13705,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스방",
       "유물 획득 지점",
-      "이끼 통로",
-      "전투방"
+      "이끼 통로"
     ],
     "asset_briefs": [
       "B02",
@@ -13528,11 +13806,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "유물 획득 지점",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -13630,10 +13910,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "문양의 성소",
-      "보스 접근 구간",
       "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "보스 접근 구간",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -13728,12 +14010,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -13827,10 +14111,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
-      "전투방",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -13927,12 +14214,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "보스방",
       "유물 획득 지점",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -14030,9 +14319,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "유물 획득 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -14131,7 +14423,9 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "보스 접근 구간",
       "전투방",
       "중앙 통로",
@@ -14230,12 +14524,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보상 포켓",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -14332,8 +14628,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -14413,35 +14711,41 @@
     "status": "downloaded",
     "origin": "new",
     "similar_frames": [],
-    "title": "사슬에 매달린 여러 발판",
-    "layout": "장치 공간",
-    "observation": "높이가 다른 매달린 바구니형 발판들이 위험면 위에 놓인다.",
+    "title": "사슬에 매달린 여러 화로",
+    "layout": "장치 외형",
+    "observation": "높이가 다른 사슬 화로들이 밝은 용암면 위에 매달려 있다.",
     "materials": [
       "금속",
       "사슬",
       "용암"
     ],
-    "depth_interpretation": "선명한 앞 사슬과 뒤 흐린 사슬의 대비가 다르다.",
-    "lighting": "뒤의 넓은 주황빛에 실제 발판은 어두운 외곽을 남긴다.",
+    "depth_interpretation": "선명한 앞 사슬·화로와 뒤 흐린 사슬의 대비가 다르다.",
+    "lighting": "넓은 주황빛과 어두운 화로 몸체, 붉은 내용물의 범위가 다르다.",
     "patterns": [
-      "P05",
+      "P03",
       "P06",
-      "P07"
+      "P07",
+      "P12"
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "보스 접근 구간",
+      "이끼 통로",
+      "전투방",
       "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
-      "B06",
+      "B03",
       "B07",
       "B08",
-      "B09"
+      "B09",
+      "B14"
     ],
-    "priority": "P1",
+    "priority": "P0",
     "lighting_types": [
       "밝은 면"
     ],
@@ -14527,11 +14831,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "유물 획득 지점",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -14628,11 +14934,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보스방",
       "유물 획득 지점",
-      "전투방",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -14730,12 +15038,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보상 포켓",
       "보스 접근 구간",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -14831,8 +15141,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "이끼 통로",
       "전투방",
       "하강 통로"
@@ -14929,12 +15241,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -15028,12 +15342,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "보스방",
       "유물 획득 지점",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -15130,12 +15446,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B04",
@@ -15230,10 +15548,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "하강 통로"
@@ -15332,6 +15652,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
@@ -15432,12 +15755,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -15532,10 +15857,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
-      "보상 포켓",
-      "이끼 통로",
       "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
+      "이끼 통로",
       "전투방",
       "중앙 통로"
     ],
@@ -15632,7 +15959,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "중앙 통로",
       "하강 통로"
     ],
@@ -15729,10 +16058,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "보상 포켓",
-      "보스방",
-      "이끼 통로",
       "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
+      "보상 포켓",
+      "이끼 통로",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -15828,11 +16159,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -15926,11 +16259,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "유물 획득 지점",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -16028,9 +16363,11 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "전투방",
       "중앙 통로",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
+      "전투방",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -16125,12 +16462,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "유물 획득 지점",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -16226,11 +16565,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "이끼 통로",
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -16325,10 +16666,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "이끼 통로"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보스방",
-      "유물 획득 지점",
-      "이끼 통로",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -16427,13 +16770,15 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "중앙 통로",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보스방",
       "유물 획득 지점",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -16529,12 +16874,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "하강 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로",
-      "하강 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -16629,11 +16976,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -16728,11 +17077,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "유물 획득 지점",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -16829,11 +17180,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -16928,10 +17281,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "보상 포켓",
+      "유물 획득 지점"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "하강 통로"
@@ -17029,12 +17384,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -17127,11 +17484,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "보스방",
       "유물 획득 지점",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -17228,10 +17587,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
-      "전투방",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -17326,10 +17688,12 @@
     ],
     "scope": "effect",
     "project_targets": [
-      "문양의 성소",
-      "보스 등장 연출",
-      "보스방",
       "유물 획득 연출",
+      "보스 등장 연출"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
+      "보스방",
       "유물 획득 지점",
       "이끼 통로",
       "전투방"
@@ -17426,8 +17790,10 @@
     "scope": "state_variant",
     "project_targets": [
       "고대 장치 구역",
+      "보스 처치 후"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 처치 후",
       "보스방",
       "전투방",
       "중앙 통로"
@@ -17522,8 +17888,11 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
       "보상 포켓",
+      "유물 획득 지점"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
       "보스방",
       "이끼 통로",
       "전투방",
@@ -17621,11 +17990,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -17720,11 +18091,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -17821,8 +18194,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -17919,10 +18294,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방"
     ],
@@ -18024,8 +18401,10 @@
     "scope": "state_variant",
     "project_targets": [
       "고대 장치 구역",
+      "보스 처치 후"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 처치 후",
       "유물 획득 지점",
       "전투방"
     ],
@@ -18121,6 +18500,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
@@ -18219,6 +18601,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스 접근 구간",
@@ -18318,7 +18703,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "중앙 통로",
       "하강 통로"
     ],
@@ -18412,13 +18799,15 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "유물 획득 지점",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B04",
@@ -18513,10 +18902,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "보상 포켓",
+      "유물 획득 지점"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "하강 통로"
@@ -18613,11 +19004,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "보스 등장 연출",
-      "보스방",
       "유물 획득 연출",
       "이끼 통로",
-      "전투방",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -18712,9 +19105,11 @@
     "scope": "state_variant",
     "project_targets": [
       "고대 장치 구역",
+      "보스 처치 후"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보상 포켓",
-      "보스 처치 후",
       "이끼 통로"
     ],
     "asset_briefs": [
@@ -18809,13 +19204,15 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보상 포켓",
       "유물 획득 지점",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -18912,12 +19309,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -19011,11 +19410,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "보스방",
       "유물 획득 지점",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -19112,10 +19513,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
+      "유물 획득 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -19213,11 +19616,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "이끼 통로",
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -19311,11 +19716,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "유물 획득 지점",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -19412,10 +19819,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "중앙 통로",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -19511,8 +19920,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "보상 포켓",
-      "보스 접근 구간",
       "이끼 통로",
       "중앙 통로",
       "하강 통로"
@@ -19609,11 +20020,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보스방",
       "이끼 통로",
-      "전투방",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -19707,11 +20120,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보상 포켓",
-      "보스방",
       "이끼 통로",
-      "전투방",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -19805,10 +20220,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방"
     ],
@@ -19906,11 +20323,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -20005,6 +20424,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
@@ -20103,9 +20525,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보스방",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "중앙 통로"
@@ -20203,12 +20628,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "하강 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
-      "전투방",
-      "중앙 통로",
-      "하강 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -20302,11 +20729,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "보상 포켓",
       "보스방",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -20402,10 +20831,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "하강 통로"
@@ -20501,10 +20932,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
+      "유물 획득 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -20599,10 +21032,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
+      "유물 획득 지점",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "보상 포켓",
       "보스방",
-      "유물 획득 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -20700,8 +21135,10 @@
     "scope": "state_variant",
     "project_targets": [
       "고대 장치 구역",
+      "보스 처치 후"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 처치 후",
       "유물 획득 지점",
       "전투방"
     ],
@@ -20796,12 +21233,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B04",
@@ -20897,10 +21336,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -20996,12 +21437,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보상 포켓",
       "유물 획득 지점",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -21098,7 +21541,9 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
-      "보스 접근 구간",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "중앙 통로",
       "하강 통로"
     ],
@@ -21193,8 +21638,11 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
       "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
       "중앙 통로",
       "하강 통로"
     ],
@@ -21290,10 +21738,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -21388,11 +21838,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "보스방",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "중앙 통로"
@@ -21489,11 +21941,13 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "이끼 통로",
-      "전투방",
       "중앙 통로",
       "하강 통로"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "이끼 통로",
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -21586,11 +22040,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "보스방",
       "유물 획득 지점",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -21687,12 +22143,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보상 포켓",
       "유물 획득 지점",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -21790,11 +22248,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -21889,10 +22349,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "중앙 통로"
@@ -21989,10 +22451,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "문양의 성소",
-      "보상 포켓",
-      "유물 획득 지점",
       "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
+      "문양의 성소",
+      "유물 획득 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -22087,11 +22551,13 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "중앙 통로",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "유물 획득 지점",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -22186,8 +22652,10 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "유물 획득 지점",
       "전투방",
@@ -22286,11 +22754,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "유물 획득 지점",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -22389,8 +22859,10 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "보스 접근 구간"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스 접근 구간",
       "보스방",
       "이끼 통로",
       "전투방",
@@ -22488,6 +22960,9 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "보스 등장 연출",
       "유물 획득 연출",
@@ -22586,11 +23061,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보스방",
       "유물 획득 지점",
-      "이끼 통로",
-      "전투방"
+      "이끼 통로"
     ],
     "asset_briefs": [
       "B04",
@@ -22685,11 +23162,13 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "중앙 통로",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "유물 획득 지점",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -22784,9 +23263,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "보상 포켓",
+      "유물 획득 지점"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보상 포켓",
       "보스방",
       "이끼 통로",
       "전투방",
@@ -22885,12 +23367,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -22984,12 +23468,14 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -23084,11 +23570,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "유물 획득 지점",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -23185,11 +23673,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B02",
@@ -23282,11 +23772,13 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "문양의 성소",
-      "전투방",
       "중앙 통로",
       "하강 통로"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "문양의 성소",
+      "전투방"
     ],
     "asset_briefs": [
       "B06",
@@ -23380,10 +23872,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투방",
+      "보스방"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "보스방",
-      "전투방",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -23477,7 +23971,9 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "유물 획득 지점",
       "전투방",
@@ -23577,7 +24073,9 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보스방",
       "이끼 통로",
@@ -23676,11 +24174,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보스방",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -23773,11 +24273,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "보스방",
       "유물 획득 지점",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -23873,7 +24375,9 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "보스방",
       "유물 획득 지점",
@@ -23975,9 +24479,11 @@
     "scope": "scene",
     "project_targets": [
       "고대 장치 구역",
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -24075,12 +24581,14 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
       "문양의 성소",
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
       "보스 접근 구간",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -24176,11 +24684,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "전투 후 휴식 지점",
+      "보상 포켓"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
-      "보상 포켓",
       "유물 획득 지점",
       "이끼 통로",
-      "전투 후 휴식 지점",
       "전투방",
       "중앙 통로"
     ],
@@ -24277,10 +24787,12 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "문양의 성소",
-      "전투방",
       "중앙 통로",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
+      "고대 장치 구역",
+      "전투방",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -24376,11 +24888,13 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "유물 획득 지점",
+      "문양의 성소"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
       "보상 포켓",
       "보스방",
-      "유물 획득 지점",
       "이끼 통로",
       "전투방",
       "중앙 통로"
@@ -24479,10 +24993,12 @@
     ],
     "scope": "scene",
     "project_targets": [
+      "중앙 통로"
+    ],
+    "secondary_project_targets": [
       "고대 장치 구역",
       "이끼 통로",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B03",
@@ -24577,12 +25093,14 @@
     ],
     "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "중앙 통로",
+      "고대 장치 구역"
+    ],
+    "secondary_project_targets": [
       "문양의 성소",
       "유물 획득 지점",
       "이끼 통로",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
