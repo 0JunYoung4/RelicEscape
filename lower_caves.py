@@ -42,12 +42,12 @@ COMBAT_TRIGGER_RADIUS = 80
 COMBAT_ENTRANCE_BARRIER = (COMBAT_LEFT_WALL - 112, 0,
                            COMBAT_LEFT_WALL, COMBAT_DOOR_HEIGHT)
 COMBAT_GATE_DURATION = .55
-# Near the 370.6-unit ground-jump + wall-jump apex, with landing clearance.
-# The center remains one held jump (202.5 units) above either side.
+# Lower all three platforms by 120 units, keeping the 200-unit step
+# from either side to the center within one held jump (202.5 units).
 COMBAT_PLATFORMS = (
-    (COMBAT_LEFT_WALL, 278, COMBAT_LEFT_WALL + 280, 368),
-    (COMBAT_CENTER_X - 280, 478, COMBAT_CENTER_X + 280, 568),
-    (COMBAT_RIGHT_WALL - 280, 278, COMBAT_RIGHT_WALL, 368),
+    (COMBAT_LEFT_WALL, 158, COMBAT_LEFT_WALL + 280, 248),
+    (COMBAT_CENTER_X - 280, 358, COMBAT_CENTER_X + 280, 448),
+    (COMBAT_RIGHT_WALL - 280, 158, COMBAT_RIGHT_WALL, 248),
 )
 COMBAT_EXIT_LEFT = COMBAT_CENTER_X - 124
 COMBAT_EXIT_RIGHT = COMBAT_CENTER_X + 124
@@ -107,8 +107,12 @@ class LowerCaves:
         self.pickup_time = None
         self.has_relic = False
         self.pillbugs = [Pillbug(1120, 1450, 0.0), Pillbug.on_platform(AIR_PLATFORM)]
-        self.golems = [CrystalGolem.on_platform(COMBAT_PLATFORMS[0]),
-                       CrystalGolem.on_platform(COMBAT_PLATFORMS[2], direction=1)]
+        left, bottom, right, top = COMBAT_PLATFORMS[1]
+        self.golems = [CrystalGolem.on_platform((left, bottom, COMBAT_CENTER_X, top), direction=1),
+                       CrystalGolem.on_platform((COMBAT_CENTER_X, bottom, right, top))]
+        # Start at opposite ends; each golem patrols its own half of the top platform.
+        self.golems[0].x = self.golems[0].left
+        self.golems[1].x = self.golems[1].right
         self.combat_pillbugs = [Pillbug(COMBAT_LEFT_WALL + 140, COMBAT_LEFT_WALL + 480, 0),
                                Pillbug(COMBAT_RIGHT_WALL - 480, COMBAT_RIGHT_WALL - 140, 0)]
         for bug, direction in zip(self.combat_pillbugs, (1, -1)):

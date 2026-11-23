@@ -120,8 +120,15 @@ class CrystalGolemRoomTests(unittest.TestCase):
         second.hp = 0
         self.assertFalse(health.check_contact(self.player, self.lower.enemies, 1))
 
-    def test_both_golems_patrol_on_the_side_platforms_without_falling_off(self):
-        for golem, platform in zip(self.lower.golems, (COMBAT_PLATFORMS[0], COMBAT_PLATFORMS[2])):
+    def test_both_golems_start_at_top_ends_and_patrol_separate_halves(self):
+        left, bottom, right, top = COMBAT_PLATFORMS[1]
+        center = (left + right) / 2
+        first, second = self.lower.golems
+        self.assertEqual(first.x, left + BODY_WIDTH / 2)
+        self.assertEqual(second.x, right - BODY_WIDTH / 2)
+        self.assertEqual((first.direction, second.direction), (1, -1))
+        for golem, platform in zip(self.lower.golems,
+                                   ((left, bottom, center, top), (center, bottom, right, top))):
             self.assertEqual(golem.floor_y, platform[3])
             for _ in range(600):
                 golem.update(.1, (), COMBAT_TERRAIN, COMBAT_WIDTH)
