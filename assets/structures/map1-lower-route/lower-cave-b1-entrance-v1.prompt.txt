@@ -1,0 +1,12 @@
+제작 도구: 내장 image_gen (투명 배경)
+범위: 첫 맵 전투방 이후 하강 착지 → 하단 연습길 → 왼쪽 첫 보스 B1. 맵2/최종 보스 구간 아님.
+용도: 첫 보스 B1 입구 폐아치
+배치 후보: 하단 연습길 왼쪽 끝·B1 안전 공간과 보스방 경계
+상태: 이미지 시안. 게임 배치·충돌·체크포인트 기능은 미적용.
+참고 ID: HK-GP18, HK-CT-05
+입력: assets/structures/map1-lower-route/lower-cave-b1-entrance-v1-source.png
+원작 이미지는 실루엣·재질·공간 원리만 참고. 외형은 프로젝트 이끼 동굴·유물 제단 기준.
+
+=== Exact generation prompt ===
+Use case: precise-object-edit. Edit ONLY the attached original RelicEscape moss-covered stone gateway: REMOVE ALL background gradient, haze, ambient glow and mist outside the physical stone and leaves AND from the open doorway center. Produce clean genuine alpha transparency there. Preserve the exact stone gateway design, cracks, moss, vines, paired geometric carvings and frontal proportions. Preserve the small cyan diamond inset, but remove its surrounding halo. Keep every part of the physical arch unchanged. It belongs at the entrance of the FIRST boss B1 in the lower moss cave, not the final temple. No environment, no text, no floor, no added objects, no opaque pixels in the open center.
+

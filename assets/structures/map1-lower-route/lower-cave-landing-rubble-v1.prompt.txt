@@ -1,0 +1,17 @@
+제작 도구: 내장 image_gen (투명 배경)
+범위: 첫 맵 전투방 이후 하강 착지 → 하단 연습길 → 왼쪽 첫 보스 B1. 맵2/최종 보스 구간 아님.
+용도: 착지 지점 폐기둥 잔해
+배치 후보: 전투방 하강 통로의 안전 착지면 뒤쪽
+상태: 이미지 시안. 게임 배치·충돌·체크포인트 기능은 미적용.
+참고 ID: SS-MG-03, HK-GP18
+입력: C:/Users/a9297/source/repos/RelicEscape/assets/terrain/green-cavern-ground-pillar-v2.png, C:/Users/a9297/source/repos/RelicEscape/assets/concepts/relic-acquisition-shrine-v1.png, C:/Users/a9297/source/repos/RelicEscape/docs/references/hollow-knight-silksong/images/ss-mg-03.png
+원작 이미지는 실루엣·재질·공간 원리만 참고. 외형은 프로젝트 이끼 동굴·유물 제단 기준.
+
+=== Exact generation prompt ===
+Use case: stylized-concept. Generate one NEW isolated 2D environment prop for RelicEscape MAP 1 LOWER MOSS CAVE, after the combat-room descent landing and before the first guardian boss B1. This is a moss-covered natural cave with remnants of dark stone ruins. No machinery or temple grandeur.
+Style: match our input project art: clean hand-inked rounded silhouettes, dark slate teal stone, almost-black interior mass, restrained pale teal rim highlights, small rounded olive-green leaves and moss clumps, rooted edges, soft painted flat shading. Orthographic FRONT ELEVATION for a side-scrolling platformer. Not isometric or 3D.
+Input image 1 is the project-approved moss pillar style/material reference; input image 2 is the project's relic shrine, used only for restrained geometric stone carvings. Remaining screenshot inputs convey spatial/lighting principles only, never copy their unique props.
+OUTPUT: single complete self-contained object with 6 percent clear margin on every side, TRUE transparent alpha outside the physical object and inside openings. ABSOLUTELY NO atmospheric haze, gradient, fog, backdrop, ambient glow, light rays, ground plane or cast shadow outside silhouette. No UI, lettering, labels, characters, relic items, enemies, floating particles. This is an asset cutout, NOT a whole scene.
+
+Subject: ONE low asymmetrical group of three fallen dark-stone column fragments, physically touching and tangled together with roots. Main fragment lies diagonally down toward LEFT to gently guide the route leftward; two smaller pieces hug its base. One broken hexagonal carving face, no readable symbols. Moss dense at outside ends, central stone plane plain. Low and wide, no sharp spikes or bright glow so this reads safe. Decorative foreground/midground rubble, not a required interactable. Landscape 3:2 canvas. References SS-MG-03: safe landing edge and vertical cave depth; HK-GP18: foliage grouped along ruin edges.
+

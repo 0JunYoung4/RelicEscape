@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-23 첫 맵 하단 동선용 이미지 시안6종은 `assets/structures/map1-lower-route/README.md`에서 확인. 범위는 전투방 아래 착지→하단 연습길→왼쪽 B1이며 맵2나 최종 성소가 아니다. 기존 이끼 통로와 같은 청록 돌/둥근 잎/유물 제단의 육각 홈. 납품은 잔해·벽점프 기둥·돌다리·가시·길잡이 석등·B1 아치, 내장 image_gen 개별 투명 PNG 및 프롬프트/manifest. 아직 실제 맵에 배치하거나 충돌/재도전 기능을 연결하지 않았다. 향후 구현 시 잎/뿌리/옅은 알파 경계는 장식으로 취급하고 실제 돌 상면·벽면·가시 높이에 맞춰 판정을 수동 설계. 석등에 회복/저장 기능을 추가하는 결정은 아님.
+
 - 2026-11-23 전투방 판독 개선을 `combat_scenery.py`·`lower_caves.py`·`moss_art.py`에 적용. 참고 HK-GP05/HK-GP37/SS-HH-06. 실제 골렘 수정탄 프레임과 높은 시점은 `docs/combat-readability-{comparison.jpg,high.png,projectiles.png}`. 재생성 `tools/preview_combat_atmosphere.py --projectiles --prefix combat-readability`. 동일 카메라에서 지면 아래 SDL 렌더 픽셀 일치. 수동 플레이와 실기기별 프레임 성능은 미측정. 이미지 생성 참고 자료 활용은 AGENTS.md에 지속 지침으로 기록.
 
 - 2026-11-23 두 게임 참고244장을 프로젝트 제작 데이터로 정리. 시작점 `docs/reference-production-guide.md`와 `docs/references/hollow-knight-silksong/index.html`. 이미지별 관찰·재질·전경/배경·빛·주요 적용 구역·P01~P20·B01~B20 연결, JSON/JSONL/CSV 및 검색 CLI. `project-targets.json`은 최신 두 맵의 실제 위치·구현 상태 대응이며 독립 성소 맵을 추가하지 않는다. 신규199장 PNG, 기존45장 원본 참조; 개발판3·상세2·효과2·상태변형4를 공간233장과 구별. 수집기는 이전 배치 보존, 신규 시각 관찰 없으면 빌드 실패. 재생성 build_database.py→build_analysis_plates.py→build_database.py, validate_database.py 실행. 브라우저 필터/비교 실제 클릭은 도구의 로컬 접근 정책으로 미검증; 우회하지 않았다. 이미지·파일/픽셀해시244·로컬링크518·구조·CLI·JS문법은 확인. 상세는 에이전트 작업로그 `worklog/codex/2026-11/20261123-hollow-knight-silksong-reference-database.md`.

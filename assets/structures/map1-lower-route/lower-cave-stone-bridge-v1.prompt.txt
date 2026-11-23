@@ -1,0 +1,19 @@
+제작 도구: 내장 image_gen (투명 배경)
+범위: 첫 맵 전투방 이후 하강 착지 → 하단 연습길 → 왼쪽 첫 보스 B1. 맵2/최종 보스 구간 아님.
+용도: 짧은 돌다리 발판
+배치 후보: 하단 연습길의 작은 단차·가시 구간 위쪽
+상태: 이미지 시안. 게임 배치·충돌·체크포인트 기능은 미적용.
+참고 ID: HK-CT-05, HK-GP18
+입력: C:/Users/a9297/source/repos/RelicEscape/assets/concepts/relic-acquisition-shrine-v1.png, C:/Users/a9297/source/repos/RelicEscape/docs/references/hollow-knight-silksong/images/hk-ct-05.png
+원작 이미지는 실루엣·재질·공간 원리만 참고. 외형은 프로젝트 이끼 동굴·유물 제단 기준.
+
+=== Exact generation prompt ===
+Use case: stylized-concept.
+Asset type: isolated architecture artwork for RelicEscape, a 2D side-scrolling action platformer.
+Generate a NEW original structure. Input image 1 is our approved relic shrine: use ONLY its visual vocabulary, dark blue-teal carved stone, chipped edges, restrained moss, angular hexagonal grooves, clean inked contours and softly painted flat shading. Other input images are references for spatial/material principles only, never copy their architecture, characters, logos or unique ornaments.
+Style: polished hand-drawn 2D game environment asset matching image 1, readable large shapes and careful limited texture. Straight-on elevation, orthographic side-scroller view, no isometric perspective, no photorealism, no 3D render.
+Palette: deep slate blue stone and almost-black recesses, desaturated moss green, occasional aged brass only for mechanics, restrained pale cyan functional inlays. Clearly readable upper edges.
+Output: a single complete object isolated on genuinely transparent alpha background. All outer edges fully inside canvas with generous 6 percent margin. No floor scene, no opaque backdrop, no checkerboard drawing, no text, labels, UI, characters, monsters, loose items, fog, or detached decorative parts. Keep transparency inside openings. No broad baked-in glowing halo; tiny cyan inlay light is enough.
+
+Subject: ONE freestanding horizontal stone bridge/platform span, roughly 4 times wider than tall. Clear continuous level walkable top, slightly chipped outside rim, three broad stones across the top. Below it two shallow angular support arches with transparent holes and a dark solid stone core between them. A few roots and small rounded leaves hang only under the two ends, leaving the upper walking surface free. Carved angular lines are subdued, no glowing strips on walk surface. No pillars continuing outside canvas, no rails or chains. Broad landscape canvas, object fills width with generous margins. References HK-CT-05: clear elevated walking surface over an architectural underside; HK-GP18: restrained moss and dark interior mass.
+

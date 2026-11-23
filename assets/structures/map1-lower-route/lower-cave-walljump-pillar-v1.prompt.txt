@@ -1,0 +1,17 @@
+제작 도구: 내장 image_gen (투명 배경)
+범위: 첫 맵 전투방 이후 하강 착지 → 하단 연습길 → 왼쪽 첫 보스 B1. 맵2/최종 보스 구간 아님.
+용도: 벽점프 연습 돌기둥
+배치 후보: 하단 연습길의 짧은 고저차 구간
+상태: 이미지 시안. 게임 배치·충돌·체크포인트 기능은 미적용.
+참고 ID: SS-MG-03, HK-CT-05
+입력: C:/Users/a9297/source/repos/RelicEscape/assets/terrain/green-cavern-ground-pillar-v2.png, C:/Users/a9297/source/repos/RelicEscape/assets/concepts/relic-acquisition-shrine-v1.png, C:/Users/a9297/source/repos/RelicEscape/docs/references/hollow-knight-silksong/images/ss-mg-03.png, C:/Users/a9297/source/repos/RelicEscape/docs/references/hollow-knight-silksong/images/hk-ct-05.png
+원작 이미지는 실루엣·재질·공간 원리만 참고. 외형은 프로젝트 이끼 동굴·유물 제단 기준.
+
+=== Exact generation prompt ===
+Use case: stylized-concept. Generate one NEW isolated 2D environment prop for RelicEscape MAP 1 LOWER MOSS CAVE, after the combat-room descent landing and before the first guardian boss B1. This is a moss-covered natural cave with remnants of dark stone ruins. No machinery or temple grandeur.
+Style: match our input project art: clean hand-inked rounded silhouettes, dark slate teal stone, almost-black interior mass, restrained pale teal rim highlights, small rounded olive-green leaves and moss clumps, rooted edges, soft painted flat shading. Orthographic FRONT ELEVATION for a side-scrolling platformer. Not isometric or 3D.
+Input image 1 is the project-approved moss pillar style/material reference; input image 2 is the project's relic shrine, used only for restrained geometric stone carvings. Remaining screenshot inputs convey spatial/lighting principles only, never copy their unique props.
+OUTPUT: single complete self-contained object with 6 percent clear margin on every side, TRUE transparent alpha outside the physical object and inside openings. ABSOLUTELY NO atmospheric haze, gradient, fog, backdrop, ambient glow, light rays, ground plane or cast shadow outside silhouette. No UI, lettering, labels, characters, relic items, enemies, floating particles. This is an asset cutout, NOT a whole scene.
+
+Subject: ONE tall narrow rectangular ruined stone pillar for wall-jump practice, height 2.8 times width, flat clearly readable walkable top, TWO straight uninterrupted vertical solid side faces suitable for wall contact. Rounded chipped top corners and one wide dark recess on center front, a single subdued angular carving near upper third. Moss and leaves only in shallow clusters on top and front, no large leaves protruding sideways across the vertical contact line. Heavy stone plinth at bottom. Dark blue-teal body has a near-black broad central mass; thin lighter outline marks top and side contact boundaries. Portrait 2:3 canvas. References SS-MG-03: legible safe ledge on a vertical wall; HK-CT-05: strong silhouette of a traversable pillar.
+
