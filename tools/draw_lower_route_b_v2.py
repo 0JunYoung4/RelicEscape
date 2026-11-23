@@ -4,7 +4,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-from tools.lower_route_b_layout import RAIL_ONE, RAIL_TWO, TERRAIN as TERRAIN_BOUNDS
+from lower_route_b_layout import RAIL_ONE, RAIL_TWO, TERRAIN as TERRAIN_BOUNDS
 
 
 OUT = Path(__file__).resolve().parents[1] / "docs/map1-lower-route-b-blockout-v2.png"

@@ -15,6 +15,6 @@
 | 통로 연결판 | 공중 발판과 같은 높이의 길을 한 암반으로 연결. B의 골렘 발판과 C 통로 | [원본](connected-passage-v1.png) |
 | 벽 연결 석대 | 높은 발판에서 옆의 세로벽으로 이어지는 위치. B의 방패병 발판 | [원본](connected-guard-wall-v1.png) |
 
-렌더링용 `crop`과 수평 보행면 `walk_surface`는 PNG의 왼쪽 위를 기준으로 기록했다. B 미술 시안은 이 좌표를 기존 착지 높이와 벽점프 면에 맞춰 배치한다. 가시밭 받침은 가시 뒤까지 내려가며, 도면의 횡단 간격은 유지한다. 이끼·뿌리·아래쪽 돌출부의 실제 판정은 맵 구현 단계에서 잡는다. [좌표 명세](manifest.json) · [전체 발판 모음](../../../docs/ruin-platforms-preview.png) · [B 배치 시안](../../concepts/map1-lower-route-b-v3.png)
+렌더링용 `crop`과 수평 보행면 `walk_surface`는 PNG의 왼쪽 위를 기준으로 기록했다. 본편 B는 이 좌표를 실제 착지 높이와 벽점프 면에 맞춰 배치한다. 가시밭 받침은 가시 뒤까지 내려간다. 암반 판정은 주요 석재의 형태를 사각형으로 근사한다. [좌표 명세](manifest.json) · [전체 발판 모음](../../../docs/ruin-platforms-preview.png) · [B 배치 시안](../../concepts/map1-lower-route-b-v3.png)
 
 내장 image_gen으로 제작했다. HK-GP22의 무리 지은 이끼와 뿌리, HK-CT-05의 석조 상면과 짙은 받침, SS-MG-03의 불규칙한 암반 외곽을 참고했다. [생성·편집 프롬프트](prompts.md)

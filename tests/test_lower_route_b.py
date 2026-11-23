@@ -1,0 +1,187 @@
+"""Exercise the playable gorge through the game's input and recovery loop."""
+
+from itertools import count
+import os
+from types import SimpleNamespace
+import unittest
+from unittest.mock import patch
+
+os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+os.environ.setdefault("SDL_RENDER_DRIVER", "software")
+
+from pico2d import pico2d as pico
+
+import main
+from health import MAX_HEALTH, SPIKE_DAMAGE, Health
+from lower_caves import LowerCaves
+from lower_route_b import PLAY_TERRAIN, SPAWN, SPIKES, LowerRouteB
+from lower_route_b_layout import C_PASSAGE, GOLEM_LEDGE, PILLBUG_LEDGE, SHIELD_LEDGE, WIDTH
+from player import Player
+from shield_soldier import MAX_HP
+
+
+def keydown(key):
+    event = pico.Event(pico.SDL_KEYDOWN)
+    event.key = key
+    return [event]
+
+
+class LowerRouteBTests(unittest.TestCase):
+    def setUp(self):
+        pico.open_canvas(main.SCREEN_WIDTH, main.SCREEN_HEIGHT)
+        self.addCleanup(pico.close_canvas)
+
+    def test_plays_both_rails_wall_jumps_and_recovers_from_early_recall(self):
+        state = SimpleNamespace(room=None, player=None, step="first_dock", direction=0, health=None)
+        view_positions = []
+        health_samples = []
+        keys = [0] * pico.SDL_NUM_SCANCODES
+        draw = LowerCaves.draw
+        check_spikes = LowerRouteB.check_spikes
+
+        def start(room, player, camera):
+            room.room, room.has_relic = "route_b", True
+            room.enter(player, camera)
+            state.room, state.player = room, player
+
+        def after_step(route, player, health, now):
+            state.health = health
+            hit = check_spikes(route, player, health, now)
+            if hit:
+                health_samples.append((health.current, health.safe_pose, route.carriages[0].position))
+            return hit
+
+        def record(room, camera):
+            if keys[pico.SDL_SCANCODE_C] and room.route_b.mounted_carriage is not None:
+                position = camera.world_to_screen(*room.route_b.mounted_carriage.position)
+                view_positions.append(position)
+            draw(room, camera)
+
+        frames = count()
+
+        def events():
+            player = state.player
+            first, second = state.room.route_b.carriages
+            step = state.step
+            state.direction = 0
+            keys[pico.SDL_SCANCODE_C] = 0
+            keys[pico.SDL_SCANCODE_SPACE] = 1
+            if next(frames) > 1150:
+                self.fail(f"Stopped at {step}: {player.x:.1f}, {player.y:.1f}, wall={player.wall_direction}")
+            if step in ("first_dock", "retry_dock"):
+                if step == "retry_dock" and (state.health.current == MAX_HEALTH
+                                             or state.health.recovering(clock.now)):
+                    return []
+                if player.x > 4680:
+                    state.direction = -1
+                    return []
+                state.step = "fail_launch" if step == "first_dock" else "first_launch"
+                return keydown(pico.SDLK_e)
+            if step in ("fail_launch", "first_launch"):
+                self.assertTrue(first.relic_mounted)
+                state.step = "early_recall" if step == "fail_launch" else "first_ride"
+                return keydown(pico.SDLK_x)
+            if step == "early_recall" and first.position[0] < 4080:
+                state.step = "retry_dock"
+                return keydown(pico.SDLK_e)
+            if step == "first_ride":
+                keys[pico.SDL_SCANCODE_C] = 1
+                if first.distance == 0:
+                    state.step = "to_wall"
+                    return keydown(pico.SDLK_e)
+            if step == "to_wall" and player.grounded:
+                self.assertEqual(player.y, PILLBUG_LEDGE[3])
+                state.direction = -1
+                if player.x <= 3096:
+                    state.step = "left_wall"
+                    return keydown(pico.SDLK_SPACE)
+            if step == "left_wall":
+                state.direction = -1
+                if player.wall_direction == -1 and player.y >= 370:
+                    state.direction, state.step = 1, "right_wall"
+                    return keydown(pico.SDLK_SPACE)
+            if step == "right_wall":
+                state.direction = 1
+                if player.wall_direction == 1 and player.y >= 530:
+                    state.direction, state.step = -1, "top_ledge"
+                    return keydown(pico.SDLK_SPACE)
+            if step == "top_ledge":
+                state.direction = -1
+                if player.grounded:
+                    self.assertEqual(player.y, SHIELD_LEDGE[3])
+                    state.step = "second_dock"
+            if step == "second_dock":
+                state.direction = -1
+                if player.x <= 2375:
+                    state.direction, state.step = 0, "second_launch"
+                    return keydown(pico.SDLK_e)
+            if step == "second_launch":
+                self.assertTrue(second.relic_mounted)
+                state.step = "second_ride"
+                return keydown(pico.SDLK_x)
+            if step == "second_ride" and second.distance == 0:
+                state.step = "exit"
+                return keydown(pico.SDLK_e)
+            if step == "exit" and player.grounded:
+                self.assertEqual(player.y, GOLEM_LEDGE[3])
+                if player.x <= C_PASSAGE[2] - 80:
+                    return [pico.Event(pico.SDL_QUIT)]
+                state.direction = -1
+            return []
+
+        # The event driver uses the current game time while waiting out the return fade.
+        timer = count(step=1 / 120)
+        clock = SimpleNamespace(now=0)
+
+        def now():
+            clock.now = next(timer)
+            return clock.now
+
+        with patch.object(LowerCaves, "start_after_relic", new=start), \
+                patch.object(LowerCaves, "draw", new=record), \
+                patch.object(LowerRouteB, "check_spikes", new=after_step), \
+                patch.object(pico, "get_events", side_effect=events), \
+                patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
+                patch.object(pico, "SDL_GetKeyboardState", return_value=keys), \
+                patch.object(main, "read_movement", side_effect=lambda: (state.direction, True, False)), \
+                patch.object(main, "perf_counter", side_effect=now), \
+                patch.object(main, "sleep"), patch.object(pico, "update_canvas"):
+            main.run_opening_cave(False, after_relic=True)
+        self.assertEqual(health_samples, [(MAX_HEALTH - SPIKE_DAMAGE, SPAWN, (4620, 280))])
+        self.assertTrue(state.room.has_relic)
+        self.assertEqual(state.step, "exit")
+        self.assertGreater(len(view_positions), 75)
+        self.assertTrue(all(0 <= x < main.SCREEN_WIDTH and 0 <= y < main.SCREEN_HEIGHT
+                            for x, y in view_positions))
+
+    def test_spikes_restore_last_ledge_without_reviving_enemies(self):
+        route = LowerRouteB()
+        player = Player(*SPAWN[:2], WIDTH, terrain=PLAY_TERRAIN)
+        route.enter(player)
+        health = Health(SPAWN)
+        self.assertTrue(player.recover_at(3500, PILLBUG_LEDGE[3], 0))
+        route.pillbug.hp = 0
+        self.assertFalse(route.check_spikes(player, health, 0))
+        self.assertTrue(player.recover_at(4050, SPIKES[0].y, 0))
+        self.assertTrue(route.check_spikes(player, health, 1))
+        self.assertTrue(health.return_to_safety(player, 1.3))
+        self.assertEqual((player.x, player.y), (3450, PILLBUG_LEDGE[3]))
+        self.assertEqual(route.pillbug.hp, 0)
+
+    def test_shield_blocks_frontal_slash_and_only_hits_once_during_bash(self):
+        route = LowerRouteB()
+        shield = route.shield
+        x, y, _, _ = shield.body_bounds()
+        strike = (x - 60, y + 10, x + 60, y + 100)
+        self.assertFalse(shield.check_strike(strike, -1, 12, 1))
+        self.assertEqual(shield.hp, MAX_HP)
+        self.assertIsNotNone(shield.block_time)
+        self.assertTrue(shield.check_strike(strike, 1, 12, 2))
+        self.assertEqual(shield.hp, MAX_HP - 12)
+        target = (x + 70, y, x + 110, y + 140)
+        shield.update(.7, target, PLAY_TERRAIN, WIDTH)
+        shield.update(.6, target, PLAY_TERRAIN, WIDTH)
+        shield.update(.55, target, PLAY_TERRAIN, WIDTH)
+        self.assertIsNotNone(shield.bash_contact(target))
+        self.assertIsNone(shield.bash_contact(target))

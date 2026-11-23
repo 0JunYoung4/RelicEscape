@@ -1,4 +1,4 @@
-"""Shared B-section concept geometry in world coordinates."""
+"""Shared B-section geometry in world coordinates."""
 
 from rail import RailSegment
 
@@ -11,6 +11,8 @@ PILLBUG_LEDGE = (3060, 85, 3650, 180)
 RIGHT_WALL = (3150, 355, 3290, 1100)
 A_ENTRY = (4460, 90, 5000, 180)
 SPIKE_TIP_Y = -200
+WIDTH = A_ENTRY[2]
+BOTTOM, TOP = -330, 1370
 TERRAIN = (C_PASSAGE, GOLEM_LEDGE, SHIELD_LEDGE, LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL, A_ENTRY)
 
 # RailCarriage moves toward smaller distances on a left-facing hit.

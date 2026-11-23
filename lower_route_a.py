@@ -62,6 +62,8 @@ def lift_path():
 
 
 class LowerRouteA:
+    camera_bottom, camera_top = 0, HEIGHT
+
     def __init__(self):
         self.plate = pico.load_image(str(ASSET_ROOT / "concepts/map1-lower-route-a-v3-plate.png"))
         self.shadow = pico.load_image(str(ASSET_ROOT / "terrain/lower-route-a-ceiling-shadow-v2.png"))
@@ -78,6 +80,10 @@ class LowerRouteA:
     @property
     def enemies(self):
         return (self.pillbug, *self.button_pillbugs)
+
+    @property
+    def mounted_carriage(self):
+        return self.carriage if self.carriage.relic_mounted else None
 
     def enter(self, player, *, shaft_offset=None):
         player.world_width = WIDTH

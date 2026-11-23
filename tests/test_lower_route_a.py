@@ -18,7 +18,8 @@ from health import Health
 from lower_caves import LowerCaves
 from lower_route_a import (BUTTON_CENTER, ENTRY_LEDGE, ENTRY_STEP, EXIT_LEDGE, GROUND_Y,
                            LOWER_DOCK, OVERHANG, RECOVERY, RECESS_BACK, UPPER_DOCK, WIDTH, LowerRouteA)
-from player import Player, STANDING_HITBOX_HEIGHT, WORLD_MARGIN
+from lower_route_b import SPAWN as ROUTE_B_SPAWN
+from player import Player, STANDING_HITBOX_HEIGHT
 from pillbug import EMERGE_DURATION
 
 
@@ -148,6 +149,8 @@ class LowerRouteATests(unittest.TestCase):
         def events():
             nonlocal dock_frames
             index = next(frame)
+            if state.room.room == "route_b" or index > 450:
+                return [pico.Event(pico.SDL_QUIT)]
             carriage = state.room.route_a.carriage
             keys[pico.SDL_SCANCODE_C] = 0
             if index == 0:
@@ -168,8 +171,6 @@ class LowerRouteATests(unittest.TestCase):
                 state.launched = carriage.relic_mounted
                 state.recalled = True
                 return [keydown(pico.SDLK_e)]
-            if state.player.x == WORLD_MARGIN or index > 450:
-                return [pico.Event(pico.SDL_QUIT)]
             return []
 
         def movement():
@@ -178,6 +179,9 @@ class LowerRouteATests(unittest.TestCase):
             return 0, False, False
 
         def record(room, camera):
+            if room.room == "route_b":
+                draw(room, camera)
+                return
             carriage = room.route_a.carriage
             if carriage.relic_mounted and carriage.position == UPPER_DOCK:
                 dock_views.append(camera.world_to_screen(*carriage.position)[0])
@@ -211,4 +215,5 @@ class LowerRouteATests(unittest.TestCase):
             else:
                 self.assertLess(x, 0)
         self.assertFalse(state.room.route_a.carriage.relic_mounted)
-        self.assertEqual((state.player.x, state.player.y), (WORLD_MARGIN, EXIT_LEDGE[3]))
+        self.assertEqual(state.room.room, "route_b")
+        self.assertEqual((state.player.x, state.player.y, state.player.crouch_time), ROUTE_B_SPAWN)

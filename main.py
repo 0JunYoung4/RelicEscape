@@ -14,7 +14,6 @@ from opening_cutscene import SigilApproach
 from health import Health, SpikeBed
 from launcher import FLIGHT_RADIUS, Crossbow
 from lower_caves import LowerCaves
-from lower_route_a import HEIGHT as ROUTE_A_HEIGHT
 from lighting import Lighting
 from player import ASSET_ROOT, STANDING_HITBOX_HEIGHT, Player
 from rail import (RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE,
@@ -841,7 +840,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
             has_relic = lower.has_relic
             lower = LowerCaves(cave)
             lower.room = room
-            if room in ("combat", "route_a"):
+            if room in ("combat", "route_a", "route_b"):
                 lower.has_relic = has_relic
             if after_relic and room == "gallery":
                 lower.start_after_relic(player, camera)
@@ -855,7 +854,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
         if lower is not None and not health.recovering(frame_start):
             use = pico.SDLK_e in pressed_keys
             destination = None
-            route = lower.route_a if lower.room == "route_a" else None
+            route = lower.route
             if lower.has_relic:
                 if use:
                     handled = False
@@ -863,13 +862,13 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
                         handled, destination = route.use_relic(player, relic_placed=travel.anchor is not None)
                     if not handled:
                         destination = travel.place_or_recall(player, frame_start)
-                elif pico.SDLK_q in pressed_keys and (route is None or not route.carriage.relic_mounted):
+                elif pico.SDLK_q in pressed_keys and (route is None or route.mounted_carriage is None):
                     destination = travel.return_pose(frame_start)
             if not lower.allows_relic_destination(destination):
                 destination = None
             if travel.teleport(player, camera, destination, frame_start, reclaim=use):
-                if route is not None and use:
-                    route.carriage.relic_mounted = False
+                if route is not None and use and route.mounted_carriage is not None:
+                    route.mounted_carriage.relic_mounted = False
                 lower.follow_camera(player, camera)
             else:
                 previous_room = lower.room
@@ -878,12 +877,18 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
                              jump_held=jump_held, crouching=crouching, attack_pressed=pico.SDLK_x in pressed_keys)
                 if lower.room != previous_room:
                     travel.reset()
-            encounter_started = lower.encounter_started
-            lower.update_enemies(player, delta_time)
-            if not encounter_started and lower.encounter_started:
+            if lower.room == "route_b" and lower.route_b.check_spikes(player, health, frame_start):
                 travel.reset()
-            health.check_contact(player, lower.enemies, frame_start)
-            lower.update_projectiles(player, health, delta_time, frame_start)
+                lower.projectiles.clear()
+            else:
+                encounter_started = lower.encounter_started
+                lower.update_enemies(player, delta_time)
+                if not encounter_started and lower.encounter_started:
+                    travel.reset()
+                health.check_contact(player, lower.enemies, frame_start)
+                lower.update_projectiles(player, health, delta_time, frame_start)
+        elif lower is not None and lower.room == "route_b" and health.return_to_safety(player, frame_start):
+            lower.follow_camera(player, camera)
         elif lower is None and approach.active:
             approach.update(player, delta_time)
             if approach.stood_up:
@@ -899,15 +904,14 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
         relic_center = None
         render_origin = camera.x, camera.y
         if lower is not None:
-            route = lower.route_a if lower.room == "route_a" else None
-            mounted_position = None
-            if route is not None and route.carriage.relic_mounted:
-                mounted_position = route.carriage.position
+            route = lower.route
+            carriage = route.mounted_carriage if route is not None else None
+            mounted_position = carriage.position if carriage is not None else None
             if relic_view_held and not health.recovering(frame_start):
                 target = mounted_position or travel.anchor_position
                 if target is not None:
                     if route is not None:
-                        camera.focus_relic(target, bottom=0, top=ROUTE_A_HEIGHT)
+                        camera.focus_relic(target, bottom=route.camera_bottom, top=route.camera_top)
                     else:
                         bottom = min(0, target[1]) - SCREEN_HEIGHT * .20 / camera.zoom
                         camera.focus_relic(target, bottom=bottom)

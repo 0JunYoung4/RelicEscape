@@ -10,14 +10,15 @@ from combat_scenery import COMBAT_BACKGROUND_TINT
 from crystal_golem import CrystalGolem
 from crystal_projectile import DAMAGE as CRYSTAL_DAMAGE
 from hit_impact import IMPACT_DURATION, HitImpact
-from lower_route_a import WIDTH as ROUTE_A_WIDTH, LowerRouteA
+from lower_route_a import EXIT_LEDGE as ROUTE_A_EXIT, WIDTH as ROUTE_A_WIDTH, LowerRouteA
+from lower_route_b import LowerRouteB
 from opening_cave import SHAFT_FLOOR, SHAFT_SCALE, SHAFT_TOP
 from pillbug import Pillbug
 from slash_effect import downward_slash_bounds, forward_slash_bounds
 from stone_wall_effects import StoneWallEffects
 from moss_art import MossCaveArt, WALL_SKIN_WIDTH, WALL_TILE_HEIGHT
 from relic_shrine import RelicShrine
-from player import ASSET_ROOT, STANDING_HITBOX_WIDTH, Animation
+from player import ASSET_ROOT, STANDING_HITBOX_WIDTH, WORLD_MARGIN, Animation
 
 
 GALLERY_SECTION_WIDTH = 3240
@@ -106,6 +107,7 @@ class LowerCaves:
         self.door_x = self.landing_width * 0.965
         self.room = "landing"
         self.route_a = None
+        self.route_b = None
         self.passage_time = None
         self.pickup_time = None
         self.has_relic = False
@@ -169,13 +171,21 @@ class LowerCaves:
                                       death["frame_durations_ms"])
 
     @property
+    def route(self):
+        if self.room == "route_a":
+            return self.route_a
+        if self.room == "route_b":
+            return self.route_b
+        return None
+
+    @property
     def enemies(self):
         if self.room == "gallery":
             return self.pillbugs
         if self.room == "combat" and self.encounter_started:
             return (*self.golems, *self.combat_pillbugs)
-        if self.room == "route_a":
-            return self.route_a.enemies
+        if self.route is not None:
+            return self.route.enemies
         return ()
 
     @property
@@ -222,6 +232,14 @@ class LowerCaves:
             self.route_a.enter(player, shaft_offset=shaft_offset)
             self.follow_camera(player, camera)
             return
+        if self.room == "route_b":
+            if self.route_b is None:
+                self.route_b = LowerRouteB()
+            self.route_b.enter(player)
+            camera.world_width = player.world_width
+            camera.zoom = camera.normal_zoom
+            self.follow_camera(player, camera)
+            return
         landing = self.room == "landing"
         width = self.landing_width if landing else (COMBAT_WIDTH if self.room == "combat" else GALLERY_WIDTH)
         player.world_width = camera.world_width = width
@@ -240,8 +258,8 @@ class LowerCaves:
         self.follow_camera(player, camera)
 
     def follow_camera(self, player, camera):
-        if self.room == "route_a":
-            self.route_a.follow_camera(player, camera, self.cave.height)
+        if self.route is not None:
+            self.route.follow_camera(player, camera, self.cave.height)
             return
         camera.follow(player.x)
         if self.room in ("gallery", "combat"):
@@ -305,8 +323,12 @@ class LowerCaves:
               and direction < 0 and player.x <= ROOM_EDGE):
             self.room = "gallery"
             self.enter(player, camera, from_right=True)
-        if self.room == "route_a":
-            self.route_a.update(player, dt)
+        elif (self.room == "route_a" and direction < 0 and player.x <= WORLD_MARGIN
+              and player.grounded and player.y == ROUTE_A_EXIT[3]):
+            self.room = "route_b"
+            self.enter(player, camera)
+        if self.route is not None:
+            self.route.update(player, dt)
         self.follow_camera(player, camera)
 
     def draw(self, camera):
@@ -321,6 +343,16 @@ class LowerCaves:
             for bug in self.enemies:
                 bug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses,
                          self.pillbug_emergence, self.pillbug_death)
+            return
+        if self.room == "route_b":
+            route = self.route_b
+            route.draw(camera, self.cave.height)
+            route.pillbug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses,
+                              self.pillbug_emergence, self.pillbug_death)
+            route.shield.draw(camera)
+            route.golem.draw(self.golem_walk, camera, self.golem_attack, self.golem_emergence, self.golem_death)
+            for projectile in self.projectiles:
+                projectile.draw(self.crystal_image, camera)
             return
         if self.room == "combat":
             self.art.draw_background(camera, tint=COMBAT_BACKGROUND_TINT)
@@ -371,6 +403,9 @@ class LowerCaves:
             bug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses, death=self.pillbug_death)
 
     def update_enemies(self, player, dt):
+        route_b = self.route_b if self.room == "route_b" else None
+        if route_b is not None:
+            route_b.activate_enemies(player)
         if (self.room == "combat" and not self.encounter_started
                 and abs(player.x - COMBAT_CENTER_X) <= COMBAT_TRIGGER_RADIUS):
             self.encounter_started = True
@@ -394,7 +429,8 @@ class LowerCaves:
                         self.hit_impacts.append(HitImpact.from_strike(
                             strike, body, facing, downward=downward, heavy=isinstance(enemy, CrystalGolem)))
                         player.recoil_from_hit(facing, player.swing_id)
-                projectile = enemy.update(dt, player.get_hitbox(), player.terrain, player.world_width)
+                target = player.get_hitbox() if route_b is None else route_b.enemy_target(enemy, player)
+                projectile = enemy.update(dt, target, player.terrain, player.world_width)
                 if projectile is not None:
                     self.projectiles.append(projectile)
         if (self.room == "combat" and self.encounter_started
@@ -563,10 +599,15 @@ class LowerCaves:
             pico.SDL_SetRenderDrawBlendMode(pico.renderer, blend)
 
     def update_projectiles(self, player, health, dt, now):
-        if self.room != "combat":
+        if self.room == "route_b":
+            self.route_b.check_enemy_attack(player, health, now)
+            target = self.route_b.enemy_target(self.route_b.golem, player) or None
+        elif self.room == "combat":
+            target = player.get_hitbox()
+        else:
             return
         for projectile in self.projectiles:
-            impact = projectile.update(dt, player.terrain, player.world_width, player.get_hitbox(),
+            impact = projectile.update(dt, player.terrain, player.world_width, target,
                                         ground_y=player.ground_y)
             if impact == "player":
                 health.take_enemy_hit((projectile.x, projectile.y), now, CRYSTAL_DAMAGE)
