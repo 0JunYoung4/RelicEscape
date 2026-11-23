@@ -2,7 +2,7 @@
 
 import json
 from ctypes import byref, c_int
-from math import ceil, floor, hypot
+from math import ceil, hypot
 
 from pico2d import pico2d as pico
 
@@ -57,6 +57,7 @@ COMBAT_SHAFT_RIGHT = COMBAT_CENTER_X + 90
 COMBAT_COVER_THICKNESS = COMBAT_ENTRANCE_BARRIER[2] - COMBAT_ENTRANCE_BARRIER[0]
 COMBAT_RIM_HEIGHT = COMBAT_COVER_THICKNESS + 64
 COMBAT_RIM_WIDTH = 997
+COMBAT_SHAFT_ART_WIDTH = 392
 COMBAT_SHAFT_FLOOR = -960
 COMBAT_ROUTE_SEAM = COMBAT_SHAFT_FLOOR + 96
 COMBAT_EXIT_DURATION = .7
@@ -88,8 +89,7 @@ class LowerCaves:
         self.ceiling = pico.load_image(str(terrain / "moss-gallery-ceiling.png"))
         self.combat_shell = pico.load_image(str(terrain / "moss-combat-room-shell-v5.png"))
         self.combat_blocker = pico.load_image(str(terrain / "moss-combat-door-blocker-v1.png"))
-        self.descent = pico.load_image(str(terrain / "moss-combat-descent-shaft-v1.png"))
-        self.descent_art = json.loads((terrain / "moss-combat-descent-shaft-v1.json").read_text(encoding="utf-8"))
+        self.descent = pico.load_image(str(terrain / "moss-combat-descent-shaft-v2.png"))
         self.exit_cover = pico.load_image(str(terrain / "moss-combat-floor-cover-v4.png"))
         self.exit_rim = pico.load_image(str(terrain / "moss-combat-shaft-rim-v3.png"))
         self.rim_art = json.loads((terrain / "moss-combat-shaft-rim-v3.json").read_text(encoding="utf-8"))
@@ -99,7 +99,6 @@ class LowerCaves:
         pico.SDL_SetTextureColorMod(self.ceiling.texture, 115, 123, 129)
         pico.SDL_SetTextureColorMod(self.combat_shell.texture, 166, 180, 178)
         pico.SDL_SetTextureColorMod(self.combat_blocker.texture, 166, 180, 178)
-        pico.SDL_SetTextureColorMod(self.descent.texture, 166, 180, 178)
         pico.SDL_SetTextureColorMod(self.exit_cover.texture, 166, 180, 178)
         pico.SDL_SetTextureColorMod(self.exit_rim.texture, 166, 180, 178)
         self.landing_width = cave.shaft.w * SHAFT_SCALE
@@ -330,7 +329,8 @@ class LowerCaves:
                                 *camera.world_to_screen(COMBAT_WIDTH, 1600), 0, 0, 0, filled=True)
             self.art.draw_wall(camera, COMBAT_LEFT_WALL, COMBAT_DOOR_HEIGHT, COMBAT_CEILING_Y)
             self.art.draw_wall(camera, COMBAT_RIGHT_WALL, 0, COMBAT_CEILING_Y, right_wall=True)
-            self.art.draw_floor(camera, 0, COMBAT_WIDTH, 0)
+            if self.exit_progress == 0:
+                self.art.draw_floor(camera, 0, COMBAT_WIDTH, 0)
             for x1, y1, x2, y2 in COMBAT_PLATFORMS:
                 self.art.draw_platform(camera, (x1, y1, x2, y2))
             self.draw_combat_gate(camera)
@@ -463,60 +463,52 @@ class LowerCaves:
                                   profile_origin=left)
         # Hide the cover and socket's buried rock with one continuous floor shadow.
         self.draw_combat_shadows(camera)
-        if self.exit_progress > 0:
-            reveal_right = right + 36 if self.exit_open else left + width * slide
-            self.draw_combat_passage(camera, reveal_right)
+        if self.exit_progress > 0 and self.shaft_visibility > 0:
+            self.draw_combat_passage(camera, left + width * slide)
 
-    def draw_combat_passage(self, camera, reveal_right):
-        # The slab disappears into the right bank; no shaft art leaks through it.
-        left, right = COMBAT_EXIT_LEFT, COMBAT_EXIT_RIGHT
-        x1, y1 = camera.world_to_screen(left - 36, COMBAT_SHAFT_FLOOR - 80)
-        x2, y2 = camera.world_to_screen(reveal_right, 0)
-        clip_left, clip_top = max(0, floor(x1)), max(0, floor(self.cave.height - y2))
-        clip_right = min(self.cave.width, ceil(x2))
-        clip_bottom = min(self.cave.height, ceil(self.cave.height - y1))
-        if clip_right <= clip_left or clip_bottom <= clip_top:
+    def draw_combat_passage(self, camera, cover_left):
+        if self.exit_open:
+            self.draw_combat_shaft_art(camera)
+            return
+        # Only the moving lid clips the artwork. Its alpha shapes the fully open rim.
+        cut = min(self.cave.width, ceil(camera.world_to_screen(cover_left, 0)[0]))
+        if cut <= 0:
             return
         previous_clip = pico.SDL_Rect()
         clipped = pico.SDL_RenderIsClipEnabled(pico.renderer)
         pico.SDL_RenderGetClipRect(pico.renderer, byref(previous_clip))
-        clip = pico.SDL_Rect(clip_left, clip_top, clip_right - clip_left, clip_bottom - clip_top)
-        if clipped:
-            pico.SDL_IntersectRect(byref(clip), byref(previous_clip), byref(clip))
+        clip = pico.SDL_Rect(0, 0, cut, self.cave.height)
+        if clipped and not pico.SDL_IntersectRect(byref(clip), byref(previous_clip), byref(clip)):
+            return
         pico.SDL_RenderSetClipRect(pico.renderer, byref(clip))
         try:
-            brightness = self.shaft_visibility
-            pico.SDL_SetTextureColorMod(self.descent.texture, round(166 * brightness),
-                                       round(180 * brightness), round(178 * brightness))
-            art = self.descent_art
-            inner_width = art["inner_right"] - art["inner_left"]
-            scale_x = (COMBAT_SHAFT_RIGHT - COMBAT_SHAFT_LEFT) / inner_width
-            height = self.descent.h * (-COMBAT_SHAFT_FLOOR - COMBAT_COVER_THICKNESS) / art["floor_y"]
-            # The short, wider mouth sits above the permanent supporting ledges.
-            self.descent.clip_draw_to_origin(art["inner_left"], self.descent.h - 40,
-                inner_width, 40, *camera.world_to_screen(left, -COMBAT_COVER_THICKNESS),
-                (right - left) * camera.zoom, COMBAT_COVER_THICKNESS * camera.zoom)
-            self.descent.draw_to_origin(
-                *camera.world_to_screen(COMBAT_SHAFT_LEFT - art["inner_left"] * scale_x,
-                                        -COMBAT_COVER_THICKNESS - height),
-                self.descent.w * scale_x * camera.zoom, height * camera.zoom)
-            tint = round(255 * brightness)
-            pico.SDL_SetTextureColorMod(self.art.wall.texture, tint, tint, tint)
-            pico.SDL_SetTextureColorMod(self.art.floor.texture, tint, tint, tint)
-            self.art.draw_wall(camera, COMBAT_SHAFT_LEFT, COMBAT_SHAFT_FLOOR, -COMBAT_COVER_THICKNESS)
-            self.art.draw_wall(camera, COMBAT_SHAFT_RIGHT, COMBAT_SHAFT_FLOOR,
-                               -COMBAT_COVER_THICKNESS, right_wall=True)
-            self.art.draw_floor(camera, COMBAT_SHAFT_LEFT, COMBAT_SHAFT_RIGHT,
-                                COMBAT_SHAFT_FLOOR, depth=64, tiled=False)
-            self.art.draw_corner(camera, COMBAT_SHAFT_LEFT, COMBAT_SHAFT_FLOOR,
-                                 width=55, grow_up=True, alpha=brightness)
-            self.art.draw_corner(camera, COMBAT_SHAFT_RIGHT, COMBAT_SHAFT_FLOOR,
-                                 width=55, right_wall=True, grow_up=True, alpha=brightness)
+            self.draw_combat_shaft_art(camera)
         finally:
-            pico.SDL_SetTextureColorMod(self.art.wall.texture, 255, 255, 255)
-            pico.SDL_SetTextureColorMod(self.art.floor.texture, 255, 255, 255)
-            pico.SDL_SetTextureColorMod(self.descent.texture, 166, 180, 178)
             pico.SDL_RenderSetClipRect(pico.renderer, byref(previous_clip) if clipped else None)
+
+    def draw_combat_shaft_art(self, camera):
+        """Fade a continuous rock silhouette into the black banks and lower passage."""
+        columns = ((0, 0), (.18, 1), (.82, 1), (1, 0))
+        rows = ((0, 0, 1), (.035, .74, 1), (.17, 1, .82),
+                (.56, .86, .78), (.83, .55, .78), (1, 0, .78))
+        tint = tuple(round(channel * self.shaft_visibility) for channel in (208, 221, 218))
+        points, indices = [], []
+        top = 0
+        bottom = COMBAT_SHAFT_FLOOR - 64
+        stride = len(columns)
+        for row, (v, depth, span) in enumerate(rows):
+            for col, (u, edge) in enumerate(columns):
+                x = COMBAT_CENTER_X + (u - .5) * COMBAT_SHAFT_ART_WIDTH * span
+                sx, sy = camera.world_to_screen(x, top + v * (bottom - top))
+                points.append(pico.SDL_Vertex((sx, self.cave.height - sy),
+                                              (*tint, round(255 * depth * edge)), (u, v)))
+                if row and col:
+                    i = row * stride + col
+                    indices.extend((i - stride - 1, i - stride, i - 1, i - stride, i, i - 1))
+        vertices = (pico.SDL_Vertex * len(points))(*points)
+        triangles = (c_int * len(indices))(*indices)
+        pico.SDL_RenderGeometry(pico.renderer, self.descent.texture,
+                                vertices, len(points), triangles, len(indices))
 
     def draw_combat_shadows(self, camera):
         """Keep solid rock interiors black, with a narrow readable surface edge."""

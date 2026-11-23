@@ -1,5 +1,11 @@
 # 이끼 동굴 구간의 미술 방향
 
+## 전투방 하강 입구
+
+열린 덮개 아래에 보이던 사각형과 가로 이음을 없애기 위해, 불규칙한 돌출 암벽과 뿌리, 먼 청록 배경을 한 장으로 연결한 [하강 이미지 v2](../assets/terrain/moss-combat-descent-shaft-v2.png)를 사용한다. [HK-GP18](references/hollow-knight-silksong/index.html#HK-GP18)의 이끼 가장자리와 검은 암반, [HK-GP22](references/hollow-knight-silksong/index.html#HK-GP22)의 비대칭 돌출부와 뒤쪽 깊이를 참고해 내장 image_gen으로 만들었다. [생성 프롬프트](../assets/terrain/moss-combat-descent-shaft-v2.prompt.txt).
+
+입구 위와 양옆, 더 깊은 하단은 점차 어두워지고, 덮개가 움직일 때만 열린 폭에 맞춰 자른다. 바닥 장식은 양쪽과 덮개에 나눠 그려 열린 구멍 위로 잔디 띠가 남지 않게 했다. 기존 덮개 두께, 개방 시간, 실제 충돌과 A파트 전환을 따른다. [수정 후 실제 화면](combat-shaft-v7-open.png).
+
 ## 첫 맵 하강 착지 이후부터 첫 보스 B1까지의 오브젝트 시안
 
 2026-11-23 사용자 지정 범위는 **첫 맵 전투방 이후 하강 착지 → 하단 연습길 → 왼쪽 첫 보스 B1 입구**다. 이 구간용으로 착지 지점 폐기둥 잔해, 벽점프 연습 돌기둥, 짧은 돌다리 발판, 가시 덩굴, 보스 전실 길잡이 석등, B1 입구 폐아치의 투명 PNG 6종을 생성했다. [이미지·프롬프트 목록](../assets/structures/map1-lower-route/README.md)과 [자산 명세](../assets/structures/map1-lower-route/manifest.json)에 배치 후보·참고 ID·해시를 기록했다.

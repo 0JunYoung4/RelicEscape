@@ -12,7 +12,8 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 
 from pico2d import pico2d as pico
 
-from lower_caves import COMBAT_EXIT_LEFT, COMBAT_EXIT_RIGHT, COMBAT_WIDTH, LowerCaves
+from lower_caves import (COMBAT_CENTER_X, COMBAT_COVER_THICKNESS, COMBAT_EXIT_LEFT,
+                         COMBAT_EXIT_RIGHT, COMBAT_WIDTH, LowerCaves)
 from main import Camera
 
 
@@ -58,7 +59,7 @@ class CombatExitArtTests(unittest.TestCase):
                     self.assertEqual(self.pixel(x, 400), (0, 0, 0))
 
     def test_passage_render_restores_the_previous_renderer_clip(self):
-        self.room.exit_progress = 1
+        self.room.exit_progress = .5
         self.room.draw_combat_exit(self.camera)
         self.assertFalse(pico.SDL_RenderIsClipEnabled(pico.renderer))
         before = pico.SDL_Rect(100, 120, 500, 300)
@@ -68,6 +69,21 @@ class CombatExitArtTests(unittest.TestCase):
         pico.SDL_RenderGetClipRect(pico.renderer, byref(after))
         self.assertTrue(pico.SDL_RenderIsClipEnabled(pico.renderer))
         self.assertEqual((after.x, after.y, after.w, after.h), (100, 120, 500, 300))
+
+    def test_shaft_shoulders_blend_across_the_lid_depth(self):
+        self.camera = Camera(960, COMBAT_WIDTH, zoom=.8, y=-415)
+        self.camera.follow(COMBAT_CENTER_X)
+        self.render(1)
+        seam = -COMBAT_COVER_THICKNESS
+        for offsets in (range(-150, -100, 4), range(100, 151, 4)):
+            contrast = []
+            for offset in offsets:
+                x = COMBAT_CENTER_X + offset
+                upper, lower = self.pixel(x, seam + 3), self.pixel(x, seam - 4)
+                contrast.append(max(abs(a - b) for a, b in zip(upper, lower)))
+            # Local foliage may be sharp; a hard cut produces a jump across
+            # the entire shoulder at the old join between its two layers.
+            self.assertLess(sum(contrast) / len(contrast), 18)
 
     def test_opening_stays_dark_until_the_player_approaches_then_fades_in(self):
         self.room.shaft_visibility = 0
