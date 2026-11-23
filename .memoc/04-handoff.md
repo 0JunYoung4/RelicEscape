@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-23 최신 하단 설계 `docs/map1-lower-route-blockout-v2.md`와 동명 PNG. 구현 시 유물 없이 스위치실에서 계단 복귀, 레일1 양쪽 끝·중간 E 및 하단 우회 불가, 레일2 중단 벽점프·종점 착지와 실패 회수, 파츠만·유물까지 회수하는 손잡이 분기를 플레이 검증한다. 기존 테스트룸 E 장착→X 타격→E 순간이동 재사용. PNG의 간격은 축척 없음.
+
 - 2026-11-23 첫 맵 하단 동선용 이미지 시안6종은 `assets/structures/map1-lower-route/README.md`에서 확인. 범위는 전투방 아래 착지→하단 연습길→왼쪽 B1이며 맵2나 최종 성소가 아니다. 기존 이끼 통로와 같은 청록 돌/둥근 잎/유물 제단의 육각 홈. 납품은 잔해·벽점프 기둥·돌다리·가시·길잡이 석등·B1 아치, 내장 image_gen 개별 투명 PNG 및 프롬프트/manifest. 아직 실제 맵에 배치하거나 충돌/재도전 기능을 연결하지 않았다. 향후 구현 시 잎/뿌리/옅은 알파 경계는 장식으로 취급하고 실제 돌 상면·벽면·가시 높이에 맞춰 판정을 수동 설계. 석등에 회복/저장 기능을 추가하는 결정은 아님.
 
 - 2026-11-23 전투방 판독 개선을 `combat_scenery.py`·`lower_caves.py`·`moss_art.py`에 적용. 참고 HK-GP05/HK-GP37/SS-HH-06. 실제 골렘 수정탄 프레임과 높은 시점은 `docs/combat-readability-{comparison.jpg,high.png,projectiles.png}`. 재생성 `tools/preview_combat_atmosphere.py --projectiles --prefix combat-readability`. 동일 카메라에서 지면 아래 SDL 렌더 픽셀 일치. 수동 플레이와 실기기별 프레임 성능은 미측정. 이미지 생성 참고 자료 활용은 AGENTS.md에 지속 지침으로 기록.
