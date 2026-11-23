@@ -173,7 +173,7 @@ class LowerCaves:
         if self.room == "combat" and self.encounter_started:
             return (*self.golems, *self.combat_pillbugs)
         if self.room == "route_a":
-            return (self.route_a.pillbug,)
+            return self.route_a.enemies
         return ()
 
     @property
@@ -315,8 +315,9 @@ class LowerCaves:
             return
         if self.room == "route_a":
             self.route_a.draw(camera)
-            self.route_a.pillbug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses,
-                                      death=self.pillbug_death)
+            for bug in self.enemies:
+                bug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses,
+                         self.pillbug_emergence, self.pillbug_death)
             return
         if self.room == "combat":
             self.art.draw_background(camera, tint=COMBAT_BACKGROUND_TINT)

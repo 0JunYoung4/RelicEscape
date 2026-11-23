@@ -38,6 +38,7 @@ TERRAIN = (EXIT_LEDGE, ENTRY_LEDGE, ENTRY_STEP, RECESS_BACK, *OVERHANG, *CEILING
 ENTRY_X, ENTRY_Y = world(1950, 63)
 BUTTON_LEFT, BUTTON_RIGHT = 1103 / ART_ZOOM, 1170 / ART_ZOOM
 BUTTON_CENTER = world(1137, 616)
+BUTTON_PILLBUGS = ((1000 / ART_ZOOM, 1), (1285 / ART_ZOOM, -1))
 RECOVERY = world(1434, 572)
 RECOVERY_RADIUS = 108
 LOWER_DOCK = world(725, 594)
@@ -70,8 +71,13 @@ class LowerRouteA:
         self.path = lift_path()
         self.carriage = RailCarriage(self.path, self.mount.w * RAIL_ART_SCALE, self.mount.h * RAIL_ART_SCALE)
         self.pillbug = Pillbug.on_platform(solid(1615, 407, 1850, 624))
+        self.button_pillbugs = ()
         self.powered = False
         self.shadow_opacity = 1.0
+
+    @property
+    def enemies(self):
+        return (self.pillbug, *self.button_pillbugs)
 
     def enter(self, player, *, shaft_offset=None):
         player.world_width = WIDTH
@@ -131,8 +137,17 @@ class LowerRouteA:
 
     def update(self, player, dt):
         left, bottom, right, _ = player.get_hitbox()
-        if player.grounded and bottom == GROUND_Y and right > BUTTON_LEFT and left < BUTTON_RIGHT:
+        if (not self.powered and player.grounded and bottom == GROUND_Y
+                and right > BUTTON_LEFT and left < BUTTON_RIGHT):
             self.powered = True
+            pit = (RECESS_BACK[2], 0, ENTRY_STEP[0], GROUND_Y)
+            bugs = []
+            for x, direction in BUTTON_PILLBUGS:
+                bug = Pillbug.on_platform(pit)
+                bug.x, bug.direction = x, direction
+                bug.begin_emergence()
+                bugs.append(bug)
+            self.button_pillbugs = tuple(bugs)
         if self.carriage.relic_mounted:
             self.carriage.check_attack(player)
         # An empty carriage can finish an already-started trip after an early teleport.

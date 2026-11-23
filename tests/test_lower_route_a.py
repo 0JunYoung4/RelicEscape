@@ -14,10 +14,12 @@ os.environ.setdefault("SDL_RENDER_DRIVER", "software")
 from pico2d import pico2d as pico
 
 import main
+from health import Health
 from lower_caves import LowerCaves
 from lower_route_a import (BUTTON_CENTER, ENTRY_LEDGE, ENTRY_STEP, EXIT_LEDGE, GROUND_Y,
                            LOWER_DOCK, OVERHANG, RECOVERY, RECESS_BACK, UPPER_DOCK, WIDTH, LowerRouteA)
 from player import Player, STANDING_HITBOX_HEIGHT, WORLD_MARGIN
+from pillbug import EMERGE_DURATION
 
 
 def keydown(key):
@@ -42,6 +44,36 @@ class LowerRouteATests(unittest.TestCase):
     def tick(self, direction=0, *, jump=False, attack=False):
         self.player.update(direction, True, 1 / 60, jump_pressed=jump, attack_pressed=attack)
         self.route.update(self.player, 1 / 60)
+
+    def test_ground_button_emerges_two_pillbugs_once_and_powers_the_rail(self):
+        room = LowerCaves(SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096)))
+        room.room, room.route_a = "route_a", self.route
+        button_x = BUTTON_CENTER[0]
+        self.assertTrue(self.player.recover_at(button_x, GROUND_Y + 60, 0))
+        self.tick()
+        self.assertFalse(self.route.powered)
+        self.assertEqual(room.enemies, (self.route.pillbug,))
+
+        self.assertTrue(self.player.recover_at(button_x, GROUND_Y, 0))
+        self.tick()
+        left, right = self.route.button_pillbugs
+        self.assertTrue(self.route.powered)
+        self.assertEqual(room.enemies, (self.route.pillbug, left, right))
+        self.assertLess(left.x, button_x)
+        self.assertGreater(right.x, button_x)
+        self.assertEqual((left.direction, right.direction), (1, -1))
+        self.assertEqual((left.phase, right.phase), ("emerge", "emerge"))
+        self.assertEqual((left.floor_y, right.floor_y), (GROUND_Y, GROUND_Y))
+        health = Health((button_x, GROUND_Y, 0))
+        self.assertTrue(self.player.recover_at(left.x, GROUND_Y, 0))
+        self.assertFalse(health.check_contact(self.player, room.enemies, 1))
+        room.update_enemies(self.player, EMERGE_DURATION)
+        self.assertTrue(health.check_contact(self.player, room.enemies, 2))
+
+        self.assertTrue(self.player.recover_at(button_x, GROUND_Y, 0))
+        self.tick()
+        self.assertEqual(self.route.button_pillbugs, (left, right))
+        self.assertEqual((left.phase, right.phase), ("crawl", "crawl"))
 
     def test_walk_from_the_entry_powers_the_button_and_reaches_the_dock(self):
         for _ in range(450):

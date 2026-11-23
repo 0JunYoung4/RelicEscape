@@ -2,7 +2,7 @@
 Last: 2026-11-23 (Asia/Seoul)
 
 - 빠른 테스트 기본 시작: 전투방 왼쪽에 유물 소지 상태로 입장. R로 초기화. 오프닝은 `--opening`.
-- A파트 본편 구현: 전투방 아래 천장 낙하→버튼→ㄷ자 레일→왼쪽 출구. 안쪽 벽·낙하 구제·공벌레. `lower_route_a.py`.
+- A파트 본편: 천장 낙하→버튼(좌우 공벌레 각 1마리, 최초 1회)→ㄷ자 레일→왼쪽 출구. `lower_route_a.py`.
 - 하단 전체 도면 `docs/map1-lower-route-blockout-v3.md`. 수평·하차 선택 레일과 B1 연결 입구는 후속.
 - 본편2맵. 레일 첫 사용은 맵1 B1 앞, 석궁·복합 퍼즐·최종 보스는 맵2. `docs/INITIAL_DESIGN.md` 6절.
 - 하강 입구 암벽·그림자 이음 개선. `docs/combat-shaft-v7-open.png`.
