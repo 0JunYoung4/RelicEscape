@@ -872,10 +872,11 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
                 lower.follow_camera(player, camera)
             else:
                 previous_room = lower.room
+                was_on_lower_route = lower.in_lower_route
                 lower.update(player, camera, delta_time, interact=use and not lower.has_relic,
                              direction=direction, running=running, jump_pressed=pico.SDLK_SPACE in pressed_keys,
                              jump_held=jump_held, crouching=crouching, attack_pressed=pico.SDLK_x in pressed_keys)
-                if lower.room != previous_room:
+                if lower.room != previous_room and not (was_on_lower_route and lower.in_lower_route):
                     travel.reset()
             if lower.room == "route_b" and lower.route_b.check_spikes(player, health, frame_start):
                 travel.reset()
@@ -911,7 +912,8 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
                 target = mounted_position or travel.anchor_position
                 if target is not None:
                     if route is not None:
-                        camera.focus_relic(target, bottom=route.camera_bottom, top=route.camera_top)
+                        bottom, top = lower.route_camera_bounds(target[0])
+                        camera.focus_relic(target, bottom=bottom, top=top)
                     else:
                         bottom = min(0, target[1]) - SCREEN_HEIGHT * .20 / camera.zoom
                         camera.focus_relic(target, bottom=bottom)

@@ -37,6 +37,7 @@ SAFE_POSES = (
 
 class LowerRouteB:
     camera_bottom, camera_top = BOTTOM, TOP
+    camera_right = WIDTH
 
     def __init__(self):
         self.art = LowerRouteBArt()
@@ -88,9 +89,12 @@ class LowerRouteB:
 
     def follow_camera(self, player, camera, screen_height):
         camera.follow(player.x)
-        view_height = screen_height / camera.zoom
-        target = player.y - view_height * .46
-        camera.y = max(BOTTOM, min(TOP - view_height, target))
+        camera.y = self.camera_y(player.y, screen_height / camera.zoom)
+
+    @staticmethod
+    def camera_y(player_y, view_height):
+        target = player_y - view_height * .46
+        return max(BOTTOM, min(TOP - view_height, target))
 
     def nearby_carriage(self, player, relic_placed):
         if relic_placed or not player.grounded:

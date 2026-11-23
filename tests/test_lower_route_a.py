@@ -18,7 +18,7 @@ from health import Health
 from lower_caves import LowerCaves
 from lower_route_a import (BUTTON_CENTER, ENTRY_LEDGE, ENTRY_STEP, EXIT_LEDGE, GROUND_Y,
                            LOWER_DOCK, OVERHANG, RECOVERY, RECESS_BACK, UPPER_DOCK, WIDTH, LowerRouteA)
-from lower_route_b import SPAWN as ROUTE_B_SPAWN
+from lower_route_connection import A_ORIGIN, PASSAGE_FLOOR, PASSAGE_LEFT, PASSAGE_RIGHT
 from player import Player, STANDING_HITBOX_HEIGHT
 from pillbug import EMERGE_DURATION
 
@@ -128,30 +128,36 @@ class LowerRouteATests(unittest.TestCase):
             self.tick(1, jump=frame % 12 == 0)
             self.assertLess(self.player.y, EXIT_LEDGE[3])
 
-    def test_opening_loop_mounts_launches_tracks_recalls_and_walks_to_the_exit(self):
+    def test_opening_loop_uses_the_lift_and_walks_to_b_without_a_camera_cut(self):
         frame = count()
         state = SimpleNamespace(room=None, player=None, launched=False, recalled=False, mounted=False)
         keys = [0] * pico.SDL_NUM_SCANCODES
         moving_views = []
         dock_views = []
+        passage_views = []
         dock_frames = 0
+        anchor_point = None
+        travel = None
         draw = LowerCaves.draw
+        place_or_recall = main.RelicTravel.place_or_recall
 
         def start(room, player, camera):
             room.room, room.has_relic = "route_a", True
             room.enter(player, camera)
             state.room, state.player = room, player
-            player.recover_at(BUTTON_CENTER[0], GROUND_Y, 0)
+            route = room.route_a
+            player.recover_at(*route.point(BUTTON_CENTER[0], GROUND_Y), 0)
             room.route_a.update(player, 0)
-            player.recover_at(LOWER_DOCK[0] - 75, GROUND_Y, 0)
+            player.recover_at(*route.point(LOWER_DOCK[0] - 75, GROUND_Y), 0)
             player.facing = 1
 
         def events():
-            nonlocal dock_frames
+            nonlocal dock_frames, anchor_point
             index = next(frame)
-            if state.room.room == "route_b" or index > 450:
+            if state.player.x < PASSAGE_LEFT - 100 or index > 450:
                 return [pico.Event(pico.SDL_QUIT)]
-            carriage = state.room.route_a.carriage
+            route = state.room.route_a
+            carriage = route.carriage
             keys[pico.SDL_SCANCODE_C] = 0
             if index == 0:
                 return [keydown(pico.SDLK_e)]
@@ -160,16 +166,19 @@ class LowerRouteATests(unittest.TestCase):
                 return [keydown(pico.SDLK_x)]
             if index == 12:
                 # From the far side of the pit, the upper dock is entirely off-screen.
-                self.assertTrue(state.player.recover_at(RECOVERY[0] - 230, GROUND_Y, 0))
-            if 12 <= index < 36 or carriage.position[1] > 600:
+                self.assertTrue(state.player.recover_at(*route.point(RECOVERY[0] - 230, GROUND_Y), 0))
+            if 12 <= index < 36 or (not state.recalled and carriage.position[1] > 600 + A_ORIGIN[1]):
                 keys[pico.SDL_SCANCODE_C] = 1
-            if carriage.position == UPPER_DOCK and not state.recalled:
+            if carriage.position == route.point(*UPPER_DOCK) and not state.recalled:
                 dock_frames += 1
                 keys[pico.SDL_SCANCODE_C] = dock_frames % 2
                 if dock_frames < 5:
                     return []
                 state.launched = carriage.relic_mounted
                 state.recalled = True
+                return [keydown(pico.SDLK_e)]
+            if state.recalled and state.player.x < PASSAGE_RIGHT + 150 and anchor_point is None:
+                anchor_point = state.player.x
                 return [keydown(pico.SDLK_e)]
             return []
 
@@ -179,20 +188,31 @@ class LowerRouteATests(unittest.TestCase):
             return 0, False, False
 
         def record(room, camera):
-            if room.room == "route_b":
-                draw(room, camera)
-                return
-            carriage = room.route_a.carriage
-            if carriage.relic_mounted and carriage.position == UPPER_DOCK:
+            route = room.route_a
+            carriage = route.carriage
+            viewing_join = state.recalled and state.player.x < PASSAGE_RIGHT + 180
+            if viewing_join:
+                passage_views.append((state.player.x, state.player.y, camera.x, camera.y))
+            if carriage.relic_mounted and carriage.position == route.point(*UPPER_DOCK):
                 dock_views.append(camera.world_to_screen(*carriage.position)[0])
             elif carriage.relic_mounted and carriage.direction and keys[pico.SDL_SCANCODE_C]:
                 moving_views.append((camera.x, camera.y, camera.world_to_screen(*carriage.position)))
             elif state.recalled and keys[pico.SDL_SCANCODE_C]:
                 self.assertAlmostEqual(camera.x, camera._clamp_x(state.player.x - camera.view_width / 2))
+            if viewing_join:
+                pico.SDL_ClearError()
             draw(room, camera)
+            if viewing_join:
+                self.assertFalse(pico.SDL_GetError())
+
+        def remember_anchor(relic_travel, player, now):
+            nonlocal travel
+            travel = relic_travel
+            return place_or_recall(relic_travel, player, now)
 
         with patch.object(LowerCaves, "start_after_relic", new=start), \
                 patch.object(LowerCaves, "draw", new=record), \
+                patch.object(main.RelicTravel, "place_or_recall", new=remember_anchor), \
                 patch.object(pico, "get_events", side_effect=events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(pico, "SDL_GetKeyboardState", return_value=keys), \
@@ -203,7 +223,7 @@ class LowerRouteATests(unittest.TestCase):
         self.assertTrue(state.mounted and state.launched and state.recalled)
         self.assertGreater(len(moving_views), 10)
         self.assertGreater(max(view[0] for view in moving_views), moving_views[0][0])
-        self.assertGreater(max(view[1] for view in moving_views), 0)
+        self.assertGreater(max(view[1] for view in moving_views), A_ORIGIN[1])
         for _, _, (x, y) in moving_views:
             self.assertAlmostEqual(x, main.SCREEN_WIDTH / 2)
             self.assertTrue(0 <= y < main.SCREEN_HEIGHT)
@@ -216,4 +236,13 @@ class LowerRouteATests(unittest.TestCase):
                 self.assertLess(x, 0)
         self.assertFalse(state.room.route_a.carriage.relic_mounted)
         self.assertEqual(state.room.room, "route_b")
-        self.assertEqual((state.player.x, state.player.y, state.player.crouch_time), ROUTE_B_SPAWN)
+        self.assertLess(state.player.x, PASSAGE_LEFT - 100)
+        self.assertEqual(state.player.y, PASSAGE_FLOOR)
+        self.assertEqual(travel.anchor.x, anchor_point)
+        self.assertTrue(state.room.route_a.powered)
+        self.assertGreater(len(passage_views), 50)
+        for before, after in zip(passage_views, passage_views[1:]):
+            self.assertAlmostEqual(before[1], PASSAGE_FLOOR)
+            self.assertTrue(0 < before[0] - after[0] < 21)
+            self.assertAlmostEqual(before[0] - after[0], before[2] - after[2])
+            self.assertLess(abs(before[3] - after[3]), 7)

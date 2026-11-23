@@ -17,6 +17,7 @@ from lower_caves import (COMBAT_CENTER_X, COMBAT_COVER_THICKNESS, COMBAT_EXIT_DU
                          COMBAT_EXIT_RIGHT, COMBAT_OPEN_TERRAIN, COMBAT_SHAFT_FLOOR,
                          COMBAT_WIDTH, LowerCaves)
 from lower_route_a import ENTRY_LEDGE, ENTRY_X
+from lower_route_connection import A_ORIGIN
 from main import Camera
 from player import Player
 
@@ -102,7 +103,8 @@ class CombatClearTests(unittest.TestCase):
             self.assertGreaterEqual(foot, 0)
             self.assertLess(foot, 540)
         self.assertEqual(self.room.room, "route_a")
-        self.assertEqual((self.player.x, self.player.y, self.player.grounded), (ENTRY_X, ENTRY_LEDGE[3], True))
+        self.assertEqual((self.player.x, self.player.y, self.player.grounded),
+                         (A_ORIGIN[0] + ENTRY_X, A_ORIGIN[1] + ENTRY_LEDGE[3], True))
         self.assertTrue(saw_route_fall)
         self.assertLess(lowest_combat_camera, original_camera_y)
         self.assertFalse(self.player._overlaps_terrain())

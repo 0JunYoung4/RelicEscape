@@ -62,20 +62,34 @@ def lift_path():
 
 
 class LowerRouteA:
-    camera_bottom, camera_top = 0, HEIGHT
-
-    def __init__(self):
+    def __init__(self, origin=(0, 0)):
+        self.origin = origin
+        self.world_width = origin[0] + WIDTH
+        self.camera_bottom, self.camera_top = origin[1], origin[1] + HEIGHT
+        self.ground_y = GROUND_Y + origin[1]
+        self.terrain = tuple(self.bounds(box) for box in TERRAIN)
         self.plate = pico.load_image(str(ASSET_ROOT / "concepts/map1-lower-route-a-v3-plate.png"))
         self.shadow = pico.load_image(str(ASSET_ROOT / "terrain/lower-route-a-ceiling-shadow-v2.png"))
         self.rail = pico.load_image(str(RAIL_IMAGE))
         self.bend = pico.load_image(str(RAIL_BEND_IMAGE))
         self.mount = pico.load_image(str(RAIL_CARRIAGE_IMAGE))
-        self.path = lift_path()
+        self.path = tuple(
+            RailSegment(self.point(*segment.start), self.point(*segment.end),
+                        self.point(*segment.center) if segment.center is not None else None)
+            for segment in lift_path()
+        )
         self.carriage = RailCarriage(self.path, self.mount.w * RAIL_ART_SCALE, self.mount.h * RAIL_ART_SCALE)
-        self.pillbug = Pillbug.on_platform(solid(1615, 407, 1850, 624))
+        self.pillbug = Pillbug.on_platform(self.bounds(solid(1615, 407, 1850, 624)))
         self.button_pillbugs = ()
         self.powered = False
         self.shadow_opacity = 1.0
+
+    def point(self, x, y):
+        return x + self.origin[0], y + self.origin[1]
+
+    def bounds(self, box):
+        left, bottom, right, top = box
+        return (*self.point(left, bottom), *self.point(right, top))
 
     @property
     def enemies(self):
@@ -86,14 +100,14 @@ class LowerRouteA:
         return self.carriage if self.carriage.relic_mounted else None
 
     def enter(self, player, *, shaft_offset=None):
-        player.world_width = WIDTH
-        player.terrain = TERRAIN
-        player.ground_y = GROUND_Y
+        player.world_width = self.world_width
+        player.terrain = self.terrain
+        player.ground_y = self.ground_y
         if shaft_offset is None:
-            player.recover_at(ENTRY_X, ENTRY_LEDGE[3], 0)
+            player.recover_at(*self.point(ENTRY_X, ENTRY_LEDGE[3]), 0)
         else:
             fall_speed = player.vertical_speed
-            player.recover_at(ENTRY_X + shaft_offset, ENTRY_Y, 0)
+            player.recover_at(*self.point(ENTRY_X + shaft_offset, ENTRY_Y), 0)
             player.vertical_speed = min(0, fall_speed)
             player.state = "jump"
             player.animation_time = TAKEOFF_FRAME_DURATION
@@ -101,13 +115,15 @@ class LowerRouteA:
 
     def follow_camera(self, player, camera, screen_height):
         camera.follow(player.x)
-        view_height = screen_height / camera.zoom
-        target = player.y - view_height * .24
-        camera.y = max(0, min(max(0, HEIGHT - view_height), target))
+        camera.y = self.camera_y(player.y, screen_height / camera.zoom)
+
+    def camera_y(self, player_y, view_height):
+        target = player_y - view_height * .24
+        return max(self.camera_bottom, min(self.camera_top - view_height, target))
 
     def can_reset(self, player):
-        return (player.grounded and player.y == GROUND_Y
-                and abs(player.x - RECOVERY[0]) <= RECOVERY_RADIUS
+        return (player.grounded and player.y == self.ground_y
+                and abs(player.x - self.point(*RECOVERY)[0]) <= RECOVERY_RADIUS
                 and (self.carriage.distance > 0 or self.carriage.relic_mounted))
 
     def can_mount(self, player, relic_placed):
@@ -115,13 +131,13 @@ class LowerRouteA:
 
     def prompt(self, player, relic_placed):
         if self.can_reset(player):
-            return RECOVERY, False
+            return self.point(*RECOVERY), False
         carriage = self.carriage
         if self.can_mount(player, relic_placed):
             return carriage.position, False
         if carriage.relic_mounted:
-            if carriage.distance == 0 and abs(player.x - LOWER_DOCK[0]) <= 160:
-                return LOWER_DOCK, True
+            if carriage.distance == 0 and abs(player.x - carriage.position[0]) <= 160:
+                return carriage.position, True
             return (player.x, player.y + STANDING_HITBOX_HEIGHT), False
         return None
 
@@ -143,14 +159,14 @@ class LowerRouteA:
 
     def update(self, player, dt):
         left, bottom, right, _ = player.get_hitbox()
-        if (not self.powered and player.grounded and bottom == GROUND_Y
-                and right > BUTTON_LEFT and left < BUTTON_RIGHT):
+        if (not self.powered and player.grounded and bottom == self.ground_y
+                and right > BUTTON_LEFT + self.origin[0] and left < BUTTON_RIGHT + self.origin[0]):
             self.powered = True
-            pit = (RECESS_BACK[2], 0, ENTRY_STEP[0], GROUND_Y)
+            pit = self.bounds((RECESS_BACK[2], 0, ENTRY_STEP[0], GROUND_Y))
             bugs = []
             for x, direction in BUTTON_PILLBUGS:
                 bug = Pillbug.on_platform(pit)
-                bug.x, bug.direction = x, direction
+                bug.x, bug.direction = x + self.origin[0], direction
                 bug.begin_emergence()
                 bugs.append(bug)
             self.button_pillbugs = tuple(bugs)
@@ -160,16 +176,16 @@ class LowerRouteA:
         self.carriage.move(dt)
 
     def update_shadow(self, player, dt):
-        x, y = world(*HOLE_PIXEL)
+        x, y = self.point(*world(*HOLE_PIXEL))
         distance = hypot(player.x - x, player.y + STANDING_HITBOX_HEIGHT / 2 - y) * ART_ZOOM
         proximity = min(1.0, max(0.0, (distance - 293) / 118))
         target = proximity * proximity * (3 - 2 * proximity)
         self.shadow_opacity += (target - self.shadow_opacity) * (1 - exp(-14 * dt))
 
     def draw(self, camera):
-        self.plate.draw_to_origin(*camera.world_to_screen(0, 0), WIDTH * camera.zoom, HEIGHT * camera.zoom)
+        self.plate.draw_to_origin(*camera.world_to_screen(*self.origin), WIDTH * camera.zoom, HEIGHT * camera.zoom)
         if self.powered:
-            x, y = camera.world_to_screen(*BUTTON_CENTER)
+            x, y = camera.world_to_screen(*self.point(*BUTTON_CENTER))
             pico.draw_line(x - 29 * camera.zoom, y, x + 29 * camera.zoom, y, 91, 215, 222)
         if not self.powered:
             for piece in (self.rail, self.bend):
@@ -187,5 +203,5 @@ class LowerRouteA:
     def draw_foreground(self, camera):
         x, y, width, height = SHADOW_BOUNDS
         pico.SDL_SetTextureAlphaMod(self.shadow.texture, round(255 * self.shadow_opacity))
-        self.shadow.draw_to_origin(*camera.world_to_screen(*world(x, y + height)),
+        self.shadow.draw_to_origin(*camera.world_to_screen(*self.point(*world(x, y + height))),
                                    width / ART_ZOOM * camera.zoom, height / ART_ZOOM * camera.zoom)

@@ -1,10 +1,12 @@
 # 하단 B파트 · 가시 협곡과 공중 전투 발판
 
-A의 왼쪽 출구에서 B의 오른쪽으로 진입해 왼쪽 C 연결부로 간다. 협곡 하단은 전부 가시로 채운다. 중간의 넓은 공중 발판 세 곳에서 착지하고 전투한다. 발판 사이는 위로 솟는 레일, 벽점프, 아래로 돌아 올라오는 레일 순서로 건넌다. [B파트 사각형 콘셉트 도면](map1-lower-route-b-blockout-v2.png)
+A의 왼쪽 발판은 같은 높이의 이끼 돌길로 B 오른쪽 출발대까지 이어진다. 협곡 하단은 전부 가시로 채운다. 중간의 넓은 공중 발판 세 곳에서 착지하고 전투한다. 발판 사이는 위로 솟는 레일, 벽점프, 아래로 돌아 올라오는 레일 순서로 건너 왼쪽 C 연결부에 닿는다. [B파트 사각형 콘셉트 도면](map1-lower-route-b-blockout-v2.png)
 
 [B파트 전체 맵 시안](../assets/concepts/map1-lower-route-b-v3.png) · [유적 발판 PNG 모음](../assets/terrain/ruin-platforms/README.md) · [원경 레이어](../assets/concepts/map1-lower-route-b-v2-background.png)
 
 ## 맵 미술
+
+연결부 양쪽의 바닥과 원경을 겹쳐 그려 한 동굴처럼 이어지게 했다. 이동 카메라의 세로 구도는 돌길을 따라 점진적으로 바뀐다. 두 구간을 오갈 때 설치한 유물이나 레일 상태도 이어진다. [본편 연결부](map1-lower-route-ab-connection.png) · [연결 원화](../assets/terrain/lower-route-ab-passage-v1.png) · [내장 image_gen 프롬프트](../assets/terrain/lower-route-ab-passage-v1.prompt.txt)
 
 원경은 A파트와 같은 청록빛 동굴에 폐수로·육각 문양 기둥·큰 석륜·멀리 흐르는 물줄기를 배치한다. 벽점프 슬롯은 천장에서 내려온 바위와 방패병 발판 밑의 돌출암으로 둘러싼다. 두 벽의 접촉면은 도면에 맞추고, 바깥쪽 암반과 장식은 불규칙하게 다듬는다.
 
