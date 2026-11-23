@@ -1,0 +1,19 @@
+{
+  "image": "relic-acquisition-shrine-v1.png",
+  "source_image": "relic-acquisition-shrine-v1-source.png",
+  "source_crop": [
+    50,
+    60,
+    1375,
+    1048
+  ],
+  "mode": "builtin-imagegen",
+  "status": "design-preview-only",
+  "ground_anchor": [
+    662,
+    974
+  ],
+  "world_height": 380,
+  "relic_world_height": 100,
+  "relic_included": false
+}

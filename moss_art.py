@@ -1,13 +1,14 @@
 """Shared forest-cave surfaces, distant scenery and dark foreground framing."""
 
 import json
-from ctypes import byref, c_int
+from ctypes import byref, c_int, c_ubyte
 from math import ceil, floor, sin
 from time import perf_counter
 
 from pico2d import pico2d as pico
 
 from player import ASSET_ROOT
+from combat_scenery import CombatScenery
 
 
 WALL_SKIN_WIDTH = 360
@@ -31,14 +32,28 @@ class MossCaveArt:
         self.pillar_art = json.loads((root / "green-cavern-ground-pillar-v2.json").read_text(encoding="utf-8"))
         pico.SDL_SetTextureColorMod(self.background.texture, 172, 199, 214)
         self.started = perf_counter()
+        self._combat_scenery = None
 
-    def draw_background(self, camera):
+    def draw_background(self, camera, *, tint=None):
         height = self.height * 1.24
         width = height * self.background.w / self.background.h
         left = (self.width - width) / 2 - camera.x * camera.zoom * .16
         bottom = max(self.height - height, min(0, (self.height - height) / 2 - camera.y * camera.zoom * .08))
-        for tile in range(floor(-left / width), ceil((self.width - left) / width)):
-            self.background.draw_to_origin(left + tile * width, bottom, width + 1, height)
+        previous = (c_ubyte(), c_ubyte(), c_ubyte())
+        if tint is not None:
+            pico.SDL_GetTextureColorMod(self.background.texture, *(byref(channel) for channel in previous))
+            pico.SDL_SetTextureColorMod(self.background.texture, *tint)
+        try:
+            for tile in range(floor(-left / width), ceil((self.width - left) / width)):
+                self.background.draw_to_origin(left + tile * width, bottom, width + 1, height)
+        finally:
+            if tint is not None:
+                pico.SDL_SetTextureColorMod(self.background.texture, *(channel.value for channel in previous))
+
+    def combat_scenery(self):
+        if self._combat_scenery is None:
+            self._combat_scenery = CombatScenery(self.width, self.height)
+        return self._combat_scenery
 
     def draw_platform(self, camera, bounds):
         left, bottom, right, top = bounds
@@ -158,14 +173,14 @@ class MossCaveArt:
                               width + 2, height,
                               profile_origin=tile * width, amount=-1.8)
 
-    def draw_motes(self, camera, floor_y, ceiling_y, *, left=0, right=None):
+    def draw_motes(self, camera, floor_y, ceiling_y, *, left=0, right=None, count=32):
         right = camera.world_width if right is None else right
         elapsed = perf_counter() - self.started
         blend = pico.SDL_BlendMode()
         pico.SDL_GetRenderDrawBlendMode(pico.renderer, byref(blend))
         pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)
         try:
-            for index in range(32):
+            for index in range(count):
                 x = left + ((index * 347.7 + sin(elapsed * .13 + index) * 20) % max(1, right - left))
                 y = floor_y + 55 + ((index * 123.3 + elapsed * (5 + index % 4)) % max(1, ceiling_y - floor_y - 120))
                 sx, sy = camera.world_to_screen(x, y)

@@ -1,0 +1,10 @@
+{
+  "image": "green-combat-foreground-roots-v1.png",
+  "mode": "builtin-imagegen",
+  "prompt": "green-combat-foreground-roots-v1.prompt.txt",
+  "size": [1024, 1536],
+  "layer": "combat-foreground",
+  "collision": false,
+  "world_anchor": "room-ceiling",
+  "description": "큰 잎과 굽은 뿌리의 어두운 전경. 좌우 크기와 높이를 달리하며 월드 천장에 고정한다."
+}

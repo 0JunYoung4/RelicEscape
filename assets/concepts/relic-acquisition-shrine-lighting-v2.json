@@ -1,0 +1,19 @@
+{
+  "image": "relic-acquisition-shrine-lighting-v2.png",
+  "mode": "builtin-imagegen-edit",
+  "status": "lighting-concept-preview-only",
+  "input_reference": "docs/relic-acquisition-shrine-v1-gallery.png",
+  "size": [
+    1672,
+    941
+  ],
+  "transparent_background": false,
+  "lighting_intent": [
+    "narrow ceiling opening",
+    "diagonal pale blue-white shafts onto the relic",
+    "compact cyan relic halo",
+    "reflected light on cradle and nearby moss",
+    "dim surrounding cave with sparse illuminated dust"
+  ],
+  "runtime_integrated": false
+}

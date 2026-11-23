@@ -15,6 +15,8 @@ Durable user and project preferences live here. Update when the user gives a rul
 
 ## Operating Rules
 
+- 2026-11-23 최신 맵 범위는 본편 2개다. 맵2는 테스트룸 같은 고대 유적 분위기로 첫 맵보다 복잡한 여러 퍼즐·몬스터를 배치하며 최종 보스 처치 후 종료한다. 아래 11/22 지도v2의 3구역 전체 연결 유지 규칙은 이번 축소 요구에 맞춰 재설계한다. 기존 첫 맵 동선은 참고·보존하되 새 세부 제안(`docs/INITIAL_DESIGN.md` 6절)을 사용자 확정으로 기록하지 않는다.
+
 - 2026-11-23 자산 정리 시 캐릭터 콘셉트·설정·기획 자료를 삭제하지 않는다. 미사용 구버전·중간 산출물은 별도 보관 폴더로 옮기고 원래 경로를 기록한다. 명백히 불필요한 임시 파일만 삭제하며, 게임의 JSON 간접 참조와 동적 파일명도 확인한다.
 
 - 오프닝은 문양 조사 E 이후 자동 연출이며 이때 주인공은 무기를 들지 않는다. 관찰·느린 접근·손 접촉 뒤 균열 발광·흔들림·바닥 붕괴·수직 추락으로 연결한다. 순서대로 제작하며 현재 구현은 접촉 자세까지다.
@@ -32,6 +34,8 @@ Durable user and project preferences live here. Update when the user gives a rul
 - State unverified parts honestly in the final answer and handoff.
 
 ## Project-Specific Rules
+
+- 2026-11-23 유물 획득 지점은 천장 틈에서 새어 들어오는 강한 빛을 유물 쪽으로 모아 신비함을 강조한다. 유물의 밝기·후광과 받침대 주변 반사광이 시선을 이끌어야 한다.
 
 - 2026-11-23 공벌레처럼 넉백이 가능한 작은 몬스터는 피격 시 살짝 뒤로 밀리고, 연속 공격을 명중시키면 거리를 확보·유지할 수 있어야 한다. 시각 흔들림뿐 아니라 실제 몸체 이동으로 적용한다.
 

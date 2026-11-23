@@ -1,0 +1,10 @@
+{
+  "image": "green-combat-midground-ruins-v1.png",
+  "mode": "builtin-imagegen",
+  "prompt": "green-combat-midground-ruins-v1.prompt.txt",
+  "size": [1536, 1024],
+  "layer": "combat-midground",
+  "collision": false,
+  "world_anchor": "room-floor",
+  "description": "뿌리가 감싼 비대칭 폐아치. 배경 전용으로 낮은 대비에 합성한다."
+}

@@ -15,6 +15,14 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-23 두 맵 재설계안을 `docs/INITIAL_DESIGN.md` v1.2 6절과 README에 기록. 확정은 2개 맵·맵2 유적/복합 퍼즐/몬스터/최종 보스까지이며 세부 방 배치·봉인2개·B1 재사용·사망 상태 유지 방식은 검토안. 구현 시 사용자 후속 피드백 반영 후 레일 재사용/발사 실패 복구/좁은 틈 귀환 끼임/사망 진행 플래그를 결정해야 한다. 이전 지도v2를 그대로 3맵으로 구현하지 않는다. 본 작업은 기획 문서만 수정, 게임·PPT·새 지도 이미지는 미변경. 기존 작업 트리의 코드·자산 변경 보존.
+
+- 2026-11-23 유물 제단의 최신 비주얼은 `assets/concepts/relic-acquisition-shrine-lighting-v2.png`: 천장 틈→봉인석 파손 틈→유물로 청백색 빛이 내려오며 유물 후광/받침대 반사광을 강조. 내장 imagegen 편집 전체 장면, 디자인 시안만 전달했고 실제 게임 미적용. 프롬프트/JSON 동봉, 생성 파일 복사 해시·PNG 디코드·시각 검토/diff 확인. `tools/preview_relic_shrine.py`는 기존 조명 없는 v1 SDL 미리보기만 재생성한다.
+
+- 2026-11-23 전투방 전용 미술 개선 완료. combat_scenery.py의 중경 폐아치/좌우 배경 명암/사선 광막/천장 고정 큰 뿌리, lower_caves.py의 전투방 분기만 연결. `docs/combat-atmosphere-{floor,combat,high,shaft}.png`, camera.gif, comparison.jpg. 기존32+신규4=36개 검증. 새 효과는 지면 아래를 차단하고 공유 색조/SDL 상태를 복원하므로 하강 공개 규칙과 다른 방을 보존한다. 재생성 `tools/preview_combat_atmosphere.py --animate`. 장시간 수동 조작·실기기별 성능은 미측정.
+
+- 2026-11-23 유물 획득 구조물 디자인 완료(게임 미적용): `assets/concepts/relic-acquisition-shrine-v1*`의 파손 육각 봉인석/낮은 받침대. 유물은 PNG에 포함하지 않음. `tools/preview_relic_shrine.py`로 기본0.5/확대0.8 배율 SDL2장 생성·시각 검토. PNG/알파·원본 크롭 일치·컴파일/diff 확인. 배치·충돌 추가는 후속 요청 때 진행하며 디자인 승인으로 간주하지 않는다.
+
 - 2026-11-23 공벌레 피격 실제 넉백 완료: `pillbug.py`의 속도400/시간0.12(24월드), 경직0.28 중만 이동. 자세별 실제 몸체·벽/발판/월드 제한, 새 타격 갱신·동일 베기 중복 금지, 순찰 복귀 튐 방지. `test_pillbug_knockback.py`5개와 공격반동의 실제 Player 연속공격 검사1개 추가. 관련39개·컴파일·diff 통과, SDL `docs/pillbug-hit-knockback.gif`/연락표 시각 확인. 장시간 수동 키 조작 밸런스는 미검증.
 
 - 2026-11-23 녹색 거리 참고45장 조사·분석서·오프라인 갤러리 완료. `docs/references/hollow-knight-greenpath/index.html`을 로컬 브라우저로 열면 전부 저장된 이미지로 구성된다. `docs/hollow-knight-layer-lighting-study.md`에 전경/배경/검은 코어/암전과 조명 분류·주석8장. 실제 클릭 UI는 브라우저 도구의 로컬 접근 정책 때문에 미검증이며 이미지·주석·로컬 링크·JS문법은 확인. 후속 자산/조명/맵 제안은 승인된 구현으로 간주하지 않는다. 기존 기둥·천장·카메라 작업 보존.

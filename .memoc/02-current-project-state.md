@@ -15,6 +15,14 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-23 사용자 요구: 기존 맵 3개를 2개로 축소. 두 번째는 테스트룸 같은 고대 유적, 첫 맵보다 복잡한 여러 퍼즐·몬스터, 마지막 보스 처치 후 종료. `docs/INITIAL_DESIGN.md` v1.2의 6절에 구조 제안 반영: 첫 맵의 오른쪽 학습→하단→왼쪽 B1→오른쪽 봉인문 유지, 맵 2 중앙 홀/레일/석궁/복합 구간/최종 보스. 독립 3번째 성소·B2 제외, 봉인2개·골렘 재사용 B1·재도전 정책은 제안이며 사용자 확정/구현 아님. 기존 지도v2는 이전 3구역 참고이며 아래 11/22의 전체 구조 유지 기록보다 이번 축소 요구가 우선. 코드·PPT 미변경.
+
+- 2026-11-23 유물 제단 조명 시안 v2: 사용자 요청에 따라 천장 균열에서 유물로 내려오는 청백색 빛줄기·청색 후광·받침대/이끼 반사광·소량 먼지 추가. 내장 imagegen으로 v1 SDL 배치 화면 편집, `assets/concepts/relic-acquisition-shrine-lighting-v2.{png,prompt.txt,json}` 저장(1672×941), 생성 원본 해시 일치·디코드·시각 검토. 전체 장면 콘셉트이며 게임 조명/구조물 PNG/미리보기 도구는 미변경. 미술 방향 문서에 v1/v2 재생성 범위 명시.
+
+- 2026-11-23 전투방 분위기 개선: 내장 imagegen 중경 폐아치/근접 뿌리2종(투명원본·프롬프트·JSON), combat_scenery.py의 비대칭 배경 명암·사선 빛·월드 천장 고정 전경. 전투방만 원경색조126/167/188·포자18개, 공유 배경 색조는 즉시 복원. 지면 아래 효과 차단·SDL 클립/블렌드 보존. 발판/적4/충돌/카메라/덮개112/접근 조명 및 다른 구역 유지. 기존32+새4=36개 검사 통과, SDL4장·GIF33프레임·전후 비교·컴파일/diff 확인. `docs/combat-atmosphere-comparison.jpg`, `docs/environment-art-direction.md`. 수동 장기 플레이와 실기기별 성능 미측정.
+
+- 2026-11-23 첫 유물 구조물 디자인 v1 제작: 내장 imagegen의 깨진 육각 봉인석+낮은 받침대, 기존 유물 문양/어두운 청록 돌/덩굴·이끼 적용. `assets/concepts/relic-acquisition-shrine-v1*`에 원본·투명PNG·프롬프트·JSON(높이380, 유물100, ground anchor662/974) 저장. `tools/preview_relic_shrine.py`와 SDL 배치2장 검토. 디자인 시안이며 게임 배치/충돌/획득 로직에는 미적용, 사용자 확정으로 간주하지 않는다. `docs/environment-art-direction.md` 참조.
+
 - 2026-11-23 공벌레 실제 넉백 적용: KNOCKBACK_SPEED400·DURATION0.12의 선형 감속으로 한 타격당 최대24월드 이동, 기존 피격 경직0.28 중 접근/구르기 정지. 유효한 다음 베기에 갱신, 같은 베기 중복 금지. 실제 몸체로 벽/월드/지지 발판 경계 제한, 순찰 범위 복귀 튐 방지, 사망/등장 시 초기화. 공벌레21+공격반동5+접촉5+골렘8=39개 통과. 좌우/30·60·120fps·4초 연속 공격의 거리/무접촉 검사 및 SDL GIF 검토. README와 `docs/pillbug-hit-knockback.gif` 참조.
 
 - 2026-11-23 녹색 거리 이미지 조사 완료: 녹색 거리39장(공식 개발 중3장 포함)·비교 지역6장 총45장과 출처/해시/이미지별5항목 분석, 오프라인 검색 HTML·CSV·연락표4장·레이어/조명 주석8장·확대 자료. `docs/hollow-knight-greenpath-study.md`, `docs/hollow-knight-layer-lighting-study.md`, `docs/references/hollow-knight-greenpath/index.html`. 이미지 디코드/고유해시45·카드45·CSV45·로컬 링크 누락0·JS문법 확인. 브라우저 로컬 접근 차단으로 필터/확대 실제 UI는 미검증. 게임 코드 변경 없음. 적용 수치는 후속 제안.

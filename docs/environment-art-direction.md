@@ -12,12 +12,24 @@
 ## 적용 범위와 확인 화면
 
 - [이끼 통로](green-style-gallery.png) · [이동과 배경 시차 GIF](green-style-gallery-parallax.gif)
-- [전투방](green-style-combat.png) · [전투방 전체](green-style-combat-map.png) · [하강 통로](green-style-shaft.png)
+- [전투방 최신 모습](combat-atmosphere-combat.png) · [전후 비교](combat-atmosphere-comparison.jpg) · [하강 통로](combat-atmosphere-shaft.png)
 - [기존 시작 동굴 유지](green-style-opening.png) · [기존 문양 유지](green-style-sigil.png)
 
 공통 렌더링은 `moss_art.py`의 `MossCaveArt`가 담당하고 `lower_caves.py`에서 사용한다. `opening_cave.py`는 변경 전 상태로 복원했다. 배경 시차는 지형 이동의0.16배다. 천장 덩굴은 지형과 같은 월드 좌표에 고정한다. 잎과 뿌리는 장식이며 실제 충돌 상면은 바꾸지 않는다.
 
 천장 덩굴을 화면 상단에 붙이거나 천장의 화면 진입 여부에 따라 배치 기준을 바꾸지 않는다. 이끼 통로는 기존 포자 영역 상단과 같은 `GALLERY_CEILING_Y=900`, 전투방은 실제 천장 `COMBAT_CEILING_Y`에 배치한다. 천장 위는 검게 채우고, 기존 불규칙한 아래 윤곽은 유지한다. 카메라는 두 구간 모두 캐릭터의 가로·세로 위치를 따라가며 천장을 보이게 하려는 높이 제한을 사용하지 않는다. 지상에서는 발밑 여백을 확보하고, 하강 통로는 기존 추적을 유지한다. [통로 지상](ceiling-vines-gallery-floor.png) · [통로 발판](ceiling-vines-gallery-platform.png) · [전투방 지상](ceiling-vines-combat-floor.png) · [전투방 상승](ceiling-vines-combat-high.png) · [높이별 비교 GIF](ceiling-vines-follow.gif).
+
+## 전투방의 깊이와 조명 개선
+
+전투방에는 뿌리가 감싼 비대칭 폐아치를 낮은 대비의 중경으로 추가했다. 먼 숲은 더 어두운 청록색으로 눌렀고, 좌우의 어둠 강도를 다르게 해 중앙 전투 공간을 남겼다. 오른쪽 위에서 중앙으로 퍼지는 부드러운 사선 빛줄기와 약한 대기광을 겹쳤다. 포자는32개에서18개로 줄였다. 빛은 배경에 합성하므로 적·캐릭터·유물과 지형의 검은 속을 하얗게 덮지 않는다.
+
+가까운 전경에는 큰 잎과 굽은 뿌리를 좌우 다른 높이·크기로 배치했다. 월드 천장에 고정하고 천장보다 높은 부분은 잘라, 카메라가 상승해도 화면 위로 다시 붙거나 위치가 바뀌지 않는다. 중앙과 하단의 전투·착지 공간은 비웠다. 기존 발판·벽·적4마리·충돌·덮개112·개방과 접근 조명·카메라 규칙은 유지한다. 시작 동굴·최초 착지방·이끼 통로에는 적용하지 않는다.
+
+`combat_scenery.py`의 `CombatScenery`가 중경·명암·빛줄기·전경을 맡는다. `MossCaveArt.combat_scenery()`는 전투방에 처음 필요할 때 자산을 읽는다. 전투방 배경 색조는 그리기 후 원래 값으로 되돌려 통로로 나가도 색이 변하지 않는다. 새 효과는 지면 아래로 그리지 않으며 호출자의 SDL 클립과 블렌드 상태를 보존한다.
+
+[지상](combat-atmosphere-floor.png) · [적4마리와 전투 시야](combat-atmosphere-combat.png) · [상승 시점](combat-atmosphere-high.png) · [하강](combat-atmosphere-shaft.png) · [카메라 높이 변화 GIF](combat-atmosphere-camera.gif) · [개선 전후 비교](combat-atmosphere-comparison.jpg).
+
+SDL 소프트웨어 렌더로 위 화면과 GIF를 생성해 확인했다. 재생성은 `.\.venv\Scripts\python.exe tools/preview_combat_atmosphere.py --animate`. 장시간 수동 키 조작과 실기기별 프레임 성능은 별도 확인 사항이다.
 
 ## 새 생성 자산
 
@@ -34,8 +46,24 @@
 | 천장 전경 실루엣 | [전경](../assets/terrain/green-cavern-canopy-v1.png) | [프롬프트](../assets/terrain/green-cavern-canopy-v1.prompt.txt) |
 | 모서리 덩굴 장식 | [덩굴](../assets/terrain/green-cavern-corner-ivy-v1.png) | [프롬프트](../assets/terrain/green-cavern-corner-ivy-v1.prompt.txt) |
 | 유물 통로의 지면 기둥 | [기둥](../assets/terrain/green-cavern-ground-pillar-v2.png) | [프롬프트](../assets/terrain/green-cavern-ground-pillar-v2.prompt.txt) |
+| 전투방 중경 폐아치 | [중경](../assets/terrain/green-combat-midground-ruins-v1.png) | [프롬프트](../assets/terrain/green-combat-midground-ruins-v1.prompt.txt) |
+| 전투방 근접 뿌리와 큰 잎 | [전경](../assets/terrain/green-combat-foreground-roots-v1.png) | [프롬프트](../assets/terrain/green-combat-foreground-roots-v1.prompt.txt) |
+
+전투방 신규2종은 내장 imagegen의 투명 원본 PNG를 편집 없이 보관하며, 원본 자체를 렌더에 사용한다. 용도·크기·고정점은 각 PNG와 같은 이름의 JSON에 기록했다. 조명은 SDL의 색·알파 메시로 그려 별도 이미지가 없다.
 
 사용자 참고 이미지7장은 [참고 폴더](references/green-cavern-style/)에 보관했다.
+
+## 유물 획득 구조물 디자인 시안
+
+첫 유물 지점에 놓을 구조물 v1은 이끼와 덩굴에 잠식된 **깨진 육각 봉인석과 낮은 받침대**다. 기존 순간이동 문양의 육각 외곽과 짝을 이룬 홈을 돌에 새겼다. 윗부분을 비대칭으로 부수고, 유물이 놓이는 중앙은 식생 없이 비워 시선을 모은다. 맵의 어두운 청록색 돌·둥근 잎·정돈된 손그림 윤곽을 따른다.
+
+현재는 **디자인 및 배치 미리보기만 제작했으며 게임에는 적용하지 않았다**. 높이380월드, 바닥에 묻히는 기준점과 기존 유물 높이100을 메타데이터에 기록했다. 구조물 PNG에는 유물을 넣지 않아 획득 시 별도로 사라질 수 있다. 향후 충돌과 상호작용 여부는 별도 구현 사항이다.
+
+[투명 구조물 PNG](../assets/concepts/relic-acquisition-shrine-v1.png) · [원본](../assets/concepts/relic-acquisition-shrine-v1-source.png) · [정확한 내장 imagegen 프롬프트](../assets/concepts/relic-acquisition-shrine-v1.prompt.txt) · [배치 메타데이터](../assets/concepts/relic-acquisition-shrine-v1.json) · [기본 배율 배치 시안](relic-acquisition-shrine-v1-gallery.png) · [확대 배치 시안](relic-acquisition-shrine-v1-closeup.png).
+
+최신 조명 시안 v2는 천장의 작은 틈에서 내려오는 청백색 빛이 봉인석의 깨진 상단을 지나 유물을 비추도록 수정했다. 유물의 밝은 청색 중심과 작은 후광, 받침대·주변 이끼의 반사광, 빛줄기 속 먼지를 강조하고 주변 동굴은 어둡게 정리했다. v1 배치 화면을 내장 imagegen으로 편집한 **전체 장면 콘셉트 이미지이며 실제 게임 조명이나 투명 구조물 PNG에는 아직 반영하지 않았다**. [조명 시안 v2](../assets/concepts/relic-acquisition-shrine-lighting-v2.png) · [정확한 편집 프롬프트](../assets/concepts/relic-acquisition-shrine-lighting-v2.prompt.txt) · [출처·상태 메타데이터](../assets/concepts/relic-acquisition-shrine-lighting-v2.json).
+
+v1 SDL 배치 미리보기 재생성: `.\.venv\Scripts\python.exe tools/preview_relic_shrine.py`. 기존 공통 맵 렌더러와 실제 유물·캐릭터를 사용하며 실행 게임의 배치·충돌·획득 로직은 수정하지 않는다. 이 명령은 imagegen 조명 시안 v2를 재생성하지 않는다.
 
 ## 녹색 거리 추가 조사 자료
 

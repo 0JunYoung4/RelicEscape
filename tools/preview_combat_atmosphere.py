@@ -4,6 +4,7 @@ from ctypes import c_ubyte
 import os
 from pathlib import Path
 import sys
+from time import perf_counter
 from types import SimpleNamespace
 
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
@@ -18,7 +19,7 @@ from main import Camera
 from player import Player
 
 
-def render(room, player, camera, path):
+def render(room, player, camera, path=None):
     pico.clear_canvas()
     room.draw(camera)
     room.draw_combat_exit(camera)
@@ -28,12 +29,16 @@ def render(room, player, camera, path):
     if pico.SDL_RenderReadPixels(pico.renderer, None, pico.SDL_PIXELFORMAT_RGBA32,
                                 pixels, 960 * 4) != 0:
         raise RuntimeError(pico.SDL_GetError())
-    Image.frombytes("RGBA", (960, 540), bytes(pixels)).save(path)
+    image = Image.frombytes("RGBA", (960, 540), bytes(pixels))
+    if path is not None:
+        image.save(path)
+    return image
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--prefix", default="combat-atmosphere")
+    parser.add_argument("--animate", action="store_true")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     pico.open_canvas(960, 540)
@@ -43,7 +48,7 @@ if __name__ == "__main__":
     player = Player(COMBAT_CENTER_X, 0, COMBAT_WIDTH)
     camera = Camera(960, COMBAT_WIDTH, zoom=.5)
     room.enter(player, camera)
-    room.art.started = __import__("time").perf_counter()
+    room.art.started = perf_counter()
     player.recover_at(COMBAT_CENTER_X, 0, 0)
     room.follow_camera(player, camera)
     render(room, player, camera, root / "docs" / f"{args.prefix}-floor.png")
@@ -53,6 +58,14 @@ if __name__ == "__main__":
     player.recover_at(COMBAT_CENTER_X, 650, 0)
     room.follow_camera(player, camera)
     render(room, player, camera, root / "docs" / f"{args.prefix}-high.png")
+    if args.animate:
+        frames = []
+        for index in list(range(17)) + list(range(15, -1, -1)):
+            player.recover_at(COMBAT_CENTER_X, index * 650 / 16, 0)
+            room.follow_camera(player, camera)
+            frames.append(render(room, player, camera).convert("RGB"))
+        frames[0].save(root / "docs" / f"{args.prefix}-camera.gif", save_all=True,
+                       append_images=frames[1:], duration=85, loop=0, optimize=False)
     room.exit_progress, room.shaft_visibility = 1, 1
     player.recover_at(COMBAT_CENTER_X, -300, 0)
     room.follow_camera(player, camera)

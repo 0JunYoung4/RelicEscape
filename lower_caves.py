@@ -285,9 +285,11 @@ class LowerCaves:
                                  self.landing_width * camera.zoom, shaft.h * SHAFT_SCALE * camera.zoom)
             return
         if self.room == "combat":
-            self.art.draw_background(camera)
+            self.art.draw_background(camera, tint=(126, 167, 188))
+            self.art.combat_scenery().draw_background(camera, COMBAT_LEFT_WALL,
+                                                     COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
             self.art.draw_motes(camera, 0, COMBAT_CEILING_Y,
-                                left=COMBAT_LEFT_WALL, right=COMBAT_RIGHT_WALL)
+                                left=COMBAT_LEFT_WALL, right=COMBAT_RIGHT_WALL, count=18)
             pico.draw_rectangle(*camera.world_to_screen(0, COMBAT_CEILING_Y),
                                 *camera.world_to_screen(COMBAT_WIDTH, 1600), 0, 0, 0, filled=True)
             self.art.draw_wall(camera, COMBAT_LEFT_WALL, COMBAT_DOOR_HEIGHT, COMBAT_CEILING_Y)
@@ -543,6 +545,8 @@ class LowerCaves:
     def draw_foreground(self, camera):
         if self.room == "combat":
             self.art.draw_canopy(camera, COMBAT_CEILING_Y)
+            self.art.combat_scenery().draw_foreground(camera, COMBAT_LEFT_WALL,
+                                                     COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
         elif self.room == "gallery":
             self.art.draw_canopy(camera, GALLERY_CEILING_Y)
         if self.passage_time is not None:
