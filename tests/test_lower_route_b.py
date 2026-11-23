@@ -18,7 +18,7 @@ from lower_caves import LowerCaves
 from lower_route_b import PLAY_TERRAIN, SPAWN, SPIKES, LowerRouteB
 from lower_route_b_layout import C_PASSAGE, GOLEM_LEDGE, PILLBUG_LEDGE, SHIELD_LEDGE, WIDTH
 from player import Player
-from shield_soldier import MAX_HP
+from shield_soldier import REAR_OPENING
 
 
 def keydown(key):
@@ -174,14 +174,52 @@ class LowerRouteBTests(unittest.TestCase):
         shield = route.shield
         x, y, _, _ = shield.body_bounds()
         strike = (x - 60, y + 10, x + 60, y + 100)
-        self.assertFalse(shield.check_strike(strike, -1, 12, 1))
-        self.assertEqual(shield.hp, MAX_HP)
+        self.assertFalse(shield.check_strike(strike, x + 90, 12, 1))
+        self.assertEqual(shield.hp, 45)
         self.assertIsNotNone(shield.block_time)
-        self.assertTrue(shield.check_strike(strike, 1, 12, 2))
-        self.assertEqual(shield.hp, MAX_HP - 12)
         target = (x + 70, y, x + 110, y + 140)
         shield.update(.7, target, PLAY_TERRAIN, WIDTH)
         shield.update(.6, target, PLAY_TERRAIN, WIDTH)
         shield.update(.55, target, PLAY_TERRAIN, WIDTH)
+        self.assertFalse(shield.check_strike(strike, x + 90, 12, 2))
+        self.assertEqual(shield.hp, 45)
         self.assertIsNotNone(shield.bash_contact(target))
         self.assertIsNone(shield.bash_contact(target))
+
+    def test_rear_hit_in_combat_turns_guard_and_blocks_next_hit_from_that_side(self):
+        cave = SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096))
+        room = LowerCaves(cave)
+        room.room = "route_b"
+        player = Player(*SPAWN[:2], WIDTH, terrain=PLAY_TERRAIN)
+        room.enter(player, main.Camera(960, WIDTH))
+        shield = room.route_b.shield
+        shield.bash_time = shield.bash_start
+
+        self.assertTrue(player.recover_at(shield.x - 84, shield.floor_y, 0))
+        player.slash = (0.04, 1, "attack")
+        player.swing_id = 1
+        room.update_enemies(player, 1 / 60)
+        self.assertEqual(shield.hp, 33)
+        self.assertEqual(shield.direction, -1)
+        self.assertIsNone(shield.bash_time)
+        self.assertEqual(len(room.hit_impacts), 1)
+
+        player.swing_id = 2
+        room.update_enemies(player, 1 / 60)
+        self.assertEqual(shield.hp, 33)
+        self.assertIsNotNone(shield.block_time)
+        self.assertEqual(len(room.hit_impacts), 1)
+
+    def test_guard_turns_after_an_uninterrupted_rear_opening(self):
+        shield = LowerRouteB().shield
+        x, y, _, _ = shield.body_bounds()
+        behind = (x - 120, y, x - 80, y + 140)
+        front = (x + 80, y, x + 120, y + 140)
+        shield.update(.9, behind, PLAY_TERRAIN, WIDTH)
+        self.assertEqual(shield.direction, 1)
+        shield.update(.01, front, PLAY_TERRAIN, WIDTH)
+        shield.update(REAR_OPENING - .02, behind, PLAY_TERRAIN, WIDTH)
+        self.assertEqual(shield.direction, 1)
+        shield.update(.03, behind, PLAY_TERRAIN, WIDTH)
+        self.assertEqual(shield.direction, -1)
+        self.assertEqual(shield.hp, 45)

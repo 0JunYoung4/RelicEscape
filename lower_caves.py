@@ -425,7 +425,11 @@ class LowerCaves:
             for enemy in self.enemies:
                 if strike is not None:
                     body = enemy.body_bounds()
-                    if enemy.check_strike(strike, facing, player.attack_power, player.swing_id):
+                    if route_b is not None and enemy is route_b.shield:
+                        hit = enemy.check_strike(strike, player.x, player.attack_power, player.swing_id)
+                    else:
+                        hit = enemy.check_strike(strike, facing, player.attack_power, player.swing_id)
+                    if hit:
                         self.hit_impacts.append(HitImpact.from_strike(
                             strike, body, facing, downward=downward, heavy=isinstance(enemy, CrystalGolem)))
                         player.recoil_from_hit(facing, player.swing_id)

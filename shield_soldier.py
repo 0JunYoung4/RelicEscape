@@ -6,10 +6,12 @@ from player import ASSET_ROOT, Animation
 
 
 BODY_WIDTH, BODY_HEIGHT = 96, 120
-MAX_HP = 48
+MAX_HP = 45
 BASH_DAMAGE = 15
 BASH_REACH = 126
 WALK_SPEED = 54
+REAR_OPENING = 1.5
+TURN_COOLDOWN = .55
 
 
 def load_pose(version):
@@ -31,7 +33,8 @@ class ShieldSoldier:
         self.block_time = None
         self.bash_time = None
         self.bash_hit = False
-        self.cooldown = .55
+        self.cooldown = TURN_COOLDOWN
+        self.rear_time = 0.0
         self.walk, _ = load_pose("walk-right-v2")
         self.block, _ = load_pose("block-right-v1")
         self.bash, data = load_pose("bash-right-v1")
@@ -41,7 +44,7 @@ class ShieldSoldier:
     def body_bounds(self):
         return self.x, self.floor_y, BODY_WIDTH, BODY_HEIGHT
 
-    def check_strike(self, box, facing, damage, swing_id):
+    def check_strike(self, box, attacker_x, damage, swing_id):
         if self.hp == 0 or self.last_swing == swing_id or box is None:
             return False
         left, bottom, right, top = box
@@ -49,15 +52,31 @@ class ShieldSoldier:
                 or bottom >= self.floor_y + BODY_HEIGHT or top <= self.floor_y):
             return False
         self.last_swing = swing_id
-        if facing == -self.direction and (self.bash_time is None or self.bash_time < self.bash_start):
+        if (attacker_x - self.x) * self.direction >= 0:
             if self.bash_time is None:
                 self.block_time = 0.0
             return False
         self.hp = max(0, self.hp - damage)
+        if self.hp > 0:
+            self._turn_around()
         return True
+
+    def _turn_around(self):
+        self.direction *= -1
+        self.rear_time = 0.0
+        self.block_time = None
+        self.bash_time = None
+        self.cooldown = max(self.cooldown, TURN_COOLDOWN)
 
     def update(self, dt, player_box, terrain, world_width):
         if self.hp == 0:
+            return
+        target_x = (player_box[0] + player_box[2]) / 2 if player_box else self.x
+        dx = target_x - self.x
+        behind = dx * self.direction < 0
+        self.rear_time = self.rear_time + dt if behind else 0.0
+        if self.rear_time >= REAR_OPENING:
+            self._turn_around()
             return
         if self.bash_time is not None:
             self.bash_time += dt
@@ -70,11 +89,8 @@ class ShieldSoldier:
             if self.block_time >= self.block.duration:
                 self.block_time = None
             return
-        if not player_box:
+        if not player_box or behind:
             return
-        left, _, right, _ = player_box
-        dx = (left + right) / 2 - self.x
-        self.direction = 1 if dx >= 0 else -1
         self.cooldown = max(0, self.cooldown - dt)
         if abs(dx) <= BASH_REACH and self.cooldown == 0:
             self.bash_time = 0.0

@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-24 B 방패병 체력 45. 공격자 위치가 방패 쪽이면 방패 공격 중에도 막는다. 후면 피격 직후 또는 후면 접근 1.5초 후 플레이어 쪽으로 전환한다. `shield_soldier.py`.
+
 - 2026-11-24 본편 B파트 적용. A 왼쪽 출구에서 진입하며 곡선 레일 2개·벽점프·공벌레·정면 방어 및 방패 공격을 하는 방패병·골렘·가시 복귀를 연결했다. B 범위는 C 연결 통로까지. `lower_route_b.py`, `tests/test_lower_route_b.py`.
 
 - 2026-11-24 습한 유적용 두꺼운 발판 10종을 제작했다. B 시안에 통로 연결판·벽 연결 석대·가시밭 받침·입구 암반을 채택하고 청회색 젖은 돌과 이끼로 통일했다. `assets/terrain/ruin-platforms/README.md`, `assets/concepts/map1-lower-route-b-v3.png`. 본편 미적용.
