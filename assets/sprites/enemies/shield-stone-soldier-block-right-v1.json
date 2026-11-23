@@ -1,0 +1,126 @@
+{
+  "image": "shield-stone-soldier-block-right-v1.png",
+  "source_concept": "assets/concepts/shield-stone-soldier-v5.png",
+  "frame_size": [
+    480,
+    368
+  ],
+  "frame_count": 8,
+  "columns": 4,
+  "fps": 11.764705882352942,
+  "loop": false,
+  "facing": "right",
+  "pose": "shield_block",
+  "foot_anchor": [
+    225,
+    350
+  ],
+  "anchor_coordinates": "frame top-left",
+  "display_height": 120,
+  "scale": 0.3669724770642202,
+  "duration_ms": 680,
+  "impact_frame": 1,
+  "impact_time_ms": 40,
+  "brace_frame": 3,
+  "brace_time_ms": 180,
+  "frame_durations_ms": [
+    40,
+    60,
+    80,
+    110,
+    120,
+    110,
+    90,
+    70
+  ],
+  "frames": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 480,
+      "height": 368,
+      "duration_ms": 40,
+      "foot_anchor": [
+        225,
+        350
+      ]
+    },
+    {
+      "x": 480,
+      "y": 0,
+      "width": 480,
+      "height": 368,
+      "duration_ms": 60,
+      "foot_anchor": [
+        225,
+        350
+      ]
+    },
+    {
+      "x": 960,
+      "y": 0,
+      "width": 480,
+      "height": 368,
+      "duration_ms": 80,
+      "foot_anchor": [
+        225,
+        350
+      ]
+    },
+    {
+      "x": 1440,
+      "y": 0,
+      "width": 480,
+      "height": 368,
+      "duration_ms": 110,
+      "foot_anchor": [
+        225,
+        350
+      ]
+    },
+    {
+      "x": 0,
+      "y": 368,
+      "width": 480,
+      "height": 368,
+      "duration_ms": 120,
+      "foot_anchor": [
+        225,
+        350
+      ]
+    },
+    {
+      "x": 480,
+      "y": 368,
+      "width": 480,
+      "height": 368,
+      "duration_ms": 110,
+      "foot_anchor": [
+        225,
+        350
+      ]
+    },
+    {
+      "x": 960,
+      "y": 368,
+      "width": 480,
+      "height": 368,
+      "duration_ms": 90,
+      "foot_anchor": [
+        225,
+        350
+      ]
+    },
+    {
+      "x": 1440,
+      "y": 368,
+      "width": 480,
+      "height": 368,
+      "duration_ms": 70,
+      "foot_anchor": [
+        225,
+        350
+      ]
+    }
+  ]
+}
