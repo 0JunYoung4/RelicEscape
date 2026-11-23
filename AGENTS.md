@@ -10,6 +10,10 @@
 - Conversation with the user may remain in Korean.
 - Preserve existing design decisions when translating or renaming files, and update references to renamed files.
 
+## Git
+
+- Commit repository changes at the end of each completed task. Include only changes made for that task.
+
 ## Character asset source
 
 - Use `assets/concepts/player-sd-idle-right-source-v3.png` as the working source for in-game character artwork and animation variants.
