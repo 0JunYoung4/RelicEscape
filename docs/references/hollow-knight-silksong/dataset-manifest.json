@@ -70,8 +70,10 @@
     "asset_briefs": "asset-briefs.json",
     "annotations": "annotations.json",
     "gallery": "index.html",
-    "guide": "../../reference-production-guide.md"
+    "guide": "../../reference-production-guide.md",
+    "project_targets": "project-targets.json"
   },
+  "project_plan": "본편 두 맵. 중앙 통로는 맵2 작은 중앙 홀, 문양의 성소는 맵2 최종 보스방에 통합. project-targets.json 참조",
   "interpretation": {
     "observation": "이미지에서 읽히는 형태·재질·명암의 시각적 관찰",
     "application": "프로젝트 적용 제안. 구현 여부는 패턴의 project_status와 최신 소스 확인",

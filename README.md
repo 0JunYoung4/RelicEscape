@@ -61,6 +61,10 @@
 
 ## 기획 문서
 
+[할로우 나이트·실크송 통합 참고 갤러리 244장](docs/references/hollow-knight-silksong/index.html) · [우리 맵 제작용 활용 가이드](docs/reference-production-guide.md) · [분석 데이터 JSON](docs/references/hollow-knight-silksong/analysis.json)
+
+두 게임의 36개 지역을 조사해 이미지별 공간 구성·재질·전경·배경·그림자·조명을 기록했습니다. 제작 패턴20개와 자산 명세20개, 대표12장·49개 관찰 영역을 현재 두 맵 기획의 제작 구역에 연결합니다.
+
 [녹색 거리 참고 이미지 갤러리 45장](docs/references/hollow-knight-greenpath/index.html) · [맵·텍스처·몬스터 분석](docs/hollow-knight-greenpath-study.md) · [전경·배경·그림자·조명 분석](docs/hollow-knight-layer-lighting-study.md)
 
 [초기 기획서 v1.1](docs/INITIAL_DESIGN.md)

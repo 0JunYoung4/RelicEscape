@@ -6,6 +6,7 @@
 - [프로젝트 제작 가이드](../../reference-production-guide.md): 지금 무엇을 만들고 어디에 쓸지 결정하는 순서.
 - [분석 JSON](analysis.json) · [한 줄 한 이미지 JSONL](analysis.jsonl) · [CSV](catalog.csv) · [출처 원장](sources.json)
 - [제작 패턴20개](patterns.json) · [자산 제작 명세20개](asset-briefs.json) · [통계](statistics.json)
+- [최신 두 맵의 위치·구현 상태 대응](project-targets.json): 중앙 통로는 맵2 작은 중앙 홀, 문양의 성소는 맵2 최종 보스방의 문양·제단에 대응.
 - [기존 녹색 거리 자료집](../hollow-knight-greenpath/README.md)
 
 신규199장은 실제 PNG로 저장했고 기존45장은 원래 파일을 참조해 중복 복사를 피했다. 파일 및 디코딩된 RGB 픽셀 해시로 완전 중복을 제외했다. 비슷한 구도는 dHash 거리4 이하 후보를 따로 표시한다. 이 표시는 유사도 후보이며 같은 방·같은 원본이라고 확정하는 판정은 아니다.
@@ -94,29 +95,29 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 
 ### HK-GP01 폭포 아래 벤치와 등불
 
-[이미지 보기](../hollow-knight-greenpath/images/gp01.png) · HK / Greenpath · 휴식 포켓 · 석재, 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp01.png) · HK / Greenpath · 휴식 포켓 · 석재, 이끼, 잎, 액체
 
 - 관찰: 낮은 바닥과 비어 있는 중앙 위로 폭포가 높게 열린다. 큰 둥근 돌 사이에 작은 잎 덩어리를 밀집시킨다.
 - 전경과 배경: 천장 덩굴은 어둡고 가까우며 폭포와 기둥은 흐리고 멀다.
 - 조명: 흰 등불의 작은 광원과 넓은 청록색 수직 빛이 겹친다.
 - 제작 패턴: P03, P04, P10 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B03, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 이끼 통로 · 자산 명세 B03, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/9c/Screenshot_HK_Greenpath_01.png/800px-Screenshot_HK_Greenpath_01.png)
 
 ### HK-GP02 웅덩이 위 철문과 수직 샛길
 
-[이미지 보기](../hollow-knight-greenpath/images/gp02.png) · HK / Greenpath · 위험 구간 · 이끼, 금속
+[이미지 보기](../hollow-knight-greenpath/images/gp02.png) · HK / Greenpath · 위험 구간 · 석재, 이끼, 금속, 액체
 
 - 관찰: 왼쪽 낮은 문과 오른쪽 높은 발판이 수평·수직 경로를 함께 제시한다. 철문의 얇은 선과 두꺼운 이끼 지형이 대비된다.
 - 전경과 배경: 화면 위 검은 덩어리는 지형 내부이고 뒤의 낙수는 원경이다.
 - 조명: 산성 액체의 밝은 수평면이 낙하 위험을 분명하게 만든다.
 - 제작 패턴: P03, P05, P07 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B03, B06, B09
+- 적용 후보: 이끼 통로, 하강 통로 · 자산 명세 B03, B06, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/dd/Screenshot_HK_Greenpath_02.png/800px-Screenshot_HK_Greenpath_02.png)
 
 ### HK-GP03 산성 호수 위 유적 회랑
 
-[이미지 보기](../hollow-knight-greenpath/images/gp03.png) · HK / Greenpath · 수평 통로 · 석재, 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp03.png) · HK / Greenpath · 수평 통로 · 석재, 잎, 금속, 액체
 
 - 관찰: 아치 두 층과 긴 수평 보행면이 반복된다. 매끈한 곡선 석재 위에 잎이 부분적으로 침식한다.
 - 전경과 배경: 뒤 회랑의 기둥은 낮은 대비로 반복되고 앞 가장자리가 선명하다.
@@ -127,18 +128,18 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 
 ### HK-GP04 가시로 둘러싸인 좁은 통로
 
-[이미지 보기](../hollow-knight-greenpath/images/gp04.png) · HK / Greenpath · 위험 구간 · 이끼, 가시
+[이미지 보기](../hollow-knight-greenpath/images/gp04.png) · HK / Greenpath · 위험 구간 · 이끼, 잎, 가시
 
 - 관찰: 위·아래 가시 사이에 열린 이동 통로가 있다. 주황·분홍 끝이 있는 뾰족한 가시가 둥근 이끼와 확실히 구별된다.
 - 전경과 배경: 바깥 검은 덩어리와 안쪽 가시 테두리가 통로를 액자처럼 감싼다.
 - 조명: 중앙 배경은 청록색으로 밝고 위험한 가시는 따뜻한 가장자리를 갖는다.
 - 제작 패턴: P05, P07, P12 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B14
+- 적용 후보: 이끼 통로, 보스 접근 구간 · 자산 명세 B06, B09, B14
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_04.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/d0/Screenshot_HK_Greenpath_04.png/800px-Screenshot_HK_Greenpath_04.png)
 
 ### HK-GP05 이끼 기사의 평평한 전투 공간
 
-[이미지 보기](../hollow-knight-greenpath/images/gp05.png) · HK / Greenpath · 전투 공간 · 석재, 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp05.png) · HK / Greenpath · 전투 공간 · 석재, 이끼, 잎
 
 - 관찰: 중앙 보행면을 길게 비우고 가장자리의 장식만 높인다. 돌기둥과 잎 덩어리는 촘촘하지만 전투 공간은 단순하다.
 - 전경과 배경: 위 덩굴은 검은 프레임이며 뒤 기둥은 흐리다.
@@ -149,139 +150,139 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 
 ### HK-GP06 유적 기둥과 매달린 검은 발판
 
-[이미지 보기](../hollow-knight-greenpath/images/gp06.png) · HK / Greenpath · 수평 통로 · 석재
+[이미지 보기](../hollow-knight-greenpath/images/gp06.png) · HK / Greenpath · 복층 공간 · 석재, 이끼, 잎
 
 - 관찰: 중앙 위쪽의 검은 발판 아래로 큰 기둥들이 이어진다. 밝은 석재는 윤곽과 홈을 읽히게 하고 발판 속은 검게 묻힌다.
 - 전경과 배경: 발판 검정은 충돌 지형의 내부이며 원경의 아치와 다르다.
 - 조명: 기둥 뒤의 수직 광막과 앞쪽 작은 등불이 깊이를 만든다.
 - 제작 패턴: P01, P02, P03, P16 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 방마다 하나의 큰 기억점
-- 적용 후보: 중앙 통로 · 자산 명세 B01, B02, B03, B17
+- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B01, B02, B03, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_06.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/df/Screenshot_HK_Greenpath_06.png/800px-Screenshot_HK_Greenpath_06.png)
 
 ### HK-GP07 호넷 공간의 문양 비석
 
-[이미지 보기](../hollow-knight-greenpath/images/gp07.png) · HK / Greenpath · 전투 공간 · 석재, 뿌리
+[이미지 보기](../hollow-knight-greenpath/images/gp07.png) · HK / Greenpath · 전투 공간 · 석재, 이끼, 뿌리
 
 - 관찰: 평평한 바닥 위 큰 문양 돌 하나가 시각적 중심이 된다. 굵은 소용돌이 문양과 덩굴이 돌의 큰 형태를 보조한다.
 - 전경과 배경: 뒤의 식물과 수직 줄기는 비석보다 흐리고 덜 선명하다.
 - 조명: 비스듬한 밝은 기둥이 비석과 빈 전투 공간을 비춘다.
 - 제작 패턴: P04, P11, P16 — 목표에 모이는 빛 / 전투방의 넓은 판독 공간 / 방마다 하나의 큰 기억점
-- 적용 후보: 전투방, 보스방 · 자산 명세 B04, B05, B13, B17
+- 적용 후보: 보스방, 문양의 성소 · 자산 명세 B04, B05, B13, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_07.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/81/Screenshot_HK_Greenpath_07.png/800px-Screenshot_HK_Greenpath_07.png)
 
 ### HK-GP08 대각선 가시와 낮은 유적 통로
 
-[이미지 보기](../hollow-knight-greenpath/images/gp08.png) · HK / Greenpath · 위험 구간 · 석재, 가시
+[이미지 보기](../hollow-knight-greenpath/images/gp08.png) · HK / Greenpath · 위험 구간 · 석재, 이끼, 가시
 
 - 관찰: 위에서 오른쪽 아래로 내려오는 가시가 이동 여유를 압축한다. 유적 아치의 매끈한 곡선과 가시의 뾰족한 선이 대비된다.
 - 전경과 배경: 상부 검은 지형 밑으로 뿌리가 매달리고 뒤 회랑이 비친다.
 - 조명: 배경은 푸르게 눌러 가시 끝과 이동면이 먼저 읽힌다.
 - 제작 패턴: P05, P07, P16 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B17
+- 적용 후보: 이끼 통로, 보스 접근 구간 · 자산 명세 B06, B09, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_08.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/6a/Screenshot_HK_Greenpath_08.png/800px-Screenshot_HK_Greenpath_08.png)
 
 ### HK-GP09 역 입구와 벤치
 
-[이미지 보기](../hollow-knight-greenpath/images/gp09.png) · HK / Greenpath · 휴식 포켓 · 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp09.png) · HK / Greenpath · 휴식 포켓 · 석재, 금속, 잎
 
 - 관찰: 왼쪽 큰 원형 문과 오른쪽 벤치가 방향과 기능을 나눈다. 부챗살 장식·문틀·얇은 기둥은 식생보다 규칙적이다.
 - 전경과 배경: 아래 전경 난간과 뒤 기둥 사이에 보행면이 놓인다.
 - 조명: 문과 벤치 근처의 작은 등불이 기능 지점을 표시한다.
 - 제작 패턴: P10, P16 — 작고 명료한 휴식 포켓 / 방마다 하나의 큰 기억점
-- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B12, B17
+- 적용 후보: 전투 후 휴식 지점, 중앙 통로 · 자산 명세 B12, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_09.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/98/Screenshot_HK_Greenpath_09.png/800px-Screenshot_HK_Greenpath_09.png)
 
 ### HK-GP10 낮은 천장 아래 고립된 벤치
 
-[이미지 보기](../hollow-knight-greenpath/images/gp10.png) · HK / Greenpath · 휴식 포켓 · 석재, 뿌리
+[이미지 보기](../hollow-knight-greenpath/images/gp10.png) · HK / Greenpath · 휴식 포켓 · 석재, 이끼, 뿌리
 
 - 관찰: 대부분을 가린 검은 천장 아래 작은 밝은 공간이 열린다. 천장의 돌 표면보다 아래로 뻗은 가는 뿌리 실루엣이 강하다.
 - 전경과 배경: 검은 상부 코어와 가까운 뿌리, 푸른 배경을 구별한다.
 - 조명: 벤치 주변만 낮은 대비의 푸른 빛으로 드러낸다.
 - 제작 패턴: P01, P02, P03, P10 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비 / 작고 명료한 휴식 포켓
-- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B01, B02, B03, B12
+- 적용 후보: 전투 후 휴식 지점, 이끼 통로 · 자산 명세 B01, B02, B03, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_10.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c9/Screenshot_HK_Greenpath_10.png/800px-Screenshot_HK_Greenpath_10.png)
 
 ### HK-GP11 안개 협곡으로 바뀌는 경계
 
-[이미지 보기](../hollow-knight-greenpath/images/gp11.png) · HK / Greenpath · 지역 경계 · 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp11.png) · HK / Greenpath · 지역 경계 · 이끼, 잎, 구형 생물
 
 - 관찰: 왼쪽 넓은 땅이 오른쪽 수직 낙하 틈으로 끝난다. 오른쪽 구형 식물이 잎 위주의 왼쪽과 다른 재질을 알린다.
 - 전경과 배경: 검은 바닥 내부와 뒤의 식물층이 명확히 분리된다.
 - 조명: 푸른 공간에 흰 둥근 발광체가 점진적으로 늘어난다.
 - 제작 패턴: P03, P05, P09 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동 / 지역 문턱과 문양 입구
-- 적용 후보: 중앙 통로, 문양의 성소 · 자산 명세 B03, B06, B11
+- 적용 후보: 이끼 통로, 하강 통로 · 자산 명세 B03, B06, B11
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Greenpath_11.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/df/Screenshot_HK_Greenpath_11.png/800px-Screenshot_HK_Greenpath_11.png)
 
 ### HK-GP12 사냥꾼의 식생 위장 은신처
 
-[이미지 보기](../hollow-knight-greenpath/images/gp12.png) · HK / Greenpath · 수평 통로 · 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp12.png) · HK / Greenpath · 랜드마크 · 잎, 생물 외곽
 
 - 관찰: 낮은 잎 무더기에 큰 입과 눈이 묻혀 있다. 겹친 작은 잎과 큰 흰 이빨의 스케일 차이가 인상을 만든다.
 - 전경과 배경: 멀리 가는 큰 줄기와 가까운 둥근 잎 덩어리가 겹친다.
 - 조명: 위에서 내려오는 사선 광선은 눈과 잎 표면을 읽히게 한다.
 - 제작 패턴: P04, P15, P16 — 목표에 모이는 빛 / 적 실루엣과 공격 방향 / 방마다 하나의 큰 기억점
-- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B04, B05, B16, B17
+- 적용 후보: 이끼 통로 · 자산 명세 B04, B05, B16, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_The_Hunter_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8f/Screenshot_HK_The_Hunter_01.png/800px-Screenshot_HK_The_Hunter_01.png)
 
 ### HK-GP13 쉐오의 집과 가시 경계
 
-[이미지 보기](../hollow-knight-greenpath/images/gp13.png) · HK / Greenpath · 위험 구간 · 뿌리, 가시
+[이미지 보기](../hollow-knight-greenpath/images/gp13.png) · HK / Greenpath · 목표 노출 · 판형 외피, 뿌리, 가시
 
 - 관찰: 중앙 둥근 집과 양옆 가시가 안전한 목적지를 감싼다. 집의 큰 판형 곡면 위로 덩굴이 감기고 외곽에는 날카로운 가시가 있다.
 - 전경과 배경: 어두운 전경 아래로 집 입구가 밝게 열린다.
 - 조명: 하얀 출입구 빛과 차가운 외부 청록빛이 대비된다.
 - 제작 패턴: P07, P16 — 안전면과 위험면의 다른 형태 / 방마다 하나의 큰 기억점
-- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B09, B17
+- 적용 후보: 유물 획득 지점, 보상 포켓 · 자산 명세 B09, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Nailmaster_Sheo_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/d/da/Screenshot_HK_Nailmaster_Sheo_01.png/800px-Screenshot_HK_Nailmaster_Sheo_01.png)
 
 ### HK-GP14 산성 호수 위 넓은 다리
 
-[이미지 보기](../hollow-knight-greenpath/images/gp14.png) · HK / Greenpath · 위험 구간 · 잎, 금속
+[이미지 보기](../hollow-knight-greenpath/images/gp14.png) · HK / Greenpath · 수평 통로 · 석재, 금속, 잎, 액체
 
 - 관찰: 긴 평평한 다리가 웅덩이와 넓은 배경을 가른다. 난간·아치의 가는 선과 잎의 작은 덩어리가 공존한다.
 - 전경과 배경: 다리 아래 검은 코어와 뒤의 큰 줄기는 서로 다른 깊이다.
 - 조명: 등불은 국소광이고 산성 수면은 넓은 가로 발광면이다.
 - 제작 패턴: P04, P05, P07 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B04, B05, B06, B09
+- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B04, B05, B06, B09
 - [출처 페이지](https://hollowknight.wiki/w/File:Greenpath_South_Area.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/7f/Greenpath_South_Area.png/800px-Greenpath_South_Area.png)
 
 ### HK-GP15 우운 사당 안의 어두운 휴식 공간
 
-[이미지 보기](../hollow-knight-greenpath/images/gp15.png) · HK / Greenpath · 휴식 포켓 · 석재
+[이미지 보기](../hollow-knight-greenpath/images/gp15.png) · HK / Greenpath · 휴식 포켓 · 유기적 조각, 뿌리
 
 - 관찰: 거의 검은 입구 테두리 안에 벤치가 작게 놓인다. 안쪽 큰 조각과 긴 곡선 구조는 돌보다 나무 같은 유기 형태를 보인다.
 - 전경과 배경: 입구를 두르는 검은 프레임과 뒤 벽의 푸른 층이 구분된다.
 - 조명: 천장 틈의 좁은 빛이 벤치로 내려오고 주변은 깊게 어둡다.
 - 제작 패턴: P01, P02, P04, P10 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 목표에 모이는 빛 / 작고 명료한 휴식 포켓
-- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B01, B02, B04, B05, B12
+- 적용 후보: 전투 후 휴식 지점, 유물 획득 지점 · 자산 명세 B01, B02, B04, B05, B12
 - [출처 페이지](https://hollowknight.wiki/w/File:Lake_of_Unn_Shrine_Interior.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/72/Lake_of_Unn_Shrine_Interior.png/800px-Lake_of_Unn_Shrine_Interior.png)
 
 ### HK-GP16 이층 유적의 벤치 포켓
 
-[이미지 보기](../hollow-knight-greenpath/images/gp16.png) · HK / Greenpath · 휴식 포켓 · 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp16.png) · HK / Greenpath · 휴식 포켓 · 석재, 금속, 잎
 
 - 관찰: 위·아래 통로 사이 오른쪽에 벤치가 놓인 작은 공간이 있다. 정교한 다리 하단 장식과 거친 잎 테두리가 겹친다.
 - 전경과 배경: 전경 아래 실루엣과 여러 층의 유적 기둥이 깊이를 만든다.
 - 조명: 벤치 뒤의 푸른 빛이 복잡한 건축에서 쉬는 지점을 분리한다.
 - 제작 패턴: P05, P10, P16 — 다음 착지면이 보이는 수직 이동 / 작고 명료한 휴식 포켓 / 방마다 하나의 큰 기억점
-- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B06, B12, B17
+- 적용 후보: 전투 후 휴식 지점, 중앙 통로 · 자산 명세 B06, B12, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Greenpath_Central_Bench%282%29.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/88/Greenpath_Central_Bench%282%29.png/800px-Greenpath_Central_Bench%282%29.png)
 
 ### HK-GP17 오블 구역의 수직 발판
 
-[이미지 보기](../hollow-knight-greenpath/images/gp17.png) · HK / Greenpath · 수직 이동 · 이끼, 뿌리
+[이미지 보기](../hollow-knight-greenpath/images/gp17.png) · HK / Greenpath · 수직 이동 · 이끼, 석재, 뿌리
 
 - 관찰: 작은 발판이 좌우 다른 높이로 흩어지고 긴 기둥이 시선을 세로로 끈다. 발판 가장자리의 이끼 띠와 아래 뿌리는 크기가 짧고 불규칙하다.
 - 전경과 배경: 큰 뒤 줄기는 흐리고 전면의 발판·벽 가장자리는 선명하다.
 - 조명: 점 형태 포자와 부드러운 청록 광막이 빈 공중을 채운다.
 - 제작 패턴: P03, P05 — 중경과 원경의 다른 대비 / 다음 착지면이 보이는 수직 이동
-- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B03, B06
+- 적용 후보: 하강 통로, 이끼 통로 · 자산 명세 B03, B06
 - [출처 페이지](https://hollowknight.wiki/w/File:Greenpath_Obble_Area%282%29.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/3/30/Greenpath_Obble_Area%282%29.png/800px-Greenpath_Obble_Area%282%29.png)
 
 ### HK-GP18 여왕의 정원으로 통하는 경계
 
-[이미지 보기](../hollow-knight-greenpath/images/gp18.png) · HK / Greenpath · 지역 경계 · 석재, 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp18.png) · HK / Greenpath · 지역 경계 · 석재, 이끼, 잎
 
 - 관찰: 좌우 높은 벽 아래 중앙 문양석이 목적지를 표시한다. 둥근 잎 테두리와 규칙적 돌 문양이 섞인다.
 - 전경과 배경: 중앙 위의 검은 코어와 먼 배경의 아치를 구분한다.
@@ -292,73 +293,73 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 
 ### HK-GP19 초기 개발판의 낮은 물가
 
-[이미지 보기](../hollow-knight-greenpath/images/gp19.jpg) · HK / Greenpath · 수평 통로 · 복합 재질
+[이미지 보기](../hollow-knight-greenpath/images/gp19.jpg) · HK / Greenpath · 수평 통로 · 이끼, 입자 표면, 액체
 
 - 관찰: 낮은 보행 띠와 큰 빈 배경을 공유한다. 현재 출시판보다 알갱이·기포 같은 점묘가 두드러진다.
 - 전경과 배경: 앞의 검은 덩어리와 뒤의 푸른 돌층이 겹친다.
 - 조명: 사선으로 내려오는 넓은 빛과 밝은 수면이 보인다.
 - 제작 패턴: P04, P12 — 목표에 모이는 빛 / 재질의 군집과 빈 구간
-- 적용 후보: 중앙 통로 · 자산 명세 B04, B05, B14
+- 적용 후보: 이끼 통로 · 자산 명세 B04, B05, B14
 - [출처 페이지](https://www.teamcherry.com.au/blog/the-green-path-a-hollow-knight-tour) · [제공 이미지](https://images.squarespace-cdn.com/content/v1/606d4deb4db8c15ea53b3624/1618900856929-F475LO4VJ8XCI406TX0X/Fungus_05.jpg)
 
 ### HK-GP20 초기 개발판의 거대 유해
 
-[이미지 보기](../hollow-knight-greenpath/images/gp20.jpg) · HK / Greenpath · 수평 통로 · 복합 재질
+[이미지 보기](../hollow-knight-greenpath/images/gp20.jpg) · HK / Greenpath · 랜드마크 · 곡면 외피, 이끼
 
 - 관찰: 작은 주인공 옆에 거대한 껍질 또는 유해가 배치된다. 큰 곡면의 몇 개 구멍만으로 낡은 생물의 규모를 만든다.
 - 전경과 배경: 앞쪽 어둠과 뒤의 푸른 큰 형태 사이에 작은 캐릭터가 있다.
 - 조명: 차가운 대기광이 유해의 윤곽만 드러낸다.
 - 제작 패턴: P03, P12, P16 — 중경과 원경의 다른 대비 / 재질의 군집과 빈 구간 / 방마다 하나의 큰 기억점
-- 적용 후보: 중앙 통로 · 자산 명세 B03, B14, B17
+- 적용 후보: 이끼 통로, 유물 획득 지점 · 자산 명세 B03, B14, B17
 - [출처 페이지](https://www.teamcherry.com.au/blog/the-green-path-a-hollow-knight-tour) · [제공 이미지](https://images.squarespace-cdn.com/content/v1/606d4deb4db8c15ea53b3624/1618900873629-BB8YVWYVVEMOZ7XQHEAF/Fungus_04.jpg)
 
 ### HK-GP21 초기 개발판의 호숫가 난간
 
-[이미지 보기](../hollow-knight-greenpath/images/gp21.jpg) · HK / Greenpath · 수평 통로 · 액체
+[이미지 보기](../hollow-knight-greenpath/images/gp21.jpg) · HK / Greenpath · 수평 통로 · 곡면 외피, 금속, 액체
 
 - 관찰: 가느다란 다리와 넓은 물가가 수평으로 이어진다. 구멍 난 큰 유기체와 문양 수면이 초기판 특징이다.
 - 전경과 배경: 앞 난간·중앙 보행면·뒤 큰 유기체가 분리된다.
 - 조명: 청록빛 수면과 사선 빛이 화면 아래와 위를 연결한다.
 - 제작 패턴: P04, P05, P12 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 재질의 군집과 빈 구간
-- 적용 후보: 중앙 통로 · 자산 명세 B04, B05, B06, B14
+- 적용 후보: 이끼 통로 · 자산 명세 B04, B05, B06, B14
 - [출처 페이지](https://www.teamcherry.com.au/blog/the-green-path-a-hollow-knight-tour) · [제공 이미지](https://images.squarespace-cdn.com/content/v1/606d4deb4db8c15ea53b3624/1618900771877-ZNK32GKBU2AR3OGN1EUO/Fungus_03.jpg)
 
 ### HK-GP22 비행 적과 수직 발판
 
-[이미지 보기](../hollow-knight-greenpath/images/gp22.jpg) · HK / Greenpath · 수직 이동 · 석재, 잎, 뿌리
+[이미지 보기](../hollow-knight-greenpath/images/gp22.jpg) · HK / Greenpath · 수직 이동 · 석재, 이끼, 잎, 뿌리
 
 - 관찰: 작은 발판 사이 공중에 돌진형 적이 놓인다. 작은 발판은 잎 테두리와 아래 뿌리로 한 덩어리가 된다.
 - 전경과 배경: 오른쪽 검은 벽과 뒤 큰 식물의 대비가 뚜렷하다.
 - 조명: 청록색 밝은 공간 안에 캐릭터와 비행 적이 보인다.
 - 제작 패턴: P05, P15 — 다음 착지면이 보이는 수직 이동 / 적 실루엣과 공격 방향
-- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B06, B16
+- 적용 후보: 하강 통로, 이끼 통로 · 자산 명세 B06, B16
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/7f/7d/14249-hollow-knight-077-grub-1-verchemin-1.jpg)
 
 ### HK-GP23 잎 단서가 있는 높은 길
 
-[이미지 보기](../hollow-knight-greenpath/images/gp23.jpg) · HK / Greenpath · 보상 포켓 · 이끼, 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp23.jpg) · HK / Greenpath · 보상 포켓 · 이끼, 잎, 석재
 
 - 관찰: 상부 통로와 아래 발판이 겹쳐 샛길의 높이 차를 보여준다. 흩어진 잎과 빽빽한 가장자리 이끼가 방향의 단서가 된다.
 - 전경과 배경: 중앙 검은 지형 속과 그 아래 선명한 뿌리가 보인다.
 - 조명: 화면 우측 위의 작은 밝은 영역이 열린 길을 읽히게 한다.
 - 제작 패턴: P01, P02, P08, P12 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 보상의 선노출과 우회 경로 / 재질의 군집과 빈 구간
-- 적용 후보: 보상 포켓, 유물 획득 지점 · 자산 명세 B01, B02, B10, B14
+- 적용 후보: 이끼 통로, 보상 포켓 · 자산 명세 B01, B02, B10, B14
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/8a/24/14250-hollow-knight-077-grub-1-verchemin-2-bis.jpg)
 
 ### HK-GP24 덩굴을 타격하는 장면
 
-[이미지 보기](../hollow-knight-greenpath/images/gp24.jpg) · HK / Greenpath · 장치 공간 · 잎, 뿌리
+[이미지 보기](../hollow-knight-greenpath/images/gp24.jpg) · HK / Greenpath · 장치 공간 · 이끼, 잎, 뿌리
 
 - 관찰: 공격이 닿는 덩굴 근처에 발판과 길이 모인다. 얇은 덩굴과 잎 조각이 무거운 지형에서 분리된다.
 - 전경과 배경: 검은 상부 코어 뒤로 큰 푸른 줄기가 있다.
 - 조명: 짧은 흰 공격선과 주황색 타격 광점이 배경보다 강하다.
 - 제작 패턴: P04, P05, P06 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함
-- 적용 후보: 고대 장치 구역 · 자산 명세 B04, B05, B06, B07, B08
+- 적용 후보: 이끼 통로, 고대 장치 구역 · 자산 명세 B04, B05, B06, B07, B08
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/48/77/14251-hollow-knight-077-grub-1-verchemin-2.jpg)
 
 ### HK-GP25 높은 곳의 구출 보상
 
-[이미지 보기](../hollow-knight-greenpath/images/gp25.jpg) · HK / Greenpath · 보상 포켓 · 석재, 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp25.jpg) · HK / Greenpath · 보상 포켓 · 석재, 이끼, 잎, 병
 
 - 관찰: 오른쪽 높은 지점의 병과 아래 발판이 목적·접근로를 나눈다. 벽의 잎 띠와 둥근 문양 돌이 반복된다.
 - 전경과 배경: 앞의 검은 위쪽 천장과 아래 푸른 원경이 열린다.
@@ -369,13 +370,13 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 
 ### HK-GP26 잘린 덩굴 아래 이동 발판
 
-[이미지 보기](../hollow-knight-greenpath/images/gp26.jpg) · HK / Greenpath · 장치 공간 · 잎, 뿌리
+[이미지 보기](../hollow-knight-greenpath/images/gp26.jpg) · HK / Greenpath · 장치 공간 · 이끼, 잎, 뿌리
 
 - 관찰: 중앙 큰 발판과 옆의 작은 발판이 단계적인 이동을 만든다. 부서지는 덩굴 잎과 발판 아래 뿌리가 다른 밀도로 표현된다.
 - 전경과 배경: 위 검은 천장과 뒤 청록색 여백이 충돌면을 둘러싼다.
 - 조명: 착지할 발판을 둘러싼 배경이 밝아 외곽이 잘 읽힌다.
 - 제작 패턴: P05, P06, P12 — 다음 착지면이 보이는 수직 이동 / 장치 경로와 작동부의 명료함 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역 · 자산 명세 B06, B07, B08, B14
+- 적용 후보: 이끼 통로, 고대 장치 구역 · 자산 명세 B06, B07, B08, B14
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/22/00/14253-hollow-knight-078-grub-2-verchemin-1.jpg)
 
 ### HK-GP27 가시 위에 남는 안전 공간
@@ -386,78 +387,78 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 - 전경과 배경: 오른쪽과 아래 검은 지형 내부가 통로의 끝을 만든다.
 - 조명: 위험물 끝은 흐리지 않고 중앙만 청록색으로 연다.
 - 제작 패턴: P05, P07, P12 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태 / 재질의 군집과 빈 구간
-- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09, B14
+- 적용 후보: 이끼 통로, 보스 접근 구간 · 자산 명세 B06, B09, B14
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/57/30/14254-hollow-knight-078-grub-2-verchemin-2.jpg)
 
 ### HK-GP28 가시 구덩이를 건너는 발판
 
-[이미지 보기](../hollow-knight-greenpath/images/gp28.jpg) · HK / Greenpath · 위험 구간 · 뿌리, 가시
+[이미지 보기](../hollow-knight-greenpath/images/gp28.jpg) · HK / Greenpath · 위험 구간 · 이끼, 뿌리, 가시
 
 - 관찰: 양옆 안전면 사이 가시와 발판이 놓여 이동 순서를 만든다. 매달린 뿌리와 뾰족한 가시의 방향성이 서로 다르다.
 - 전경과 배경: 상하 검은 덩어리가 가운데 밝은 통로를 감싼다.
 - 조명: 경로 중앙의 부드러운 푸른 빛이 이동 공간을 드러낸다.
 - 제작 패턴: P05, P07 — 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B06, B09
+- 적용 후보: 하강 통로, 이끼 통로 · 자산 명세 B06, B09
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/54/53/14255-hollow-knight-078-grub-2-verchemin-3.jpg)
 
 ### HK-GP29 산성 웅덩이의 작은 섬
 
-[이미지 보기](../hollow-knight-greenpath/images/gp29.jpg) · HK / Greenpath · 위험 구간 · 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp29.jpg) · HK / Greenpath · 보상 포켓 · 이끼, 잎, 액체
 
 - 관찰: 물 위 두 작은 발판과 우측 보상 높이가 단계적으로 이어진다. 떠 있는 발판의 불규칙한 잎 덩어리가 배경과 분리된다.
 - 전경과 배경: 아래 수면은 넓고 상부 천장은 검은 실루엣이다.
 - 조명: 밝은 액체 면과 어두운 발판의 명암 대비가 위험을 알린다.
 - 제작 패턴: P04, P05, P07 — 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동 / 안전면과 위험면의 다른 형태
-- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B04, B05, B06, B09
+- 적용 후보: 보상 포켓, 이끼 통로 · 자산 명세 B04, B05, B06, B09
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/e8/19/14256-hollow-knight-078-grub-2-verchemin-4.jpg)
 
 ### HK-GP30 구출 직후의 작은 보상방
 
-[이미지 보기](../hollow-knight-greenpath/images/gp30.jpg) · HK / Greenpath · 휴식 포켓 · 석재, 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp30.jpg) · HK / Greenpath · 보상 포켓 · 석재, 이끼, 잎
 
 - 관찰: 오른쪽 끝의 안전한 바닥에 캐릭터와 보상이 모인다. 둥근 돌과 잎이 좁은 방을 감싼다.
 - 전경과 배경: 바닥 속은 검고 배경은 푸른 대기층으로 물러난다.
 - 조명: 보상 주변의 밝기를 유지하고 위 천장은 어둡게 닫는다.
 - 제작 패턴: P05, P08, P10 — 다음 착지면이 보이는 수직 이동 / 보상의 선노출과 우회 경로 / 작고 명료한 휴식 포켓
-- 적용 후보: 전투 후 휴식 지점, 보상 포켓 · 자산 명세 B06, B10, B12
+- 적용 후보: 보상 포켓, 이끼 통로 · 자산 명세 B06, B10, B12
 - [출처 페이지](https://www.monster-soluce.com/jeux/hollow-knight/guide-solution/vertchemin-guide-exploration-et-secrets-boss-personnages) · [제공 이미지](https://www.monster-soluce.com/uploads/scale-max/90/5b/14257-hollow-knight-078-grub-2-verchemin-5.jpg)
 
 ### HK-GP31 이끼 돌진충의 큰 잎 덩어리
 
-[이미지 보기](../hollow-knight-greenpath/images/gp31.png) · HK / Greenpath · 전투 공간 · 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp31.png) · HK / Greenpath · 전투 공간 · 잎, 생물 외곽
 
 - 관찰: 긴 평평한 보행면에 가로로 긴 적이 놓인다. 잎 위장 덩어리에 얼굴이 드러나 배경 식생과 몸체를 구별한다.
 - 전경과 배경: 위 유적 발판의 검은 코어와 하단 적의 밝은 외곽이 대비된다.
 - 조명: 차가운 빛 속에서 적 얼굴의 밝은 점이 시선을 끈다.
 - 제작 패턴: P11, P12, P15 — 전투방의 넓은 판독 공간 / 재질의 군집과 빈 구간 / 적 실루엣과 공격 방향
-- 적용 후보: 전투방, 보스방 · 자산 명세 B13, B14, B16
+- 적용 후보: 전투방, 이끼 통로 · 자산 명세 B13, B14, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Moss_Charger_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/8/8d/Screenshot_HK_Moss_Charger_01.png/800px-Screenshot_HK_Moss_Charger_01.png)
 
 ### HK-GP32 작은 이끼족 무리
 
-[이미지 보기](../hollow-knight-greenpath/images/gp32.png) · HK / Greenpath · 전투 공간 · 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp32.png) · HK / Greenpath · 전투 공간 · 잎, 생물 외곽
 
 - 관찰: 낮은 통로에 비슷한 체형 둘이 배치된다. 털·잎처럼 일어난 외곽과 밝은 몸통이 특징이다.
 - 전경과 배경: 검은 중간 지형 때문에 적은 아래 통로에 또렷하게 보인다.
 - 조명: 큰 원형 효과 없이 몸통 명암만으로 적을 분리한다.
 - 제작 패턴: P03, P11, P15 — 중경과 원경의 다른 대비 / 전투방의 넓은 판독 공간 / 적 실루엣과 공격 방향
-- 적용 후보: 전투방, 보스방 · 자산 명세 B03, B13, B16
+- 적용 후보: 전투방, 이끼 통로 · 자산 명세 B03, B13, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Mosskin_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/5/55/Screenshot_HK_Mosskin_01.png/800px-Screenshot_HK_Mosskin_01.png)
 
 ### HK-GP33 폭발하는 이끼족의 주황 신호
 
-[이미지 보기](../hollow-knight-greenpath/images/gp33.png) · HK / Greenpath · 위험 구간 · 석재
+[이미지 보기](../hollow-knight-greenpath/images/gp33.png) · HK / Greenpath · 전투 공간 · 생물 외곽, 입자 구름
 
 - 관찰: 좁은 발판의 둥근 적과 주황 구름이 결합한다. 둥근 몸에 점 같은 돌기가 있고 큰 주황 덩어리가 녹색을 깨뜨린다.
 - 전경과 배경: 검은 천장과 푸른 배경이 폭발 신호의 대비를 높인다.
 - 조명: 따뜻한 주황색은 차가운 지역 팔레트에서 위험 신호가 된다.
 - 제작 패턴: P04, P07, P14, P15 — 목표에 모이는 빛 / 안전면과 위험면의 다른 형태 / 기능색과 장식색의 분리 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B04, B05, B09, B16, B18
+- 적용 후보: 전투방, 이끼 통로 · 자산 명세 B04, B05, B09, B16, B18
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Volatile_Mosskin_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/a/a3/Screenshot_HK_Volatile_Mosskin_01.png/800px-Screenshot_HK_Volatile_Mosskin_01.png)
 
 ### HK-GP34 방패와 긴 무기의 이끼 기사
 
-[이미지 보기](../hollow-knight-greenpath/images/gp34.png) · HK / Greenpath · 전투 공간 · 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp34.png) · HK / Greenpath · 전투 공간 · 잎, 방패, 무기
 
 - 관찰: 낮고 긴 무기 실루엣이 이동·공격 방향을 가리킨다. 둥근 방패와 잘게 갈라진 잎 갑옷이 다른 크기로 읽힌다.
 - 전경과 배경: 뒤 큰 나무줄기는 어두워 무기 윤곽을 과도하게 방해하지 않는다.
@@ -468,29 +469,29 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 
 ### HK-GP35 통로 옆 고정형 식물 적
 
-[이미지 보기](../hollow-knight-greenpath/images/gp35.png) · HK / Greenpath · 수평 통로 · 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp35.png) · HK / Greenpath · 전투 공간 · 잎, 생물 외곽
 
 - 관찰: 좌상단 작은 식물과 아래 이동 공간이 분리된다. 배경 잎과 비슷한 형상에 얼굴·입 부분이 작게 보인다.
 - 전경과 배경: 큰 검은 중앙 코어가 통로를 위아래로 나눈다.
 - 조명: 푸른 주변광 위로 적의 작은 밝은 얼굴이 대비된다.
 - 제작 패턴: P01, P02, P05, P15 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 다음 착지면이 보이는 수직 이동 / 적 실루엣과 공격 방향
-- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B01, B02, B06, B16
+- 적용 후보: 전투방, 이끼 통로 · 자산 명세 B01, B02, B06, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Gulka_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/cd/Screenshot_HK_Gulka_01.png/800px-Screenshot_HK_Gulka_01.png)
 
 ### HK-GP36 상하 지형 사이 바보잡이풀
 
-[이미지 보기](../hollow-knight-greenpath/images/gp36.png) · HK / Greenpath · 위험 구간 · 잎
+[이미지 보기](../hollow-knight-greenpath/images/gp36.png) · HK / Greenpath · 위험 구간 · 잎, 이빨 외곽
 
 - 관찰: 위아래 통로 틈의 큰 벌어진 입이 이동 경계와 겹친다. 식물 잎과 이빨의 날카로운 외곽을 함께 쓴다.
 - 전경과 배경: 검은 지형 내부와 입의 밝은 면이 대비되어 위치가 드러난다.
 - 조명: 밝은 입 내부가 푸른 배경에서 눈에 띈다.
 - 제작 패턴: P03, P07, P15 — 중경과 원경의 다른 대비 / 안전면과 위험면의 다른 형태 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B03, B09, B16
+- 적용 후보: 이끼 통로, 보스 접근 구간 · 자산 명세 B03, B09, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fool_Eater_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/7/7f/Screenshot_HK_Fool_Eater_01.png/800px-Screenshot_HK_Fool_Eater_01.png)
 
 ### HK-GP37 오블의 공중 탄막
 
-[이미지 보기](../hollow-knight-greenpath/images/gp37.png) · HK / Greenpath · 전투 공간 · 복합 재질
+[이미지 보기](../hollow-knight-greenpath/images/gp37.png) · HK / Greenpath · 전투 공간 · 생물 외곽, 투사체
 
 - 관찰: 작은 발판 주변의 둥근 비행 적과 여러 발사체가 공중을 나눈다. 둥근 적 몸과 둥근 탄환이 같은 계열 형태를 쓴다.
 - 전경과 배경: 뒤 수직 빛줄기는 흐리고 탄환 가장자리는 선명하다.
@@ -501,29 +502,29 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 
 ### HK-GP38 모기의 가늘고 뾰족한 몸
 
-[이미지 보기](../hollow-knight-greenpath/images/gp38.png) · HK / Greenpath · 전투 공간 · 이끼
+[이미지 보기](../hollow-knight-greenpath/images/gp38.png) · HK / Greenpath · 전투 공간 · 날개, 침 외곽, 이끼
 
 - 관찰: 왼쪽 공중의 길쭉한 적이 작은 발판 사이 경로를 가로지른다. 침 모양 주둥이와 얇은 날개가 둥근 이끼와 다른 외곽을 만든다.
 - 전경과 배경: 오른쪽 검은 지형 코어가 비행 경로의 끝을 또렷하게 한다.
 - 조명: 별도 강한 광원보다 가는 밝은 몸체 윤곽이 중요하다.
 - 제작 패턴: P05, P11, P15 — 다음 착지면이 보이는 수직 이동 / 전투방의 넓은 판독 공간 / 적 실루엣과 공격 방향
-- 적용 후보: 전투방, 보스방 · 자산 명세 B06, B13, B16
+- 적용 후보: 전투방, 이끼 통로 · 자산 명세 B06, B13, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Squit_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/11/Screenshot_HK_Squit_01.png/800px-Screenshot_HK_Squit_01.png)
 
 ### HK-GP39 가시 틈의 단단한 비행체
 
-[이미지 보기](../hollow-knight-greenpath/images/gp39.png) · HK / Greenpath · 위험 구간 · 가시
+[이미지 보기](../hollow-knight-greenpath/images/gp39.png) · HK / Greenpath · 위험 구간 · 생물 외피, 가시
 
 - 관찰: 위·아래 가시 사이의 비행체가 좁은 이동 공간을 차지한다. 단단한 껍질의 가시와 둥근 중앙 몸체가 위험 형태를 반복한다.
 - 전경과 배경: 배경의 흐린 유적과 선명한 적 껍질이 분리된다.
 - 조명: 밝은 주황색 눈과 차가운 껍질이 구별된다.
 - 제작 패턴: P07, P12, P15 — 안전면과 위험면의 다른 형태 / 재질의 군집과 빈 구간 / 적 실루엣과 공격 방향
-- 적용 후보: 고대 장치 구역, 보스 접근 구간 · 자산 명세 B09, B14, B16
+- 적용 후보: 이끼 통로, 보스 접근 구간 · 자산 명세 B09, B14, B16
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Duranda_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/c/c6/Screenshot_HK_Duranda_01.png/800px-Screenshot_HK_Duranda_01.png)
 
 ### HK-EX01 여왕의 정원의 큰 전경 잎
 
-[이미지 보기](../hollow-knight-greenpath/images/ex01.png) · HK / Queen's Gardens · 수평 통로 · 석재, 잎
+[이미지 보기](../hollow-knight-greenpath/images/ex01.png) · HK / Queen's Gardens · 수평 통로 · 석재, 잎, 꽃
 
 - 관찰: 큰 식물과 유적 기둥이 화면 양끝을 채운다. 넓은 잎 면·작은 꽃·가느다란 건축 선이 크기로 구분된다.
 - 전경과 배경: 하단의 거의 검은 큰 잎은 카메라 가까운 가림물로 읽힌다.
@@ -534,57 +535,57 @@ CLI 예: `.\.venv\Scripts\python.exe docs/references/hollow-knight-silksong/quer
 
 ### HK-EX02 여왕의 정원의 매달린 발판
 
-[이미지 보기](../hollow-knight-greenpath/images/ex02.png) · HK / Queen's Gardens · 수평 통로 · 석재, 금속
+[이미지 보기](../hollow-knight-greenpath/images/ex02.png) · HK / Queen's Gardens · 수직 이동 · 석재, 금속, 잎
 
 - 관찰: 얇은 줄과 발판이 수직 이동의 규칙을 만든다. 규칙적인 금속·돌 테두리에 자연 식물이 끼어든다.
 - 전경과 배경: 앞쪽 검은 식물, 중앙 매달린 구조, 흐린 초록 배경을 구분한다.
 - 조명: 여러 작은 발광체가 층마다 다른 크기로 배치된다.
 - 제작 패턴: P03, P04, P05 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 다음 착지면이 보이는 수직 이동
-- 적용 후보: 중앙 통로 · 자산 명세 B03, B04, B05, B06
+- 적용 후보: 고대 장치 구역, 하강 통로 · 자산 명세 B03, B04, B05, B06
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Queen%27s_Gardens_02.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/9/94/Screenshot_HK_Queen%27s_Gardens_02.png/800px-Screenshot_HK_Queen%27s_Gardens_02.png)
 
 ### HK-EX03 안개 협곡의 발광 생물과 흐린 전경
 
-[이미지 보기](../hollow-knight-greenpath/images/ex03.png) · HK / Fog Canyon · 수평 통로 · 석재
+[이미지 보기](../hollow-knight-greenpath/images/ex03.png) · HK / Fog Canyon · 열린 방 · 석재, 구형 생물, 기포
 
 - 관찰: 구불거리는 지형 사이 열린 공간에 발광 생물이 뜬다. 둥근 기포와 부드러운 생물 표면이 돌과 다른 감촉을 만든다.
 - 전경과 배경: 크고 흐린 원은 가까운 입자처럼 읽히며 지형 속의 검정과 다르다.
 - 조명: 흰 중심·분홍 후광·보랏빛 안개가 겹친다.
 - 제작 패턴: P03, P04 — 중경과 원경의 다른 대비 / 목표에 모이는 빛
-- 적용 후보: 중앙 통로 · 자산 명세 B03, B04, B05
+- 적용 후보: 문양의 성소, 유물 획득 지점 · 자산 명세 B03, B04, B05
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fog_Canyon_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/b/b3/Screenshot_HK_Fog_Canyon_01.png/800px-Screenshot_HK_Fog_Canyon_01.png)
 
 ### HK-EX04 버섯 황무지의 하단 실루엣
 
-[이미지 보기](../hollow-knight-greenpath/images/ex04.png) · HK / Fungal Wastes · 수평 통로 · 복합 재질
+[이미지 보기](../hollow-knight-greenpath/images/ex04.png) · HK / Fungal Wastes · 수평 통로 · 버섯, 줄기
 
 - 관찰: 천장과 바닥이 가운데 큰 푸른 빈 공간을 감싼다. 둥근 버섯 갓과 가는 줄기라는 단순 형태를 반복한다.
 - 전경과 배경: 앞 하단 버섯은 검고 뒤 버섯은 청록색으로 물러난다.
 - 조명: 중앙 황록색 작은 빛무리가 깊이를 만든다.
 - 제작 패턴: P01, P02, P03 — 검은 지형 속과 읽히는 테두리 / 근접 전경과 중앙 시야 여백 / 중경과 원경의 다른 대비
-- 적용 후보: 중앙 통로 · 자산 명세 B01, B02, B03
+- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B01, B02, B03
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Fungal_Wastes_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/1/1f/Screenshot_HK_Fungal_Wastes_01.png/800px-Screenshot_HK_Fungal_Wastes_01.png)
 
 ### HK-EX05 눈물의 도시의 층진 건축
 
-[이미지 보기](../hollow-knight-greenpath/images/ex05.png) · HK / City of Tears · 수평 통로 · 석재, 금속
+[이미지 보기](../hollow-knight-greenpath/images/ex05.png) · HK / City of Tears · 복층 공간 · 석재, 금속
 
 - 관찰: 긴 수평 발판과 큰 수직 기둥이 도시 깊이를 만든다. 금속 장식의 얇은 선과 돌 받침의 큰 면이 대비된다.
 - 전경과 배경: 앞 난간·중앙 가로등·먼 건물의 명암 차가 뚜렷하다.
 - 조명: 흰 작은 가로등 주변으로 푸른 안개가 번진다.
 - 제작 패턴: P03, P04, P16 — 중경과 원경의 다른 대비 / 목표에 모이는 빛 / 방마다 하나의 큰 기억점
-- 적용 후보: 중앙 통로 · 자산 명세 B03, B04, B05, B17
+- 적용 후보: 중앙 통로, 하강 통로 · 자산 명세 B03, B04, B05, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_City_of_Tears_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/2/2b/Screenshot_HK_City_of_Tears_01.png/800px-Screenshot_HK_City_of_Tears_01.png)
 
 ### HK-EX06 수정 봉우리의 보랏빛 광막
 
-[이미지 보기](../hollow-knight-greenpath/images/ex06.png) · HK / Crystal Peak · 수평 통로 · 이끼
+[이미지 보기](../hollow-knight-greenpath/images/ex06.png) · HK / Crystal Peak · 복층 공간 · 수정, 석재, 금속
 
 - 관찰: 중앙 발판과 긴 사슬이 밝은 배경 앞에 놓인다. 각진 수정과 격자 구조가 유기적 이끼와 반대되는 형태다.
 - 전경과 배경: 검은 사슬·중앙 발판·보라 원경이 층으로 겹친다.
 - 조명: 넓은 보라 빛과 작은 흰 등불은 서로 다른 범위를 갖는다.
 - 제작 패턴: P04, P16 — 목표에 모이는 빛 / 방마다 하나의 큰 기억점
-- 적용 후보: 이끼 통로, 중앙 통로 · 자산 명세 B04, B05, B17
+- 적용 후보: 고대 장치 구역, 중앙 통로 · 자산 명세 B04, B05, B17
 - [출처 페이지](https://hollowknight.wiki/w/File:Screenshot_HK_Crystal_Peak_01.png) · [제공 이미지](https://cdn.wikimg.net/en/hkwiki/images/thumb/6/60/Screenshot_HK_Crystal_Peak_01.png/800px-Screenshot_HK_Crystal_Peak_01.png)
 
 ### HK-FC-01 빛기둥과 낮은 유적

@@ -31,6 +31,8 @@ _No issues found._
 
 _None._
 
+2026-11-23 통합 참고 데이터 위키 추가: 지식 허브의 인바운드·Related·문서/작업로그 링크를 직접 확인했다. memoc 런타임 부재로 전체 lint-wiki 재실행은 하지 못했으며 이번 변경 링크만 검사했다.
+
 ## Related
 
 - [Wiki Index](../index.md)

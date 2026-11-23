@@ -68,3 +68,11 @@ v1 SDL 배치 미리보기 재생성: `.\.venv\Scripts\python.exe tools/preview_
 ## 녹색 거리 추가 조사 자료
 
 녹색 거리39장·비교 지역6장, 총45장의 [이미지 갤러리](references/hollow-knight-greenpath/index.html)와 [이미지별 분석 목록](references/hollow-knight-greenpath/README.md)을 추가했다. [맵·텍스처·몬스터 종합 분석](hollow-knight-greenpath-study.md), [전경 그림자·배경층·조명 상세 분석](hollow-knight-layer-lighting-study.md), 대표8장의 영역 주석과 확대 자료를 함께 제공한다. 모든 이미지에 출처·저장 해상도·해시를 기록했다. 자료집의 적용안과 조명 수치는 후속 제작 제안이며 현재 승인된 미술·충돌·카메라 규칙을 변경하지 않는다.
+
+## 두 게임 통합 제작 데이터
+
+기존45장에 신규199장을 더한 [통합 검색 갤러리244장](references/hollow-knight-silksong/index.html)은 할로우 나이트128장·실크송116장, 게임별36개 지역을 다룬다. 이미지마다 공간 구성·재질·앞뒤 깊이·조명·적용 구역·제작 패턴·자산 명세·출처를 연결했다. 전경 그림자처럼 보이는 큰 실루엣, 검은 지형 내부, 중경, 원경, 대기광을 구별해서 기록한다.
+
+[프로젝트 제작 가이드](reference-production-guide.md)에 전투방·유물 지점·하강·맵2 중앙 홀·장치 구역·최종 보스방의 추천 자료와 다음 제작 순서를 정리했다. 제작 패턴20개·자산 명세20개, 대표12장의49개 영역 주석을 제공하며 [JSON](references/hollow-knight-silksong/analysis.json)·[CSV](references/hollow-knight-silksong/catalog.csv)·검색 CLI로 재사용할 수 있다. [현재 두 맵과의 대응](references/hollow-knight-silksong/project-targets.json)에서 기존 ‘문양의 성소’ 분류는 맵2 최종 보스방의 문양·제단에 대응한다. 독립된 세 번째 맵을 추가하는 자료가 아니다.
+
+원작 이미지는 참고 자료로 보관하고 우리 게임의 외형은 승인된 자산과 고유 문양으로 제작한다. 시각적 영역 주석은 실제 충돌·엔진 레이어의 정답이 아니며, 이번 통합 조사는 게임 코드·맵 배치·현재 조명 동작을 변경하지 않았다.

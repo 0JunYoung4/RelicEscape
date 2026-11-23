@@ -11,6 +11,8 @@ tags:
 ---
 # 녹색 거리 환경 미술 조사
 
+후속 조사는 [두 게임 통합 제작 데이터244장](hollow-knight-silksong-reference-database.md)으로 누적했다. 아래45장은 그 안에 원본 참조로 포함된다.
+
 녹색 거리39장과 여왕의 정원·안개 협곡·버섯 황무지·눈물의 도시·수정 봉우리6장, 총45장을 출처와 함께 저장했다. 초기 개발판3장은 구별했고 주석·확대 자료는 이미지 수에서 제외했다.
 
 - [오프라인 갤러리](../../../docs/references/hollow-knight-greenpath/index.html)

@@ -29,6 +29,10 @@ def main():
     briefs=json.loads((ROOT/"asset-briefs.json").read_text(encoding="utf-8"))
     stats=json.loads((ROOT/"statistics.json").read_text(encoding="utf-8"))
     ids={r["id"] for r in rows};pids={p["id"] for p in pats};bids={b["id"] for b in briefs}
+    targets=json.loads((ROOT/"project-targets.json").read_text(encoding="utf-8"))
+    target_tags={t["tag"] for t in targets["targets"]}
+    assert len(target_tags)==len(targets["targets"])
+    for key in ("plan","approved_map"):assert (ROOT/targets[key]).exists()
     assert len(ids)==len(rows)==stats["total"]
     assert len({r["sha256"] for r in rows})==len(rows)
     assert len({r["pixel_sha256"] for r in rows})==len(rows)
@@ -43,6 +47,7 @@ def main():
             assert pixel_hash==r["pixel_sha256"],r["id"]
         assert r["patterns"] and set(r["patterns"])<=pids
         assert r["asset_briefs"] and set(r["asset_briefs"])<=bids
+        assert r["project_targets"] and set(r["project_targets"])<=target_tags
         assert r["observation"] and r["lighting"] and r["depth_interpretation"]
         assert r["review"]["status"]=="visual_reviewed"
         for similar in r["similar_frames"]:assert similar["id"] in ids

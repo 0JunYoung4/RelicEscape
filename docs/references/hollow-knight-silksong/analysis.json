@@ -80,16 +80,19 @@
     "layout": "휴식 포켓",
     "materials": [
       "석재",
-      "잎"
+      "이끼",
+      "잎",
+      "액체"
     ],
-    "scope": "scene",
     "project_targets": [
       "전투 후 휴식 지점",
-      "보상 포켓"
+      "이끼 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
+      "보상 포켓",
       "유물 획득 지점",
       "전투방",
       "중앙 통로"
@@ -192,18 +195,21 @@
     ],
     "layout": "위험 구간",
     "materials": [
+      "석재",
       "이끼",
-      "금속"
+      "금속",
+      "액체"
+    ],
+    "project_targets": [
+      "이끼 통로",
+      "하강 통로"
     ],
     "scope": "scene",
-    "project_targets": [
-      "고대 장치 구역",
-      "보스 접근 구간"
-    ],
     "secondary_project_targets": [
+      "고대 장치 구역",
+      "보스 접근 구간",
       "전투방",
-      "중앙 통로",
-      "하강 통로"
+      "중앙 통로"
     ],
     "asset_briefs": [
       "B03",
@@ -303,13 +309,15 @@
     "layout": "수평 통로",
     "materials": [
       "석재",
-      "잎"
+      "잎",
+      "금속",
+      "액체"
     ],
-    "scope": "scene",
     "project_targets": [
       "이끼 통로",
       "중앙 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
@@ -416,15 +424,16 @@
     "layout": "위험 구간",
     "materials": [
       "이끼",
+      "잎",
       "가시"
     ],
-    "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "이끼 통로",
       "보스 접근 구간"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
-      "이끼 통로",
+      "고대 장치 구역",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -527,13 +536,14 @@
     "layout": "전투 공간",
     "materials": [
       "석재",
+      "이끼",
       "잎"
     ],
-    "scope": "scene",
     "project_targets": [
       "전투방",
       "보스방"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "문양의 성소",
       "유물 획득 지점",
@@ -636,19 +646,21 @@
       "P03",
       "P16"
     ],
-    "layout": "수평 통로",
+    "layout": "복층 공간",
     "materials": [
-      "석재"
+      "석재",
+      "이끼",
+      "잎"
     ],
-    "scope": "scene",
     "project_targets": [
+      "이끼 통로",
       "중앙 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
-      "이끼 통로",
       "전투방",
       "하강 통로"
     ],
@@ -752,16 +764,17 @@
     "layout": "전투 공간",
     "materials": [
       "석재",
+      "이끼",
       "뿌리"
     ],
-    "scope": "scene",
     "project_targets": [
-      "전투방",
-      "보스방"
+      "보스방",
+      "문양의 성소"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
-      "문양의 성소",
       "유물 획득 지점",
+      "전투방",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -863,14 +876,16 @@
     "layout": "위험 구간",
     "materials": [
       "석재",
+      "이끼",
       "가시"
     ],
-    "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "이끼 통로",
       "보스 접근 구간"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
+      "고대 장치 구역",
       "문양의 성소",
       "보스방",
       "전투방",
@@ -973,18 +988,20 @@
     ],
     "layout": "휴식 포켓",
     "materials": [
+      "석재",
+      "금속",
       "잎"
     ],
-    "scope": "scene",
     "project_targets": [
       "전투 후 휴식 지점",
-      "보상 포켓"
+      "중앙 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "문양의 성소",
+      "보상 포켓",
       "보스방",
-      "전투방",
-      "중앙 통로"
+      "전투방"
     ],
     "asset_briefs": [
       "B12",
@@ -1084,17 +1101,18 @@
     "layout": "휴식 포켓",
     "materials": [
       "석재",
+      "이끼",
       "뿌리"
     ],
-    "scope": "scene",
     "project_targets": [
       "전투 후 휴식 지점",
-      "보상 포켓"
+      "이끼 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "이끼 통로",
+      "보상 포켓",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -1197,17 +1215,20 @@
     ],
     "layout": "지역 경계",
     "materials": [
-      "잎"
+      "이끼",
+      "잎",
+      "구형 생물"
+    ],
+    "project_targets": [
+      "이끼 통로",
+      "하강 통로"
     ],
     "scope": "scene",
-    "project_targets": [
-      "중앙 통로",
-      "문양의 성소"
-    ],
     "secondary_project_targets": [
       "고대 장치 구역",
+      "문양의 성소",
       "전투방",
-      "하강 통로"
+      "중앙 통로"
     ],
     "asset_briefs": [
       "B03",
@@ -1304,20 +1325,21 @@
       "P15",
       "P16"
     ],
-    "layout": "수평 통로",
+    "layout": "랜드마크",
     "materials": [
-      "잎"
+      "잎",
+      "생물 외곽"
+    ],
+    "project_targets": [
+      "이끼 통로"
     ],
     "scope": "scene",
-    "project_targets": [
-      "이끼 통로",
-      "중앙 통로"
-    ],
     "secondary_project_targets": [
       "문양의 성소",
       "보스방",
       "유물 획득 지점",
-      "전투방"
+      "전투방",
+      "중앙 통로"
     ],
     "asset_briefs": [
       "B04",
@@ -1415,18 +1437,21 @@
       "P07",
       "P16"
     ],
-    "layout": "위험 구간",
+    "layout": "목표 노출",
     "materials": [
+      "판형 외피",
       "뿌리",
       "가시"
     ],
-    "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "보스 접근 구간"
+      "유물 획득 지점",
+      "보상 포켓"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
+      "고대 장치 구역",
       "문양의 성소",
+      "보스 접근 구간",
       "보스방",
       "전투방",
       "중앙 통로",
@@ -1526,21 +1551,24 @@
       "P05",
       "P07"
     ],
-    "layout": "위험 구간",
+    "layout": "수평 통로",
     "materials": [
+      "석재",
+      "금속",
       "잎",
-      "금속"
+      "액체"
+    ],
+    "project_targets": [
+      "이끼 통로",
+      "중앙 통로"
     ],
     "scope": "scene",
-    "project_targets": [
-      "고대 장치 구역",
-      "보스 접근 구간"
-    ],
     "secondary_project_targets": [
+      "고대 장치 구역",
       "문양의 성소",
+      "보스 접근 구간",
       "유물 획득 지점",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -1643,16 +1671,17 @@
     ],
     "layout": "휴식 포켓",
     "materials": [
-      "석재"
+      "유기적 조각",
+      "뿌리"
     ],
-    "scope": "scene",
     "project_targets": [
       "전투 후 휴식 지점",
-      "보상 포켓"
+      "유물 획득 지점"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "문양의 성소",
-      "유물 획득 지점",
+      "보상 포켓",
       "이끼 통로",
       "전투방",
       "중앙 통로",
@@ -1757,19 +1786,21 @@
     ],
     "layout": "휴식 포켓",
     "materials": [
+      "석재",
+      "금속",
       "잎"
     ],
-    "scope": "scene",
     "project_targets": [
       "전투 후 휴식 지점",
-      "보상 포켓"
+      "중앙 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
+      "보상 포켓",
       "보스방",
       "전투방",
-      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -1869,16 +1900,18 @@
     "layout": "수직 이동",
     "materials": [
       "이끼",
+      "석재",
       "뿌리"
     ],
-    "scope": "scene",
     "project_targets": [
-      "중앙 통로",
-      "하강 통로"
+      "하강 통로",
+      "이끼 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
-      "전투방"
+      "전투방",
+      "중앙 통로"
     ],
     "asset_briefs": [
       "B03",
@@ -1978,13 +2011,14 @@
     "layout": "지역 경계",
     "materials": [
       "석재",
+      "이끼",
       "잎"
     ],
-    "scope": "scene",
     "project_targets": [
       "중앙 통로",
       "문양의 성소"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "이끼 통로",
@@ -2087,17 +2121,18 @@
     ],
     "layout": "수평 통로",
     "materials": [
-      "복합 재질"
+      "이끼",
+      "입자 표면",
+      "액체"
+    ],
+    "project_targets": [
+      "이끼 통로"
     ],
     "scope": "pre_release",
-    "project_targets": [
-      "중앙 통로"
-    ],
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
-      "이끼 통로",
       "전투방"
     ],
     "asset_briefs": [
@@ -2195,20 +2230,22 @@
       "P12",
       "P16"
     ],
-    "layout": "수평 통로",
+    "layout": "랜드마크",
     "materials": [
-      "복합 재질"
+      "곡면 외피",
+      "이끼"
+    ],
+    "project_targets": [
+      "이끼 통로",
+      "유물 획득 지점"
     ],
     "scope": "pre_release",
-    "project_targets": [
-      "중앙 통로"
-    ],
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
-      "이끼 통로",
-      "전투방"
+      "전투방",
+      "중앙 통로"
     ],
     "asset_briefs": [
       "B03",
@@ -2306,18 +2343,20 @@
     ],
     "layout": "수평 통로",
     "materials": [
+      "곡면 외피",
+      "금속",
       "액체"
     ],
-    "scope": "pre_release",
     "project_targets": [
-      "중앙 통로"
+      "이끼 통로"
     ],
+    "scope": "pre_release",
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
-      "이끼 통로",
       "전투방",
+      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -2418,19 +2457,20 @@
     "layout": "수직 이동",
     "materials": [
       "석재",
+      "이끼",
       "잎",
       "뿌리"
     ],
-    "scope": "scene",
     "project_targets": [
-      "중앙 통로",
-      "하강 통로"
+      "하강 통로",
+      "이끼 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "보스방",
-      "이끼 통로",
-      "전투방"
+      "전투방",
+      "중앙 통로"
     ],
     "asset_briefs": [
       "B06",
@@ -2529,17 +2569,17 @@
     "layout": "보상 포켓",
     "materials": [
       "이끼",
-      "잎"
+      "잎",
+      "석재"
+    ],
+    "project_targets": [
+      "이끼 통로",
+      "보상 포켓"
     ],
     "scope": "scene",
-    "project_targets": [
-      "보상 포켓",
-      "유물 획득 지점"
-    ],
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "이끼 통로",
       "전투방",
       "하강 통로"
     ],
@@ -2640,13 +2680,15 @@
     ],
     "layout": "장치 공간",
     "materials": [
+      "이끼",
       "잎",
       "뿌리"
     ],
-    "scope": "scene",
     "project_targets": [
+      "이끼 통로",
       "고대 장치 구역"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "문양의 성소",
       "유물 획득 지점",
@@ -2753,13 +2795,15 @@
     "layout": "보상 포켓",
     "materials": [
       "석재",
-      "잎"
+      "이끼",
+      "잎",
+      "병"
     ],
-    "scope": "scene",
     "project_targets": [
       "보상 포켓",
       "유물 획득 지점"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
@@ -2865,15 +2909,16 @@
     ],
     "layout": "장치 공간",
     "materials": [
+      "이끼",
       "잎",
       "뿌리"
     ],
-    "scope": "scene",
     "project_targets": [
+      "이끼 통로",
       "고대 장치 구역"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
-      "이끼 통로",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -2978,13 +3023,13 @@
       "이끼",
       "가시"
     ],
-    "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "이끼 통로",
       "보스 접근 구간"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
-      "이끼 통로",
+      "고대 장치 구역",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -3084,17 +3129,19 @@
     ],
     "layout": "위험 구간",
     "materials": [
+      "이끼",
       "뿌리",
       "가시"
     ],
-    "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
-      "보스 접근 구간"
+      "하강 통로",
+      "이끼 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
-      "중앙 통로",
-      "하강 통로"
+      "고대 장치 구역",
+      "보스 접근 구간",
+      "중앙 통로"
     ],
     "asset_briefs": [
       "B06",
@@ -3189,17 +3236,21 @@
       "P05",
       "P07"
     ],
-    "layout": "위험 구간",
+    "layout": "보상 포켓",
     "materials": [
-      "잎"
+      "이끼",
+      "잎",
+      "액체"
+    ],
+    "project_targets": [
+      "보상 포켓",
+      "이끼 통로"
     ],
     "scope": "scene",
-    "project_targets": [
-      "고대 장치 구역",
-      "보스 접근 구간"
-    ],
     "secondary_project_targets": [
+      "고대 장치 구역",
       "문양의 성소",
+      "보스 접근 구간",
       "유물 획득 지점",
       "전투방",
       "중앙 통로",
@@ -3300,19 +3351,20 @@
       "P08",
       "P10"
     ],
-    "layout": "휴식 포켓",
+    "layout": "보상 포켓",
     "materials": [
       "석재",
+      "이끼",
       "잎"
     ],
-    "scope": "scene",
     "project_targets": [
-      "전투 후 휴식 지점",
-      "보상 포켓"
+      "보상 포켓",
+      "이끼 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
-      "이끼 통로",
+      "전투 후 휴식 지점",
       "중앙 통로",
       "하강 통로"
     ],
@@ -3413,16 +3465,17 @@
     ],
     "layout": "전투 공간",
     "materials": [
-      "잎"
+      "잎",
+      "생물 외곽"
     ],
-    "scope": "scene",
     "project_targets": [
       "전투방",
-      "보스방"
+      "이끼 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
-      "이끼 통로"
+      "보스방"
     ],
     "asset_briefs": [
       "B13",
@@ -3521,16 +3574,17 @@
     ],
     "layout": "전투 공간",
     "materials": [
-      "잎"
+      "잎",
+      "생물 외곽"
     ],
-    "scope": "scene",
     "project_targets": [
       "전투방",
-      "보스방"
+      "이끼 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
-      "이끼 통로",
+      "보스방",
       "중앙 통로"
     ],
     "asset_briefs": [
@@ -3629,21 +3683,22 @@
       "P14",
       "P15"
     ],
-    "layout": "위험 구간",
+    "layout": "전투 공간",
     "materials": [
-      "석재"
+      "생물 외곽",
+      "입자 구름"
+    ],
+    "project_targets": [
+      "전투방",
+      "이끼 통로"
     ],
     "scope": "scene",
-    "project_targets": [
-      "고대 장치 구역",
-      "보스 접근 구간"
-    ],
     "secondary_project_targets": [
+      "고대 장치 구역",
       "문양의 성소",
+      "보스 접근 구간",
       "보스방",
       "유물 획득 지점",
-      "이끼 통로",
-      "전투방",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -3745,13 +3800,15 @@
     ],
     "layout": "전투 공간",
     "materials": [
-      "잎"
+      "잎",
+      "방패",
+      "무기"
     ],
-    "scope": "scene",
     "project_targets": [
       "전투방",
       "보스방"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "이끼 통로"
@@ -3852,20 +3909,21 @@
       "P05",
       "P15"
     ],
-    "layout": "수평 통로",
+    "layout": "전투 공간",
     "materials": [
-      "잎"
+      "잎",
+      "생물 외곽"
+    ],
+    "project_targets": [
+      "전투방",
+      "이끼 통로"
     ],
     "scope": "scene",
-    "project_targets": [
-      "이끼 통로",
-      "중앙 통로"
-    ],
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
       "보스방",
-      "전투방",
+      "중앙 통로",
       "하강 통로"
     ],
     "asset_briefs": [
@@ -3966,16 +4024,17 @@
     ],
     "layout": "위험 구간",
     "materials": [
-      "잎"
+      "잎",
+      "이빨 외곽"
     ],
-    "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "이끼 통로",
       "보스 접근 구간"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
+      "고대 장치 구역",
       "보스방",
-      "이끼 통로",
       "전투방",
       "중앙 통로",
       "하강 통로"
@@ -4078,13 +4137,14 @@
     ],
     "layout": "전투 공간",
     "materials": [
-      "복합 재질"
+      "생물 외곽",
+      "투사체"
     ],
-    "scope": "scene",
     "project_targets": [
       "전투방",
       "보스방"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
@@ -4190,16 +4250,18 @@
     ],
     "layout": "전투 공간",
     "materials": [
+      "날개",
+      "침 외곽",
       "이끼"
     ],
-    "scope": "scene",
     "project_targets": [
       "전투방",
-      "보스방"
+      "이끼 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
-      "이끼 통로",
+      "보스방",
       "중앙 통로",
       "하강 통로"
     ],
@@ -4300,16 +4362,17 @@
     ],
     "layout": "위험 구간",
     "materials": [
+      "생물 외피",
       "가시"
     ],
-    "scope": "scene",
     "project_targets": [
-      "고대 장치 구역",
+      "이끼 통로",
       "보스 접근 구간"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
+      "고대 장치 구역",
       "보스방",
-      "이끼 통로",
       "전투방",
       "하강 통로"
     ],
@@ -4411,13 +4474,14 @@
     "layout": "수평 통로",
     "materials": [
       "석재",
-      "잎"
+      "잎",
+      "꽃"
     ],
-    "scope": "scene",
     "project_targets": [
       "이끼 통로",
       "중앙 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
@@ -4519,21 +4583,22 @@
       "P04",
       "P05"
     ],
-    "layout": "수평 통로",
+    "layout": "수직 이동",
     "materials": [
       "석재",
-      "금속"
+      "금속",
+      "잎"
+    ],
+    "project_targets": [
+      "고대 장치 구역",
+      "하강 통로"
     ],
     "scope": "scene",
-    "project_targets": [
-      "중앙 통로"
-    ],
     "secondary_project_targets": [
-      "고대 장치 구역",
       "문양의 성소",
       "유물 획득 지점",
       "전투방",
-      "하강 통로"
+      "중앙 통로"
     ],
     "asset_briefs": [
       "B03",
@@ -4630,19 +4695,21 @@
       "P03",
       "P04"
     ],
-    "layout": "수평 통로",
+    "layout": "열린 방",
     "materials": [
-      "석재"
+      "석재",
+      "구형 생물",
+      "기포"
+    ],
+    "project_targets": [
+      "문양의 성소",
+      "유물 획득 지점"
     ],
     "scope": "scene",
-    "project_targets": [
-      "중앙 통로"
-    ],
     "secondary_project_targets": [
       "고대 장치 구역",
-      "문양의 성소",
-      "유물 획득 지점",
-      "전투방"
+      "전투방",
+      "중앙 통로"
     ],
     "asset_briefs": [
       "B03",
@@ -4742,16 +4809,17 @@
     ],
     "layout": "수평 통로",
     "materials": [
-      "복합 재질"
+      "버섯",
+      "줄기"
     ],
-    "scope": "scene",
     "project_targets": [
+      "이끼 통로",
       "중앙 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
-      "이끼 통로",
       "전투방",
       "하강 통로"
     ],
@@ -4850,15 +4918,16 @@
       "P04",
       "P16"
     ],
-    "layout": "수평 통로",
+    "layout": "복층 공간",
     "materials": [
       "석재",
       "금속"
     ],
-    "scope": "scene",
     "project_targets": [
-      "중앙 통로"
+      "중앙 통로",
+      "하강 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "고대 장치 구역",
       "문양의 성소",
@@ -4961,15 +5030,17 @@
       "P04",
       "P16"
     ],
-    "layout": "수평 통로",
+    "layout": "복층 공간",
     "materials": [
-      "이끼"
+      "수정",
+      "석재",
+      "금속"
     ],
-    "scope": "scene",
     "project_targets": [
-      "이끼 통로",
+      "고대 장치 구역",
       "중앙 통로"
     ],
+    "scope": "scene",
     "secondary_project_targets": [
       "문양의 성소",
       "보스방",

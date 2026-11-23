@@ -34,6 +34,11 @@ TARGET_OVERRIDES={"SS-UW-01":["유물 획득 지점","문양의 성소"],
 
 def load_records():
     observations={}
+    legacy_curation={}
+    for line in (ROOT/"legacy-curation.txt").read_text(encoding="utf-8").splitlines():
+        key,layout,materials,targets=line.split("|")
+        if key in legacy_curation:raise ValueError("Repeated legacy curation " + key)
+        legacy_curation[key]=dict(layout=layout,materials=materials.split(","),project_targets=targets.split(","))
     for path in sorted(ROOT.glob("observations-*.txt")):
         for line in path.read_text(encoding="utf-8").splitlines():
             key,title,layout,observation,materials,depth,light,uses=line.split("|")
@@ -43,6 +48,7 @@ def load_records():
     rows=json.loads((ROOT/"sources.json").read_text(encoding="utf-8"))
     pattern_map={p["id"]:p for p in patterns()}
     for index,row in enumerate(rows):
+        curated_targets=None
         row["region"]=ALIASES.get(row["region"],row["region"])
         if row["origin"]=="new":
             row.update(observations.pop(row["id"]))
@@ -52,13 +58,8 @@ def load_records():
             row["observation"]=row["composition"]+" "+row["texture"]
             row["depth_interpretation"]=row["layers"]
             row["patterns"]=sorted({p for t in tags for p in TAG_PATTERNS.get(t,[])}) or ["P12"]
-            row["layout"]=next((x for tag,x in [("휴식","휴식 포켓"),("전투","전투 공간"),("위험","위험 구간"),
-                ("수직","수직 이동"),("탐색","보상 포켓"),("전이","지역 경계"),("상호작용","장치 공간")]
-                if tag in tags),"수평 통로")
-            combined=row["observation"]
-            row["materials"]=[name for name,keys in [("석재",["돌","석재","유적"]),("이끼",["이끼"]),
-                ("잎",["잎","식생"]),("뿌리",["뿌리","덩굴"]),("금속",["철문","금속","난간"]),
-                ("가시",["가시"]),("액체",["액체","수면"])] if any(k in combined for k in keys)] or ["복합 재질"]
+            row.update(legacy_curation.pop(row["id"]))
+            curated_targets=row["project_targets"]
         if row["id"] in ("SS-MF-01","SS-DD-01","HK-GP33","HK-GP37","HK-CP-03"):
             row["patterns"]=sorted(set(row["patterns"]+["P14"]))
         row["scope"]=("pre_release" if "개발 중" in row["edition"] else
@@ -70,6 +71,9 @@ def load_records():
         if row["layout"]=="수평 통로" and any(m in row["materials"] for m in ("잎","이끼","덩굴")):
             row["project_targets"]=["이끼 통로","중앙 통로"]
         if row["id"] in TARGET_OVERRIDES:row["project_targets"]=TARGET_OVERRIDES[row["id"]]
+        if curated_targets:
+            # Preserve manual production targets rather than keyword inference.
+            row["project_targets"]=curated_targets
         row["secondary_project_targets"]=sorted(broad_targets-set(row["project_targets"]))
         row["asset_briefs"]=sorted({a for p in row["patterns"] for a in pattern_map[p]["asset_briefs"]})
         row["priority"]=min(pattern_map[p]["priority"] for p in row["patterns"])
@@ -88,6 +92,7 @@ def load_records():
                 if distance<=4:
                     row["similar_frames"].append(dict(id=other["id"],dhash_distance=distance))
     if observations:raise ValueError("Unused observations " + str(sorted(observations)))
+    if legacy_curation:raise ValueError("Unused legacy curation " + str(sorted(legacy_curation)))
     assert len({r["sha256"] for r in rows})==len(rows)
     assert len({r["pixel_sha256"] for r in rows})==len(rows)
     return rows
@@ -124,7 +129,8 @@ def write_exports(rows):
         snapshot_date="2026-11-23",counts=stats,
         files=dict(records="analysis.json",jsonl="analysis.jsonl",csv="catalog.csv",sources="sources.json",
                    patterns="patterns.json",asset_briefs="asset-briefs.json",annotations="annotations.json",
-                   gallery="index.html",guide="../../reference-production-guide.md"),
+                   gallery="index.html",guide="../../reference-production-guide.md",project_targets="project-targets.json"),
+        project_plan="본편 두 맵. 중앙 통로는 맵2 작은 중앙 홀, 문양의 성소는 맵2 최종 보스방에 통합. project-targets.json 참조",
         interpretation=dict(observation="이미지에서 읽히는 형태·재질·명암의 시각적 관찰",
                             application="프로젝트 적용 제안. 구현 여부는 패턴의 project_status와 최신 소스 확인",
                             spatial_labels="시각적 관심 영역이며 실제 엔진 레이어·충돌·세그멘테이션 아님",
@@ -146,6 +152,7 @@ def write_readme(rows,pats,briefs,stats):
 - [프로젝트 제작 가이드](../../reference-production-guide.md): 지금 무엇을 만들고 어디에 쓸지 결정하는 순서.
 - [분석 JSON](analysis.json) · [한 줄 한 이미지 JSONL](analysis.jsonl) · [CSV](catalog.csv) · [출처 원장](sources.json)
 - [제작 패턴20개](patterns.json) · [자산 제작 명세20개](asset-briefs.json) · [통계](statistics.json)
+- [최신 두 맵의 위치·구현 상태 대응](project-targets.json): 중앙 통로는 맵2 작은 중앙 홀, 문양의 성소는 맵2 최종 보스방의 문양·제단에 대응.
 - [기존 녹색 거리 자료집](../hollow-knight-greenpath/README.md)
 
 신규{stats['new']}장은 실제 PNG로 저장했고 기존45장은 원래 파일을 참조해 중복 복사를 피했다. 파일 및 디코딩된 RGB 픽셀 해시로 완전 중복을 제외했다. 비슷한 구도는 dHash 거리4 이하 후보를 따로 표시한다. 이 표시는 유사도 후보이며 같은 방·같은 원본이라고 확정하는 판정은 아니다.
@@ -240,7 +247,7 @@ window.addEventListener('hashchange',revealHash);apply();revealHash();
 
 def main():
     rows=load_records();pats,briefs,stats=write_exports(rows);write_readme(rows,pats,briefs,stats);write_gallery(rows,pats,briefs,stats)
-    print(json.dumps(stats,ensure_ascii=True))
+    print(json.dumps({k:stats[k] for k in ('total','new','legacy','games','regions','patterns','asset_briefs')},ensure_ascii=True))
 
 
 if __name__=="__main__":main()
