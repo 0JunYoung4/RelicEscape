@@ -1,0 +1,122 @@
+{
+  "image": "shield-stone-soldier-walk-right-v2.png",
+  "source_concept": "assets/concepts/shield-stone-soldier-v5.png",
+  "frame_size": [
+    448,
+    368
+  ],
+  "frame_count": 8,
+  "columns": 4,
+  "fps": 5.555555555555555,
+  "loop": true,
+  "facing": "right",
+  "pose": "shield_walk",
+  "foot_anchor": [
+    200,
+    350
+  ],
+  "anchor_coordinates": "frame top-left",
+  "display_height": 120,
+  "scale": 0.3614457831325301,
+  "duration_ms": 1440,
+  "frame_durations_ms": [
+    170,
+    220,
+    140,
+    190,
+    170,
+    220,
+    140,
+    190
+  ],
+  "frames": [
+    {
+      "x": 0,
+      "y": 0,
+      "width": 448,
+      "height": 368,
+      "duration_ms": 170,
+      "foot_anchor": [
+        200,
+        350
+      ]
+    },
+    {
+      "x": 448,
+      "y": 0,
+      "width": 448,
+      "height": 368,
+      "duration_ms": 220,
+      "foot_anchor": [
+        200,
+        350
+      ]
+    },
+    {
+      "x": 896,
+      "y": 0,
+      "width": 448,
+      "height": 368,
+      "duration_ms": 140,
+      "foot_anchor": [
+        200,
+        350
+      ]
+    },
+    {
+      "x": 1344,
+      "y": 0,
+      "width": 448,
+      "height": 368,
+      "duration_ms": 190,
+      "foot_anchor": [
+        200,
+        350
+      ]
+    },
+    {
+      "x": 0,
+      "y": 368,
+      "width": 448,
+      "height": 368,
+      "duration_ms": 170,
+      "foot_anchor": [
+        200,
+        350
+      ]
+    },
+    {
+      "x": 448,
+      "y": 368,
+      "width": 448,
+      "height": 368,
+      "duration_ms": 220,
+      "foot_anchor": [
+        200,
+        350
+      ]
+    },
+    {
+      "x": 896,
+      "y": 368,
+      "width": 448,
+      "height": 368,
+      "duration_ms": 140,
+      "foot_anchor": [
+        200,
+        350
+      ]
+    },
+    {
+      "x": 1344,
+      "y": 368,
+      "width": 448,
+      "height": 368,
+      "duration_ms": 190,
+      "foot_anchor": [
+        200,
+        350
+      ]
+    }
+  ]
+}

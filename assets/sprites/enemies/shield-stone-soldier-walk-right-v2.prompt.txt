@@ -1,0 +1,16 @@
+OpenAI built-in ImageGen, transparent background
+Source: assets/concepts/shield-stone-soldier-v5.png
+Design reference: HK-GP34 (front shield and direction readability). Only the original RelicEscape design was passed as image input.
+
+Make one seamless eight-frame 2D side-scrolling walk cycle sprite atlas for the attached NEW RelicEscape shield stone guard v5 (the sole input, original character design). Preserve exactly its own slate rounded boulders, low crouched body, cold blue eye, moss tufts, thick two arms and two legs, and original slab shield with an uneven chipped top, heavy black-teal stone thickness, a long recessed vertical groove and TWO muted bronze clamps. Do not redesign the original character. Keep the slab taller than the crouching head. The silhouette reads as a heavy broad stone body just behind its distinct front slab. Fully transparent background and one independent full-body right-facing sprite in each of exactly 8 equal cells in a strict regular 4-column by 2-row grid ordered left to right, top row then bottom row. 2:1 wide output. Generous cell gaps and all extremities fully inside. No text, labels, grid lines, effects, floor, scenery or cast shadows.
+Physical motion is a deliberate heavy WALK, not a run, dash or attack. The guard holds his heavy shield close to the chest and shoulder with one flexed arm, forearm touching the slab's inside plane, same grip in every frame; keep it tucked over the leading thigh, never extended in front on an outstretched arm. Shield is rigid and upright, always very near his face and nearly touching its starting support height, can rise and settle very slightly with the shoulders as a single weight. Make his knees bend slightly deeper as weight lands, then push up just enough to pass the other foot. Short low forward steps, slow planted beats, compact forward lean, slight down-up of torso at contacts, no bouncing hop, never raise both feet; only very small counter-swing in free rear arm, clearly an empty hand. Do not lift the massive slab to chin height. Same chest, helmet, body scale, shield geometry, bronze clamps and pixel palette across all slots. Ground near the same horizontal baseline inside each equal cell.
+Eight distinct analyzed poses (do not repeat the front or far foot arbitrarily):
+1. NEAR foot front contact, far foot rear; rear knee lightly flexed, shield steady.
+2. Weight sinks onto near foot; far rear heel releases, toes last to leave, compact shoulders settle.
+3. Far foot clearly lifts and passes in front of the planted near leg, limited above-ground lift, arms stay tight.
+4. Far foot reaches forward low while near toes finish push-off; weight advancing.
+5. FAR foot front contact, near foot rear, reverse near/far layer compared to frame 1. Shield remains tucked.
+6. Weight sinks onto far foot; near rear heel lifts and hips settle.
+7. Near foot clearly lifts and passes the planted far leg, reverse the overlaps and far foot reading from frame 3.
+8. Near foot reaches forward low while far toes finish push-off, leads smoothly back to frame 1.
+Near legs can be slightly brighter than far legs to show the exchange. Use crisp clustered pixels and restrained facet lighting at game size, no seam flicker, no different shields, no duplicate limbs, no weapon other than shield. Preserve the exact unique guard design in the reference.
