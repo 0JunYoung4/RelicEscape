@@ -332,6 +332,9 @@ class LowerCaves:
         self.art.draw_floor(camera, 0, GALLERY_WIDTH, 0)
         self.art.shadow_floor(camera, 0)
         self.art.draw_platform(camera, AIR_PLATFORM)
+        # Light the scenery first so additive shafts cannot wash out the relic sprite.
+        self.shrine.draw_light(camera, RELIC_X, RELIC_Y, GALLERY_CEILING_Y,
+                               collected=self.has_relic)
         for bug in self.pillbugs:
             bug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses, death=self.pillbug_death)
 
@@ -557,8 +560,6 @@ class LowerCaves:
             self.art.combat_scenery().draw_foreground(camera, COMBAT_LEFT_WALL,
                                                      COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
         elif self.room == "gallery":
-            self.shrine.draw_light(camera, RELIC_X, RELIC_Y, GALLERY_CEILING_Y,
-                                   collected=self.has_relic)
             self.art.draw_canopy(camera, GALLERY_CEILING_Y)
         if self.passage_time is not None:
             opacity = round(255 * min(1, self.passage_time / PASSAGE_TIME))
