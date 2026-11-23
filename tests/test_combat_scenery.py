@@ -9,6 +9,7 @@ os.environ["SDL_AUDIODRIVER"] = "dummy"
 os.environ["SDL_RENDER_DRIVER"] = "software"
 
 from pico2d import pico2d as pico
+from combat_scenery import COMBAT_BACKGROUND_TINT
 from lower_caves import COMBAT_CEILING_Y, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL, COMBAT_WIDTH
 from main import Camera
 from moss_art import MossCaveArt
@@ -40,7 +41,7 @@ class CombatSceneryTests(unittest.TestCase):
     def test_combat_tint_does_not_change_the_shared_gallery_background(self):
         self.art.draw_background(self.camera)
         before = self.pixels()
-        self.art.draw_background(self.camera, tint=(126, 167, 188))
+        self.art.draw_background(self.camera, tint=COMBAT_BACKGROUND_TINT)
         self.assertNotEqual(before, self.pixels())
         self.art.draw_background(self.camera)
         self.assertEqual(before, self.pixels())

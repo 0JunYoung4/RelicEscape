@@ -21,6 +21,11 @@
 - The 64x64 PNGs in `assets/sprites/player/` are previous reference exports, not the required source or a fixed production resolution.
 - Choose production frame dimensions during implementation. Keep the approved LD images as concept references.
 
+## Image generation references
+
+- For project image generation, consult `docs/reference-production-guide.md` and filter the reference catalog at `docs/references/hollow-knight-silksong/index.html` or with `query_references.py` for the relevant room, material, lighting, or silhouette. Open selected images before writing the prompt.
+- Use the selected references for composition, silhouette, materials, depth, and lighting. Build the artwork around RelicEscape's own designs and approved asset sources. Record the reference IDs and the visual decisions they informed in the asset's prompt file or metadata.
+
 ## Presentation and planning deliverables
 
 - The user designated `발표&기획서/` as the location for future presentation and planning PPT files. Create and edit PPT deliverables there, using an appropriate presentation subfolder.

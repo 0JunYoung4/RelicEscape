@@ -9,15 +9,18 @@ from pico2d import pico2d as pico
 from player import ASSET_ROOT
 
 
+COMBAT_BACKGROUND_TINT = (120, 145, 178)
+
+
 class CombatScenery:
     def __init__(self, width, height):
         self.width, self.height = width, height
         terrain = ASSET_ROOT / "terrain"
         self.ruins = pico.load_image(str(terrain / "green-combat-midground-ruins-v1.png"))
         self.roots = pico.load_image(str(terrain / "green-combat-foreground-roots-v1.png"))
-        pico.SDL_SetTextureColorMod(self.ruins.texture, 140, 175, 190)
-        pico.SDL_SetTextureAlphaMod(self.ruins.texture, 132)
-        pico.SDL_SetTextureColorMod(self.roots.texture, 125, 150, 162)
+        pico.SDL_SetTextureColorMod(self.ruins.texture, 133, 155, 175)
+        pico.SDL_SetTextureAlphaMod(self.ruins.texture, 77)
+        pico.SDL_SetTextureColorMod(self.roots.texture, 99, 123, 143)
 
     @contextmanager
     def room_clip(self, camera, left, right, ceiling, *, margin=0):
@@ -83,13 +86,13 @@ class CombatScenery:
     def light_shaft(self, camera, left, right, ceiling):
         span = right - left
         points, colors = [], []
-        # The opening is high on the right; the light spreads softly toward the center.
-        rows = ((1.04, .72, 55, 0), (.86, .66, 100, 38),
-                (.52, .55, 175, 46), (.19, .45, 235, 20), (.01, .40, 265, 0))
+        # The upper-right beam fades above the crystal flight path.
+        rows = ((1.04, .76, 50, 0), (.90, .72, 92, 45),
+                (.77, .68, 136, 24), (.62, .63, 175, 0))
         for height, center, half_width, opacity in rows:
             for across, strength in ((-1, 0), (-.55, .5), (0, 1), (.55, .5), (1, 0)):
                 points.append((left + span * center + half_width * across, ceiling * height))
-                colors.append((160, 204, 185, round(opacity * strength)))
+                colors.append((139, 173, 190, round(opacity * strength)))
         triangles = []
         for row in range(len(rows) - 1):
             for column in range(4):
@@ -104,12 +107,12 @@ class CombatScenery:
                 return
             span = right - left
             with self.alpha_geometry():
-                # Unequal dark sides leave an open, brighter center behind combat.
+                # Keep the side platforms and the air above them in the same quiet values.
                 points = [(left + span * x, ceiling * y)
                           for y in (0, .50, 1) for x in (-.25, 0, .26, .58, 1, 1.25)]
-                colors = [(4, 12, 22, alpha) for row in ((80, 80, 28, 8, 58, 58),
-                                                        (104, 104, 24, 0, 70, 70),
-                                                        (126, 126, 55, 10, 86, 86)) for alpha in row]
+                colors = [(7, 16, 30, alpha) for row in ((72, 72, 65, 61, 68, 68),
+                                                        (93, 93, 82, 78, 84, 84),
+                                                        (118, 118, 74, 46, 86, 86)) for alpha in row]
                 triangles = []
                 for row in range(2):
                     for column in range(5):
@@ -122,19 +125,18 @@ class CombatScenery:
             self.ruins.draw_to_origin(*camera.world_to_screen(left + span * .08, -28),
                                       width * camera.zoom, height * camera.zoom)
             with self.alpha_geometry():
-                self.soft_light(camera, (left + span * .51, ceiling * .43),
-                                (span * .46, ceiling * .60), (77, 139, 148), 17)
+                # Diffuse light behind the low pillbug silhouettes brings out their outline.
+                self.soft_light(camera, (left + span * .50, 35),
+                                (span * .67, 260), (84, 134, 151), 105)
                 self.light_shaft(camera, left, right, ceiling)
-                # Local air glow along the ruin's right pier, kept weaker than relic effects.
-                self.soft_light(camera, (left + span * .78, 210), (120, 180), (110, 170, 152), 12)
 
     def draw_foreground(self, camera, left, right, ceiling):
         with self.room_clip(camera, left, right, ceiling, margin=64) as visible:
             if not visible:
                 return
             # Both origins stay attached to the world ceiling at every camera height.
-            for edge, top, height, flip in ((left - 100, ceiling + 60, 670, ""),
-                                            (right + 80, ceiling + 28, 535, "h")):
+            for edge, top, height, flip in ((left - 68, ceiling + 60, 490, ""),
+                                            (right + 54, ceiling + 28, 410, "h")):
                 width = height * self.roots.w / self.roots.h
                 x = edge + width / 2 if not flip else edge - width / 2
                 y = top - height / 2

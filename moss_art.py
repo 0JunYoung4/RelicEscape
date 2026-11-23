@@ -155,10 +155,10 @@ class MossCaveArt:
                 source_top - source_bottom, 0, "h" if right_wall else "", sx, sy,
                 skin_width * camera.zoom, (high - low) * camera.zoom)
 
-    def draw_canopy(self, camera, roof):
+    def draw_canopy(self, camera, roof, *, height_scale=1.0):
         """Attach hanging roots to the map ceiling, independent of the viewport."""
         width = 1120
-        height = width * self.canopy.h / self.canopy.w
+        height = width * self.canopy.h / self.canopy.w * height_scale
         top = roof + 30
         screen_roof = camera.world_to_screen(0, roof)[1]
         if screen_roof < self.height:
@@ -173,7 +173,8 @@ class MossCaveArt:
                               width + 2, height,
                               profile_origin=tile * width, amount=-1.8)
 
-    def draw_motes(self, camera, floor_y, ceiling_y, *, left=0, right=None, count=32):
+    def draw_motes(self, camera, floor_y, ceiling_y, *, left=0, right=None, count=32,
+                   opacity_scale=1.0):
         right = camera.world_width if right is None else right
         elapsed = perf_counter() - self.started
         blend = pico.SDL_BlendMode()
@@ -186,7 +187,7 @@ class MossCaveArt:
                 sx, sy = camera.world_to_screen(x, y)
                 if not (0 <= sx < self.width and 0 <= sy < self.height):
                     continue
-                alpha = round(65 + 65 * (.5 + .5 * sin(elapsed * .8 + index)))
+                alpha = round(opacity_scale * (65 + 65 * (.5 + .5 * sin(elapsed * .8 + index))))
                 radius = 1 if index % 5 else 2
                 pico.draw_circle(round(sx), round(sy), radius, 162, 205, 158, alpha, filled=True)
         finally:

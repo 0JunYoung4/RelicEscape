@@ -12,7 +12,7 @@
 ## 적용 범위와 확인 화면
 
 - [이끼 통로](green-style-gallery.png) · [이동과 배경 시차 GIF](green-style-gallery-parallax.gif)
-- [전투방 최신 모습](combat-atmosphere-combat.png) · [전후 비교](combat-atmosphere-comparison.jpg) · [하강 통로](combat-atmosphere-shaft.png)
+- [전투방 수정탄 발사 장면](combat-readability-projectiles.png) · [조정 전후 비교](combat-readability-comparison.jpg) · [높은 발판 시점](combat-readability-high.png)
 - [기존 시작 동굴 유지](green-style-opening.png) · [기존 문양 유지](green-style-sigil.png)
 
 공통 렌더링은 `moss_art.py`의 `MossCaveArt`가 담당하고 `lower_caves.py`에서 사용한다. `opening_cave.py`는 변경 전 상태로 복원했다. 배경 시차는 지형 이동의0.16배다. 천장 덩굴은 지형과 같은 월드 좌표에 고정한다. 잎과 뿌리는 장식이며 실제 충돌 상면은 바꾸지 않는다.
@@ -20,6 +20,12 @@
 천장 덩굴을 화면 상단에 붙이거나 천장의 화면 진입 여부에 따라 배치 기준을 바꾸지 않는다. 이끼 통로는 기존 포자 영역 상단과 같은 `GALLERY_CEILING_Y=900`, 전투방은 실제 천장 `COMBAT_CEILING_Y`에 배치한다. 천장 위는 검게 채우고, 기존 불규칙한 아래 윤곽은 유지한다. 카메라는 두 구간 모두 캐릭터의 가로·세로 위치를 따라가며 천장을 보이게 하려는 높이 제한을 사용하지 않는다. 지상에서는 발밑 여백을 확보하고, 하강 통로는 기존 추적을 유지한다. [통로 지상](ceiling-vines-gallery-floor.png) · [통로 발판](ceiling-vines-gallery-platform.png) · [전투방 지상](ceiling-vines-combat-floor.png) · [전투방 상승](ceiling-vines-combat-high.png) · [높이별 비교 GIF](ceiling-vines-follow.gif).
 
 ## 전투방의 깊이와 조명 개선
+
+최신 전투방은 녹색 거리의 넓은 전투 여백과 투사체 대비, 실크송 High Halls의 어두운 가장자리를 참고했다. 청록색 원경을 차분한 남청색으로 누르고 폐아치의 대비를 낮췄다. 우측 상단의 빛줄기는 수정탄이 지나가는 높이 위에서 흩어지고, 바닥 뒤의 낮고 넓은 빛은 공벌레의 등판을 드러낸다. 포자는 18개에서 8개로 줄이고 밝기를 낮췄다. 천장 덩굴 띠는 세로로 줄이고 좌우 큰 뿌리는 벽 쪽으로 당겼다. 기존 세 발판과 네 몬스터의 배치, 천장 고정 기준, 하강 통로 계산을 유지했다. [HK-GP05](references/hollow-knight-silksong/index.html#HK-GP05) · [HK-GP37](references/hollow-knight-silksong/index.html#HK-GP37) · [SS-HH-06](references/hollow-knight-silksong/index.html#SS-HH-06)
+
+두 골렘의 실제 발사 코드로 수정탄을 만들고 같은 카메라와 비행 시점에서 전후 화면을 렌더링했다. `.\.venv\Scripts\python.exe tools/preview_combat_atmosphere.py --projectiles --prefix combat-readability`로 최신 화면을 다시 만들 수 있다. 앞으로 이미지를 생성할 때는 [제작 가이드](reference-production-guide.md)에서 관련 참고를 골라 실제 화면을 보고, 참고 ID와 가져온 표현 원리를 프롬프트 또는 자산 메타데이터에 기록한다.
+
+### 이전 전투방 미술 기록
 
 전투방에는 뿌리가 감싼 비대칭 폐아치를 낮은 대비의 중경으로 추가했다. 먼 숲은 더 어두운 청록색으로 눌렀고, 좌우의 어둠 강도를 다르게 해 중앙 전투 공간을 남겼다. 오른쪽 위에서 중앙으로 퍼지는 부드러운 사선 빛줄기와 약한 대기광을 겹쳤다. 포자는32개에서18개로 줄였다. 빛은 배경에 합성하므로 적·캐릭터·유물과 지형의 검은 속을 하얗게 덮지 않는다.
 

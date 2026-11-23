@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-23 전투방 판독 개선을 `combat_scenery.py`·`lower_caves.py`·`moss_art.py`에 적용. 참고 HK-GP05/HK-GP37/SS-HH-06. 실제 골렘 수정탄 프레임과 높은 시점은 `docs/combat-readability-{comparison.jpg,high.png,projectiles.png}`. 재생성 `tools/preview_combat_atmosphere.py --projectiles --prefix combat-readability`. 동일 카메라에서 지면 아래 SDL 렌더 픽셀 일치. 수동 플레이와 실기기별 프레임 성능은 미측정. 이미지 생성 참고 자료 활용은 AGENTS.md에 지속 지침으로 기록.
+
 - 2026-11-23 두 게임 참고244장을 프로젝트 제작 데이터로 정리. 시작점 `docs/reference-production-guide.md`와 `docs/references/hollow-knight-silksong/index.html`. 이미지별 관찰·재질·전경/배경·빛·주요 적용 구역·P01~P20·B01~B20 연결, JSON/JSONL/CSV 및 검색 CLI. `project-targets.json`은 최신 두 맵의 실제 위치·구현 상태 대응이며 독립 성소 맵을 추가하지 않는다. 신규199장 PNG, 기존45장 원본 참조; 개발판3·상세2·효과2·상태변형4를 공간233장과 구별. 수집기는 이전 배치 보존, 신규 시각 관찰 없으면 빌드 실패. 재생성 build_database.py→build_analysis_plates.py→build_database.py, validate_database.py 실행. 브라우저 필터/비교 실제 클릭은 도구의 로컬 접근 정책으로 미검증; 우회하지 않았다. 이미지·파일/픽셀해시244·로컬링크518·구조·CLI·JS문법은 확인. 상세는 에이전트 작업로그 `worklog/codex/2026-11/20261123-hollow-knight-silksong-reference-database.md`.
 
 - 2026-11-23 두 맵 재설계안을 `docs/INITIAL_DESIGN.md` v1.2 6절과 README에 기록. 확정은 2개 맵·맵2 유적/복합 퍼즐/몬스터/최종 보스까지이며 세부 방 배치·봉인2개·B1 재사용·사망 상태 유지 방식은 검토안. 구현 시 사용자 후속 피드백 반영 후 레일 재사용/발사 실패 복구/좁은 틈 귀환 끼임/사망 진행 플래그를 결정해야 한다. 이전 지도v2를 그대로 3맵으로 구현하지 않는다. 본 작업은 기획 문서만 수정, 게임·PPT·새 지도 이미지는 미변경. 기존 작업 트리의 코드·자산 변경 보존.

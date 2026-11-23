@@ -6,6 +6,7 @@ from math import ceil, floor, hypot
 
 from pico2d import pico2d as pico
 
+from combat_scenery import COMBAT_BACKGROUND_TINT
 from crystal_golem import CrystalGolem
 from crystal_projectile import DAMAGE as CRYSTAL_DAMAGE
 from opening_cave import SHAFT_FLOOR, SHAFT_SCALE, SHAFT_TOP
@@ -285,11 +286,12 @@ class LowerCaves:
                                  self.landing_width * camera.zoom, shaft.h * SHAFT_SCALE * camera.zoom)
             return
         if self.room == "combat":
-            self.art.draw_background(camera, tint=(126, 167, 188))
+            self.art.draw_background(camera, tint=COMBAT_BACKGROUND_TINT)
             self.art.combat_scenery().draw_background(camera, COMBAT_LEFT_WALL,
                                                      COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
             self.art.draw_motes(camera, 0, COMBAT_CEILING_Y,
-                                left=COMBAT_LEFT_WALL, right=COMBAT_RIGHT_WALL, count=18)
+                                left=COMBAT_LEFT_WALL, right=COMBAT_RIGHT_WALL,
+                                count=8, opacity_scale=.45)
             pico.draw_rectangle(*camera.world_to_screen(0, COMBAT_CEILING_Y),
                                 *camera.world_to_screen(COMBAT_WIDTH, 1600), 0, 0, 0, filled=True)
             self.art.draw_wall(camera, COMBAT_LEFT_WALL, COMBAT_DOOR_HEIGHT, COMBAT_CEILING_Y)
@@ -544,7 +546,7 @@ class LowerCaves:
 
     def draw_foreground(self, camera):
         if self.room == "combat":
-            self.art.draw_canopy(camera, COMBAT_CEILING_Y)
+            self.art.draw_canopy(camera, COMBAT_CEILING_Y, height_scale=.78)
             self.art.combat_scenery().draw_foreground(camera, COMBAT_LEFT_WALL,
                                                      COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
         elif self.room == "gallery":
