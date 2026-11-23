@@ -1,5 +1,6 @@
 """Render the A route art plate with the existing rail and ceiling reveal."""
 
+from argparse import ArgumentParser
 from ctypes import byref, c_ubyte
 from math import hypot
 import os
@@ -15,35 +16,34 @@ sys.path.insert(0, str(ROOT))
 from PIL import Image
 from pico2d import pico2d as pico
 
-from main import Camera, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE
+from main import CAMERA_ZOOM, Camera, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE, RELIC_IMAGE
 from player import Player
-from rail import BEND_ART_RADIUS, RAIL_ART_SCALE, RailSegment, draw_rail
+from rail import BEND_ART_RADIUS, RAIL_ART_SCALE, RAIL_TRAVEL_SPEED, RailCarriage, RailSegment, draw_rail
 
 
-PLATE = ROOT / "assets/concepts/map1-lower-route-a-v2-plate.png"
 SHADOW = ROOT / "assets/terrain/lower-route-a-ceiling-shadow-v2.png"
-OUTPUT = ROOT / "docs/map1-lower-route-a-v2"
 ZOOM = 0.4
 
 # Anchor positions in art pixels, measured from the top left of the source plate.
-UPPER_DOCK = (600, 350)
-RAIL_X = 935
-LOWER_DOCK = (1315, 599)
+RAIL_LAYOUTS = {
+    2: ((600, 350), 935, (1315, 599)),
+    3: ((605, 329), 975, (725, 594)),
+}
 HOLE = (1950, 90)
 SHADOW_BOUNDS = (1808, -8, 480, 300)
 WALK_START = (1632, 405)
 WALK_END = (1950, 404)
 
 
-def rail_path(height):
+def rail_path(height, version=2):
     radius = BEND_ART_RADIUS * ZOOM
-    left, upper = UPPER_DOCK
-    right, lower = LOWER_DOCK
-    top_center = (RAIL_X - radius, upper + radius)
-    bottom_center = (RAIL_X + radius, lower - radius)
+    (upper_x, upper), rail_x, (lower_x, lower) = RAIL_LAYOUTS[version]
+    top_center = (rail_x - radius, upper + radius)
+    lower_side = 1 if lower_x > rail_x else -1
+    bottom_center = (rail_x + lower_side * radius, lower - radius)
     points = [
-        (left, upper), (top_center[0], upper), (RAIL_X, top_center[1]),
-        (RAIL_X, bottom_center[1]), (bottom_center[0], lower), (right, lower),
+        (upper_x, upper), (top_center[0], upper), (rail_x, top_center[1]),
+        (rail_x, bottom_center[1]), (bottom_center[0], lower), (lower_x, lower),
     ]
 
     def world(point):
@@ -51,6 +51,10 @@ def rail_path(height):
         return x / ZOOM, (height - y) / ZOOM
 
     centers = (None, top_center, None, bottom_center, None)
+    if version == 3:
+        # On this layout positive direction (a right-facing hit) travels up.
+        points.reverse()
+        centers = centers[::-1]
     return tuple(
         RailSegment(world(start), world(end), world(center) if center else None)
         for start, end, center in zip(points, points[1:], centers)
@@ -73,27 +77,42 @@ def read_render(x, y, width, height):
     return Image.frombytes("RGBA", (width, height), bytes(pixels)).convert("RGB")
 
 
-def main():
-    with Image.open(PLATE) as source:
+def save_gif(frames, durations, path):
+    palette = frames[-1].quantize(colors=256)
+    indexed = [frame.quantize(palette=palette, dither=Image.Dither.NONE) for frame in frames]
+    indexed[0].save(path, save_all=True, append_images=indexed[1:],
+                    duration=durations, loop=0, optimize=True)
+
+
+def main(version):
+    stem = f"map1-lower-route-a-v{version}"
+    plate = ROOT / "assets/concepts" / f"{stem}-plate.png"
+    output = ROOT / "docs" / stem
+    with Image.open(plate) as source:
         width, height = source.size
     pico.open_canvas(width, height)
     try:
-        art = pico.load_image(str(PLATE))
+        art = pico.load_image(str(plate))
         shadow = pico.load_image(str(SHADOW))
         straight, bend, carriage = (pico.load_image(str(path)) for path in (
             RAIL_IMAGE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE,
         ))
         camera = Camera(width, width / ZOOM, zoom=ZOOM)
-        path = rail_path(height)
+        path = rail_path(height, version)
+        dock = path[0].start if version == 3 else path[-1].end
         player = Player(0, 0, width / ZOOM)
         player.facing = 1
 
-        def draw(position, *, elapsed=None):
+        def draw(position, *, elapsed=None, carriage_position=dock, relic=None):
             pico.clear_canvas()
             art.draw_to_origin(0, 0, width, height)
             draw_rail(straight, bend, camera, path)
             scale = RAIL_ART_SCALE * ZOOM
-            carriage.draw(*camera.world_to_screen(*path[-1].end), carriage.w * scale, carriage.h * scale)
+            mount = camera.world_to_screen(*carriage_position)
+            carriage.draw(*mount, carriage.w * scale, carriage.h * scale)
+            if relic is not None:
+                relic_scale = ZOOM / CAMERA_ZOOM
+                relic.draw(*mount, relic.w * relic_scale, relic.h * relic_scale)
             if elapsed is not None:
                 player.x = position[0] / ZOOM
                 player.y = (height - position[1]) / ZOOM
@@ -106,7 +125,7 @@ def main():
 
         for name, position in (("covered", WALK_START), ("open", WALK_END)):
             draw(position)
-            read_render(0, 0, width, height).save(OUTPUT.with_name(f"{OUTPUT.name}-{name}.png"))
+            read_render(0, 0, width, height).save(output.with_name(f"{stem}-{name}.png"))
 
         frames = []
         left = max(0, width - 780)
@@ -116,14 +135,28 @@ def main():
             position = tuple(a + (b - a) * t for a, b in zip(WALK_START, WALK_END))
             draw(position, elapsed=i * .065 if 0 < i < 33 else -1)
             frames.append(read_render(*view))
-        palette = frames[-1].quantize(colors=256)
-        indexed = [frame.quantize(palette=palette, dither=Image.Dither.NONE) for frame in frames]
-        indexed[0].save(OUTPUT.with_suffix(".gif"), save_all=True, append_images=indexed[1:],
-                        duration=[550] + [65] * 32 + [900], loop=0, optimize=True)
+        save_gif(frames, [550] + [65] * 32 + [900], output.with_suffix(".gif"))
+
+        if version == 3:
+            relic = pico.load_image(str(RELIC_IMAGE))
+            moving = RailCarriage(path, carriage.w * RAIL_ART_SCALE, carriage.h * RAIL_ART_SCALE)
+            moving.direction = 1
+            step = moving.length / RAIL_TRAVEL_SPEED / 32
+            frames = []
+            for i in range(33):
+                draw(WALK_END, carriage_position=moving.position, relic=relic)
+                frames.append(read_render(470, 270, 625, 405))
+                if i < 32:
+                    moving.move(step)
+            save_gif(frames, [550] + [round(step * 1000)] * 31 + [900],
+                     output.with_name(f"{stem}-rail.gif"))
+            del relic
         del art, shadow, straight, bend, carriage, player
     finally:
         pico.close_canvas()
 
 
 if __name__ == "__main__":
-    main()
+    parser = ArgumentParser(description=__doc__)
+    parser.add_argument("--version", type=int, choices=RAIL_LAYOUTS, default=2)
+    main(parser.parse_args().version)
