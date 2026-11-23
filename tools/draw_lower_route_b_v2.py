@@ -4,7 +4,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-from rail import RailSegment
+from tools.lower_route_b_layout import RAIL_ONE, RAIL_TWO, TERRAIN as TERRAIN_BOUNDS
 
 
 OUT = Path(__file__).resolve().parents[1] / "docs/map1-lower-route-b-blockout-v2.png"
@@ -12,31 +12,6 @@ image = Image.new("RGB", (2290, 1010), "#f4f7fb")
 d = ImageDraw.Draw(image)
 INK, MUTED, TERRAIN = "#173149", "#4b6176", "#435568"
 RAIL, WALL, ENEMY, SAFE, SPIKE = "#3559b3", "#945611", "#9e3650", "#278060", "#a02c44"
-
-# RailCarriage moves toward smaller distances on a left-facing hit.
-RAIL_ONE = (
-    RailSegment((3450, 280), (3698, 280)),
-    RailSegment((3698, 280), (3794, 376), (3698, 376)),
-    RailSegment((3794, 376), (3794, 464)),
-    RailSegment((3794, 464), (3890, 560), (3890, 464)),
-    RailSegment((3890, 560), (4058, 560)),
-    RailSegment((4058, 560), (4154, 464), (4058, 464)),
-    RailSegment((4154, 464), (4154, 376)),
-    RailSegment((4154, 376), (4250, 280), (4250, 376)),
-    RailSegment((4250, 280), (4620, 280)),
-)
-RAIL_TWO = (
-    RailSegment((1160, 690), (1418, 690)),
-    RailSegment((1418, 690), (1514, 594), (1418, 594)),
-    RailSegment((1514, 594), (1514, 451)),
-    RailSegment((1514, 451), (1610, 355), (1610, 451)),
-    RailSegment((1610, 355), (1848, 355)),
-    RailSegment((1848, 355), (1944, 451), (1848, 451)),
-    RailSegment((1944, 451), (1944, 594)),
-    RailSegment((1944, 594), (2040, 690), (2040, 594)),
-    RailSegment((2040, 690), (2320, 690)),
-)
-
 
 def label(x, y, value, size=26, *, color=INK, bold=False, anchor="la"):
     path = "C:/Windows/Fonts/malgunbd.ttf" if bold else "C:/Windows/Fonts/malgun.ttf"
@@ -76,13 +51,8 @@ for x, end, caption in ((70, 335, "C 연결"), (340, 690, "03  수정 골렘"),
     label(x + 12, 165, caption, 25, bold=True)
 
 # Connecting ledges and islands.
-block(0, 500, 680, 590)
-block(680, 495, 1340, 590)
-block(2160, 495, 2900, 590)
-block(2800, 100, 2900, 495)
-block(3060, 85, 3650, 180)
-block(3150, 355, 3290, 1100)
-block(4460, 90, 5000, 180)
+for bounds in TERRAIN_BOUNDS:
+    block(*bounds)
 for left, right, height in ((0, 380, 590), (1100, 1340, 590), (2670, 2900, 590),
                             (2160, 2350, 590), (3410, 3650, 180), (4460, 5000, 180)):
     block(left, height - 8, right, height, SAFE)
