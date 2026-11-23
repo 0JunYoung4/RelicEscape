@@ -1,5 +1,7 @@
 # 하단 B파트 · 수평 레일과 방패병 회랑
 
+최신 배치는 [B파트 v2 가시 협곡 설계안](map1-lower-route-b-v2.md)에 있다.
+
 A파트 왼쪽 출구를 통과하면 B 오른쪽 발판으로 이어진다. 약 두 화면 분량이며, 오른쪽에서 왼쪽으로 진행해 C 진입부에 닿는다. [사각형 배치도](map1-lower-route-b-blockout-v1.png) · [미술 시안](../assets/concepts/map1-lower-route-b-v1.png)
 
 | 순서 | 플레이 흐름 |
