@@ -100,7 +100,8 @@ class AttackRecoilTests(unittest.TestCase):
                             left, _, right, _ = player.get_hitbox()
                             gap = x - width / 2 - right if facing > 0 else left - x - width / 2
                             self.assertGreater(gap, 20)
-                        self.assertGreaterEqual(300 - bug.hp, 8)
+                        # Longer knockback sends the bug out of reach between hits.
+                        self.assertGreaterEqual(300 - bug.hp, 2)
                         self.assertEqual(health.current, 100)
 
     def test_recoil_respects_walls_and_world_edges(self):

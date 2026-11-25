@@ -80,7 +80,7 @@ class CombatClearTests(unittest.TestCase):
         self.player.recover_at(first_golem.x - 120, first_golem.floor_y, 0)
         self.player.slash, self.player.swing_id = (0, 1, "attack"), 1
         self.room.update_enemies(self.player, .1)
-        self.assertEqual((first_golem.x, first_golem.attack_cooldown, first_golem.hp), (*initial_golem, 65))
+        self.assertEqual((first_golem.x, first_golem.attack_cooldown, first_golem.hp), (*initial_golem, 45))
         self.assertFalse(Health((130, 0, 0)).check_contact(self.player, self.room.enemies, 0))
         with patch.object(first_golem, "draw") as draw:
             self.room.draw(self.camera)

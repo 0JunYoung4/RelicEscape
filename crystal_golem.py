@@ -2,9 +2,10 @@
 
 from crystal_projectile import CrystalProjectile
 from death_pixels import draw_blue_pixels
+from enemy_knockback import KNOCKBACK_DURATION, advance_knockback
 
 
-MAX_HP = 65
+MAX_HP = 45
 WALK_SPEED = 22.0
 BODY_WIDTH = 140
 BODY_HEIGHT = 140
@@ -28,6 +29,9 @@ class CrystalGolem:
         self.phase = "active"
         self.time = 0.0
         self.last_swing = None
+        self.knockback_remaining = 0.0
+        self.strike_direction = 1
+        self.support_edges = None
         self.death_time = None
         self.attack_time = None
         self.attack_target = None
@@ -35,10 +39,11 @@ class CrystalGolem:
         self.fired = False
 
     @classmethod
-    def on_platform(cls, platform, *, direction=-1):
+    def on_platform(cls, platform, *, direction=-1, support_edges=None):
         left, _, right, top = platform
         golem = cls(left + BODY_WIDTH / 2, right - BODY_WIDTH / 2, direction=direction)
         golem.floor_y = top
+        golem.support_edges = support_edges or (left, right)
         return golem
 
     def body_bounds(self):
@@ -51,6 +56,7 @@ class CrystalGolem:
         self.attack_time = None
         self.attack_target = None
         self.fired = False
+        self.knockback_remaining = 0.0
 
     def check_strike(self, box, facing, damage, swing_id):
         if box is None or self.hp == 0 or self.phase == "emerge" or self.last_swing == swing_id:
@@ -65,6 +71,10 @@ class CrystalGolem:
             self.phase, self.death_time = "death", 0.0
             self.attack_time = None
             self.attack_target = None
+            self.knockback_remaining = 0.0
+        else:
+            self.knockback_remaining = KNOCKBACK_DURATION
+            self.strike_direction = facing
         return True
 
     def update(self, dt, player_box, terrain, world_width):
@@ -79,6 +89,17 @@ class CrystalGolem:
                 self.phase, self.time = "active", 0.0
                 self.attack_cooldown = max(EMERGE_ATTACK_DELAY, self.attack_cooldown)
             return
+        patrol_time = dt
+        if self.knockback_remaining > 0:
+            step = min(dt, self.knockback_remaining)
+            push, self.knockback_remaining = advance_knockback(
+                step, self.knockback_remaining, self.strike_direction, self.body_bounds(),
+                terrain, world_width, self.support_edges,
+            )
+            if push:
+                self.x += push
+                self.left, self.right = min(self.left, self.x), max(self.right, self.x)
+                patrol_time -= step
         if self.attack_time is not None:
             previous = self.attack_time
             self.attack_time += dt
@@ -101,7 +122,9 @@ class CrystalGolem:
                 self.attack_target = target
                 self.fired = False
                 return
-        requested_distance = self.direction * WALK_SPEED * dt
+        if patrol_time <= 0:
+            return
+        requested_distance = self.direction * WALK_SPEED * patrol_time
         distance = requested_distance
         start = self.x
         left, right = self.x - BODY_WIDTH / 2, self.x + BODY_WIDTH / 2

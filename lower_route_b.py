@@ -72,7 +72,8 @@ class LowerRouteB:
         # Leave the right edge of each ledge open for landing.
         self.pillbug = Pillbug.on_platform((3060, 85, 3380, PILLBUG_LEDGE[3]))
         self.pillbug.x = 3265
-        self.shield = ShieldSoldier(2500, SHIELD_LEDGE[3], 2420, 2600)
+        self.shield = ShieldSoldier(2500, SHIELD_LEDGE[3], 2420, 2600,
+                                   support_edges=(SHIELD_LEDGE[0], SHIELD_LEDGE[2]))
         self.fights = (
             (self.pillbug, 3060, 3410),
             (self.shield, 2350, 2670),

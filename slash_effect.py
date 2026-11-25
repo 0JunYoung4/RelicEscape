@@ -12,6 +12,7 @@ FORWARD_SLASH_CENTER = (31, 82)
 FORWARD_SLASH_RADIUS = (150, 78)
 FORWARD_SLASH_HALF_ANGLE = 102
 SLASH_FADE_EXPANSION = (6, 3)
+FORWARD_SLASH_REACH = FORWARD_SLASH_CENTER[0] + FORWARD_SLASH_RADIUS[0] + SLASH_FADE_EXPANSION[0]
 DOWNWARD_CENTER = (8, 42)
 DOWNWARD_RADIUS = (128, 66)
 DOWNWARD_ANGLE = 82
@@ -25,7 +26,7 @@ def forward_slash_bounds(x, y, facing):
     radius_x += SLASH_FADE_EXPANSION[0]
     radius_y += SLASH_FADE_EXPANSION[1]
     near_x = x + facing * (center_x + radius_x * cos(radians(FORWARD_SLASH_HALF_ANGLE)))
-    far_x = x + facing * (center_x + radius_x)
+    far_x = x + facing * FORWARD_SLASH_REACH
     return min(near_x, far_x), y + center_y - radius_y, max(near_x, far_x), y + center_y + radius_y
 
 

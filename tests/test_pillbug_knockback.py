@@ -2,7 +2,8 @@
 
 import unittest
 
-from pillbug import HURT_TIME, KNOCKBACK_DURATION, KNOCKBACK_SPEED, Pillbug
+from pillbug import HURT_TIME, KNOCKBACK_DURATION, Pillbug
+from slash_effect import forward_slash_bounds
 
 
 class PillbugKnockbackTests(unittest.TestCase):
@@ -25,7 +26,7 @@ class PillbugKnockbackTests(unittest.TestCase):
                             dt = min(1 / fps, KNOCKBACK_DURATION - elapsed)
                             bug.update(dt, (1600, 0, 1640, 140), (), 2400)
                             elapsed += dt
-                        self.assertAlmostEqual(bug.x, start + facing * KNOCKBACK_SPEED * KNOCKBACK_DURATION / 2)
+                        self.assertAlmostEqual(bug.x, start + facing * forward_slash_bounds(0, 0, 1)[2])
                         self.assertEqual((bug.phase, bug.time), (phase, .05))
                         self.assertAlmostEqual(bug.knockback_remaining, 0)
                         self.assertFalse(self.strike(bug, facing, 1))
@@ -39,7 +40,7 @@ class PillbugKnockbackTests(unittest.TestCase):
         self.assertTrue(self.strike(bug, -1, 2))
         self.assertEqual(bug.hurt_remaining, HURT_TIME)
         bug.update(KNOCKBACK_DURATION, (1600, 0, 1640, 140), (), 2400)
-        self.assertAlmostEqual(bug.x, start - KNOCKBACK_SPEED * KNOCKBACK_DURATION / 2)
+        self.assertAlmostEqual(bug.x, start - forward_slash_bounds(0, 0, 1)[2])
 
     def test_push_stops_at_walls_world_edges_and_both_platform_edges(self):
         for facing in (-1, 1):

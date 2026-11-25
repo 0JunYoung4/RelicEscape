@@ -15,10 +15,12 @@ from pico2d import pico2d as pico
 from crystal_golem import ATTACK_RELEASE, DEATH_COLLAPSE_DURATION, DEATH_DURATION, CrystalGolem
 from crystal_projectile import CrystalProjectile
 from death_pixels import COLORS
+from enemy_knockback import KNOCKBACK_DURATION
 from health import Health
 from lower_caves import COMBAT_WIDTH, LowerCaves
 from main import Camera
 from player import Player
+from slash_effect import forward_slash_bounds
 
 
 class GolemDeathTests(unittest.TestCase):
@@ -32,20 +34,20 @@ class GolemDeathTests(unittest.TestCase):
         self.assertEqual((golem.attack_time, golem.attack_target, golem.direction,
                           golem.attack_cooldown), before)
         self.assertIsInstance(golem.update(.03, (1000, 0, 1040, 140), (), 1920), CrystalProjectile)
-        self.assertEqual(golem.hp, 53)
+        self.assertEqual(golem.hp, 33)
 
-    def test_sixth_hit_starts_death_cancels_attack_and_never_moves_hurts_or_revives(self):
+    def test_fourth_hit_starts_death_cancels_attack_and_never_moves_hurts_or_revives(self):
         for fps in (30, 60, 120):
             with self.subTest(fps=fps):
                 golem = CrystalGolem(400, 600)
                 golem.attack_cooldown = 0
                 golem.update(.01, (900, 0, 940, 140), (), 1920)
-                for swing, hp in enumerate((53, 41, 29, 17, 5, 0), 1):
+                for swing, hp in enumerate((33, 21, 9, 0), 1):
                     self.assertTrue(golem.check_strike((450, 0, 550, 100), 1, 12, swing))
                     self.assertEqual(golem.hp, hp)
                 self.assertEqual((golem.phase, golem.death_time), ("death", 0))
                 self.assertIsNone(golem.attack_time)
-                self.assertFalse(golem.check_strike((450, 0, 550, 100), 1, 12, 7))
+                self.assertFalse(golem.check_strike((450, 0, 550, 100), 1, 12, 5))
                 golem.begin_emergence()
                 player = Mock()
                 player.get_hitbox.return_value = (480, 0, 520, 140)
@@ -97,15 +99,17 @@ class GolemDeathRenderTests(unittest.TestCase):
             pixels.assert_not_called()
             collapse.assert_not_called()
 
-    def test_actual_combat_sword_hits_leave_golem_in_place_and_render_its_death(self):
+    def test_actual_combat_sword_hits_push_golem_then_render_its_death(self):
         golem = self.room.golems[0]
         position = golem.x, golem.floor_y
-        for _ in range(6):
+        for swing in range(4):
             self.player.recover_at(golem.x - 120, golem.floor_y, 0)
             self.player.swing_id += 1
             self.player.slash = (0, 1, "attack")
-            self.room.update_enemies(self.player, 0)
-            self.assertEqual((golem.x, golem.floor_y), position)
+            self.room.update_enemies(self.player, KNOCKBACK_DURATION if swing == 0 else 0)
+            if swing == 0:
+                self.assertAlmostEqual(golem.x, position[0] + forward_slash_bounds(0, 0, 1)[2])
+            self.assertEqual(golem.floor_y, position[1])
             self.assertGreater(self.player.recoil_remaining, 0)
         self.player.slash = None
         self.assertEqual((golem.hp, golem.phase), (0, "death"))

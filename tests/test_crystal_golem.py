@@ -1,4 +1,4 @@
-"""Check the 65-HP golem through sword damage and the actual combat room."""
+"""Check the crystal golem through sword damage and the actual combat room."""
 
 import gc
 import os
@@ -15,10 +15,12 @@ from pico2d import pico2d as pico
 
 import main
 from crystal_golem import BODY_WIDTH, MAX_HP, CrystalGolem
+from enemy_knockback import KNOCKBACK_DURATION
 from health import CONTACT_DAMAGE, Health
 from hit_impact import IMPACT_DURATION
 from lower_caves import COMBAT_PLATFORMS, COMBAT_TERRAIN, COMBAT_WIDTH, LowerCaves
 from player import STARTING_ATTACK_POWER, Player
+from slash_effect import forward_slash_bounds
 
 
 class CrystalGolemTests(unittest.TestCase):
@@ -43,14 +45,14 @@ class CrystalGolemTests(unittest.TestCase):
         self.assertEqual(golem.direction, -1)
         self.assertLess(golem.x, golem.right)
 
-    def test_six_separate_12_damage_hits_kill_a_65_hp_golem(self):
+    def test_four_separate_12_damage_hits_kill_a_45_hp_golem(self):
         golem = CrystalGolem(700, 900)
-        self.assertEqual(golem.hp, 65)
+        self.assertEqual(golem.hp, 45)
         strike = (760, 10, 840, 80)
-        for swing, expected in enumerate((53, 41, 29, 17, 5, 0), 1):
+        for swing, expected in enumerate((33, 21, 9, 0), 1):
             self.assertTrue(golem.check_strike(strike, 1, STARTING_ATTACK_POWER, swing))
             self.assertEqual(golem.hp, expected)
-        self.assertFalse(golem.check_strike(strike, 1, STARTING_ATTACK_POWER, 7))
+        self.assertFalse(golem.check_strike(strike, 1, STARTING_ATTACK_POWER, 5))
         x = golem.x
         golem.update(5, (), (), 1920)
         self.assertEqual((golem.x, golem.hp), (x, 0))
@@ -62,7 +64,23 @@ class CrystalGolemTests(unittest.TestCase):
         self.assertEqual(golem.hp, MAX_HP)
         self.assertTrue(golem.check_strike((760, 0, 840, 100), 1, 12, 1))
         self.assertFalse(golem.check_strike((760, 0, 840, 100), -1, 12, 1))
-        self.assertEqual(golem.hp, 53)
+        self.assertEqual(golem.hp, 33)
+
+    def test_knockback_matches_slash_reach_and_stops_at_the_platform_edge(self):
+        platform = (400, 0, 1000, 150)
+        reach = forward_slash_bounds(0, 0, 1)[2]
+        for direction in (-1, 1):
+            with self.subTest(direction=direction):
+                golem = CrystalGolem.on_platform(platform)
+                start = golem.x
+                self.assertTrue(golem.check_strike((650, 150, 750, 240), direction, 1, 1))
+                golem.update(KNOCKBACK_DURATION, (), (platform,), 2000)
+                self.assertAlmostEqual(golem.x, start + direction * reach)
+                self.assertTrue(golem.check_strike((golem.x - 20, 150, golem.x + 20, 240), direction, 1, 2))
+                golem.update(KNOCKBACK_DURATION / 2, (), (platform,), 2000)
+                edge = platform[0] + BODY_WIDTH / 2 if direction < 0 else platform[2] - BODY_WIDTH / 2
+                self.assertAlmostEqual(golem.x, edge)
+                self.assertEqual(golem.knockback_remaining, 0)
 
     def test_patrol_stops_at_stone_faces_and_keeps_moving_when_hit(self):
         golem = CrystalGolem(100, 900, direction=1)
@@ -99,13 +117,13 @@ class CrystalGolemRoomTests(unittest.TestCase):
 
     def test_combat_room_damage_recoil_contact_and_dead_enemy_removal(self):
         first, second = self.lower.golems
-        self.assertEqual((first.hp, second.hp), (65, 65))
-        for swing, expected in enumerate((53, 41, 29, 17, 5, 0), 1):
+        self.assertEqual((first.hp, second.hp), (45, 45))
+        for swing, expected in enumerate((33, 21, 9, 0), 1):
             self.assertTrue(self.player.recover_at(first.x - 120, first.floor_y, 0))
             self.player.swing_id = swing
             self.player.slash = (0, 1, "attack")
             self.lower.update_enemies(self.player, 0)
-            self.assertEqual((first.hp, second.hp), (expected, 65))
+            self.assertEqual((first.hp, second.hp), (expected, 45))
             self.assertGreater(self.player.recoil_remaining, 0)
             self.lower.update_enemies(self.player, 0)
             self.assertEqual(first.hp, expected)
@@ -133,10 +151,12 @@ class CrystalGolemRoomTests(unittest.TestCase):
         golem.attack_time = .24
         golem.attack_target = (self.player.x, golem.floor_y)
         self.player.slash = (0, 1, "attack")
+        hit_position = golem.x
         self.lower.update_enemies(self.player, .03)
         impact, = self.lower.hit_impacts
-        self.assertLess(impact.x, golem.x)
-        self.assertGreater(impact.x, golem.x - BODY_WIDTH / 2)
+        self.assertLess(impact.x, hit_position)
+        self.assertGreater(impact.x, hit_position - BODY_WIDTH / 2)
+        self.assertGreater(golem.x, hit_position)
         self.assertAlmostEqual(golem.attack_time, .27)
         self.assertEqual(golem.hp, MAX_HP - STARTING_ATTACK_POWER)
         self.lower.update_enemies(self.player, 0)
@@ -160,7 +180,7 @@ class CrystalGolemRoomTests(unittest.TestCase):
                 self.assertGreaterEqual(golem.x - BODY_WIDTH / 2, platform[0])
                 self.assertLessEqual(golem.x + BODY_WIDTH / 2, platform[2])
 
-    def test_death_restarts_golems_at_65_hp_and_keeps_acquired_relic(self):
+    def test_death_restarts_golems_at_45_hp_and_keeps_acquired_relic(self):
         rooms, healths, frames = [], [], []
         sequence = Mock(active=True, stood_up=True)
         event_frames = count()
@@ -202,7 +222,7 @@ class CrystalGolemRoomTests(unittest.TestCase):
         self.assertIn(0, frames)
         self.assertIn(100, frames)
         self.assertTrue(rooms[-1].has_relic)
-        self.assertEqual(rooms[-1].golems[0].hp, 65)
+        self.assertEqual(rooms[-1].golems[0].hp, 45)
         sequence.reset_mock()
         room_factory.reset_mock()
         rooms.clear()

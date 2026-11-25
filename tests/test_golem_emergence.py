@@ -45,11 +45,11 @@ class GolemEmergenceTests(unittest.TestCase):
         health = Health((130, 0, 0))
         self.assertFalse(golem.check_strike((450, 0, 550, 100), 1, 12, 1))
         self.assertFalse(health.check_contact(player, (golem,), 0))
-        self.assertEqual((golem.hp, health.current), (65, 100))
+        self.assertEqual((golem.hp, health.current), (45, 100))
         golem.update(EMERGE_DURATION, player.get_hitbox(), (), COMBAT_WIDTH)
         self.assertTrue(golem.check_strike((450, 0, 550, 100), 1, 12, 1))
         self.assertTrue(health.check_contact(player, (golem,), 2))
-        self.assertEqual((golem.hp, health.current), (53, 90))
+        self.assertEqual((golem.hp, health.current), (33, 90))
 
     def test_repeated_start_does_not_reset_time_fire_a_queued_attack_or_revive(self):
         golem = CrystalGolem(400, 600)

@@ -3,6 +3,8 @@
 from math import hypot, pi, sin, sqrt
 from pico2d import pico2d as pico
 from death_pixels import COLORS as DEATH_PIXEL_COLORS, draw_blue_pixels
+from enemy_knockback import KNOCKBACK_DURATION, advance_knockback
+from enemy_knockback import KNOCKBACK_SPEED as KNOCKBACK_SPEED
 
 
 BODY_LENGTH = 164
@@ -18,8 +20,6 @@ RIGHTING_TIME = 0.52
 ATTACK_COOLDOWN = 0.65
 POSE_SIZES = ((120, 102), (100, 100), (136, 102), (164, 76))
 HURT_TIME = .28
-KNOCKBACK_SPEED = 400.0
-KNOCKBACK_DURATION = .12
 MAX_HP = 30
 EMERGE_DURATION = 1.6
 DEATH_CURL_DURATION = .64
@@ -87,31 +87,6 @@ class Pillbug:
         self.hurt_remaining = 0.0
         self.knockback_remaining = 0.0
 
-    def _advance_knockback(self, dt, terrain, world_width):
-        """Move the real body away from a hit without crossing walls or ledges."""
-        step = min(dt, self.knockback_remaining)
-        if step <= 0:
-            return
-        distance = KNOCKBACK_SPEED * step * (self.knockback_remaining - step / 2) / KNOCKBACK_DURATION
-        self.knockback_remaining = max(0.0, self.knockback_remaining - step)
-        x, bottom, width, height = self.body_bounds()
-        left, right = x - width / 2, x + width / 2
-        support_left, support_right = self.support_edges or (0, world_width)
-        if self.strike_direction > 0:
-            distance = min(distance, max(0.0, min(world_width, support_right) - right))
-        else:
-            distance = min(distance, max(0.0, left - max(0, support_left)))
-        for x1, y1, x2, y2 in terrain:
-            if bottom >= y2 or bottom + height <= y1:
-                continue
-            if self.strike_direction > 0 and right <= x1:
-                distance = min(distance, x1 - right)
-            elif self.strike_direction < 0 and left >= x2:
-                distance = min(distance, left - x2)
-        self.x += self.strike_direction * distance
-        # A pushed enemy must not snap back to its original patrol interval.
-        self.left, self.right = min(self.left, self.x), max(self.right, self.x)
-
     def _clearance(self, box):
         """Horizontal travel before the rolling circle first touches a solid box."""
         left, bottom, right, top = box
@@ -132,7 +107,14 @@ class Pillbug:
             return
         if self.hurt_remaining > 0:
             paused = min(max(0, dt), self.hurt_remaining)
-            self._advance_knockback(paused, terrain, world_width)
+            if self.knockback_remaining > 0:
+                push, self.knockback_remaining = advance_knockback(
+                    paused, self.knockback_remaining, self.strike_direction, self.body_bounds(),
+                    terrain, world_width, self.support_edges,
+                )
+                if push:
+                    self.x += push
+                    self.left, self.right = min(self.left, self.x), max(self.right, self.x)
             self.hurt_remaining -= paused
             dt -= paused
             if dt <= 0:

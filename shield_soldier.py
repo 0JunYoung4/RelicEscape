@@ -2,11 +2,12 @@
 
 import json
 
+from enemy_knockback import KNOCKBACK_DURATION, advance_knockback
 from player import ASSET_ROOT, Animation
 
 
 BODY_WIDTH, BODY_HEIGHT = 96, 120
-MAX_HP = 45
+MAX_HP = 65
 BASH_DAMAGE = 15
 BASH_REACH = 126
 WALK_SPEED = 54
@@ -23,12 +24,15 @@ def load_pose(version):
 
 
 class ShieldSoldier:
-    def __init__(self, x, floor_y, left, right):
+    def __init__(self, x, floor_y, left, right, *, support_edges=None):
         self.x, self.floor_y = x, floor_y
         self.left, self.right = left, right
         self.direction = 1
         self.hp = MAX_HP
         self.last_swing = None
+        self.knockback_remaining = 0.0
+        self.strike_direction = 1
+        self.support_edges = support_edges
         self.walk_time = 0.0
         self.block_time = None
         self.bash_time = None
@@ -58,7 +62,11 @@ class ShieldSoldier:
             return False
         self.hp = max(0, self.hp - damage)
         if self.hp > 0:
+            self.knockback_remaining = KNOCKBACK_DURATION
+            self.strike_direction = self.direction
             self._turn_around()
+        else:
+            self.knockback_remaining = 0.0
         return True
 
     def _turn_around(self):
@@ -71,6 +79,17 @@ class ShieldSoldier:
     def update(self, dt, player_box, terrain, world_width):
         if self.hp == 0:
             return
+        walk_time = dt
+        if self.knockback_remaining > 0:
+            step = min(dt, self.knockback_remaining)
+            push, self.knockback_remaining = advance_knockback(
+                step, self.knockback_remaining, self.strike_direction, self.body_bounds(),
+                terrain, world_width, self.support_edges,
+            )
+            if push:
+                self.x += push
+                self.left, self.right = min(self.left, self.x), max(self.right, self.x)
+                walk_time -= step
         target_x = (player_box[0] + player_box[2]) / 2 if player_box else self.x
         dx = target_x - self.x
         behind = dx * self.direction < 0
@@ -96,11 +115,11 @@ class ShieldSoldier:
             self.bash_time = 0.0
             self.bash_hit = False
         elif abs(dx) > 78:
-            step = min(WALK_SPEED * dt, abs(dx) - 78)
+            step = min(WALK_SPEED * walk_time, abs(dx) - 78)
             x = max(self.left, min(self.right, self.x + self.direction * step))
             if x != self.x:
                 self.x = x
-                self.walk_time += dt
+                self.walk_time += walk_time
 
     def bash_contact(self, player_box):
         if (self.hp == 0 or self.bash_hit or self.bash_time is None

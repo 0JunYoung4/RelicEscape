@@ -45,9 +45,12 @@ class CrystalAttackTests(unittest.TestCase):
         golem.update(.01, (900, 0, 940, 140), (), 1920)
         self.assertTrue(golem.check_strike((450, 0, 550, 100), 1, 12, 1))
         self.assertEqual(golem.attack_time, 0)
-        self.assertIsInstance(golem.update(ATTACK_RELEASE, (900, 0, 940, 140), (), 1920), CrystalProjectile)
+        shot = golem.update(ATTACK_RELEASE, (900, 0, 940, 140), (), 1920)
+        self.assertIsInstance(shot, CrystalProjectile)
+        self.assertGreater(golem.x, 500)
+        self.assertAlmostEqual(shot.x, golem.x - 20)
         golem.hp = 12
-        self.assertTrue(golem.check_strike((450, 0, 550, 100), 1, 12, 2))
+        self.assertTrue(golem.check_strike((golem.x - 50, 0, golem.x + 50, 100), 1, 12, 2))
         self.assertIsNone(golem.attack_time)
         self.assertIsNone(golem.update(10, (900, 0, 940, 140), (), 1920))
 

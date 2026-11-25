@@ -17,6 +17,8 @@ Last synced: 2026-11-05T03:23:05
 
 - 2026-11-25 B1 은신 v2 `assets/concepts/b1-hermit-crab/claw-counter-shell-reveal-preview-v2.gif`는 맞은 쪽 집게, 반대 집게, 짧은 다리 순으로 몸을 접고 앞쪽 돌판이 얼굴을 덮는 동작을 40포즈로 담았다. 등딱지가 내려앉은 뒤 오른쪽 수정 하나가 드러난다.
 
+- 2026-11-25 수정 골렘 HP45, 방패병 HP65. 공벌레·수정 골렘·방패병의 유효 피격은 기본 베기 사거리(최대 187 월드 단위, 0.20초)만큼 몸체를 밀며 벽과 지지 발판에서 멈춘다. 수정 골렘의 충전·발사 타이밍과 방패병의 정면 방어는 유지한다.
+
 - 2026-11-25 B1 집게 공격에 플레이어 반격과 첫 은신을 이어 붙였다. `assets/concepts/b1-hermit-crab/claw-counter-shell-reveal-preview-v1.gif`에서 소라게가 몸을 접고 등딱지를 앞으로 기울여 오른쪽 푸른 수정 하나를 드러낸다. 은신 모션만 담은 투명 WebP도 저장했다.
 
 - 2026-11-25 B1 바위 소라게가 플레이어 바로 앞까지 접근하고 멈춘 뒤 집게를 높게 들어 0.64초 버티고 수직으로 내려찍는 시안을 제작했다. `assets/concepts/b1-hermit-crab/claw-approach-slam-preview-v1.gif`에 접근·공격과 회피를 연결했다.

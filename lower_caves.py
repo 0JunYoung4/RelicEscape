@@ -118,8 +118,10 @@ class LowerCaves:
         self.has_relic = False
         self.pillbugs = [Pillbug(1120, 1450, 0.0), Pillbug.on_platform(AIR_PLATFORM)]
         left, bottom, right, top = COMBAT_PLATFORMS[1]
-        self.golems = [CrystalGolem.on_platform((left, bottom, COMBAT_CENTER_X, top), direction=1),
-                       CrystalGolem.on_platform((COMBAT_CENTER_X, bottom, right, top))]
+        self.golems = [CrystalGolem.on_platform((left, bottom, COMBAT_CENTER_X, top),
+                                               direction=1, support_edges=(left, right)),
+                       CrystalGolem.on_platform((COMBAT_CENTER_X, bottom, right, top),
+                                               support_edges=(left, right))]
         # Start at opposite ends; each golem patrols its own half of the top platform.
         self.golems[0].x = self.golems[0].left
         self.golems[1].x = self.golems[1].right

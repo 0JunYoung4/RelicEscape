@@ -13,6 +13,7 @@ os.environ.setdefault("SDL_RENDER_DRIVER", "software")
 from pico2d import pico2d as pico
 
 import main
+from enemy_knockback import KNOCKBACK_DURATION
 from health import MAX_HEALTH, SPIKE_DAMAGE, Health
 from lower_caves import LowerCaves
 from lower_route_b import PLAY_TERRAIN, SPAWN, SPIKES, LowerRouteB
@@ -21,6 +22,7 @@ from lower_route_b_layout import (C_APPROACH_LEDGE, C_PASSAGE, PILLBUG_LEDGE, RA
 from player import Player, STANDING_HITBOX_HEIGHT
 from rail import RAIL_TRAVEL_SPEED
 from shield_soldier import REAR_OPENING
+from slash_effect import forward_slash_bounds
 
 
 def keydown(key):
@@ -215,14 +217,15 @@ class LowerRouteBTests(unittest.TestCase):
         x, y, _, _ = shield.body_bounds()
         strike = (x - 60, y + 10, x + 60, y + 100)
         self.assertFalse(shield.check_strike(strike, x + 90, 12, 1))
-        self.assertEqual(shield.hp, 45)
+        self.assertEqual(shield.hp, 65)
+        self.assertEqual(shield.knockback_remaining, 0)
         self.assertIsNotNone(shield.block_time)
         target = (x + 70, y, x + 110, y + 140)
         shield.update(.7, target, PLAY_TERRAIN, WIDTH)
         shield.update(.6, target, PLAY_TERRAIN, WIDTH)
         shield.update(.55, target, PLAY_TERRAIN, WIDTH)
         self.assertFalse(shield.check_strike(strike, x + 90, 12, 2))
-        self.assertEqual(shield.hp, 45)
+        self.assertEqual(shield.hp, 65)
         self.assertIsNotNone(shield.bash_contact(target))
         self.assertIsNone(shield.bash_contact(target))
 
@@ -234,21 +237,25 @@ class LowerRouteBTests(unittest.TestCase):
         room.enter(player, main.Camera(960, WIDTH))
         shield = room.route_b.shield
         shield.bash_time = shield.bash_start
+        start = shield.x
 
         self.assertTrue(player.recover_at(shield.x - 84, shield.floor_y, 0))
         player.slash = (0.04, 1, "attack")
         player.swing_id = 1
         room.update_enemies(player, 1 / 60)
-        self.assertEqual(shield.hp, 33)
+        self.assertEqual(shield.hp, 53)
+        self.assertGreater(shield.x, start)
         self.assertEqual(shield.direction, -1)
         self.assertIsNone(shield.bash_time)
         self.assertEqual(len(room.hit_impacts), 1)
 
         player.swing_id = 2
         room.update_enemies(player, 1 / 60)
-        self.assertEqual(shield.hp, 33)
+        self.assertEqual(shield.hp, 53)
         self.assertIsNotNone(shield.block_time)
         self.assertEqual(len(room.hit_impacts), 1)
+        shield.update(KNOCKBACK_DURATION, None, PLAY_TERRAIN, WIDTH)
+        self.assertAlmostEqual(shield.x, start + forward_slash_bounds(0, 0, 1)[2])
 
     def test_guard_turns_after_an_uninterrupted_rear_opening(self):
         shield = LowerRouteB().shield
@@ -262,4 +269,4 @@ class LowerRouteBTests(unittest.TestCase):
         self.assertEqual(shield.direction, 1)
         shield.update(.03, behind, PLAY_TERRAIN, WIDTH)
         self.assertEqual(shield.direction, -1)
-        self.assertEqual(shield.hp, 45)
+        self.assertEqual(shield.hp, 65)
