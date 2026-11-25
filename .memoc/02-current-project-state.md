@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 집게 공격에 플레이어 반격과 첫 은신을 이어 붙였다. `assets/concepts/b1-hermit-crab/claw-counter-shell-reveal-preview-v1.gif`에서 소라게가 몸을 접고 등딱지를 앞으로 기울여 오른쪽 푸른 수정 하나를 드러낸다. 은신 모션만 담은 투명 WebP도 저장했다.
+
 - 2026-11-25 B1 바위 소라게가 플레이어 바로 앞까지 접근하고 멈춘 뒤 집게를 높게 들어 0.64초 버티고 수직으로 내려찍는 시안을 제작했다. `assets/concepts/b1-hermit-crab/claw-approach-slam-preview-v1.gif`에 접근·공격과 회피를 연결했다.
 
 - 2026-11-25 B1 바위 소라게의 빠른 좌우 이동 시안 `assets/concepts/b1-hermit-crab/boss-scuttle-preview-v2.gif`를 만들었다. 접근 구간을 방향당 2.24초에서 1.12초로 줄였다.
