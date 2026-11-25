@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 조립 외형 v5를 `assets/concepts/b1-hermit-crab/assembled-preview-v5.png`에 정리했다. 기존 760 대비 높이 860 가안, 긴 다리와 높이 든 좌우 집게, 몸통 아래의 납작한 돌판을 적용했다. 단일 바닥에서 집게 밑에 실제 플레이어 스프라이트를 배치했다.
+
 - 2026-11-25 전투방 전용 원경에 부서진 석조 고리·뿌리·왼쪽 틈빛을 그렸고 지면 양끝에 호박빛 열매를 배치했다. `combat_scenery.py`가 원경 시차와 전투방 클립을 처리한다. 원화와 프롬프트는 `assets/terrain/moss-combat-relic-grotto-v1.*`, `moss-combat-seedpods-v1.*`.
 
 - 2026-11-25 B1 단일 바닥의 집게 추적 공격과 은신 후 수정 전진을 각각 `claw-tracking-slam-preview-v1.gif`, `shell-depth-reveal-preview-v1.gif`로 만들었다. 집게 제자리 상승 후 공중 추적, 몸체의 좌우 기어가기, 0.8초 고정 예고와 수직 낙하를 확인했다. 집게 아래만 플레이어가 다니는 이미지 시안이다.
