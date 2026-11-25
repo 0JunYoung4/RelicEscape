@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 가로 확장 시안은 `assets/concepts/b1-hermit-crab/rear-terrace-wide-room-preview-v2.png`에 있다. 높이 1,400과 보스·플레이어 배율을 유지하며 방 너비를 2,400에서 3,200으로 늘렸다. 뒤쪽 암반은 양 벽까지 이어진다.
+
 - 2026-11-25 B1 v6 몸체·은신 자세와 방 양옆 끝까지 이어지는 뒤쪽 암반 시안을 `assets/concepts/b1-hermit-crab/assembled-preview-v6.png`에 저장했다. 다리와 팔을 불규칙한 자연 암석으로 다듬고, 배경 암반 위를 기어가다 앞쪽으로 엎어지는 GIF를 만들었다.
 
 - 2026-11-25 A 첫 레일 뒤에 필수 3초 발판 봉인문을 연결했다. 위층에 `E` 설치 → 아래 발판 접촉 → 3초 안에 `E` 위층 복귀 → 왼쪽 B 연결문 개방. 실패 후 재시도, 사망 시 개방 유지, `R` 초기화. 쌍날 파수꾼과 공명 골렘은 `docs/DESIGN_DISCUSSION.md`에 후속 콘셉트로 보관했다.
