@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 분리 집게의 수직 내려찍기 이미지 시안을 `assets/concepts/b1-hermit-crab/claw-vertical-slam-preview-v1.gif`에 저장했다. 왼쪽 집게가 몸에서 떨어져 올라가고 착지 지점에 황색 표시를 띄운 채 0.8초 머문 뒤 같은 가로 위치로 내려꽂힌다.
+
 - 2026-11-25 B 마지막 레일의 세로 가시벽을 천장 너머로 연장하고 상단을 천장 덩굴과 겹쳐 공중에 끊긴 끝이 보이지 않게 했다. `lower_route_b_layout.py`, `lower_route_b_art.py`.
 
 - 2026-11-25 B1 바위 소라게 v4를 몸체·왼쪽 집게·오른쪽 집게의 투명 PNG로 분리했다. `assets/concepts/b1-hermit-crab/claw-slam-preview-v4.gif`에서 화면 왼쪽 집게를 들어 올려 바닥을 내려찍고 회수한다. `parts-v4.json`에 양쪽 어깨의 조립 좌표를 저장했다. 외형·모션 시안 단계다.
