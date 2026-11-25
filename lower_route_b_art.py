@@ -82,6 +82,8 @@ def draw_spike_bank(spikes, camera, left, right, tip):
 class LowerRouteBArt:
     def __init__(self):
         self.background = pico.load_image(str(ASSET_ROOT / "concepts/map1-lower-route-b-v2-background.png"))
+        if pico.SDL_SetTextureScaleMode(self.background.texture, pico.SDL_ScaleModeLinear) != 0:
+            raise RuntimeError(pico.SDL_GetError())
         self.wall = pico.load_image(str(ASSET_ROOT / "terrain/green-cavern-wall-v1.png"))
         self.marker = pico.load_image(str(STRUCTURES / "lower-cave-safe-waymarker-v1.png"))
         self.rubble = pico.load_image(str(STRUCTURES / "lower-cave-landing-rubble-v1.png"))
@@ -98,13 +100,16 @@ class LowerRouteBArt:
 
     def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0]):
         panorama_width = WIDTH - passage_left
+        panorama_height = TOP - BACKGROUND_BOTTOM
         if camera.y < BACKGROUND_BOTTOM:
-            # The flipped lower section meets the existing panorama at the same source edge.
-            crop = (0, round(self.background.h * .88), self.background.w, self.background.h)
+            # Extend from the same edge at the same vertical texel density.
+            lower_height = BACKGROUND_BOTTOM - BOTTOM
+            source_height = round(self.background.h * lower_height / panorama_height)
+            crop = (0, self.background.h - source_height, self.background.w, self.background.h)
             draw_structure(self.background, crop, camera, (passage_left + WIDTH) / 2, BOTTOM,
-                           panorama_width, BACKGROUND_BOTTOM - BOTTOM, flip="v")
+                           panorama_width, lower_height, flip="v")
         self.background.draw_to_origin(*camera.world_to_screen(passage_left, BACKGROUND_BOTTOM),
-                                       panorama_width * camera.zoom, (TOP - BACKGROUND_BOTTOM) * camera.zoom)
+                                       panorama_width * camera.zoom, panorama_height * camera.zoom)
         wall = self.wall
         left, bottom, right, top = RIGHT_WALL
         draw_rock_wall(wall, camera, ((bottom - 16, left + 60, right - 58),
