@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 둥지 시안을 `assets/concepts/b1-hermit-crab/nest-room-v1/`에 제작했다. 1,680 × 790 캔버스를 공유하는 원경·발판·전경 세 PNG와 방 전체 및 960 × 540 카메라 합성본을 저장했다. 원경에는 바닥과 뒤쪽 암반을 그리지 않았다.
+
 - 2026-11-25 B1 가로 확장 시안은 `assets/concepts/b1-hermit-crab/rear-terrace-wide-room-preview-v2.png`에 있다. 높이 1,400과 보스·플레이어 배율을 유지하며 방 너비를 2,400에서 3,200으로 늘렸다. 뒤쪽 암반은 양 벽까지 이어진다.
 
 - 2026-11-25 B1 v6 몸체·은신 자세와 방 양옆 끝까지 이어지는 뒤쪽 암반 시안을 `assets/concepts/b1-hermit-crab/assembled-preview-v6.png`에 저장했다. 다리와 팔을 불규칙한 자연 암석으로 다듬고, 배경 암반 위를 기어가다 앞쪽으로 엎어지는 GIF를 만들었다.
