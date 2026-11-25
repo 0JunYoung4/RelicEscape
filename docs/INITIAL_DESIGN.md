@@ -176,7 +176,7 @@
 
 레일의 첫 학습은 맵 1 B1 앞에서 유물을 장착하고 보내는 동작부터 시작한다. 석궁의 첫 학습과 레일을 다른 장치와 결합하는 퍼즐은 맵 2에서 다룬다.
 
-플레이어가 오른쪽 통로를 완전히 지나 보스방에 들어오면, 뒤쪽에 바위 봉인문이 내려와 통로를 막는다. [진입 후 봉쇄 시안](../assets/concepts/b1-hermit-crab/right-passage-v1/right-passage-lock-preview.gif)
+오른쪽 통로와 방 입구에서는 탐험 카메라로 플레이어를 가깝게 따라간다. 방 중앙의 전투 시작 지점에 도착하면 카메라가 넓어지고, 같은 시점에 바위 봉인문이 내려와 뒤쪽 통로를 막는다. [진입과 전투 시작 시안](../assets/concepts/b1-hermit-crab/right-passage-v1/camera-entry-fight-preview.gif)
 
 #### B1 보스의 점프 낙하 공격
 

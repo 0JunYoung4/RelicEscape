@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1은 오른쪽 통로에서 탐험 카메라로 들어오고, 중앙에서 전투가 시작되는 순간 카메라를 넓히면서 뒤쪽 석문을 닫는다. `assets/concepts/b1-hermit-crab/right-passage-v1/camera-entry-fight-preview.gif`에 최신 타이밍을 저장했다.
+
 - 2026-11-25 B1은 플레이어가 오른쪽 진입 통로를 빠져나온 뒤 석문이 내려와 길을 막는다. `assets/concepts/b1-hermit-crab/right-passage-v1/right-passage-lock-preview.gif`에 진입·봉쇄 연출을 저장했다.
 
 - 2026-11-25 B1 초기 배치도에 있고 둥지 v2 지형 레이어에서 빠졌던 C 방향 진입 통로를 `assets/concepts/b1-hermit-crab/right-passage-v1/` 시안에 복원했다. 새 낮은 천장 아래로 바닥을 잇고, 전경은 검은 그림자로 낮추며 통행 높이의 알파를 비웠다.
