@@ -1,0 +1,18 @@
+{
+  "image": "ceiling-boulder-shatter-sheet.png",
+  "frame_size": [
+    664,
+    504
+  ],
+  "columns": 6,
+  "frame_count": 24,
+  "fps": 25,
+  "loop": false,
+  "impact_anchor": [
+    332,
+    264
+  ],
+  "anchor_coordinates": "frame top-left, pixel coordinates",
+  "source": "ceiling-boulder.png",
+  "frame_order": "row-major"
+}

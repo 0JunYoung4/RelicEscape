@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 B1 중앙 암석의 파쇄 스프라이트 시트와 등딱지 충돌 GIF를 `assets/concepts/b1-hermit-crab/ceiling-rock-v2/`에 저장했다. 기존 암석 균열을 따라 여덟 조각이 갈라지고 자갈과 먼지가 퍼지는 24프레임 시안이다.
+
 - 2026-11-26 B1 시작 연출 시안 `python -m tools.preview_b1_intro`에서 등딱지 옆 `E` 조사로 화면 진동과 천장 먼지·자갈을 시작한다. `assets/concepts/b1-hermit-crab/right-passage-v1/shell-investigation-preview.gif`로 동작을 기록했다.
 
 - 2026-11-25 B1 첫 대면에서 소라게가 몸을 숨긴 등딱지만 보이게 했다. `assets/concepts/b1-hermit-crab/right-passage-v1/camera-entry-fight-preview-v2.gif`에 해당 자세와 중앙 카메라 전환·석문 하강을 합성했다.
