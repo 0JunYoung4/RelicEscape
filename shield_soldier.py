@@ -11,6 +11,8 @@ MAX_HP = 65
 BASH_DAMAGE = 15
 BASH_REACH = 126
 WALK_SPEED = 54
+KNOCKBACK_DISTANCE = 45.0
+KNOCKBACK_SPEED = 2 * KNOCKBACK_DISTANCE / KNOCKBACK_DURATION
 REAR_OPENING = 1.5
 TURN_COOLDOWN = .55
 
@@ -84,7 +86,7 @@ class ShieldSoldier:
             step = min(dt, self.knockback_remaining)
             push, self.knockback_remaining = advance_knockback(
                 step, self.knockback_remaining, self.strike_direction, self.body_bounds(),
-                terrain, world_width, self.support_edges,
+                terrain, world_width, self.support_edges, speed=KNOCKBACK_SPEED,
             )
             if push:
                 self.x += push

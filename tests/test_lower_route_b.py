@@ -21,8 +21,7 @@ from lower_route_b_layout import (C_APPROACH_LEDGE, C_PASSAGE, PILLBUG_LEDGE, RA
                                   SHIELD_LEDGE, THORN_WALLS, WIDTH)
 from player import Player, STANDING_HITBOX_HEIGHT
 from rail import RAIL_TRAVEL_SPEED
-from shield_soldier import REAR_OPENING
-from slash_effect import forward_slash_bounds
+from shield_soldier import KNOCKBACK_DISTANCE, REAR_OPENING
 
 
 def keydown(key):
@@ -255,7 +254,7 @@ class LowerRouteBTests(unittest.TestCase):
         self.assertIsNotNone(shield.block_time)
         self.assertEqual(len(room.hit_impacts), 1)
         shield.update(KNOCKBACK_DURATION, None, PLAY_TERRAIN, WIDTH)
-        self.assertAlmostEqual(shield.x, start + forward_slash_bounds(0, 0, 1)[2])
+        self.assertAlmostEqual(shield.x, start + KNOCKBACK_DISTANCE)
 
     def test_guard_turns_after_an_uninterrupted_rear_opening(self):
         shield = LowerRouteB().shield
