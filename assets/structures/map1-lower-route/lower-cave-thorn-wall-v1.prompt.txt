@@ -1,0 +1,15 @@
+제작 도구: 내장 image_gen, 투명 PNG
+용도: 맵 1 하단 B 레일 사이를 막는 세로 가시벽. 평평한 끝을 바닥에 붙이거나 180도 회전해 천장에 붙인다.
+프로젝트 입력: lower-cave-thorn-bed-v1.png (가시의 형태·색), lower-cave-walljump-pillar-v1.png (석재·이끼).
+참고 ID: HK-QG-04 (좁은 수직 공간에서 가시를 명확히 읽을 수 있는 실루엣), SS-MG-06 (어두운 석재와 밝은 가시 끝의 대비).
+크기: 724 × 2172 RGBA. 알파 128 이상 외곽 (왼쪽, 위, 오른쪽, 아래): (106, 14, 605, 2158).
+배치 구상: 첫 레일은 바닥과 천장 가시벽 사이 통과. 두 번째 레일은 바닥 가시층 아래 우회 및 숨겨진 유물. 실제 배치와 충돌은 구현 단계에서 결정.
+
+=== Exact generation prompt ===
+Use case: stylized-concept
+Asset type: one transparent 2D side-scroller environment sprite for RelicEscape, a mossy cave ruins game.
+Create the vertical counterpart of our existing thorn bed. The thorn-bed input is a design and palette reference for its curved pointed olive-brown thorn blades, pale ivory-yellow cutting edges, bark roots, and dark slate. The wall-pillar input is a reference for front-facing worn blue-gray stone and small olive moss clusters. Create a distinct original obstacle.
+Subject: one very tall narrow, solid, nearly straight vertical wall of cracked charcoal-blue standing stones with woody roots closely gripping both edges. Continuous, clearly dangerous rows of separated curved blade thorns protrude outward LEFT and RIGHT along almost its entire height. Around eight substantial, legible thorns per side, varied in size and lean, leaving clean transparent notches between the tips. A compact cluster of three upward-pointing sharp thorns crowns the exposed tip. The opposite, BOTTOM end is a short, flat stone-and-root insertion edge, approximately the width of the main shaft, so the same sprite can be mounted upside down from a ceiling. No broad base, no foothold or shelf, no gaps through the solid core.
+Style: orthographic game side view, polished hand-painted 2D cave art with clear dark ink contours, broad slate facets, muted brown root knots, sparse rounded moss, and ivory-olive thorn tips that remain readable at gameplay scale. No isometric perspective. Keep most contrast at the danger silhouette, with understated face detail. Use soft cool diffuse lighting with highlights on outward edges, avoiding strong top- or bottom-specific illumination so the sprite reads when rotated 180 degrees.
+Composition: centered single complete upright cutout in a portrait image. The silhouette itself is tall and narrow, approximately four times as high as its maximum width including the thorns, with clear transparent space all around and all tips fully in frame.
+Output: real transparent alpha outside the physical silhouette and between protruding thorns. No haze, glows, particles, cast shadows, floor, scene, rails, characters, UI, text, or watermark.

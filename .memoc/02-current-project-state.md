@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B 개편 구상. 첫 레일은 바닥·천장 가시벽 사이를 통과하고, 두 번째 레일은 가시층 아래로 돌아 숨겨진 유물 발판에 선택 정차한다. 양방향 가시벽 PNG `assets/structures/map1-lower-route/lower-cave-thorn-wall-v1.png` 제작. 게임 배치·충돌은 미구현.
+
 - 2026-11-25 B1 보스방 기획 v2를 `docs/map1-b1-boss-room-blockout-v2.png`에 정리했다. C 왼쪽 통로, 좌우 레일과 상단 발판, 소라게 집게 2곳과 은신 때 하나씩 드러나는 푸른 수정 2곳을 배치했다. 두 은신 구간과 게임 적용 범위는 기획 단계다.
 
 - 2026-11-25 유물 레일 곡선은 직선 단면으로 만든 반경 72·96·216 스프라이트를 사용한다. `python -m tools.bake_rail_bends`로 아틀라스를 재생성한다. `tests/test_relic.py`에서 본편 A·B와 장치 시험룸의 발광선 연결을 검사한다.
