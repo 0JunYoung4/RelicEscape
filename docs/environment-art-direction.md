@@ -1,5 +1,7 @@
 # 이끼 동굴 구간의 미술 방향
 
+새 맵과 기존 구역의 미술 수정은 [맵 장식 23종과 레이어 제작·렌더링 기준](reference-production-guide.md#맵-미술-제작과-렌더링-기준)을 따른다.
+
 ## 전투방 하강 입구
 
 열린 덮개 아래에 보이던 사각형과 가로 이음을 없애기 위해, 불규칙한 돌출 암벽과 뿌리, 먼 청록 배경을 한 장으로 연결한 [하강 이미지 v2](../assets/terrain/moss-combat-descent-shaft-v2.png)를 사용한다. [HK-GP18](references/hollow-knight-silksong/index.html#HK-GP18)의 이끼 가장자리와 검은 암반, [HK-GP22](references/hollow-knight-silksong/index.html#HK-GP22)의 비대칭 돌출부와 뒤쪽 깊이를 참고해 내장 image_gen으로 만들었다. [생성 프롬프트](../assets/terrain/moss-combat-descent-shaft-v2.prompt.txt).

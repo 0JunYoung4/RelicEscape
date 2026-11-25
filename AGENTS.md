@@ -28,6 +28,11 @@
 - For project image generation, consult `docs/reference-production-guide.md` and filter the reference catalog at `docs/references/hollow-knight-silksong/index.html` or with `query_references.py` for the relevant room, material, lighting, or silhouette. Open selected images before writing the prompt.
 - Use the selected references for composition, silhouette, materials, depth, and lighting. Build the artwork around RelicEscape's own designs and approved asset sources. Record the reference IDs and the visual decisions they informed in the asset's prompt file or metadata.
 
+## Map art and rendering
+
+- Reuse suitable sprites from the [23-piece map decoration set](assets/terrain/moss-grotto-floor-decor/README.md) when building or revising map areas. Match new map art to its crisp dark contours, deep teal shadows, rounded shapes, and restrained moss-green highlights. Vary cluster size, spacing, and silhouette across each area.
+- Follow the [layer production and rendering rules](docs/reference-production-guide.md#맵-미술-제작과-렌더링-기준). Create and preview the far background, floor, ceiling, walls when applicable, world decorations, and near foreground as independently adjustable assets. Render the far background behind the terrain and actors, and near foreground silhouettes in front of them at the edges.
+
 ## Presentation and planning deliverables
 
 - The user designated `발표&기획서/` as the location for future presentation and planning PPT files. Create and edit PPT deliverables there, using an appropriate presentation subfolder.

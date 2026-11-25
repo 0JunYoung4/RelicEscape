@@ -2,6 +2,8 @@
 
 This is the Claude Code entry file for the project.
 
+Follow the map art and rendering rules in [AGENTS.md](AGENTS.md#map-art-and-rendering).
+
 <!-- memoc:managed:start -->
 ## Session Start
 - [ ] Read `.memoc/session-summary.md`
