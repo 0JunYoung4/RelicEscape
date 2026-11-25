@@ -58,8 +58,10 @@ class CombatSceneryTests(unittest.TestCase):
                                       COMBAT_CEILING_Y)
         after = self.pixels()
         self.assertNotEqual(before, after)
-        # World y<0 is below screen row 432 with this camera.
-        self.assertEqual(before[433 * 960 * 4:], after[433 * 960 * 4:])
+        # The corner foreground may extend below the floor, but the shaft stays clear.
+        for row in range(433, 540):
+            start, stop = (row * 960 + 400) * 4, (row * 960 + 560) * 4
+            self.assertEqual(before[start:stop], after[start:stop])
         self.camera.y = -1400
         before = self.pixels()
         self.scenery.draw_background(self.camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL,

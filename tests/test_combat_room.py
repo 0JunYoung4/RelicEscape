@@ -16,7 +16,7 @@ from pico2d import pico2d as pico
 
 import main
 from lower_caves import COMBAT_CEILING_Y, COMBAT_LEFT_WALL, COMBAT_PLATFORMS, COMBAT_RIGHT_WALL, COMBAT_TERRAIN, COMBAT_WIDTH, GALLERY_WIDTH, LowerCaves
-from player import Player
+from player import Player, STANDING_HITBOX_HEIGHT, STANDING_HITBOX_WIDTH
 
 
 class CombatRoomTests(unittest.TestCase):
@@ -92,22 +92,33 @@ class CombatRoomTests(unittest.TestCase):
         self.lower.follow_camera(self.player, self.camera)
         self.assertEqual(self.camera.y, base)
 
-    def test_both_straight_walls_stop_the_body_at_each_height_and_allow_wall_jumps(self):
+    def test_both_rock_profiles_stop_the_body_and_allow_wall_jumps(self):
         self.lower.room = "combat"
         self.lower.enter(self.player, self.camera)
-        for direction, wall in ((-1, COMBAT_LEFT_WALL), (1, COMBAT_RIGHT_WALL)):
+        left_faces, right_faces = set(), set()
+        for direction in (-1, 1):
             for height in (500, 700, 900):
                 with self.subTest(direction=direction, height=height):
-                    self.assertTrue(self.player.recover_at(wall - direction * 80, height, 0))
-                    self.player.update(direction, False, .3)
+                    body_top = height + STANDING_HITBOX_HEIGHT
+                    bands = [rect for rect in COMBAT_TERRAIN if rect[1] < body_top and rect[3] > height]
+                    if direction < 0:
+                        wall = max(x2 for x1, _, x2, _ in bands if x1 == 0)
+                        left_faces.add(wall)
+                    else:
+                        wall = min(x1 for x1, _, x2, _ in bands if x2 == COMBAT_WIDTH)
+                        right_faces.add(wall)
+                    offset = STANDING_HITBOX_WIDTH / 2 + 2
+                    self.assertTrue(self.player.recover_at(wall - direction * offset, height, 0))
+                    self.player.update(direction, False, .01)
                     box = self.player.get_hitbox()
                     self.assertAlmostEqual(box[0] if direction < 0 else box[2], wall)
                     self.assertFalse(self.player._overlaps_terrain())
-            self.assertTrue(self.player.recover_at(wall - direction * 20, 600, 0))
-            start = self.player.x
-            self.player.update(direction, False, .03, jump_pressed=True)
-            self.assertGreater((self.player.x - start) * -direction, 0)
-            self.assertGreater(self.player.vertical_speed, 0)
+                    start = self.player.x
+                    self.player.update(direction, False, .03, jump_pressed=True)
+                    self.assertGreater((self.player.x - start) * -direction, 0)
+                    self.assertGreater(self.player.vertical_speed, 0)
+        self.assertGreater(len(left_faces), 1)
+        self.assertGreater(len(right_faces), 1)
 
     def test_square_doorway_can_be_crossed_standing_in_both_directions(self):
         self.lower.room = "combat"

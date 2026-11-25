@@ -157,17 +157,19 @@ class CombatClearTests(unittest.TestCase):
         self.assertLess(lowest_combat_camera, original_camera_y)
         self.assertFalse(self.player._overlaps_terrain())
 
-    def test_sliding_cover_still_supports_right_side_while_left_side_is_open(self):
+    def test_crumbling_floor_removes_both_sides_of_the_cover_together(self):
         self.defeat_enemies()
         self.room.update_enemies(self.player, COMBAT_EXIT_DELAY + COMBAT_EXIT_DURATION / 2)
         terrain = self.room.combat_terrain()
-        # Freeze the half-open cover to check each side's support independently.
-        for x, falling in ((COMBAT_EXIT_LEFT + 50, True), (COMBAT_EXIT_RIGHT - 50, False)):
+        self.assertFalse(self.room.exit_open)
+        self.assertNotIn(COMBAT_TERRAIN[-1], terrain)
+        # Check both sides before the falling debris finishes animating.
+        for x in (COMBAT_EXIT_LEFT + 50, COMBAT_EXIT_RIGHT - 50):
             self.player.terrain = terrain
             self.player.recover_at(x, 0, 0)
             for _ in range(12):
                 self.player.update(0, False, 1 / 60)
-            self.assertEqual(self.player.y < 0, falling)
+            self.assertLess(self.player.y, 0)
 
     def test_clear_persists_on_room_return_but_fresh_encounter_is_closed(self):
         self.defeat_enemies()
@@ -183,7 +185,7 @@ class CombatClearTests(unittest.TestCase):
         self.assertEqual(fresh.exit_seam_light, 0)
         self.assertEqual(sum(enemy.hp > 0 for enemy in (*fresh.golems, *fresh.combat_pillbugs)), 4)
 
-    def test_fixed_socket_ledges_remain_after_the_thin_lid_retracts(self):
+    def test_fixed_shaft_ledges_remain_after_the_floor_collapses(self):
         self.defeat_enemies()
         self.room.update_enemies(self.player, COMBAT_EXIT_DELAY + COMBAT_EXIT_DURATION)
         for x in (COMBAT_EXIT_LEFT + 20, COMBAT_EXIT_RIGHT - 20):

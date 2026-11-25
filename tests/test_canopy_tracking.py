@@ -73,7 +73,7 @@ class CanopyTrackingTests(unittest.TestCase):
         for room in ("gallery", "combat"):
             with self.subTest(room=room):
                 self.room.room = room
-                self.camera.x, self.camera.y = 2040, 100
+                self.camera.x, self.camera.y = (0 if room == "combat" else 2040), 100
                 self.assert_pan_matches(32, 40)
 
     def test_ceiling_above_view_does_not_add_screen_edge_vines(self):
@@ -81,11 +81,14 @@ class CanopyTrackingTests(unittest.TestCase):
             with self.subTest(room=room):
                 self.room.room = room
                 self.camera.y = -1000
+                if room == "combat":
+                    self.camera.x, self.camera.y, self.camera.zoom = 480, 320, 1
                 pixels = self.render_foreground()
                 self.assertEqual(pixels, bytes((61, 91, 111, 255)) * (960 * 540))
 
     def test_crossing_former_screen_threshold_does_not_snap_canopy(self):
         self.room.room = "combat"
+        self.camera.x = 0
         self.camera.y = COMBAT_CEILING_Y - 540 * 1.2 / self.camera.zoom - 2
         self.assert_pan_matches(0, 2)
 

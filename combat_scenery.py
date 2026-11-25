@@ -1,8 +1,9 @@
-"""Combat-only depth, soft background light, and world-anchored root silhouettes."""
+"""Layered moss chamber art and the post-combat floor collapse."""
 
+import json
 from contextlib import contextmanager
 from ctypes import byref, c_int
-from math import ceil, cos, floor, sin, tau
+from math import ceil, cos, floor, radians, sin, tau
 
 from pico2d import pico2d as pico
 
@@ -10,22 +11,46 @@ from player import ASSET_ROOT
 
 
 COMBAT_BACKGROUND_TINT = (120, 145, 178)
+COMBAT_ART_PATH = ASSET_ROOT / "terrain" / "combat-room-v2"
+COMBAT_ART = json.loads((COMBAT_ART_PATH / "manifest.json").read_text(encoding="utf-8"))
+FLOOR_DETAILS = (
+    ("grass-rounded-tuft", 335, 104), ("weathered-marker-fragment", 410, 88),
+    ("bead-moss-patch", 480, 96), ("grass-small-sprigs", 705, 43),
+    ("split-moss-cushion", 800, 79), ("grass-small-sprigs", 1190, 44),
+    ("mossy-ring-shard", 1510, 135), ("grass-soft-sedge", 1570, 126),
+    ("grass-rounded-tuft", 1662, 88),
+)
+FALLING_ROCKS = ((.10, .05, 19, -26), (.29, .02, -8, 34), (.48, 0, -24, -21),
+                 (.68, .035, 16, 25), (.89, .06, 26, -32))
 
 
 class CombatScenery:
     def __init__(self, width, height):
         self.width, self.height = width, height
+        names = ("background", "foreground", "gate", "shaft", "vine-joint", "vine-wall", "vine-ceiling",
+                 *COMBAT_ART["terrain_origins"], *(entry[0] for entry in COMBAT_ART["platform_surfaces"]))
+        self.images = {name: pico.load_image(str(COMBAT_ART_PATH / f"{name}.png")) for name in names}
+        self.room_width = self.images["floor"].w
+        for image in self.images.values():
+            pico.SDL_SetTextureScaleMode(image.texture, pico.SDL_ScaleModeLinear)
         terrain = ASSET_ROOT / "terrain"
-        self.grotto = pico.load_image(str(terrain / "moss-combat-relic-grotto-v1.png"))
         self.seedpods = pico.load_image(str(terrain / "moss-combat-seedpods-v1.png"))
-        self.roots = pico.load_image(str(terrain / "green-combat-foreground-roots-v1.png"))
-        pico.SDL_SetTextureColorMod(self.roots.texture, 99, 123, 143)
-        pico.SDL_SetTextureAlphaMod(self.seedpods.texture, 216)
+        pico.SDL_SetTextureAlphaMod(self.seedpods.texture, 205)
+        self.floor_details = {}
+        required = {name + ".png" for name, _, _ in FLOOR_DETAILS}
+        for folder in ("moss-grotto-floor-decor", "moss-grotto-foliage"):
+            root = terrain / folder
+            manifest = json.loads((root / "placement.json").read_text(encoding="utf-8"))
+            for entry in manifest["assets"]:
+                if entry["file"] in required:
+                    image = pico.load_image(str(root / entry["file"]))
+                    pico.SDL_SetTextureColorMod(image.texture, 126, 166, 154)
+                    self.floor_details[entry["file"][:-4]] = (image, entry)
 
     @contextmanager
-    def room_clip(self, camera, left, right, ceiling, *, margin=0):
-        """Never reveal the lower shaft, and respect a caller's existing SDL clip."""
-        x1, y1 = camera.world_to_screen(left - margin, 0)
+    def room_clip(self, camera, left, right, ceiling, *, margin=0, bottom=0):
+        """Clip art to the room and preserve a caller's existing SDL clip."""
+        x1, y1 = camera.world_to_screen(left - margin, bottom)
         x2, y2 = camera.world_to_screen(right + margin, ceiling)
         x1, x2 = max(0, floor(x1)), min(self.width, ceil(x2))
         y1, y2 = max(0, floor(self.height - y2)), min(self.height, ceil(self.height - y1))
@@ -92,36 +117,130 @@ class CombatScenery:
                       for alpha in (0, 185, 245, 185, 245, 0)]
             self.geometry(camera, points, colors, (0, 3, 1, 1, 3, 2, 2, 3, 4, 2, 4, 5))
 
-    def draw_background(self, camera, left, right, ceiling):
-        with self.room_clip(camera, left - 360, right + 360, ceiling) as visible:
+    def draw_background(self, camera, left, right, ceiling, *, broken=False):
+        bottom = -36 if broken else 0
+        with self.room_clip(camera, 0, self.room_width - 12, ceiling + 30, bottom=bottom) as visible:
             if not visible:
                 return
-            width = (right - left) * 1.46
-            height = width * self.grotto.h / self.grotto.w
-            # Overscan lets the distant roots shift more slowly than the floor and walls.
+            width = self.room_width * 1.14
             x = (left + right - width) / 2 + camera.x * .10
-            y = -200 + camera.y * .12
-            self.grotto.draw_to_origin(*camera.world_to_screen(x, y),
-                                      width * camera.zoom, height * camera.zoom)
+            self.draw_sprite("background", camera, x, -80 + camera.y * .10, width, ceiling + 176)
+
+    def draw_sprite(self, name, camera, x, bottom, width=None, height=None):
+        image = self.images[name]
+        width = image.w if width is None else width
+        height = width * image.h / image.w if height is None else height
+        image.draw_to_origin(*camera.world_to_screen(x, bottom), width * camera.zoom, height * camera.zoom)
+
+    def draw_terrain(self, camera, platforms, exit_left, exit_right, *, broken):
+        floor = self.images["floor"]
+        _, bottom = COMBAT_ART["terrain_origins"]["floor"]
+        sections = ((0, round(exit_left)), (round(exit_right), floor.w)) if broken else ((0, floor.w),)
+        for x0, x1 in sections:
+            floor.clip_draw_to_origin(x0, 0, x1 - x0, floor.h, *camera.world_to_screen(x0, bottom),
+                                      (x1 - x0) * camera.zoom, floor.h * camera.zoom)
+        for index, ((left, base, right, top), (name, lip, rock_base)) in enumerate(
+                zip(platforms, COMBAT_ART["platform_surfaces"])):
+            image = self.images[name]
+            scale = (top - base) / (rock_base - lip)
+            bottom = top - (image.h - lip) * scale
+            if index == 2:
+                # Seat the wall end behind the cave outline, beyond the playable lip.
+                outer = round(image.w * .14)
+                start = lip + 9
+                image.clip_draw_to_origin(image.w - outer, 0, outer, image.h - start,
+                                          *camera.world_to_screen(right - 6, bottom),
+                                          72 * camera.zoom, (image.h - start) * scale * camera.zoom)
+            self.draw_sprite(name, camera, left, bottom, right - left, image.h * scale)
+        for name in ("left-wall", "right-wall", "ceiling"):
+            self.draw_sprite(name, camera, *COMBAT_ART["terrain_origins"][name])
+        # The join covers the wall end while leaving the exposed jump edge clear.
+        self.draw_sprite("vine-joint", camera, 244, 151, 126, 196)
+        self.draw_sprite("vine-wall", camera, 1670, 489, 91, 204)
+
+    def draw_gate(self, camera, bounds, progress):
+        image = self.images["gate"]
+        left, bottom, right, top = bounds
+        visible = round(image.h * progress)
+        if visible:
+            image.clip_draw_to_origin(0, image.h - visible, image.w, visible,
+                                      *camera.world_to_screen(left, bottom), (right - left) * camera.zoom,
+                                      (top - bottom) * visible / image.h * camera.zoom)
 
     def draw_floor_plants(self, camera, left, right, ceiling):
-        with self.room_clip(camera, left, right, ceiling) as visible:
+        with self.room_clip(camera, left - 20, right, ceiling) as visible:
             if not visible:
                 return
-            for x, width, flip in ((left + 132, 260, ""), (right - 122, 214, "h")):
-                height = width * self.seedpods.h / self.seedpods.w
-                self.seedpods.composite_draw(0, flip, *camera.world_to_screen(x, height / 2 - 11),
-                                             width * camera.zoom, height * camera.zoom)
+            width = 164
+            height = width * self.seedpods.h / self.seedpods.w
+            self.seedpods.draw_to_origin(*camera.world_to_screen(left - 14, -8),
+                                         width * camera.zoom, height * camera.zoom)
+            for name, x, width in FLOOR_DETAILS:
+                image, entry = self.floor_details[name]
+                x0, y0, x1, y1 = entry["visible_bounds"]
+                anchor_x, anchor_y = entry["pivot_px"]
+                scale = width / (x1 - x0)
+                origin = camera.world_to_screen(x + (x0 - anchor_x) * scale, (anchor_y - y1) * scale - 4)
+                image.clip_draw_to_origin(x0, image.h - y1, x1 - x0, y1 - y0, *origin,
+                                          width * camera.zoom, (y1 - y0) * scale * camera.zoom)
 
     def draw_foreground(self, camera, left, right, ceiling):
-        with self.room_clip(camera, left, right, ceiling, margin=64) as visible:
-            if not visible:
-                return
-            # Both origins stay attached to the world ceiling at every camera height.
-            for edge, top, height, flip in ((left - 68, ceiling + 60, 490, ""),
-                                            (right + 54, ceiling + 28, 410, "h")):
-                width = height * self.roots.w / self.roots.h
-                x = edge + width / 2 if not flip else edge - width / 2
-                y = top - height / 2
-                self.roots.composite_draw(0, flip, *camera.world_to_screen(x, y),
-                                          width * camera.zoom, height * camera.zoom)
+        with self.room_clip(camera, 0, self.room_width, ceiling + 45, margin=64) as visible:
+            if visible:
+                self.draw_sprite("vine-ceiling", camera, left + 153, ceiling - 112, 272, 144)
+                self.draw_sprite("vine-ceiling", camera, right - 355, ceiling - 94, 252, 128)
+        if camera.y + self.height / camera.zoom >= 0:
+            self.draw_sprite("foreground", camera, 0, -318, self.room_width, 350)
+
+    def draw_shaft(self, camera, exit_left, visibility):
+        image = self.images["shaft"]
+        x0 = exit_left - COMBAT_ART["shaft_mouth_offset"]
+        # Blend the sheer sides into the solid banks and keep the depth unreadable at range.
+        columns = ((.17, 0), (.29, 255), (.306, 255), (.692, 255), (.71, 255), (.83, 0))
+        rows = ((0, max(.68, visibility)), (.015, max(.62, visibility)),
+                (.034, max(.48, visibility)), (.16, visibility), (.82, visibility), (1, 0))
+        vertices, faces = [], []
+        stride = len(columns)
+        for row, (v, light) in enumerate(rows):
+            for col, (u, opacity) in enumerate(columns):
+                world_x, world_y = x0 + u * image.w, -v * image.h
+                x, y = camera.world_to_screen(world_x, world_y)
+                tint = tuple(round(channel * light) for channel in (220, 235, 239))
+                if col in (2, 3) and v <= .015:
+                    opacity = 0
+                vertices.append(pico.SDL_Vertex((x, self.height - y), (*tint, opacity), (u, v)))
+                if row and col:
+                    i = row * stride + col
+                    faces.extend((i - stride - 1, i - stride, i - 1, i - stride, i, i - 1))
+        points = (pico.SDL_Vertex * len(vertices))(*vertices)
+        indices = (c_int * len(faces))(*faces)
+        pico.SDL_RenderGeometry(pico.renderer, image.texture, points, len(vertices), indices, len(faces))
+
+    def draw_collapse(self, camera, left, right, age):
+        span = right - left
+        piece_width = span / len(FALLING_ROCKS)
+        with self.alpha_geometry():
+            for fraction, delay, drift, spin in FALLING_ROCKS:
+                t = max(0.0, age - delay)
+                x = left + fraction * span + drift * t
+                y = -12 - 82 * t - 540 * t * t
+                angle = radians(spin * t * 5)
+                c, s = cos(angle), sin(angle)
+                offsets = ((-.5, 10), (.47, 10), (.52, -3), (.09, -28), (-.43, -18))
+                points = [(x + ox * piece_width * c - oy * s, y + ox * piece_width * s + oy * c)
+                          for ox, oy in offsets]
+                self.geometry(camera, points, ((78, 121, 128, 255), (82, 132, 137, 255),
+                              (47, 73, 84, 255), (10, 24, 34, 255), (20, 40, 50, 255)),
+                              (0, 1, 2, 0, 2, 3, 0, 3, 4))
+            dust = max(0.0, 1 - age / .7)
+            for index in range(12):
+                offset = (index + .5) / 12
+                x = left + span * offset + (offset - .5) * age * 130
+                y = age * (58 - (index * 29) % 81) - 148 * age * age
+                size = 2 + index % 4
+                color = (104, 151, 149, round(178 * dust))
+                self.geometry(camera, ((x - size, y), (x, y + size), (x + size, y - size)),
+                              (color,) * 3, (0, 1, 2))
+            for fraction in (.13, .37, .62, .86):
+                self.soft_light(camera, (left + span * fraction, 4 + age * 18),
+                                (34 + age * 50, 16 + age * 32), (91, 125, 122), round(42 * dust))

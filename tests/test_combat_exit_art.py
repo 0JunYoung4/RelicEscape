@@ -1,4 +1,4 @@
-"""Check the sliding opening reveals only the passage and preserves SDL clipping."""
+"""Check the broken floor reveals the passage and preserves SDL clipping."""
 
 import gc
 import os
@@ -12,7 +12,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 
 from pico2d import pico2d as pico
 
-from lower_caves import (COMBAT_CENTER_X, COMBAT_COVER_THICKNESS, COMBAT_EXIT_DELAY, COMBAT_EXIT_LEFT,
+from lower_caves import (COMBAT_CENTER_X, COMBAT_EXIT_DELAY, COMBAT_EXIT_LEFT,
                          COMBAT_EXIT_RIGHT, COMBAT_WIDTH, LowerCaves)
 from main import Camera
 
@@ -45,18 +45,17 @@ class CombatExitArtTests(unittest.TestCase):
                          pico.SDL_PIXELFORMAT_RGBA32, pixel, 4), 0)
         return tuple(pixel[:3])
 
-    def test_closed_partial_and_open_passage_reveal_left_to_right_only(self):
+    def test_the_break_reveals_both_sides_of_the_shaft_and_leaves_the_banks_dark(self):
         left, right = COMBAT_EXIT_LEFT, COMBAT_EXIT_RIGHT
-        for progress, left_visible, right_visible in ((0, False, False), (.5, True, False),
-                                                     (1, True, True)):
+        for progress in (0, .5, 1):
             with self.subTest(progress=progress):
                 self.render(progress)
-                self.assertEqual(max(self.pixel(left + 45, -180)) > 4, left_visible)
-                self.assertEqual(max(self.pixel(right - 45, -180)) > 4, right_visible)
+                self.assertEqual(max(self.pixel(left + 45, -180)) > 4, progress > 0)
+                self.assertEqual(max(self.pixel(right - 45, -180)) > 4, progress > 0)
                 for x in (left - 100, right + 100):
                     self.assertEqual(self.pixel(x, -180), (0, 0, 0))
                 for x in (30, COMBAT_WIDTH - 30):
-                    self.assertEqual(self.pixel(x, 400), (0, 0, 0))
+                    self.assertLessEqual(max(self.pixel(x, 400)), 3)
 
     def test_light_slips_through_closed_seam_without_revealing_the_shaft(self):
         self.camera = Camera(960, COMBAT_WIDTH, zoom=.8, y=-235)
@@ -82,20 +81,15 @@ class CombatExitArtTests(unittest.TestCase):
         self.assertTrue(pico.SDL_RenderIsClipEnabled(pico.renderer))
         self.assertEqual((after.x, after.y, after.w, after.h), (100, 120, 500, 300))
 
-    def test_shaft_shoulders_blend_across_the_lid_depth(self):
+    def test_shaft_mouth_blends_into_the_room_without_a_horizontal_gap(self):
         self.camera = Camera(960, COMBAT_WIDTH, zoom=.8, y=-415)
         self.camera.follow(COMBAT_CENTER_X)
         self.render(1)
-        seam = -COMBAT_COVER_THICKNESS
-        for offsets in (range(-150, -100, 4), range(100, 151, 4)):
-            contrast = []
-            for offset in offsets:
-                x = COMBAT_CENTER_X + offset
-                upper, lower = self.pixel(x, seam + 3), self.pixel(x, seam - 4)
-                contrast.append(max(abs(a - b) for a, b in zip(upper, lower)))
-            # Local foliage may be sharp; a hard cut produces a jump across
-            # the entire shoulder at the old join between its two layers.
-            self.assertLess(sum(contrast) / len(contrast), 18)
+        for offset in range(-65, 66, 13):
+            x = COMBAT_CENTER_X + offset
+            upper, lower = self.pixel(x, 4), self.pixel(x, -6)
+            self.assertGreater(max(lower), 9)
+            self.assertLess(max(abs(a - b) for a, b in zip(upper, lower)), 18)
 
     def test_opening_stays_dark_until_the_player_approaches_then_fades_in(self):
         self.room.shaft_visibility = 0

@@ -1,12 +1,11 @@
 """Playable landing chamber, moss gallery, combat chamber, and lower route."""
 
 import json
-from ctypes import byref, c_int
-from math import ceil, hypot
+from math import hypot
 
 from pico2d import pico2d as pico
 
-from combat_scenery import COMBAT_BACKGROUND_TINT
+from combat_scenery import COMBAT_ART
 from crystal_golem import CrystalGolem
 from crystal_projectile import DAMAGE as CRYSTAL_DAMAGE
 from hit_impact import IMPACT_DURATION, HitImpact
@@ -18,7 +17,7 @@ from opening_cave import SHAFT_FLOOR, SHAFT_SCALE, SHAFT_TOP
 from pillbug import Pillbug
 from slash_effect import downward_slash_bounds, forward_slash_bounds
 from stone_wall_effects import StoneWallEffects
-from moss_art import MossCaveArt, WALL_SKIN_WIDTH, WALL_TILE_HEIGHT
+from moss_art import MossCaveArt
 from relic_shrine import RelicShrine
 from player import ASSET_ROOT, STANDING_HITBOX_WIDTH, Animation
 
@@ -34,13 +33,12 @@ PILLAR = (3240, 0, 3380, 242)
 AIR_PLATFORM = (3488, 274, 3744, 364)
 GALLERY_TERRAIN = (PILLAR, AIR_PLATFORM)
 COMBAT_WIDTH = 1920
-# Match the straight inner faces and doorway in the 1402x1122 source artwork.
+# Preserve the doorway, walkable width and platform datum of the original room.
 COMBAT_ART_SCALE = COMBAT_WIDTH / 1402
 COMBAT_LEFT_WALL = 199 * COMBAT_ART_SCALE
 COMBAT_RIGHT_WALL = 1258 * COMBAT_ART_SCALE
 COMBAT_DOOR_HEIGHT = (888 - 770) * COMBAT_ART_SCALE
 COMBAT_CEILING_Y = (888 - 96) * COMBAT_ART_SCALE
-COMBAT_FLOOR_FRACTION = 888 / 1122
 COMBAT_CENTER_X = (COMBAT_LEFT_WALL + COMBAT_RIGHT_WALL) / 2
 COMBAT_TRIGGER_RADIUS = 80
 # Keep the rising slab flush with the doorway's inner face and lintel.
@@ -59,9 +57,6 @@ COMBAT_EXIT_RIGHT = COMBAT_CENTER_X + 124
 COMBAT_SHAFT_LEFT = COMBAT_CENTER_X - 90
 COMBAT_SHAFT_RIGHT = COMBAT_CENTER_X + 90
 COMBAT_COVER_THICKNESS = COMBAT_ENTRANCE_BARRIER[2] - COMBAT_ENTRANCE_BARRIER[0]
-COMBAT_RIM_HEIGHT = COMBAT_COVER_THICKNESS + 64
-COMBAT_RIM_WIDTH = 997
-COMBAT_SHAFT_ART_WIDTH = 392
 COMBAT_SHAFT_FLOOR = -960
 COMBAT_ROUTE_SEAM = COMBAT_SHAFT_FLOOR + 96
 COMBAT_EXIT_QUIET_DURATION = .5
@@ -72,9 +67,8 @@ COMBAT_FLOOR_BANKS = ((0, -COMBAT_COVER_THICKNESS, COMBAT_EXIT_LEFT, 0),
                       (COMBAT_EXIT_RIGHT, -COMBAT_COVER_THICKNESS, COMBAT_WIDTH, 0),
                       (0, COMBAT_SHAFT_FLOOR, COMBAT_SHAFT_LEFT, -COMBAT_COVER_THICKNESS),
                       (COMBAT_SHAFT_RIGHT, COMBAT_SHAFT_FLOOR, COMBAT_WIDTH, -COMBAT_COVER_THICKNESS))
-COMBAT_TERRAIN = ((0, COMBAT_DOOR_HEIGHT, COMBAT_LEFT_WALL, 1280),
-                  (COMBAT_RIGHT_WALL, 0, COMBAT_WIDTH, 1280),
-                  (COMBAT_LEFT_WALL, COMBAT_CEILING_Y, COMBAT_RIGHT_WALL, 1280),
+COMBAT_TERRAIN = (*map(tuple, COMBAT_ART["wall_colliders"]),
+                  (0, COMBAT_CEILING_Y, COMBAT_WIDTH, 1280),
                   *COMBAT_PLATFORMS, *COMBAT_FLOOR_BANKS,
                   (COMBAT_EXIT_LEFT, -COMBAT_COVER_THICKNESS, COMBAT_EXIT_RIGHT, 0))
 COMBAT_OPEN_TERRAIN = COMBAT_TERRAIN[:-1]
@@ -94,18 +88,10 @@ class LowerCaves:
         self.platform = pico.load_image(str(terrain / "moss-gallery-small-platform.png"))
         self.floor = pico.load_image(str(terrain / "moss-gallery-floor.png"))
         self.ceiling = pico.load_image(str(terrain / "moss-gallery-ceiling.png"))
-        self.combat_shell = pico.load_image(str(terrain / "moss-combat-room-shell-v5.png"))
-        self.descent = pico.load_image(str(terrain / "moss-combat-descent-shaft-v2.png"))
-        self.exit_cover = pico.load_image(str(terrain / "moss-combat-floor-cover-v4.png"))
-        self.exit_rim = pico.load_image(str(terrain / "moss-combat-shaft-rim-v3.png"))
-        self.rim_art = json.loads((terrain / "moss-combat-shaft-rim-v3.json").read_text(encoding="utf-8"))
         pico.SDL_SetTextureColorMod(self.backdrop.texture, 166, 180, 178)
         pico.SDL_SetTextureColorMod(self.entry_backdrop.texture, 166, 180, 178)
         pico.SDL_SetTextureColorMod(self.floor.texture, 154, 163, 174)
         pico.SDL_SetTextureColorMod(self.ceiling.texture, 115, 123, 129)
-        pico.SDL_SetTextureColorMod(self.combat_shell.texture, 166, 180, 178)
-        pico.SDL_SetTextureColorMod(self.exit_cover.texture, 166, 180, 178)
-        pico.SDL_SetTextureColorMod(self.exit_rim.texture, 166, 180, 178)
         self.landing_width = cave.shaft.w * SHAFT_SCALE
         self.door_x = self.landing_width * 0.965
         self.room = "landing"
@@ -224,11 +210,6 @@ class LowerCaves:
         return self.exit_progress >= 1.0
 
     @property
-    def exit_slide(self):
-        progress = self.exit_progress
-        return progress * progress * (3 - 2 * progress)
-
-    @property
     def exit_seam_light(self):
         progress = max(0.0, self.exit_cue_time - COMBAT_EXIT_QUIET_DURATION) / COMBAT_EXIT_LIGHT_DURATION
         return min(1.0, progress) * max(0.0, 1 - 2 * self.exit_progress)
@@ -238,12 +219,7 @@ class LowerCaves:
         return self.combat_phase not in ("waiting", "cleared") or self.entrance_progress > 0
 
     def combat_terrain(self):
-        terrain = COMBAT_TERRAIN
-        if self.exit_progress > 0:
-            terrain = COMBAT_OPEN_TERRAIN
-            if not self.exit_open:
-                cover_left = COMBAT_EXIT_LEFT + (COMBAT_EXIT_RIGHT - COMBAT_EXIT_LEFT) * self.exit_slide
-                terrain = (*terrain, (cover_left, -COMBAT_COVER_THICKNESS, COMBAT_EXIT_RIGHT, 0))
+        terrain = COMBAT_OPEN_TERRAIN if self.exit_progress > 0 else COMBAT_TERRAIN
         return (*terrain, COMBAT_ENTRANCE_BARRIER) if self.entrance_locked else terrain
 
     def allows_relic_destination(self, destination):
@@ -329,7 +305,7 @@ class LowerCaves:
             camera.y = max(base, player.y - self.cave.height * 0.40 / camera.zoom)
             if self.room == "combat" and self.exit_cue_time and not self.exit_open:
                 pan = min(1.0, self.exit_cue_time / COMBAT_EXIT_QUIET_DURATION)
-                weight = pan * pan * (3 - 2 * pan) * (1 - self.exit_slide)
+                weight = pan * pan * (3 - 2 * pan) * (1 - self.exit_progress)
                 # Bring the seam into view from the upper platform while keeping the hero in frame.
                 seam_view = max(base / 2, player.y - self.cave.height * .80 / camera.zoom)
                 camera.y += min(0.0, seam_view - camera.y) * weight
@@ -412,31 +388,18 @@ class LowerCaves:
             self.draw_lower_route(camera)
             return
         if self.room == "combat":
-            self.art.draw_background(camera, tint=COMBAT_BACKGROUND_TINT)
+            pico.draw_rectangle(0, 0, self.cave.width, self.cave.height, 0, 0, 0, filled=True)
             scenery = self.art.combat_scenery()
-            scenery.draw_background(camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
+            scenery.draw_background(camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL,
+                                    COMBAT_CEILING_Y, broken=self.exit_progress > 0)
             self.art.draw_motes(camera, 0, COMBAT_CEILING_Y,
                                 left=COMBAT_LEFT_WALL, right=COMBAT_RIGHT_WALL,
                                 count=8, opacity_scale=.45)
-            pico.draw_rectangle(*camera.world_to_screen(0, COMBAT_CEILING_Y),
-                                *camera.world_to_screen(COMBAT_WIDTH, 1600), 0, 0, 0, filled=True)
-            self.art.draw_wall(camera, COMBAT_LEFT_WALL, COMBAT_DOOR_HEIGHT, COMBAT_CEILING_Y)
-            self.art.draw_wall(camera, COMBAT_RIGHT_WALL, 0, COMBAT_CEILING_Y, right_wall=True)
-            if self.exit_progress == 0:
-                self.art.draw_floor(camera, 0, COMBAT_WIDTH, 0)
-            for x1, y1, x2, y2 in COMBAT_PLATFORMS:
-                self.art.draw_platform(camera, (x1, y1, x2, y2))
+            scenery.draw_terrain(camera, COMBAT_PLATFORMS, COMBAT_EXIT_LEFT, COMBAT_EXIT_RIGHT,
+                                 broken=self.exit_progress > 0)
             scenery.draw_floor_plants(camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
             self.draw_combat_gate(camera)
             self.wall_effects.draw(camera)
-            self.art.draw_corner(camera, COMBAT_LEFT_WALL, COMBAT_CEILING_Y, width=120)
-            self.art.draw_corner(camera, COMBAT_RIGHT_WALL, COMBAT_CEILING_Y,
-                                 width=120, right_wall=True)
-            self.art.draw_corner(camera, COMBAT_RIGHT_WALL, 0, width=110,
-                                 right_wall=True, grow_up=True)
-            self.art.draw_corner(camera, COMBAT_LEFT_WALL, COMBAT_PLATFORMS[0][3], width=84)
-            self.art.draw_corner(camera, COMBAT_RIGHT_WALL, COMBAT_PLATFORMS[2][3],
-                                 width=84, right_wall=True)
             if self.combat_phase in ("golems", "cleared"):
                 for golem in self.golems:
                     golem.draw(self.golem_walk, camera, self.golem_attack,
@@ -559,7 +522,7 @@ class LowerCaves:
                              max(player.y, 0))
             proximity = max(0.0, 1 - distance / 240)
             target = proximity * proximity * (3 - 2 * proximity)
-        # Light follows the player's approach after the lid opens, independently of its motion.
+        # Light follows the player's approach after the floor collapses.
         change = dt / .7
         self.shaft_visibility += max(-change, min(change, target - self.shaft_visibility))
 
@@ -568,137 +531,22 @@ class LowerCaves:
             impact.draw(camera)
 
     def draw_combat_gate(self, camera):
-        if self.room != "combat" or self.entrance_progress <= 0:
-            return
-        left, _, right, height = COMBAT_ENTRANCE_BARRIER
-        # Show the slab's upper part above ground as it rises from below the floor.
-        # Reversing the same progress sinks it back down when the arena clears.
-        image = self.art.wall
-        source_width = min(image.w, round((right - left) / WALL_SKIN_WIDTH * image.w))
-        source_height = min(image.h, round(height / WALL_TILE_HEIGHT * image.h))
-        visible_pixels = round(source_height * self.entrance_progress)
-        if visible_pixels:
-            image.clip_draw_to_origin(image.w - source_width, source_height - visible_pixels, source_width, visible_pixels,
-                                      *camera.world_to_screen(left, 0),
-                                      (right - left) * camera.zoom,
-                                      height * visible_pixels / source_height * camera.zoom)
+        if self.room == "combat" and self.entrance_progress > 0:
+            self.art.combat_scenery().draw_gate(camera, COMBAT_ENTRANCE_BARRIER, self.entrance_progress)
 
     def draw_combat_exit(self, camera):
-        """Slide the heavy cover beneath the same foreground shadow as the floor."""
         if self.room != "combat":
             return
-        left, right = COMBAT_EXIT_LEFT, COMBAT_EXIT_RIGHT
-        slide = self.exit_slide
-        width = right - left
-        cover_left = left + width * slide
-        # The supporting shoulders remain in place while the top cap slides away.
-        # Match the floor plane and socket depth separately; feathered banks blend over the floor.
-        image, art = self.exit_rim, self.rim_art
-        upper_scale = width / (art["upper_right"] - art["upper_left"])
-        lower_scale = (COMBAT_SHAFT_RIGHT - COMBAT_SHAFT_LEFT) / (art["lower_right"] - art["lower_left"])
-        image.clip_draw_to_origin(0, image.h - art["step_y"], image.w,
-            art["step_y"] - art["surface_y"],
-            *camera.world_to_screen(left - art["upper_left"] * upper_scale, -COMBAT_COVER_THICKNESS),
-            image.w * upper_scale * camera.zoom, COMBAT_COVER_THICKNESS * camera.zoom)
-        image.clip_draw_to_origin(0, 0, image.w, image.h - art["step_y"],
-            *camera.world_to_screen(COMBAT_SHAFT_LEFT - art["lower_left"] * lower_scale, -COMBAT_RIM_HEIGHT),
-            image.w * lower_scale * camera.zoom,
-            (COMBAT_RIM_HEIGHT - COMBAT_COVER_THICKNESS) * camera.zoom)
-        self.art.draw_floor(camera, 0, left, 0)
-        self.art.draw_floor(camera, right, COMBAT_WIDTH, 0)
-        image = self.art.floor
-        visible_pixels = round(image.w * (1 - slide))
-        if visible_pixels:
-            height = COMBAT_COVER_THICKNESS * image.h / (image.h - self.art.floor_art["surface_y"])
-            self.art.draw_surface(camera, image, cover_left, -COMBAT_COVER_THICKNESS,
-                                  width * (1 - slide), height, source_right=visible_pixels,
-                                  profile_origin=left)
-        # Hide the cover and socket's buried rock with one continuous floor shadow.
-        self.draw_combat_shadows(camera)
-        if self.exit_progress > 0 and self.shaft_visibility > 0:
-            self.draw_combat_passage(camera, cover_left)
+        scenery = self.art.combat_scenery()
+        if self.exit_progress > 0:
+            scenery.draw_shaft(camera, COMBAT_EXIT_LEFT, self.shaft_visibility)
+            if not self.exit_open:
+                scenery.draw_collapse(camera, COMBAT_EXIT_LEFT, COMBAT_EXIT_RIGHT,
+                                      self.exit_progress * COMBAT_EXIT_DURATION)
         light = self.exit_seam_light
         if light > 0:
-            self.art.combat_scenery().draw_exit_seam(camera, cover_left, light)
-
-    def draw_combat_passage(self, camera, cover_left):
-        if self.exit_open:
-            self.draw_combat_shaft_art(camera)
-            return
-        # Only the moving lid clips the artwork. Its alpha shapes the fully open rim.
-        cut = min(self.cave.width, ceil(camera.world_to_screen(cover_left, 0)[0]))
-        if cut <= 0:
-            return
-        previous_clip = pico.SDL_Rect()
-        clipped = pico.SDL_RenderIsClipEnabled(pico.renderer)
-        pico.SDL_RenderGetClipRect(pico.renderer, byref(previous_clip))
-        clip = pico.SDL_Rect(0, 0, cut, self.cave.height)
-        if clipped and not pico.SDL_IntersectRect(byref(clip), byref(previous_clip), byref(clip)):
-            return
-        pico.SDL_RenderSetClipRect(pico.renderer, byref(clip))
-        try:
-            self.draw_combat_shaft_art(camera)
-        finally:
-            pico.SDL_RenderSetClipRect(pico.renderer, byref(previous_clip) if clipped else None)
-
-    def draw_combat_shaft_art(self, camera):
-        """Fade a continuous rock silhouette into the black banks and lower passage."""
-        columns = ((0, 0), (.18, 1), (.82, 1), (1, 0))
-        rows = ((0, 0, 1), (.035, .74, 1), (.17, 1, .82),
-                (.56, .86, .78), (.83, .55, .78), (1, 0, .78))
-        tint = tuple(round(channel * self.shaft_visibility) for channel in (208, 221, 218))
-        points, indices = [], []
-        top = 0
-        bottom = COMBAT_SHAFT_FLOOR - 64
-        stride = len(columns)
-        for row, (v, depth, span) in enumerate(rows):
-            for col, (u, edge) in enumerate(columns):
-                x = COMBAT_CENTER_X + (u - .5) * COMBAT_SHAFT_ART_WIDTH * span
-                sx, sy = camera.world_to_screen(x, top + v * (bottom - top))
-                points.append(pico.SDL_Vertex((sx, self.cave.height - sy),
-                                              (*tint, round(255 * depth * edge)), (u, v)))
-                if row and col:
-                    i = row * stride + col
-                    indices.extend((i - stride - 1, i - stride, i - 1, i - stride, i, i - 1))
-        vertices = (pico.SDL_Vertex * len(points))(*points)
-        triangles = (c_int * len(indices))(*indices)
-        pico.SDL_RenderGeometry(pico.renderer, self.descent.texture,
-                                vertices, len(points), triangles, len(indices))
-
-    def draw_combat_shadows(self, camera):
-        """Keep solid rock interiors black, with a narrow readable surface edge."""
-        def solid(bounds):
-            x1, y1, x2, y2 = bounds
-            if x2 > x1 and y2 > y1:
-                pico.draw_rectangle(*camera.world_to_screen(x1, y1),
-                                    *camera.world_to_screen(x2, y2), 0, 0, 0, filled=True)
-
-        def gradient(bounds, alpha):
-            x1, y1, x2, y2 = bounds
-            vertices = []
-            for (x, y), opacity in zip(((x1, y1), (x2, y1), (x1, y2), (x2, y2)), alpha):
-                sx, sy = camera.world_to_screen(x, y)
-                vertices.append(pico.SDL_Vertex((sx, self.cave.height - sy), (0, 0, 0, opacity)))
-            geometry = (pico.SDL_Vertex * 4)(*vertices)
-            indices = (c_int * 6)(0, 1, 2, 1, 3, 2)
-            pico.SDL_RenderGeometry(pico.renderer, None, geometry, 4, indices, 6)
-
-        solid((0, min(camera.y - 4 / camera.zoom, -57), COMBAT_WIDTH, -56))
-        solid((COMBAT_EXIT_LEFT, min(camera.y - 4 / camera.zoom, -COMBAT_COVER_THICKNESS - 1),
-               COMBAT_EXIT_RIGHT, -COMBAT_COVER_THICKNESS))
-        solid((0, COMBAT_DOOR_HEIGHT, COMBAT_LEFT_WALL - 192, 1280))
-        solid((COMBAT_RIGHT_WALL + 192, 0, COMBAT_WIDTH, 1280))
-        blend = pico.SDL_BlendMode()
-        pico.SDL_GetRenderDrawBlendMode(pico.renderer, byref(blend))
-        pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)
-        try:
-            gradient((0, -56, COMBAT_WIDTH, 0), (255, 255, 0, 0))
-            gradient((COMBAT_LEFT_WALL - 192, COMBAT_DOOR_HEIGHT, COMBAT_LEFT_WALL, 1280),
-                     (255, 0, 255, 0))
-            gradient((COMBAT_RIGHT_WALL, 0, COMBAT_RIGHT_WALL + 192, 1280),
-                     (0, 255, 0, 255))
-        finally:
-            pico.SDL_SetRenderDrawBlendMode(pico.renderer, blend)
+            scenery.draw_exit_seam(camera, COMBAT_EXIT_LEFT, light)
+            scenery.draw_exit_seam(camera, COMBAT_EXIT_RIGHT, light * .55)
 
     def update_projectiles(self, player, health, dt, now):
         if self.in_lower_route and self.route_b is not None:
@@ -736,7 +584,6 @@ class LowerCaves:
 
     def draw_foreground(self, camera):
         if self.room == "combat":
-            self.art.draw_canopy(camera, COMBAT_CEILING_Y, height_scale=.78)
             self.art.combat_scenery().draw_foreground(camera, COMBAT_LEFT_WALL,
                                                      COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
         elif self.room == "gallery":
