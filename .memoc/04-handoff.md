@@ -23,7 +23,7 @@ Last synced: 2026-11-05T03:23:05
 
 - 2026-11-25 첫 전투방 순서는 `lower_caves.py`의 `combat_phase`와 `update_combat_encounter`에서 관리한다. 문이 닫히는 동안 적이 표시되거나 피해를 주지 않는다. 공벌레 사망 연출은 골렘 단계에서도 계속 재생된다. `tests/test_combat_trigger.py`와 `tests/test_combat_clear.py`에서 순서를 확인한다.
 
-- 2026-11-25 C 전실과 재도전 석등, B1 봉인문을 연결했다. B1 방 연결 시 `lower_route_c.py`의 왼쪽 입구 충돌을 실제 동선으로 교체한다. 사용자 우선순위에 따라 B 하부는 원래 지면 안에 별도 숨겨진 방을 만드는 후속 과제로 기록했다.
+- 2026-11-25 C 전실과 재도전 석등, B1 봉인문을 연결했다. B1 방 연결 시 `lower_route_c.py`의 왼쪽 입구 충돌을 실제 동선으로 교체한다.
 
 - 2026-11-23 본편 A 구현. `LowerCaves`의 `route_a`가 전투방 하강 끝에서 낙하 속도를 이어받는다. `lower_route_a.py`의 이미지 좌표가 벽·레일 기준이며 미리보기도 같은 궤도를 사용한다. B는 왼쪽 출구에서 연결하면 된다. 전체 테스트는 `.\.venv\Scripts\python.exe -m unittest discover -s tests`.
 

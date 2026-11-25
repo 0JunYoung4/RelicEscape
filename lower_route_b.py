@@ -7,8 +7,10 @@ from pico2d import pico2d as pico
 from health import SpikeBed
 from lower_route_b_art import LowerRouteBArt
 from lower_route_b_layout import (A_ENTRY, BOTTOM, C_APPROACH_LEDGE, C_PASSAGE, PILLBUG_LEDGE, RAIL_ONE, RAIL_TWO,
-                                  RIGHT_WALL, SHIELD_LEDGE, SPIKE_SHELVES, TERRAIN, THORN_WALL_CROP,
-                                  THORN_WALL_PROFILE, THORN_WALLS, TOP, WIDTH)
+                                  RIGHT_WALL, SECRET_FLOOR, SECRET_FLOOR_Y, SECRET_LEFT_WALL, SECRET_PASSAGE,
+                                  SECRET_RAIL_DISTANCE, SECRET_RAIL_DOCK, SECRET_RELIC_X, SHIELD_LEDGE,
+                                  STONE_SHELVES, STONE_SURFACE, TERRAIN, THORN_WALL_CROP, THORN_WALL_PROFILE,
+                                  THORN_WALLS, TOP, WIDTH)
 from pillbug import Pillbug
 from player import STANDING_HITBOX_HEIGHT
 from rail import (RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE, RAIL_MOUNT_RADIUS,
@@ -29,17 +31,16 @@ def _thorn_wall_spikes(bounds, hanging):
         if hanging:
             edge_left, edge_right = source_width - edge_right, source_width - edge_left
         row = index if hanging else len(profile) - 1 - index
+        base = bottom + row * height
+        visible_base = max(base, STONE_SURFACE)
         yield SpikeBed(left + edge_left * scale_x, left + edge_right * scale_x,
-                       bottom + row * height, height=height)
+                       visible_base, height=base + height - visible_base)
 
 
-SPIKES = (
-    *(SpikeBed(left, right, top) for left, _, right, top in SPIKE_SHELVES),
-    *(spikes for wall, hanging in THORN_WALLS for spikes in _thorn_wall_spikes(wall, hanging)),
-    SpikeBed(0, WIDTH, BOTTOM),
-)
+SPIKES = tuple(spikes for wall, hanging in THORN_WALLS for spikes in _thorn_wall_spikes(wall, hanging))
 # Keep the painted shelf cores solid and join the top of the hanging wall to the roof.
-PLAY_TERRAIN = (*TERRAIN, *SPIKE_SHELVES, (18, 360, 1110, 500), (1000, 140, 1315, 495),
+PLAY_TERRAIN = (*TERRAIN, *STONE_SHELVES, SECRET_FLOOR, SECRET_LEFT_WALL,
+                (18, 360, 1110, 500), (1000, 140, 1315, 495),
                 (2265, 332, 2860, 495), (4475, -45, WIDTH, 90),
                 (3085, -16, 3615, 85), (3160, -145, 3525, -16),
                 (3165, -350, 3520, -145),
@@ -69,6 +70,8 @@ class LowerRouteB:
             self.reset_carriage(carriage)
         self.rail_attempt = None
         self.safe_pose = SPAWN
+        self.secret_revealed = False
+        self.secret_relic_collected = False
         # Leave the right edge of each ledge open for landing.
         self.pillbug = Pillbug.on_platform((3060, 85, 3380, PILLBUG_LEDGE[3]))
         self.pillbug.x = 3265
@@ -113,24 +116,28 @@ class LowerRouteB:
         target = player_y - view_height * .46
         return max(BOTTOM, min(TOP - view_height, target))
 
-    def nearby_carriage(self, player, relic_placed):
+    def nearby_dock(self, player, relic_placed):
         if relic_placed or not player.grounded:
             return None
+        if player.y == SECRET_FLOOR_Y and abs(player.x - SECRET_RAIL_DOCK[0]) <= 64:
+            return self.carriages[1], SECRET_RAIL_DISTANCE, SECRET_RAIL_DOCK
         _, bottom, _, top = player.get_hitbox()
         for carriage in self.carriages:
             x, y = carriage.segments[-1].end
             if hypot(player.x - x, (bottom + top) / 2 - y) <= RAIL_MOUNT_RADIUS:
-                return carriage
+                return carriage, carriage.length, (x, y)
         return None
 
     def use_relic(self, player, *, relic_placed):
         if self.mounted_carriage is not None:
             x, y = self.mounted_carriage.position
             return True, (x, y - STANDING_HITBOX_HEIGHT / 2, 0.0)
-        carriage = self.nearby_carriage(player, relic_placed)
-        if carriage is None:
+        dock = self.nearby_dock(player, relic_placed)
+        if dock is None:
             return False, None
+        carriage, distance, _ = dock
         self.reset_carriage(carriage)
+        carriage.distance = distance
         carriage.relic_mounted = True
         self.rail_attempt = carriage
         return True, None
@@ -142,9 +149,9 @@ class LowerRouteB:
             if carriage.distance == carriage.length and abs(player.x - x) <= 160:
                 return (x, y), True
             return (player.x, player.y + STANDING_HITBOX_HEIGHT), False
-        carriage = self.nearby_carriage(player, relic_placed)
-        if carriage is not None:
-            return carriage.segments[-1].end, False
+        dock = self.nearby_dock(player, relic_placed)
+        if dock is not None:
+            return dock[2], False
         return None
 
     def update(self, player, dt):
@@ -153,6 +160,10 @@ class LowerRouteB:
             mounted.check_attack(player)
         for carriage in self.carriages:
             carriage.move(dt)
+        if player.grounded and player.y == SECRET_FLOOR_Y and SECRET_PASSAGE[0] < player.x < SECRET_PASSAGE[2]:
+            self.secret_revealed = True
+            if abs(player.x - SECRET_RELIC_X) <= 45:
+                self.secret_relic_collected = True
 
     def check_spikes(self, player, health, now):
         if player.grounded and not health.recovering(now):
@@ -190,7 +201,8 @@ class LowerRouteB:
                 health.take_enemy_hit(hit, now, BASH_DAMAGE)
 
     def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0]):
-        self.art.draw(camera, screen_height, passage_left=passage_left)
+        self.art.draw(camera, screen_height, passage_left=passage_left, secret_revealed=self.secret_revealed,
+                      secret_relic_collected=self.secret_relic_collected)
         scale = RAIL_ART_SCALE * camera.zoom
         for carriage in self.carriages:
             draw_rail(self.rail, self.bend, camera, carriage.segments)

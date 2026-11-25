@@ -1,21 +1,23 @@
 """Draw the B-part scenery and terrain using the approved asset anchors."""
 
-from ctypes import c_int
+from ctypes import byref, c_int
 import json
 from math import ceil
 
 from pico2d import pico2d as pico
 
-from health import SPIKE_HEIGHT
 from lower_route_b_layout import (A_ENTRY, BACKGROUND_BOTTOM, BOTTOM, C_APPROACH_LEDGE, C_PASSAGE,
-                                  LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL,
-                                  SHIELD_LEDGE, SPIKE_SHELVES, SPIKE_TIP_Y, THORN_WALL_CROP,
-                                  THORN_WALLS, TOP, WIDTH)
+                                  LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL, SECRET_FLOOR,
+                                  SECRET_FLOOR_Y, SECRET_LEFT_WALL, SECRET_PASSAGE, SECRET_RELIC_X, SHIELD_LEDGE,
+                                  STONE_SHELVES, STONE_SURFACE, THORN_WALL_CROP, THORN_WALLS, TOP, WIDTH)
 from player import ASSET_ROOT
 
 
 STRUCTURES = ASSET_ROOT / "structures/map1-lower-route"
 PLATFORMS = ASSET_ROOT / "terrain/ruin-platforms"
+FLOOR_DECOR = ASSET_ROOT / "terrain/moss-grotto-floor-decor"
+ROCK_CORE = (8, 16, 23)
+AMBER_RELIC_CROP = (287, 158, 946, 1103)
 CEILING_SPANS = (
     (-1200, 1250, TOP + 74, 358, False),
     (820, 3260, TOP + 64, 380, True),
@@ -64,19 +66,33 @@ def draw_ruin_platform(camera, image, entry, bounds, *, base_y=None):
                    (crop_right - crop_left) * scale, (crop_bottom - crop_top) * height_scale)
 
 
-def draw_spike_bank(spikes, camera, left, right, tip):
-    source = (40, 53, 2133, 640)
-    tiles = ceil((right - left) / 650)
-    stride = (right - left) / tiles
-    # Keep both rows entirely within the shelf, leaving the rail shafts clear.
-    for tint, height, offset in (((95, 134, 140), 82, -13), ((195, 210, 203), 96, 0)):
-        pico.SDL_SetTextureColorMod(spikes.texture, *tint)
-        for index in range(tiles):
-            start = max(left, left + index * stride - 33)
-            end = min(right, left + (index + 1) * stride + 33)
-            if start < camera.x + camera.view_width and end > camera.x:
-                draw_structure(spikes, source, camera, (start + end) / 2, tip + offset - height,
-                               end - start, height, flip="h" if index % 2 else "")
+def fill_rock(camera, screen_height, bounds, color=ROCK_CORE):
+    left, bottom, right, top = bounds
+    x1, y1 = map(round, camera.world_to_screen(left, bottom))
+    x2, y2 = map(round, camera.world_to_screen(right, top))
+    pico.SDL_SetRenderDrawColor(pico.renderer, *color, 255)
+    rect = pico.SDL_Rect(x1, screen_height - y2, x2 - x1, y2 - y1)
+    pico.SDL_RenderFillRect(pico.renderer, rect)
+
+
+def draw_amber_light(camera, screen_height):
+    x, y = SECRET_RELIC_X, SECRET_FLOOR_Y + 48
+    rim = ((-145, 0), (-100, 78), (0, 110), (100, 78), (145, 0),
+           (100, -78), (0, -110), (-100, -78))
+    vertices = []
+    for index, (dx, dy) in enumerate(((0, 0), *rim)):
+        sx, sy = camera.world_to_screen(x + dx, y + dy)
+        alpha = 140 if index == 0 else 0
+        vertices.append(pico.SDL_Vertex((sx, screen_height - sy), (226, 139, 53, alpha)))
+    data = (pico.SDL_Vertex * len(vertices))(*vertices)
+    triangles = (c_int * 24)(*(value for i in range(8) for value in (0, i + 1, (i + 1) % 8 + 1)))
+    previous = pico.SDL_BlendMode()
+    pico.SDL_GetRenderDrawBlendMode(pico.renderer, byref(previous))
+    pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)
+    try:
+        pico.SDL_RenderGeometry(pico.renderer, None, data, len(data), triangles, len(triangles))
+    finally:
+        pico.SDL_SetRenderDrawBlendMode(pico.renderer, previous)
 
 
 class LowerRouteBArt:
@@ -87,9 +103,12 @@ class LowerRouteBArt:
         self.wall = pico.load_image(str(ASSET_ROOT / "terrain/green-cavern-wall-v1.png"))
         self.marker = pico.load_image(str(STRUCTURES / "lower-cave-safe-waymarker-v1.png"))
         self.rubble = pico.load_image(str(STRUCTURES / "lower-cave-landing-rubble-v1.png"))
-        self.spikes = pico.load_image(str(STRUCTURES / "lower-cave-thorn-bed-v1.png"))
         self.thorn_wall = pico.load_image(str(STRUCTURES / "lower-cave-thorn-wall-v1.png"))
         self.canopy = pico.load_image(str(ASSET_ROOT / "terrain/green-cavern-canopy-v1.png"))
+        self.amber_relic = pico.load_image(str(ASSET_ROOT / "sprites/relic/amber-fossil-v1.png"))
+        pico.SDL_SetTextureScaleMode(self.amber_relic.texture, pico.SDL_ScaleModeLinear)
+        self.rock_chips = pico.load_image(str(FLOOR_DECOR / "moss-rock-chips.png"))
+        self.bead_moss = pico.load_image(str(FLOOR_DECOR / "bead-moss-patch.png"))
         pico.SDL_SetTextureColorMod(self.rubble.texture, 139, 175, 186)
         self.platforms = json.loads((PLATFORMS / "manifest.json").read_text(encoding="utf-8"))["platforms"]
         self.platform_images = {
@@ -98,7 +117,8 @@ class LowerRouteBArt:
                          "waterworn-sill")
         }
 
-    def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0]):
+    def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0],
+             secret_revealed=False, secret_relic_collected=False):
         panorama_width = WIDTH - passage_left
         panorama_height = TOP - BACKGROUND_BOTTOM
         if camera.y < BACKGROUND_BOTTOM:
@@ -127,7 +147,7 @@ class LowerRouteBArt:
         for name, bounds, base_y in (("root-wedge", entry, None),
                                      ("connected-guard-wall", SHIELD_LEDGE, LEFT_WALL[1]),
                                      ("connected-passage", passage, passage_base),
-                                     ("spike-bed-pier", PILLBUG_LEDGE, SPIKE_TIP_Y - 113)):
+                                     ("spike-bed-pier", PILLBUG_LEDGE, -313)):
             draw_ruin_platform(camera, self.platform_images[name], self.platforms[name], bounds, base_y=base_y)
 
         for x, surface, size in ((1200, C_APPROACH_LEDGE[3], 66), (2760, SHIELD_LEDGE[3], 86),
@@ -135,6 +155,8 @@ class LowerRouteBArt:
             draw_structure(self.marker, (207, 15, 1040, 1206), camera, x, surface, size * .70, size)
         draw_structure(self.rubble, (88, 133, 1454, 882), camera, 4880, A_ENTRY[3], 219, 122)
         self.draw_hazards(camera)
+        if camera.y < STONE_SURFACE:
+            self.draw_basement(camera, screen_height, secret_revealed, secret_relic_collected)
         self.draw_ceiling(camera, screen_height)
 
     def draw_hazards(self, camera):
@@ -142,21 +164,47 @@ class LowerRouteBArt:
             if right > camera.x and left < camera.x + camera.view_width:
                 draw_structure(self.thorn_wall, THORN_WALL_CROP, camera, (left + right) / 2, bottom,
                                right - left, top - bottom, flip="hv" if hanging else "")
-        for left, bottom, right, top in SPIKE_SHELVES:
-            if right <= camera.x or left >= camera.x + camera.view_width:
-                continue
-            name = "waterworn-sill"
-            count = ceil((right - left) / 490)
-            stride = (right - left) / count
-            for index in range(count):
-                start = max(left, left + index * stride - 20)
-                end = min(right, left + (index + 1) * stride + 20)
-                if start < camera.x + camera.view_width and end > camera.x:
-                    draw_ruin_platform(camera, self.platform_images[name], self.platforms[name],
-                                       (start, bottom, end, top), base_y=bottom)
-            draw_spike_bank(self.spikes, camera, left, right, SPIKE_TIP_Y)
-        if camera.y < BOTTOM + SPIKE_HEIGHT:
-            draw_spike_bank(self.spikes, camera, 0, WIDTH, BOTTOM + SPIKE_HEIGHT)
+
+    def draw_stone_surface(self, camera, left, right, top, *, depth=106):
+        name = "waterworn-sill"
+        count = ceil((right - left) / 490)
+        stride = (right - left) / count
+        for index in range(count):
+            start = max(left, left + index * stride - 20)
+            end = min(right, left + (index + 1) * stride + 20)
+            if start < camera.x + camera.view_width and end > camera.x:
+                draw_ruin_platform(camera, self.platform_images[name], self.platforms[name],
+                                   (start, top - depth, end, top), base_y=top - depth)
+
+    def draw_basement(self, camera, screen_height, revealed, collected):
+        left, floor, mouth, ceiling = SECRET_PASSAGE
+        if not revealed:
+            fill_rock(camera, screen_height, SECRET_PASSAGE)
+        if revealed and not collected:
+            draw_amber_light(camera, screen_height)
+        for bounds in (*STONE_SHELVES, SECRET_FLOOR, SECRET_LEFT_WALL):
+            fill_rock(camera, screen_height, bounds)
+        for shelf_left, _, shelf_right, shelf_top in STONE_SHELVES:
+            self.draw_stone_surface(camera, shelf_left, shelf_right, shelf_top)
+        right = SECRET_FLOOR[2]
+        draw_rock_wall(self.wall, camera, ((ceiling, mouth - 55, mouth),
+                                           (-415, mouth - 90, mouth),
+                                           (STONE_SURFACE, mouth - 65, mouth)), screen_height)
+        draw_rock_wall(self.wall, camera, ((floor, right, right + 80),
+                                           (-520, right, right + 104),
+                                           (STONE_SURFACE, right, right + 65)), screen_height)
+        self.draw_stone_surface(camera, left if revealed else mouth, right, floor, depth=68)
+        if revealed:
+            draw_structure(self.canopy, (0, 160, self.canopy.w, 474), camera,
+                           (left + mouth) / 2, ceiling - 12, mouth - left, 60)
+            draw_rock_wall(self.wall, camera, ((floor, left - 65, left),
+                                               (-585, left - 70, left),
+                                               (ceiling, left - 39, left)), screen_height)
+            draw_structure(self.rock_chips, (225, 235, 1370, 730), camera, SECRET_RELIC_X, floor, 128, 24)
+            draw_structure(self.bead_moss, (114, 134, 2053, 585), camera, 1090, floor, 108, 19)
+            if not collected:
+                draw_structure(self.amber_relic, AMBER_RELIC_CROP, camera, SECRET_RELIC_X,
+                               floor + 18, 44, 63)
 
     def draw_ceiling(self, camera, screen_height):
         # Overlap the canopy strips and feather their ends into the painted roof.

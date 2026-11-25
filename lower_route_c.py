@@ -3,12 +3,12 @@
 from pico2d import pico2d as pico
 
 from lower_route_b_art import STRUCTURES, draw_rock_wall, draw_structure
-from lower_route_b_layout import C_PASSAGE, TOP
+from lower_route_b_layout import C_PASSAGE, C_PASSAGE_LEFT, TOP
 from pillbug import Pillbug
 from player import ASSET_ROOT
 
 
-LEFT, RIGHT = -1600, C_PASSAGE[0]
+LEFT, RIGHT = C_PASSAGE_LEFT, C_PASSAGE[0]
 FLOOR = C_PASSAGE[3]
 ENTRANCE_X = -1290
 ENTRANCE_WIDTH = 220
