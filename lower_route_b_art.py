@@ -8,7 +8,7 @@ from pico2d import pico2d as pico
 
 from health import SPIKE_HEIGHT
 from lower_route_b_layout import (A_ENTRY, BACKGROUND_BOTTOM, BOTTOM, C_APPROACH_LEDGE, C_PASSAGE,
-                                  HIDDEN_DOCK, HIDDEN_LEDGE, LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL,
+                                  LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL,
                                   SHIELD_LEDGE, SPIKE_SHELVES, SPIKE_TIP_Y, THORN_WALL_CROP,
                                   THORN_WALLS, TOP, WIDTH)
 from player import ASSET_ROOT
@@ -93,7 +93,7 @@ class LowerRouteBArt:
         self.platform_images = {
             name: pico.load_image(str(PLATFORMS / self.platforms[name]["image"]))
             for name in ("root-wedge", "connected-guard-wall", "connected-passage", "spike-bed-pier",
-                         "short-root-step", "waterworn-sill")
+                         "waterworn-sill")
         }
 
     def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0]):
@@ -131,10 +131,6 @@ class LowerRouteBArt:
         draw_structure(self.rubble, (88, 133, 1454, 882), camera, 4880, A_ENTRY[3], 219, 122)
         self.draw_hazards(camera)
         self.draw_ceiling(camera, screen_height)
-        if camera.y < HIDDEN_LEDGE[3]:
-            name = "short-root-step"
-            draw_ruin_platform(camera, self.platform_images[name], self.platforms[name], HIDDEN_LEDGE,
-                               base_y=HIDDEN_LEDGE[1])
 
     def draw_hazards(self, camera):
         for (left, bottom, right, top), hanging in THORN_WALLS:
@@ -182,25 +178,3 @@ class LowerRouteBArt:
             triangles = (c_int * len(indices))(*indices)
             pico.SDL_RenderGeometry(pico.renderer, self.canopy.texture, geometry, len(vertices),
                                     triangles, len(indices))
-
-    @staticmethod
-    def draw_hidden_relic(camera, screen_height, collected):
-        x, y = camera.world_to_screen(*HIDDEN_DOCK)
-        if not 0 <= x < camera.screen_width or not 0 <= y < screen_height:
-            return
-        radius = max(2, round(9 * camera.zoom))
-        pico.draw_circle(round(x), round(y), radius, 224, 177, 103)
-        if collected:
-            return
-        # The amber collectible is distinct from the blue relic carried by the rail.
-        x, y = camera.world_to_screen(HIDDEN_DOCK[0], HIDDEN_LEDGE[3] + 32)
-        y = screen_height - y
-        r = 14 * camera.zoom
-        vertices = (pico.SDL_Vertex * 4)(
-            pico.SDL_Vertex((x, y - r), (255, 232, 167, 255)),
-            pico.SDL_Vertex((x - r, y), (235, 176, 86, 255)),
-            pico.SDL_Vertex((x + r, y), (180, 106, 47, 255)),
-            pico.SDL_Vertex((x, y + r), (143, 73, 40, 255)),
-        )
-        indices = (c_int * 6)(0, 1, 2, 1, 3, 2)
-        pico.SDL_RenderGeometry(pico.renderer, None, vertices, 4, indices, 6)

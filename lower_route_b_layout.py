@@ -32,9 +32,6 @@ THORN_WALL_PROFILE = (
     (117, 374), (108, 367), (36, 478), (0, 440), (19, 499), (6, 482), (8, 474), (84, 472),
     (7, 396), (90, 486), (11, 401), (76, 496), (18, 444), (62, 465), (23, 444), (87, 395),
 )
-HIDDEN_DOCK = (1729, -560)
-HIDDEN_LEDGE = (1590, -685, 1868, -630)
-
 # RailCarriage moves toward smaller distances on a left-facing hit.
 RAIL_ONE = (
     RailSegment((3450, 280), (3698, 280)),
@@ -51,11 +48,10 @@ RAIL_TWO = (
     RailSegment((1160, 690), (1418, 690)),
     RailSegment((1418, 690), (1514, 594), (1418, 594)),
     RailSegment((1514, 594), (1514, -464)),
-    RailSegment((1514, -464), (1610, HIDDEN_DOCK[1]), (1610, -464)),
-    RailSegment((1610, HIDDEN_DOCK[1]), (1848, HIDDEN_DOCK[1])),
-    RailSegment((1848, HIDDEN_DOCK[1]), (1944, -464), (1848, -464)),
+    RailSegment((1514, -464), (1610, -560), (1610, -464)),
+    RailSegment((1610, -560), (1848, -560)),
+    RailSegment((1848, -560), (1944, -464), (1848, -464)),
     RailSegment((1944, -464), (1944, 594)),
     RailSegment((1944, 594), (2040, 690), (2040, 594)),
     RailSegment((2040, 690), (2320, 690)),
 )
-HIDDEN_DOCK_DISTANCE = sum(segment.length for segment in RAIL_TWO[:4]) + HIDDEN_DOCK[0] - RAIL_TWO[4].start[0]
