@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 바위 소라게 외형 v3를 `assets/concepts/b1-hermit-crab/assembled-preview-v3.png`에 정리했다. 기존 수정 골렘의 회청색 돌 면·픽셀 외곽·이끼를 참고한 기본·은신 투명 PNG와 기존 동굴 배경에서의 비교 시안이다.
+
 - 2026-11-25 본편 C 전실 구현. B 왼쪽 끝에서 같은 바닥으로 이어지며 석등 접근으로 재도전 지점을 활성화한다. B1 봉인문까지 플레이 가능하다. `lower_route_c.py`; B/C 유물 복귀와 C 재시작은 `tests/test_lower_route_c.py`에서 검증한다.
 
 - 2026-11-25 B1 소라게 조립 외형 v2를 `assets/concepts/b1-hermit-crab/assembled-preview-v2.png`에 정리했다. 구멍 없는 팔 연결과 두꺼운 집게, 기본 상태의 뒤로 기운 집과 앞으로 서는 은신 상태를 각각 투명 PNG로 저장했다.
