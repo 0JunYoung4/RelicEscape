@@ -4,6 +4,7 @@ import gc
 import os
 import unittest
 from types import SimpleNamespace
+from unittest.mock import patch
 
 os.environ["SDL_VIDEODRIVER"] = "dummy"
 os.environ["SDL_AUDIODRIVER"] = "dummy"
@@ -11,14 +12,16 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 
 from pico2d import pico2d as pico
 
+from crystal_golem import EMERGE_DURATION as GOLEM_EMERGE_DURATION
 from crystal_projectile import CrystalProjectile
 from health import Health
 from lower_caves import (COMBAT_CENTER_X, COMBAT_COVER_THICKNESS, COMBAT_EXIT_DURATION, COMBAT_EXIT_LEFT,
-                         COMBAT_EXIT_RIGHT, COMBAT_OPEN_TERRAIN, COMBAT_SHAFT_FLOOR,
+                         COMBAT_EXIT_RIGHT, COMBAT_GATE_DURATION, COMBAT_OPEN_TERRAIN, COMBAT_SHAFT_FLOOR,
                          COMBAT_WIDTH, LowerCaves)
 from lower_route_a import ENTRY_LEDGE, ENTRY_X
 from lower_route_connection import A_ORIGIN
 from main import Camera
+from pillbug import EMERGE_DURATION as PILLBUG_EMERGE_DURATION
 from player import Player
 
 
@@ -28,10 +31,12 @@ class CombatClearTests(unittest.TestCase):
         self.cave = SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096))
         self.room = LowerCaves(self.cave)
         self.room.room, self.room.has_relic = "combat", True
-        self.room.encounter_started = True
         self.player = Player(130, 0, COMBAT_WIDTH)
         self.camera = Camera(960, COMBAT_WIDTH)
         self.room.enter(self.player, self.camera)
+        self.player.recover_at(COMBAT_CENTER_X, 0, 0)
+        self.room.update_enemies(self.player, COMBAT_GATE_DURATION)
+        self.room.update_enemies(self.player, PILLBUG_EMERGE_DURATION)
 
     def tearDown(self):
         del self.room, self.player
@@ -52,9 +57,15 @@ class CombatClearTests(unittest.TestCase):
             self.room.update_enemies(self.player, 0)
         self.player.slash = None
 
-    def test_four_enemies_are_two_golems_above_and_two_pillbugs_on_either_side(self):
-        self.assertEqual(len(self.room.enemies), 4)
-        self.assertEqual([enemy.hp for enemy in self.room.enemies], [65, 65, 30, 30])
+    def defeat_enemies(self):
+        for wave in (self.room.combat_pillbugs, self.room.golems):
+            for enemy in wave:
+                enemy.hp = 0
+            self.room.update_enemies(self.player, 0)
+
+    def test_ground_wave_has_two_pillbugs_below_the_hidden_golems(self):
+        self.assertEqual(self.room.enemies, tuple(self.room.combat_pillbugs))
+        self.assertEqual([enemy.hp for enemy in self.room.enemies], [30, 30])
         left, right = self.room.combat_pillbugs
         self.assertLess(left.x, COMBAT_CENTER_X)
         self.assertGreater(right.x, COMBAT_CENTER_X)
@@ -62,12 +73,32 @@ class CombatClearTests(unittest.TestCase):
         self.assertTrue(all(golem.floor_y > 0 for golem in self.room.golems))
 
     def test_all_four_actual_sword_kills_are_required_before_cover_opens(self):
-        for enemy in self.room.enemies[:-1]:
-            self.kill_with_sword(enemy)
-            self.room.update_enemies(self.player, .1)
-            self.assertFalse(self.room.exit_open)
-            self.assertEqual(self.room.exit_progress, 0)
-        self.kill_with_sword(self.room.enemies[-1])
+        first_bug, last_bug = self.room.combat_pillbugs
+        first_golem, last_golem = self.room.golems
+        initial_golem = first_golem.x, first_golem.attack_cooldown
+        self.player.recover_at(first_golem.x - 120, first_golem.floor_y, 0)
+        self.player.slash, self.player.swing_id = (0, 1, "attack"), 1
+        self.room.update_enemies(self.player, .1)
+        self.assertEqual((first_golem.x, first_golem.attack_cooldown, first_golem.hp), (*initial_golem, 65))
+        self.assertFalse(Health((130, 0, 0)).check_contact(self.player, self.room.enemies, 0))
+        with patch.object(first_golem, "draw") as draw:
+            self.room.draw(self.camera)
+            draw.assert_not_called()
+        self.kill_with_sword(first_bug)
+        self.assertEqual(self.room.enemies, tuple(self.room.combat_pillbugs))
+        self.kill_with_sword(last_bug)
+        self.assertTrue(all(golem.phase == "emerge" for golem in self.room.golems))
+        self.assertTrue(self.room.entrance_locked)
+        self.assertEqual(self.room.exit_progress, 0)
+        with patch.object(self.room.golem_emergence, "draw") as draw:
+            self.room.draw(self.camera)
+            self.assertEqual(draw.call_count, 2)
+        self.room.update_enemies(self.player, GOLEM_EMERGE_DURATION)
+        self.kill_with_sword(first_golem)
+        self.room.update_enemies(self.player, .1)
+        self.assertTrue(self.room.entrance_locked)
+        self.assertEqual(self.room.exit_progress, 0)
+        self.kill_with_sword(last_golem)
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION / 2)
         self.assertGreater(self.room.exit_progress, 0)
         self.assertFalse(self.room.exit_open)
@@ -81,8 +112,7 @@ class CombatClearTests(unittest.TestCase):
         for _ in range(20):
             self.step()
         self.assertEqual((self.player.y, self.player.grounded), (0, True))
-        for enemy in self.room.enemies:
-            enemy.hp = 0
+        self.defeat_enemies()
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
         for x in (COMBAT_EXIT_LEFT - 80, COMBAT_EXIT_RIGHT + 80):
             self.assertTrue(self.player.recover_at(x, 100, 0))
@@ -110,8 +140,7 @@ class CombatClearTests(unittest.TestCase):
         self.assertFalse(self.player._overlaps_terrain())
 
     def test_sliding_cover_still_supports_right_side_while_left_side_is_open(self):
-        for enemy in self.room.enemies:
-            enemy.hp = 0
+        self.defeat_enemies()
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION / 2)
         terrain = self.room.combat_terrain()
         # Freeze the half-open cover to check each side's support independently.
@@ -123,8 +152,7 @@ class CombatClearTests(unittest.TestCase):
             self.assertEqual(self.player.y < 0, falling)
 
     def test_clear_persists_on_room_return_but_fresh_encounter_is_closed(self):
-        for enemy in self.room.enemies:
-            enemy.hp = 0
+        self.defeat_enemies()
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
         self.room.room = "gallery"
         self.room.enter(self.player, self.camera)
@@ -137,8 +165,7 @@ class CombatClearTests(unittest.TestCase):
         self.assertEqual(sum(enemy.hp > 0 for enemy in (*fresh.golems, *fresh.combat_pillbugs)), 4)
 
     def test_fixed_socket_ledges_remain_after_the_thin_lid_retracts(self):
-        for enemy in self.room.enemies:
-            enemy.hp = 0
+        self.defeat_enemies()
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
         for x in (COMBAT_EXIT_LEFT + 20, COMBAT_EXIT_RIGHT - 20):
             self.assertTrue(self.player.recover_at(x, 0, 0))
@@ -152,8 +179,7 @@ class CombatClearTests(unittest.TestCase):
         health = Health((130, 0, 0))
         self.assertTrue(health.check_contact(self.player, self.room.enemies, 0))
         self.assertEqual(health.current, 90)
-        for enemy in self.room.enemies:
-            enemy.hp = 0
+        self.defeat_enemies()
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
         shot = CrystalProjectile(COMBAT_CENTER_X, 80, 0, -200)
         self.room.projectiles.append(shot)

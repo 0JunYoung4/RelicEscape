@@ -1,4 +1,4 @@
-"""Verify the room remains empty until the hero reaches its center."""
+"""Verify that the entrance seals before the first combat wave appears."""
 
 import gc
 import os
@@ -13,8 +13,8 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 from pico2d import pico2d as pico
 
 from health import Health
-from lower_caves import (COMBAT_CENTER_X, COMBAT_EXIT_DURATION, COMBAT_TRIGGER_RADIUS,
-                         COMBAT_WIDTH, LowerCaves)
+from lower_caves import (COMBAT_CENTER_X, COMBAT_EXIT_DURATION, COMBAT_GATE_DURATION,
+                         COMBAT_TRIGGER_RADIUS, COMBAT_WIDTH, LowerCaves)
 from main import Camera
 from player import Player
 
@@ -57,10 +57,11 @@ class CombatTriggerTests(unittest.TestCase):
             golems.assert_not_called()
             bugs.assert_not_called()
 
-    def test_running_to_center_triggers_four_enemies_at_each_frame_rate(self):
+    def test_running_to_center_closes_the_gate_before_pillbugs_emerge_at_each_frame_rate(self):
         for fps in (30, 60, 120):
             with self.subTest(fps=fps):
-                self.room.encounter_started = False
+                self.room = LowerCaves(self.cave)
+                self.room.room = "combat"
                 self.room.enter(self.player, self.camera)
                 for _ in range(3 * fps):
                     self.room.update(self.player, self.camera, 1 / fps, interact=False,
@@ -73,22 +74,38 @@ class CombatTriggerTests(unittest.TestCase):
                     self.assertEqual(self.room.enemies, ())
                 self.assertTrue(self.room.encounter_started)
                 self.assertLessEqual(abs(self.player.x - COMBAT_CENTER_X), COMBAT_TRIGGER_RADIUS)
-                self.assertEqual([enemy.hp for enemy in self.room.enemies], [65, 65, 30, 30])
+                self.assertTrue(self.room.entrance_locked)
+                with patch.object(self.room.combat_pillbugs[0], "draw") as bug, \
+                        patch.object(self.room.golems[0], "draw") as golem:
+                    self.room.draw(self.camera)
+                    bug.assert_not_called()
+                    golem.assert_not_called()
+                for _ in range(fps):
+                    if self.room.entrance_progress >= 1:
+                        break
+                    self.assertEqual(self.room.enemies, ())
+                    self.room.update_enemies(self.player, 1 / fps)
+                self.assertEqual(self.room.entrance_progress, 1)
+                self.assertEqual(self.room.enemies, tuple(self.room.combat_pillbugs))
+                self.assertTrue(all(bug.phase == "emerge" for bug in self.room.enemies))
 
     def test_encounter_and_clear_persist_on_retreat_and_only_fresh_room_waits_again(self):
         self.player.recover_at(COMBAT_CENTER_X, 0, 0)
-        self.room.update_enemies(self.player, 0)
+        self.room.update_enemies(self.player, COMBAT_GATE_DURATION)
         enemies = self.room.enemies
-        enemies[0].hp = 53
+        enemies[0].hp = 18
         self.room.room = "gallery"
         self.room.enter(self.player, self.camera)
         self.room.room = "combat"
         self.room.enter(self.player, self.camera)
         self.assertTrue(self.room.encounter_started)
         self.assertEqual(self.room.enemies, enemies)
-        self.assertEqual(self.room.enemies[0].hp, 53)
+        self.assertEqual(self.room.enemies[0].hp, 18)
         for enemy in enemies:
             enemy.hp = 0
+        self.room.update_enemies(self.player, 0)
+        for golem in self.room.golems:
+            golem.hp = 0
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
         self.player.recover_at(COMBAT_CENTER_X, 0, 0)
         self.room.update_enemies(self.player, .1)

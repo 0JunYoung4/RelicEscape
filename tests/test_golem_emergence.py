@@ -14,7 +14,7 @@ from pico2d import pico2d as pico
 
 from crystal_golem import EMERGE_ATTACK_DELAY, EMERGE_DURATION, CrystalGolem
 from health import Health
-from lower_caves import COMBAT_CENTER_X, COMBAT_PLATFORMS, COMBAT_WIDTH, LowerCaves
+from lower_caves import COMBAT_CENTER_X, COMBAT_GATE_DURATION, COMBAT_PLATFORMS, COMBAT_WIDTH, LowerCaves
 from main import Camera
 from player import Player
 
@@ -68,7 +68,7 @@ class GolemEmergenceTests(unittest.TestCase):
 
 
 class GolemEmergenceRoomTests(unittest.TestCase):
-    def test_center_trigger_and_return_preserve_both_golem_emergences_then_resume(self):
+    def test_pillbug_clear_and_return_preserve_both_golem_emergences_then_resume(self):
         pico.open_canvas(960, 540)
         try:
             room = LowerCaves(SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096)))
@@ -77,9 +77,11 @@ class GolemEmergenceRoomTests(unittest.TestCase):
             camera = Camera(960, COMBAT_WIDTH)
             room.enter(player, camera)
             player.recover_at(COMBAT_CENTER_X, 0, 0)
+            room.update_enemies(player, COMBAT_GATE_DURATION)
+            for bug in room.combat_pillbugs:
+                bug.hp = 0
             room.update_enemies(player, 0)
-            self.assertEqual(len(room.enemies), 4)
-            self.assertTrue(all(enemy.phase == "emerge" for enemy in room.enemies))
+            self.assertTrue(all(golem.phase == "emerge" for golem in room.golems))
             with patch.object(room.golem_emergence, "draw") as emerging, \
                     patch.object(room.golem_walk, "draw") as walking, \
                     patch.object(room.golem_attack, "draw") as attack:

@@ -1,4 +1,4 @@
-"""Verify the arena seals at spawn, prevents relic escape, and opens on clear."""
+"""Verify the arena seals before spawn, prevents relic escape, and opens on clear."""
 
 import gc
 import os
@@ -38,6 +38,11 @@ class CombatGateTests(unittest.TestCase):
         self.player.recover_at(COMBAT_CENTER_X, 0, 0)
         self.room.update_enemies(self.player, dt)
 
+    def clear_pillbugs(self):
+        for bug in self.room.combat_pillbugs:
+            bug.hp = 0
+        self.room.update_enemies(self.player, 0)
+
     def test_center_trigger_immediately_seals_then_blocks_standing_crouched_and_jumping_exit(self):
         self.assertFalse(self.room.entrance_locked)
         self.trigger(0)
@@ -61,15 +66,16 @@ class CombatGateTests(unittest.TestCase):
 
     def test_one_remaining_enemy_keeps_seal_and_clear_reopens_both_exits(self):
         self.trigger()
-        for enemy in self.room.enemies[:-1]:
-            enemy.hp = 0
+        self.clear_pillbugs()
+        self.room.golems[0].hp = 0
         self.room.update_enemies(self.player, 1)
         self.assertEqual(self.room.entrance_progress, 1)
         self.assertFalse(self.room.exit_open)
-        self.room.enemies[-1].hp = 0
+        self.room.golems[-1].hp = 0
         self.room.update_enemies(self.player, COMBAT_GATE_DURATION / 2)
         self.assertTrue(self.room.entrance_locked)
         self.assertGreater(self.room.entrance_progress, 0)
+        self.assertGreater(self.room.exit_progress, 0)
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
         self.assertFalse(self.room.entrance_locked)
         self.assertTrue(self.room.exit_open)
@@ -87,8 +93,9 @@ class CombatGateTests(unittest.TestCase):
         self.assertFalse(self.room.allows_relic_destination(outside))
         self.assertFalse(self.room.allows_relic_destination((130, 700, 0)))
         self.assertTrue(self.room.allows_relic_destination((COMBAT_CENTER_X + 100, 0, 0)))
-        for enemy in self.room.enemies:
-            enemy.hp = 0
+        self.clear_pillbugs()
+        for golem in self.room.golems:
+            golem.hp = 0
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
         self.assertTrue(self.room.allows_relic_destination(outside))
 
@@ -97,8 +104,9 @@ class CombatGateTests(unittest.TestCase):
         self.trigger()
         self.room.enter(self.player, self.camera)
         self.assertGreater(self.player.get_hitbox()[0], COMBAT_ENTRANCE_BARRIER[2])
-        for enemy in self.room.enemies:
-            enemy.hp = 0
+        self.clear_pillbugs()
+        for golem in self.room.golems:
+            golem.hp = 0
         self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
         self.room.room = "gallery"
         self.room.enter(self.player, self.camera)

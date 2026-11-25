@@ -13,7 +13,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 from pico2d import pico2d as pico
 
 from health import Health
-from lower_caves import COMBAT_CENTER_X, COMBAT_WIDTH, LowerCaves
+from lower_caves import COMBAT_CENTER_X, COMBAT_GATE_DURATION, COMBAT_WIDTH, LowerCaves
 from main import Camera
 from pillbug import ATTACK_COOLDOWN, EMERGE_DURATION, Pillbug
 from player import Player
@@ -74,7 +74,7 @@ class PillbugEmergenceRoomTests(unittest.TestCase):
             room.enter(player, camera)
             self.assertFalse(room.encounter_started)
             player.recover_at(COMBAT_CENTER_X, 0, 0)
-            room.update_enemies(player, 0)
+            room.update_enemies(player, COMBAT_GATE_DURATION)
             self.assertEqual([bug.phase for bug in room.combat_pillbugs], ["emerge", "emerge"])
             with patch.object(room.pillbug_emergence, "draw") as emerging, \
                     patch.object(room.crawl, "draw") as crawl:

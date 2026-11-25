@@ -17,6 +17,8 @@ Last synced: 2026-11-05T03:23:05
 
 - 2026-11-25 B1 바위 소라게 v4를 몸체·왼쪽 집게·오른쪽 집게의 투명 PNG로 분리했다. `assets/concepts/b1-hermit-crab/claw-slam-preview-v4.gif`에서 화면 왼쪽 집게를 들어 올려 바닥을 내려찍고 회수한다. `parts-v4.json`에 양쪽 어깨의 조립 좌표를 저장했다. 외형·모션 시안 단계다.
 
+- 2026-11-25 전투방에서 중앙 도달 시 돌문을 완전히 닫은 뒤 바닥 공벌레 두 마리가 등장한다. 공벌레 전멸 후 중앙 상단 발판에서 골렘 두 마리가 등장하고, 골렘 전멸 후 입구와 하강로를 함께 연다. `LowerCaves.update_combat_encounter`.
+
 - 2026-11-25 B–C 이음새를 단일 동굴 원경과 바닥으로 통합했다. 기존 원경을 C 왼쪽까지 넓히고, 석재 발판의 깊이를 유지하며 B 왼쪽 착지점에서 B1 전실까지 이어 그린다. `lower_route_b_art.py`, `tests/test_lower_route_c.py`.
 
 - 2026-11-25 B1 바위 소라게의 조립 외형 v4와 실제 게임 배율 기준 비교 이미지 `assets/concepts/b1-hermit-crab/assembled-preview-v4.png`를 제작했다. 기본 자세 높이 760을 가정해 높이 140인 수정 골렘 및 플레이어와 같은 바닥에 두고 확인했다.

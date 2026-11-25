@@ -14,9 +14,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from PIL import Image
 from pico2d import pico2d as pico
-from crystal_golem import ATTACK_RELEASE
-from lower_caves import COMBAT_CENTER_X, COMBAT_WIDTH, LowerCaves
+from crystal_golem import ATTACK_RELEASE, EMERGE_DURATION as GOLEM_EMERGE_DURATION
+from lower_caves import (COMBAT_CENTER_X, COMBAT_EXIT_DURATION, COMBAT_GATE_DURATION,
+                         COMBAT_WIDTH, LowerCaves)
 from main import Camera
+from pillbug import EMERGE_DURATION as PILLBUG_EMERGE_DURATION
 from player import Player
 
 
@@ -24,6 +26,7 @@ def render(room, player, camera, path=None):
     pico.clear_canvas()
     room.draw(camera)
     room.draw_combat_exit(camera)
+    room.draw_combat_gate(camera)
     player.draw(camera)
     room.draw_hit_impacts(camera)
     room.draw_foreground(camera)
@@ -74,8 +77,8 @@ if __name__ == "__main__":
     player.recover_at(COMBAT_CENTER_X, 0, 0)
     room.follow_camera(player, camera)
     render(room, player, camera, output / f"{args.prefix}-floor.png")
-    room.encounter_started = True
-    player.recover_at(COMBAT_CENTER_X, 0, 0)
+    room.update_enemies(player, COMBAT_GATE_DURATION)
+    room.update_enemies(player, PILLBUG_EMERGE_DURATION)
     render(room, player, camera, output / f"{args.prefix}-combat.png")
     player.recover_at(COMBAT_CENTER_X, 650, 0)
     room.follow_camera(player, camera)
@@ -88,13 +91,20 @@ if __name__ == "__main__":
             frames.append(render(room, player, camera).convert("RGB"))
         frames[0].save(output / f"{args.prefix}-camera.gif", save_all=True,
                        append_images=frames[1:], duration=85, loop=0, optimize=False)
-    room.exit_progress, room.shaft_visibility = 1, 1
+    for bug in room.combat_pillbugs:
+        bug.hp = 0
+    room.update_enemies(player, 0)
+    if args.projectiles:
+        player.recover_at(COMBAT_CENTER_X, 0, 0)
+        room.follow_camera(player, camera)
+        room.update_enemies(player, GOLEM_EMERGE_DURATION)
+        render_projectile_sample(room, player, camera, output / f"{args.prefix}-projectiles.png")
+        room.projectiles.clear()
+    for golem in room.golems:
+        golem.hp = 0
+    room.update_enemies(player, COMBAT_EXIT_DURATION)
+    room.shaft_visibility = 1
     player.recover_at(COMBAT_CENTER_X, -300, 0)
     room.follow_camera(player, camera)
     render(room, player, camera, output / f"{args.prefix}-shaft.png")
-    if args.projectiles:
-        room.exit_progress, room.shaft_visibility = 0, 0
-        player.recover_at(COMBAT_CENTER_X, 0, 0)
-        room.follow_camera(player, camera)
-        render_projectile_sample(room, player, camera, output / f"{args.prefix}-projectiles.png")
     print(f"Saved {args.prefix} to {output}")

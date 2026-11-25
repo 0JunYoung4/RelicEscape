@@ -99,7 +99,7 @@ class PillbugDeathRenderTests(unittest.TestCase):
         for name in ("gallery", "combat"):
             with self.subTest(room=name):
                 self.room.room = name
-                self.room.encounter_started = True
+                self.room.combat_phase = "pillbugs"
                 self.room.enter(self.player, self.camera)
                 bug = (self.room.pillbugs if name == "gallery" else self.room.combat_pillbugs)[0]
                 for _ in range(3):

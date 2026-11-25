@@ -60,7 +60,7 @@ class GolemDeathRenderTests(unittest.TestCase):
     def setUp(self):
         pico.open_canvas(960, 540)
         self.room = LowerCaves(SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096)))
-        self.room.room, self.room.encounter_started = "combat", True
+        self.room.room, self.room.combat_phase = "combat", "golems"
         self.player = Player(130, 0, COMBAT_WIDTH)
         self.camera = Camera(960, COMBAT_WIDTH)
         self.room.enter(self.player, self.camera)

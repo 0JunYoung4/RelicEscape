@@ -89,7 +89,7 @@ class CrystalAttackRoomTests(unittest.TestCase):
         pico.open_canvas(960, 540)
         self.room = LowerCaves(SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096)))
         self.room.room = "combat"
-        self.room.encounter_started = True
+        self.room.combat_phase = "golems"
         self.player = Player(130, 0, COMBAT_WIDTH)
         self.camera = Camera(960, COMBAT_WIDTH)
         self.room.enter(self.player, self.camera)

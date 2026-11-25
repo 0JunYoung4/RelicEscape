@@ -87,7 +87,7 @@ class CrystalGolemRoomTests(unittest.TestCase):
         cave = SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096))
         self.lower = LowerCaves(cave)
         self.lower.room = "combat"
-        self.lower.encounter_started = True
+        self.lower.combat_phase = "golems"
         self.player = Player(130, 0, COMBAT_WIDTH)
         self.camera = main.Camera(960, COMBAT_WIDTH)
         self.lower.enter(self.player, self.camera)
@@ -168,7 +168,8 @@ class CrystalGolemRoomTests(unittest.TestCase):
         def make_room(cave):
             room = LowerCaves(cave)
             room.room = "combat"
-            room.encounter_started = True
+            if not rooms:
+                room.combat_phase = "golems"
             room.has_relic = not rooms
             room.golems = [CrystalGolem(120, 140)]
             rooms.append(room)

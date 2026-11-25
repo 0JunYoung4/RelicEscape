@@ -2,7 +2,7 @@
 memoc: true
 type: project
 scope: environment-art
-updated: 2026-11-23
+updated: 2026-11-25
 status: active
 tags:
   - memoc/wiki
@@ -16,7 +16,7 @@ tags:
 
 배경 명암은 낮은 입구까지 이어져 벽 안쪽 면에 수직 이음새가 생기지 않게 한다. 모든 새 효과는 지면 아래를 그리지 않는다. 근접 식생은 월드 천장에 고정하고 천장보다 위는 잘라 화면 고정·임계점 전환을 방지한다. 호출자의 클립과 블렌드를 복원한다.
 
-발판·적4마리·충돌·카메라·덮개112·입구 봉쇄·하강 접근 조명은 그대로다. 시작 동굴·최초 착지방·이끼 통로에는 새 분위기를 적용하지 않았다.
+전투방 중앙에 들어서면 입구 돌벽이 먼저 닫힌다. 바닥 공벌레 두 마리가 등장하고, 둘을 처치하면 중앙 상단 발판에서 골렘 두 마리가 등장한다. 마지막 골렘을 처치하면 왼쪽 돌벽과 바닥의 두께 112인 덮개가 함께 열리기 시작한다. 덮개가 열린 뒤 구멍에 접근하면 하강로가 서서히 드러난다.
 
 렌더 회귀 검사는 공유 배경 색조 복원, 지면 아래 누출 방지, SDL 상태 복원, 카메라 이동 중 전경 위치 정렬을 확인한다. 최신 SDL 비교에서는 실제 골렘 발사 코드로 생성한 수정탄의 같은 비행 시점을 확인했다. [전후 비교](../../../docs/combat-readability-comparison.jpg) · [높은 발판 시점](../../../docs/combat-readability-high.png)
 
@@ -24,6 +24,7 @@ tags:
 
 - [프로젝트 허브](README.md)
 - [미술 방향과 자산 프롬프트](../../../docs/environment-art-direction.md)
+- [전투방 단계별 조우](../../worklog/codex/2026-11/20261125-combat-room-waves.md)
 - [녹색 거리 조사](../knowledge/greenpath-art-study.md)
 - [최신 전투 시야 작업](../../worklog/codex/2026-11/20261123-combat-readability.md)
 - [이전 전투방 미술 작업](../../worklog/codex/2026-11/20261123-combat-atmosphere.md)
