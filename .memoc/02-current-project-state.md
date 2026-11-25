@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 점프 시안 v2 `assets/concepts/b1-hermit-crab/boss-jump-preview-v2.gif`는 기본 자세에서 발구름까지 44개 프레임으로 연결한다. 화면 밖에서 1.4초 대기한 뒤 대기가 끝날 때의 플레이어 위치로 떨어진다. 같은 보스 동작은 투명 WebP로 저장했다.
+
 - 2026-11-25 B1 바위 소라게 점프 시안 `assets/concepts/b1-hermit-crab/boss-jump-preview-v1.gif`와 투명 포즈 시트를 제작했다. 짧고 굵은 다리의 접힘으로 발구름과 착지를 표현하고 공중에서는 다리와 집게를 몸 가까이 모은다.
 
 - 2026-11-25 B1 둥지 v2 `assets/concepts/b1-hermit-crab/nest-room-v2/`의 방 너비를 4,200으로 늘리고 뒤쪽 단차를 제거했다. 원경·단일 바닥·식생과 조형물 전경 및 960 × 540 카메라를 축소한 좌우 스크롤 낙하 공격 GIF를 저장했다.
