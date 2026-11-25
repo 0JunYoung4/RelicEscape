@@ -1,0 +1,584 @@
+{
+  "coordinates": "Top-left source pixels, exclusive right and bottom bounds. Preview widths are measured at 960x540.",
+  "assets": [
+    {
+      "file": "low-hooked-grass.png",
+      "layer": "floor",
+      "image_size": [
+        1920,
+        819
+      ],
+      "visible_bounds": [
+        153,
+        118,
+        1754,
+        710
+      ],
+      "pivot_px": [
+        954,
+        709
+      ],
+      "preview_width_px": 48
+    },
+    {
+      "file": "bead-moss-patch.png",
+      "layer": "floor",
+      "image_size": [
+        2172,
+        724
+      ],
+      "visible_bounds": [
+        118,
+        138,
+        2049,
+        582
+      ],
+      "pivot_px": [
+        1084,
+        581
+      ],
+      "preview_width_px": 55
+    },
+    {
+      "file": "moss-crack-shoots.png",
+      "layer": "floor",
+      "image_size": [
+        302,
+        431
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        289,
+        418
+      ],
+      "pivot_px": [
+        151,
+        417
+      ],
+      "preview_width_px": 36,
+      "source_atlas": "source/ground-sprouts.png",
+      "source_crop": [
+        182,
+        102,
+        484,
+        533
+      ]
+    },
+    {
+      "file": "split-moss-cushion.png",
+      "layer": "floor",
+      "image_size": [
+        545,
+        186
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        532,
+        173
+      ],
+      "pivot_px": [
+        272,
+        172
+      ],
+      "preview_width_px": 64,
+      "source_atlas": "source/ground-sprouts.png",
+      "source_crop": [
+        650,
+        292,
+        1195,
+        478
+      ]
+    },
+    {
+      "file": "round-fan-fern.png",
+      "layer": "floor",
+      "image_size": [
+        521,
+        268
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        508,
+        255
+      ],
+      "pivot_px": [
+        260,
+        254
+      ],
+      "preview_width_px": 54,
+      "source_atlas": "source/ground-sprouts.png",
+      "source_crop": [
+        67,
+        809,
+        588,
+        1077
+      ]
+    },
+    {
+      "file": "low-club-spores.png",
+      "layer": "floor",
+      "image_size": [
+        377,
+        340
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        364,
+        327
+      ],
+      "pivot_px": [
+        188,
+        326
+      ],
+      "preview_width_px": 44,
+      "source_atlas": "source/ground-sprouts.png",
+      "source_crop": [
+        732,
+        745,
+        1109,
+        1085
+      ]
+    },
+    {
+      "file": "overhanging-fern.png",
+      "layer": "ledge",
+      "image_size": [
+        1536,
+        1024
+      ],
+      "visible_bounds": [
+        200,
+        55,
+        1237,
+        941
+      ],
+      "pivot_px": [
+        407,
+        241
+      ],
+      "preview_width_px": 65
+    },
+    {
+      "file": "ceiling-moss-drip.png",
+      "layer": "ceiling",
+      "image_size": [
+        542,
+        268
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        529,
+        255
+      ],
+      "pivot_px": [
+        271,
+        13
+      ],
+      "preview_width_px": 96,
+      "source_atlas": "source/ceiling-wall-roots.png",
+      "source_crop": [
+        44,
+        178,
+        586,
+        446
+      ]
+    },
+    {
+      "file": "crooked-root-drop.png",
+      "layer": "ceiling",
+      "image_size": [
+        470,
+        510
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        457,
+        497
+      ],
+      "pivot_px": [
+        235,
+        13
+      ],
+      "preview_width_px": 56,
+      "source_atlas": "source/ceiling-wall-roots.png",
+      "source_crop": [
+        704,
+        60,
+        1174,
+        570
+      ]
+    },
+    {
+      "file": "wall-flat-ivy.png",
+      "layer": "wall",
+      "image_size": [
+        327,
+        409
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        314,
+        396
+      ],
+      "pivot_px": [
+        313,
+        204
+      ],
+      "preview_width_px": 64,
+      "source_atlas": "source/ceiling-wall-roots.png",
+      "source_crop": [
+        150,
+        751,
+        477,
+        1160
+      ]
+    },
+    {
+      "file": "ledge-moss-cascade.png",
+      "layer": "ledge",
+      "image_size": [
+        582,
+        268
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        569,
+        255
+      ],
+      "pivot_px": [
+        124,
+        64
+      ],
+      "preview_width_px": 87,
+      "source_atlas": "source/ceiling-wall-roots.png",
+      "source_crop": [
+        652,
+        827,
+        1234,
+        1095
+      ]
+    },
+    {
+      "file": "squat-cave-fungi.png",
+      "layer": "floor",
+      "image_size": [
+        1536,
+        1024
+      ],
+      "visible_bounds": [
+        213,
+        180,
+        1305,
+        801
+      ],
+      "pivot_px": [
+        759,
+        800
+      ],
+      "preview_width_px": 50
+    },
+    {
+      "file": "moss-rock-chips.png",
+      "layer": "floor",
+      "image_size": [
+        1610,
+        977
+      ],
+      "visible_bounds": [
+        229,
+        238,
+        1366,
+        726
+      ],
+      "pivot_px": [
+        798,
+        725
+      ],
+      "preview_width_px": 61
+    },
+    {
+      "file": "weathered-marker-fragment.png",
+      "layer": "floor",
+      "image_size": [
+        428,
+        367
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        415,
+        354
+      ],
+      "pivot_px": [
+        214,
+        353
+      ],
+      "preview_width_px": 71,
+      "source_atlas": "source/ruin-fragments.png",
+      "source_crop": [
+        123,
+        147,
+        551,
+        514
+      ]
+    },
+    {
+      "file": "mossy-ring-shard.png",
+      "layer": "floor",
+      "image_size": [
+        453,
+        287
+      ],
+      "visible_bounds": [
+        13,
+        12,
+        440,
+        274
+      ],
+      "pivot_px": [
+        226,
+        273
+      ],
+      "preview_width_px": 86,
+      "source_atlas": "source/ruin-fragments.png",
+      "source_crop": [
+        698,
+        224,
+        1151,
+        511
+      ]
+    },
+    {
+      "file": "split-slate-scrap.png",
+      "layer": "floor",
+      "image_size": [
+        516,
+        237
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        503,
+        224
+      ],
+      "pivot_px": [
+        258,
+        223
+      ],
+      "preview_width_px": 61,
+      "source_atlas": "source/ruin-fragments.png",
+      "source_crop": [
+        61,
+        842,
+        577,
+        1079
+      ]
+    },
+    {
+      "file": "dark-root-stump.png",
+      "layer": "floor",
+      "image_size": [
+        548,
+        233
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        535,
+        220
+      ],
+      "pivot_px": [
+        274,
+        219
+      ],
+      "preview_width_px": 90,
+      "source_atlas": "source/ruin-fragments.png",
+      "source_crop": [
+        666,
+        828,
+        1214,
+        1061
+      ]
+    },
+    {
+      "file": "near-shadow-ribbon-grass.png",
+      "layer": "foreground",
+      "image_size": [
+        1774,
+        887
+      ],
+      "visible_bounds": [
+        233,
+        381,
+        1433,
+        773
+      ],
+      "pivot_px": [
+        833,
+        772
+      ],
+      "preview_width_px": 96,
+      "suggested_texture_rgb": [
+        144,
+        160,
+        171
+      ]
+    },
+    {
+      "file": "near-shadow-rounded-leaves.png",
+      "layer": "foreground",
+      "image_size": [
+        1536,
+        1024
+      ],
+      "visible_bounds": [
+        220,
+        262,
+        1272,
+        807
+      ],
+      "pivot_px": [
+        746,
+        806
+      ],
+      "preview_width_px": 85,
+      "suggested_texture_rgb": [
+        144,
+        160,
+        171
+      ]
+    },
+    {
+      "file": "shadow-fern-scroll.png",
+      "layer": "foreground",
+      "image_size": [
+        331,
+        358
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        318,
+        345
+      ],
+      "pivot_px": [
+        166,
+        344
+      ],
+      "preview_width_px": 74,
+      "source_atlas": "source/foreground-silhouettes.png",
+      "source_crop": [
+        149,
+        145,
+        480,
+        503
+      ],
+      "suggested_texture_rgb": [
+        144,
+        160,
+        171
+      ]
+    },
+    {
+      "file": "shadow-stoop-leaves.png",
+      "layer": "foreground",
+      "image_size": [
+        560,
+        170
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        548,
+        157
+      ],
+      "pivot_px": [
+        280,
+        156
+      ],
+      "preview_width_px": 119,
+      "source_atlas": "source/foreground-silhouettes.png",
+      "source_crop": [
+        661,
+        317,
+        1221,
+        487
+      ],
+      "suggested_texture_rgb": [
+        144,
+        160,
+        171
+      ]
+    },
+    {
+      "file": "shadow-wall-root-hook.png",
+      "layer": "side",
+      "image_size": [
+        504,
+        356
+      ],
+      "visible_bounds": [
+        13,
+        13,
+        491,
+        343
+      ],
+      "pivot_px": [
+        13,
+        178
+      ],
+      "preview_width_px": 72,
+      "source_atlas": "source/foreground-silhouettes.png",
+      "source_crop": [
+        71,
+        776,
+        575,
+        1132
+      ],
+      "suggested_texture_rgb": [
+        144,
+        160,
+        171
+      ]
+    },
+    {
+      "file": "shadow-low-moss-lobes.png",
+      "layer": "foreground",
+      "image_size": [
+        566,
+        156
+      ],
+      "visible_bounds": [
+        12,
+        13,
+        553,
+        143
+      ],
+      "pivot_px": [
+        282,
+        142
+      ],
+      "preview_width_px": 94,
+      "source_atlas": "source/foreground-silhouettes.png",
+      "source_crop": [
+        659,
+        971,
+        1225,
+        1127
+      ],
+      "suggested_texture_rgb": [
+        144,
+        160,
+        171
+      ]
+    }
+  ]
+}
