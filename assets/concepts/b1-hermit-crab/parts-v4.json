@@ -1,0 +1,66 @@
+{
+  "units": "Pixels from each named PNG\u2019s top-left. Scale is relative to the body sprite.",
+  "parts": {
+    "body-upright": {
+      "file": "body-upright-v4.png",
+      "atlas_origin": [
+        270,
+        0
+      ],
+      "size": [
+        996,
+        602
+      ]
+    },
+    "claw-left": {
+      "file": "claw-left-v4.png",
+      "atlas_origin": [
+        129,
+        681
+      ],
+      "size": [
+        407,
+        324
+      ]
+    },
+    "claw-right": {
+      "file": "claw-right-v4.png",
+      "atlas_origin": [
+        997,
+        681
+      ],
+      "size": [
+        410,
+        324
+      ]
+    }
+  },
+  "body_ground_anchor": [
+    498,
+    593
+  ],
+  "attachments": {
+    "claw-left": {
+      "pivot": [
+        77,
+        72
+      ],
+      "shoulder": [
+        245,
+        401
+      ],
+      "scale": 0.73
+    },
+    "claw-right": {
+      "pivot": [
+        332,
+        72
+      ],
+      "shoulder": [
+        751,
+        401
+      ],
+      "scale": 0.73
+    }
+  }
+}
