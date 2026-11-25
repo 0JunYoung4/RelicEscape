@@ -1,0 +1,167 @@
+{
+  "coordinates": "Pixels from top-left. Visible bounds exclude right and bottom. Pivots are placement starting points.",
+  "assets": [
+    {
+      "file": "vine-ceiling-drape.png",
+      "layer": "ceiling",
+      "image_size": [
+        1448,
+        1086
+      ],
+      "visible_bounds": [
+        151,
+        73,
+        1272,
+        1023
+      ],
+      "pivot_px": [
+        712,
+        73
+      ]
+    },
+    {
+      "file": "vine-wall-creeper.png",
+      "layer": "wall",
+      "image_size": [
+        1024,
+        1536
+      ],
+      "visible_bounds": [
+        47,
+        16,
+        578,
+        1521
+      ],
+      "pivot_px": [
+        47,
+        768
+      ]
+    },
+    {
+      "file": "vine-loose-swag.png",
+      "layer": "ceiling",
+      "image_size": [
+        2172,
+        724
+      ],
+      "visible_bounds": [
+        22,
+        16,
+        2150,
+        656
+      ],
+      "pivot_px": [
+        1086,
+        16
+      ]
+    },
+    {
+      "file": "grass-rounded-tuft.png",
+      "layer": "floor",
+      "image_size": [
+        1942,
+        809
+      ],
+      "visible_bounds": [
+        60,
+        48,
+        1736,
+        744
+      ],
+      "pivot_px": [
+        898,
+        743
+      ]
+    },
+    {
+      "file": "grass-soft-sedge.png",
+      "layer": "floor",
+      "image_size": [
+        1774,
+        887
+      ],
+      "visible_bounds": [
+        93,
+        144,
+        1666,
+        762
+      ],
+      "pivot_px": [
+        880,
+        761
+      ]
+    },
+    {
+      "file": "grass-small-sprigs.png",
+      "layer": "floor",
+      "image_size": [
+        1536,
+        1024
+      ],
+      "visible_bounds": [
+        273,
+        165,
+        1242,
+        886
+      ],
+      "pivot_px": [
+        758,
+        885
+      ]
+    },
+    {
+      "file": "shadow-arching-grass.png",
+      "layer": "foreground",
+      "image_size": [
+        2172,
+        724
+      ],
+      "visible_bounds": [
+        132,
+        113,
+        2038,
+        669
+      ],
+      "pivot_px": [
+        1085,
+        668
+      ]
+    },
+    {
+      "file": "shadow-overlapping-leaves.png",
+      "layer": "foreground",
+      "image_size": [
+        1774,
+        887
+      ],
+      "visible_bounds": [
+        73,
+        147,
+        1650,
+        797
+      ],
+      "pivot_px": [
+        862,
+        796
+      ]
+    },
+    {
+      "file": "shadow-curled-ferns.png",
+      "layer": "foreground",
+      "image_size": [
+        1536,
+        1024
+      ],
+      "visible_bounds": [
+        133,
+        140,
+        1394,
+        967
+      ],
+      "pivot_px": [
+        764,
+        966
+      ]
+    }
+  ]
+}
