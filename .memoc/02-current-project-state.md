@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 점프 시안 v3 `assets/concepts/b1-hermit-crab/boss-jump-preview-v3.gif`는 바닥에서 발구름을 보여준 뒤 0.04초 동안 위로 스치는 잔상으로 화면을 벗어난다. 화면 밖 대기 1.4초와 낙하·착지 동작을 유지하며 보스만 담은 투명 WebP도 같은 타이밍으로 저장했다.
+
 - 2026-11-25 B1 점프 시안 v2 `assets/concepts/b1-hermit-crab/boss-jump-preview-v2.gif`는 기본 자세에서 발구름까지 44개 프레임으로 연결한다. 화면 밖에서 1.4초 대기한 뒤 대기가 끝날 때의 플레이어 위치로 떨어진다. 같은 보스 동작은 투명 WebP로 저장했다.
 
 - 2026-11-25 B1 바위 소라게 점프 시안 `assets/concepts/b1-hermit-crab/boss-jump-preview-v1.gif`와 투명 포즈 시트를 제작했다. 짧고 굵은 다리의 접힘으로 발구름과 착지를 표현하고 공중에서는 다리와 집게를 몸 가까이 모은다.
