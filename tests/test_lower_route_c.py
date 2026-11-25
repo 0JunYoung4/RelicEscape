@@ -16,6 +16,8 @@ import main
 from health import SPIKE_DAMAGE
 from lower_caves import LowerCaves
 from lower_route_b import SPIKES, LowerRouteB
+from lower_route_b_art import draw_ruin_platform
+from lower_route_b_layout import BACKGROUND_BOTTOM, C_APPROACH_LEDGE, WIDTH as B_WIDTH
 from lower_route_c import CHECKPOINT, ENTRANCE_WIDTH, ENTRANCE_X, FLOOR, LEFT
 from pillbug import Pillbug
 from player import Player, STANDING_HITBOX_WIDTH
@@ -50,6 +52,25 @@ class LowerRouteCTests(unittest.TestCase):
         self.assertEqual(rooms.restart_room, "route_c")
         self.assertAlmostEqual(player.x, ENTRANCE_X + (ENTRANCE_WIDTH + STANDING_HITBOX_WIDTH) / 2)
         self.assertEqual(camera.x, LEFT)
+
+    def test_b_and_c_share_the_rendered_background_and_ledge(self):
+        cave = SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096))
+        rooms = LowerCaves(cave)
+        player = Player(0, 0, main.WORLD_WIDTH)
+        camera = main.Camera(960, main.WORLD_WIDTH)
+        rooms.room = "route_c"
+        rooms.enter(player, camera)
+        art = rooms.route_b.art
+        with patch.object(art.background, "draw_to_origin", wraps=art.background.draw_to_origin) as backdrop, \
+                patch("lower_route_b_art.draw_ruin_platform", wraps=draw_ruin_platform) as draw_platform:
+            rooms.draw(camera)
+        backdrop.assert_called_once()
+        self.assertEqual(backdrop.call_args.args[:2], camera.world_to_screen(LEFT, BACKGROUND_BOTTOM))
+        self.assertEqual(backdrop.call_args.args[2], (B_WIDTH - LEFT) * camera.zoom)
+        ledge = art.platform_images["connected-passage"]
+        bounds = [call.args[3] for call in draw_platform.call_args_list if call.args[1] is ledge]
+        self.assertEqual([(left, right, top) for left, _, right, top in bounds],
+                         [(LEFT, C_APPROACH_LEDGE[2], FLOOR)])
 
     def test_two_pillbugs_replace_the_golem_near_c_and_can_be_hit(self):
         cave = SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096))

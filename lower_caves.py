@@ -126,7 +126,7 @@ class LowerCaves:
             bug.x = (bug.left + bug.right) / 2
             bug.direction = direction
             bug.support_edges = COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL
-        self.encounter_started = False
+        self.combat_phase = "waiting"
         self.entrance_progress = 0.0
         self.wall_effects = StoneWallEffects(COMBAT_ENTRANCE_BARRIER[0], COMBAT_ENTRANCE_BARRIER[2])
         self.exit_progress = 0.0
@@ -196,11 +196,18 @@ class LowerCaves:
         return None
 
     @property
+    def encounter_started(self):
+        return self.combat_phase != "waiting"
+
+    @property
     def enemies(self):
         if self.room == "gallery":
             return self.pillbugs
-        if self.room == "combat" and self.encounter_started:
-            return (*self.golems, *self.combat_pillbugs)
+        if self.room == "combat":
+            if self.combat_phase in ("golems", "cleared"):
+                return (*self.golems, *self.combat_pillbugs)
+            if self.combat_phase == "pillbugs":
+                return tuple(self.combat_pillbugs)
         if self.in_lower_route:
             return tuple(enemy for route in (self.route_a, self.route_b, self.route_c) if route is not None
                          for enemy in route.enemies)
@@ -217,8 +224,7 @@ class LowerCaves:
 
     @property
     def entrance_locked(self):
-        return self.encounter_started and (self.entrance_progress > 0 or
-               any(enemy.hp > 0 for enemy in (*self.golems, *self.combat_pillbugs)))
+        return self.combat_phase not in ("waiting", "cleared") or self.entrance_progress > 0
 
     def combat_terrain(self):
         terrain = COMBAT_TERRAIN
@@ -409,10 +415,11 @@ class LowerCaves:
             self.art.draw_corner(camera, COMBAT_LEFT_WALL, COMBAT_PLATFORMS[0][3], width=84)
             self.art.draw_corner(camera, COMBAT_RIGHT_WALL, COMBAT_PLATFORMS[2][3],
                                  width=84, right_wall=True)
-            if self.encounter_started:
+            if self.combat_phase in ("golems", "cleared"):
                 for golem in self.golems:
                     golem.draw(self.golem_walk, camera, self.golem_attack,
                                self.golem_emergence, self.golem_death)
+            if self.combat_phase in ("pillbugs", "golems", "cleared"):
                 for bug in self.combat_pillbugs:
                     bug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses,
                              self.pillbug_emergence, self.pillbug_death)
@@ -437,10 +444,10 @@ class LowerCaves:
         draw_a = route_a is not None and camera.x + camera.view_width > route_a.origin[0]
         draw_b = route_b is not None and camera.x < route_b.camera_right
         draw_c = route_c is not None and camera.x < C_RIGHT
+        if draw_b:
+            route_b.draw(camera, self.cave.height, passage_left=C_LEFT if route_c is not None else C_RIGHT)
         if draw_c:
             route_c.draw(camera, self.cave.height)
-        if draw_b:
-            route_b.draw(camera, self.cave.height)
         if draw_a:
             route_a.draw(camera)
         if self.route_connection is not None:
@@ -461,13 +468,6 @@ class LowerCaves:
         if route_b is not None:
             route_b.activate_enemies(player)
             b_enemies = route_b.enemies
-        if (self.room == "combat" and not self.encounter_started
-                and abs(player.x - COMBAT_CENTER_X) <= COMBAT_TRIGGER_RADIUS):
-            self.encounter_started = True
-            for golem in self.golems:
-                golem.begin_emergence()
-            for bug in self.combat_pillbugs:
-                bug.begin_emergence()
         if self.enemies:
             strike = None
             downward = False
@@ -492,17 +492,31 @@ class LowerCaves:
                 projectile = enemy.update(dt, target, player.terrain, player.world_width)
                 if projectile is not None:
                     self.projectiles.append(projectile)
-        if (self.room == "combat" and self.encounter_started
-                and all(enemy.hp == 0 for enemy in self.enemies)):
+        if self.room == "combat":
+            self.update_combat_encounter(player, dt)
+            player.terrain = self.combat_terrain()
+
+    def update_combat_encounter(self, player, dt):
+        if (self.combat_phase == "waiting"
+                and abs(player.x - COMBAT_CENTER_X) <= COMBAT_TRIGGER_RADIUS):
+            self.combat_phase = "closing"
+        if self.combat_phase == "closing":
+            self.entrance_progress = min(1.0, self.entrance_progress + dt / COMBAT_GATE_DURATION)
+            if self.entrance_progress >= 1.0:
+                self.combat_phase = "pillbugs"
+                for bug in self.combat_pillbugs:
+                    bug.begin_emergence()
+        elif self.combat_phase == "pillbugs" and all(bug.hp == 0 for bug in self.combat_pillbugs):
+            self.combat_phase = "golems"
+            for golem in self.golems:
+                golem.begin_emergence()
+        elif self.combat_phase == "golems" and all(golem.hp == 0 for golem in self.golems):
+            self.combat_phase = "cleared"
+        if self.combat_phase == "cleared":
+            self.entrance_progress = max(0.0, self.entrance_progress - dt / COMBAT_GATE_DURATION)
             self.exit_progress = min(1.0, self.exit_progress + dt / COMBAT_EXIT_DURATION)
             if self.exit_progress > 0:
                 player.ground_y = COMBAT_SHAFT_FLOOR
-        if self.room == "combat":
-            closing = self.encounter_started and any(enemy.hp > 0 for enemy in self.enemies)
-            direction = 1 if closing else -1
-            self.entrance_progress = max(0.0, min(1.0,
-                self.entrance_progress + direction * dt / COMBAT_GATE_DURATION))
-            player.terrain = self.combat_terrain()
 
     def update_effects(self, dt, player):
         for impact in self.hit_impacts:

@@ -2,8 +2,8 @@
 
 from pico2d import pico2d as pico
 
-from lower_route_b_art import STRUCTURES, draw_rock_wall, draw_ruin_platform, draw_structure
-from lower_route_b_layout import BACKGROUND_BOTTOM, C_PASSAGE, TOP, WIDTH as B_WIDTH
+from lower_route_b_art import STRUCTURES, draw_rock_wall, draw_structure
+from lower_route_b_layout import C_PASSAGE, TOP
 from pillbug import Pillbug
 from player import ASSET_ROOT
 
@@ -40,21 +40,12 @@ class LowerRouteC:
 
     def draw(self, camera, screen_height):
         art = self.cave_art
-        width = RIGHT - LEFT
-        crop_width = round(art.background.w * width / B_WIDTH)
-        # Reflect the neighbor's edge so both the backdrop and its scale meet at the seam.
-        draw_structure(art.background, (0, 0, crop_width, art.background.h), camera,
-                       (LEFT + RIGHT) / 2, BACKGROUND_BOTTOM, width, TOP - BACKGROUND_BOTTOM, flip="h")
-
         draw_rock_wall(art.wall, camera, (
             (FLOOR - 48, LEFT - 105, -1165), (FLOOR + 54, LEFT - 110, -1118),
             (FLOOR + 164, LEFT - 119, -1076), (FLOOR + 252, LEFT - 125, -1105),
             (FLOOR + 332, LEFT - 115, -1032), (FLOOR + 450, LEFT - 135, -956),
             (FLOOR + 588, LEFT - 135, -907), (TOP, LEFT - 145, -807),
         ), screen_height)
-        name = "connected-passage"
-        draw_ruin_platform(camera, art.platform_images[name], art.platforms[name], FLOOR_BOUNDS)
-
         x, y = camera.world_to_screen(ENTRANCE_X, FLOOR + 165)
         self.stone_seal.draw(x, y, 320 * camera.zoom, 330 * camera.zoom)
         draw_structure(self.arch, (97, 27, 1439, 986), camera, ENTRANCE_X, FLOOR - 14, 510, 364)
