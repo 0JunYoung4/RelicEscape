@@ -14,13 +14,12 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 from pico2d import pico2d as pico
 
 import main
-from crystal_golem import BODY_WIDTH, MAX_HP, CrystalGolem
+from crystal_golem import BODY_WIDTH, KNOCKBACK_DISTANCE, MAX_HP, CrystalGolem
 from enemy_knockback import KNOCKBACK_DURATION
 from health import CONTACT_DAMAGE, Health
 from hit_impact import IMPACT_DURATION
 from lower_caves import COMBAT_PLATFORMS, COMBAT_TERRAIN, COMBAT_WIDTH, LowerCaves
 from player import STARTING_ATTACK_POWER, Player
-from slash_effect import forward_slash_bounds
 
 
 class CrystalGolemTests(unittest.TestCase):
@@ -66,16 +65,15 @@ class CrystalGolemTests(unittest.TestCase):
         self.assertFalse(golem.check_strike((760, 0, 840, 100), -1, 12, 1))
         self.assertEqual(golem.hp, 33)
 
-    def test_knockback_matches_slash_reach_and_stops_at_the_platform_edge(self):
-        platform = (400, 0, 1000, 150)
-        reach = forward_slash_bounds(0, 0, 1)[2]
+    def test_knockback_uses_the_golem_distance_and_stops_at_the_platform_edge(self):
+        platform = (480, 0, 920, 150)
         for direction in (-1, 1):
             with self.subTest(direction=direction):
                 golem = CrystalGolem.on_platform(platform)
                 start = golem.x
                 self.assertTrue(golem.check_strike((650, 150, 750, 240), direction, 1, 1))
                 golem.update(KNOCKBACK_DURATION, (), (platform,), 2000)
-                self.assertAlmostEqual(golem.x, start + direction * reach)
+                self.assertAlmostEqual(golem.x, start + direction * KNOCKBACK_DISTANCE)
                 self.assertTrue(golem.check_strike((golem.x - 20, 150, golem.x + 20, 240), direction, 1, 2))
                 golem.update(KNOCKBACK_DURATION / 2, (), (platform,), 2000)
                 edge = platform[0] + BODY_WIDTH / 2 if direction < 0 else platform[2] - BODY_WIDTH / 2

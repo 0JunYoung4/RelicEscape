@@ -245,7 +245,7 @@ class LowerCaves:
             if self.route_b is None:
                 self.route_b = LowerRouteB()
             if self.route_c is None:
-                self.route_c = LowerRouteC(self.route_b.art)
+                self.route_c = LowerRouteC()
             if self.route_connection is None:
                 self.route_connection = LowerRouteConnection(self.route_a)
             if self.room == "route_a":
@@ -431,7 +431,7 @@ class LowerCaves:
         draw_c = route_c is not None and camera.x < C_RIGHT
         if draw_b:
             route_b.draw(camera, self.cave.height, passage_left=C_LEFT if route_c is not None else C_RIGHT)
-        if draw_c:
+        if route_c is not None:
             route_c.draw(camera, self.cave.height)
         if draw_a:
             route_a.draw(camera)

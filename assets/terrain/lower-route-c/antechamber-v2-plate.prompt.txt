@@ -1,0 +1,8 @@
+C 전실 본편 원화
+내장 image_gen
+
+원본은 assets/concepts/lower-route-combat-style-v1/c-antechamber-v2.png.
+보행면은 원화의 y=589, 봉인문 중심은 x=254, 석등 중심은 x=624에서 본편 좌표에 맞췄다. 공벌레와 석등 발광은 게임에서 그린다.
+HK-GP17의 짙은 암반과 가는 뿌리 윤곽, HK-CT-05의 낮은 대비 원경은 기존 시안에서 이어받았다.
+
+Use case: precise-object-edit. Prepare this approved RelicEscape C antechamber image as a game scenery plate. Match EXACTLY the existing 1672 by 941 framing, aspect, color, walking-line height, ceiling, portal, lantern shape and position, path plants, small jagged loose stone cluster around x=1170, and filled solid bedrock. Two tiny localized changes only. (1) Remove the two rounded segmented pillbug-like silhouettes sitting on the path around x=1010 and x=1340, about y=530 to 589, cleanly restoring the teal aqueduct fog behind those two shapes and the same straight walk line beneath. Leave the unrelated small angular rubble between them. These two enemies will be rendered separately. (2) Preserve the original little stone checkpoint near x=624 exactly, but switch off the cyan light in its small octagonal core so the lens is a dark, readable blue-teal glass. Keep the lens visibly defined; do not remove or replace the checkpoint shrine. The game will render glow on activation. Leave the entire rest of the image as is, especially the door and the textured solid ground beneath the path. No other edits, no resizing or cropping.

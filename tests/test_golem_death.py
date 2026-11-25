@@ -12,7 +12,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 
 from pico2d import pico2d as pico
 
-from crystal_golem import ATTACK_RELEASE, DEATH_COLLAPSE_DURATION, DEATH_DURATION, CrystalGolem
+from crystal_golem import ATTACK_RELEASE, DEATH_COLLAPSE_DURATION, DEATH_DURATION, KNOCKBACK_DISTANCE, CrystalGolem
 from crystal_projectile import CrystalProjectile
 from death_pixels import COLORS
 from enemy_knockback import KNOCKBACK_DURATION
@@ -20,7 +20,6 @@ from health import Health
 from lower_caves import COMBAT_WIDTH, LowerCaves
 from main import Camera
 from player import Player
-from slash_effect import forward_slash_bounds
 
 
 class GolemDeathTests(unittest.TestCase):
@@ -108,7 +107,7 @@ class GolemDeathRenderTests(unittest.TestCase):
             self.player.slash = (0, 1, "attack")
             self.room.update_enemies(self.player, KNOCKBACK_DURATION if swing == 0 else 0)
             if swing == 0:
-                self.assertAlmostEqual(golem.x, position[0] + forward_slash_bounds(0, 0, 1)[2])
+                self.assertAlmostEqual(golem.x, position[0] + KNOCKBACK_DISTANCE)
             self.assertEqual(golem.floor_y, position[1])
             self.assertGreater(self.player.recoil_remaining, 0)
         self.player.slash = None

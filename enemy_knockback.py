@@ -7,13 +7,13 @@ KNOCKBACK_DURATION = .20
 KNOCKBACK_SPEED = 2 * FORWARD_SLASH_REACH / KNOCKBACK_DURATION
 
 
-def advance_knockback(dt, remaining, facing, body, terrain, world_width, support_edges):
+def advance_knockback(dt, remaining, facing, body, terrain, world_width, support_edges, *, speed=KNOCKBACK_SPEED):
     """Return this frame's signed push and the remaining time, clipped to solid ground."""
     step = min(dt, remaining)
     if step <= 0:
         return 0.0, remaining
 
-    requested = KNOCKBACK_SPEED * step * (remaining - step / 2) / KNOCKBACK_DURATION
+    requested = speed * step * (remaining - step / 2) / KNOCKBACK_DURATION
     distance = requested
     x, bottom, width, height = body
     left, right = x - width / 2, x + width / 2

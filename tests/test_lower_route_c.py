@@ -1,5 +1,6 @@
 """Exercise the seamless B/C crossing and the antechamber checkpoint."""
 
+from ctypes import c_ubyte
 from itertools import count
 import os
 from types import SimpleNamespace
@@ -18,7 +19,8 @@ from lower_caves import LowerCaves
 from lower_route_b import SPIKES, LowerRouteB
 from lower_route_b_art import draw_ruin_platform
 from lower_route_b_layout import BACKGROUND_BOTTOM, C_APPROACH_LEDGE, WIDTH as B_WIDTH
-from lower_route_c import CHECKPOINT, ENTRANCE_WIDTH, ENTRANCE_X, FLOOR, LEFT
+from lower_route_c import (ART_BLEND_END, ART_FLOOR_ROW, ART_LAMP_ROW, ART_SCALE, CHECKPOINT,
+                           ENTRANCE_WIDTH, ENTRANCE_X, FLOOR, LEFT, LowerRouteC)
 from pillbug import Pillbug
 from player import Player, STANDING_HITBOX_WIDTH
 
@@ -42,6 +44,7 @@ class LowerRouteCTests(unittest.TestCase):
         rooms.room = "route_b"
         rooms.enter(player, camera)
         self.assertTrue(player.recover_at(80, FLOOR, 0))
+        self.assertFalse(player.recover_at(-900, FLOOR - 160, 0))
         for _ in range(250):
             player.update(-1, True, 1 / 60)
             rooms.follow_camera(player, camera)
@@ -71,6 +74,32 @@ class LowerRouteCTests(unittest.TestCase):
         bounds = [call.args[3] for call in draw_platform.call_args_list if call.args[1] is ledge]
         self.assertEqual([(left, right, top) for left, _, right, top in bounds],
                          [(LEFT, C_APPROACH_LEDGE[2], FLOOR)])
+
+    def test_lantern_lights_only_after_checkpoint_and_plate_stops_inside_b(self):
+        route = LowerRouteC()
+        player = Player(*CHECKPOINT[:2], main.WORLD_WIDTH)
+        player.grounded = True
+        camera = main.Camera(main.SCREEN_WIDTH, main.WORLD_WIDTH, y=100)
+        camera.x = -1100
+        lamp_y = FLOOR + (ART_FLOOR_ROW - ART_LAMP_ROW) * ART_SCALE
+
+        def pixel(world_x, world_y):
+            x, y = map(round, camera.world_to_screen(world_x, world_y))
+            rect = pico.SDL_Rect(x, main.SCREEN_HEIGHT - y, 1, 1)
+            rgba = (c_ubyte * 4)()
+            self.assertEqual(pico.SDL_RenderReadPixels(pico.renderer, rect, pico.SDL_PIXELFORMAT_RGBA32,
+                                                      rgba, 4), 0)
+            return tuple(rgba)
+
+        pico.clear_canvas()
+        baseline = pixel(ART_BLEND_END + 100, FLOOR)
+        route.draw(camera, main.SCREEN_HEIGHT)
+        self.assertEqual(pixel(ART_BLEND_END + 100, FLOOR), baseline)
+        unlit = pixel(CHECKPOINT[0], lamp_y)
+        route.check_arrival(player)
+        pico.clear_canvas()
+        route.draw(camera, main.SCREEN_HEIGHT)
+        self.assertGreater(pixel(CHECKPOINT[0], lamp_y)[1], unlit[1] + 35)
 
     def test_two_pillbugs_replace_the_golem_near_c_and_can_be_hit(self):
         cave = SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096))

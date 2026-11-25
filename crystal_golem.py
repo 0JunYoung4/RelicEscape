@@ -7,6 +7,8 @@ from enemy_knockback import KNOCKBACK_DURATION, advance_knockback
 
 MAX_HP = 45
 WALK_SPEED = 22.0
+KNOCKBACK_DISTANCE = 110.0
+KNOCKBACK_SPEED = 2 * KNOCKBACK_DISTANCE / KNOCKBACK_DURATION
 BODY_WIDTH = 140
 BODY_HEIGHT = 140
 ATTACK_RANGE = 1400.0
@@ -94,7 +96,7 @@ class CrystalGolem:
             step = min(dt, self.knockback_remaining)
             push, self.knockback_remaining = advance_knockback(
                 step, self.knockback_remaining, self.strike_direction, self.body_bounds(),
-                terrain, world_width, self.support_edges,
+                terrain, world_width, self.support_edges, speed=KNOCKBACK_SPEED,
             )
             if push:
                 self.x += push
