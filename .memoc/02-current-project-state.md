@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 천장 배치 v2 `assets/concepts/b1-hermit-crab/ceiling-rock-v2/`에서 상단 발판을 짙은 청록 암반과 이끼·덩굴 형태로 다시 그렸다. 중앙 암석 폭을 315에서 236으로 줄이고 안쪽 발판을 암석 쪽으로 옮겼다.
+
 - 2026-11-25 B1 은신 해제는 유물 레일로 상단에 올라가 중앙 천장 암석을 떨어뜨리는 방식으로 변경했다. `assets/concepts/b1-hermit-crab/ceiling-rock-v1/`에 상단 발판 네 개, 중앙 암석, 둥지 배치 합성본을 저장했다.
 
 - 2026-11-25 B1 `assets/concepts/b1-hermit-crab/claw-counter-shell-reveal-preview-v3.gif`에서 내려찍는 집게와 몸통·다리를 분리했다. 은신에서는 집게와 짧은 다리를 등껍질 아래로 차례로 접어 넣고 등껍질이 바닥에 닿은 뒤 오른쪽 수정 하나를 드러낸다.
