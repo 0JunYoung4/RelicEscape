@@ -7,7 +7,7 @@ from math import ceil
 from pico2d import pico2d as pico
 
 from health import SPIKE_HEIGHT
-from lower_route_b_layout import (A_ENTRY, BACKGROUND_BOTTOM, BOTTOM, C_PASSAGE, GOLEM_LEDGE,
+from lower_route_b_layout import (A_ENTRY, BACKGROUND_BOTTOM, BOTTOM, C_APPROACH_LEDGE, C_PASSAGE,
                                   HIDDEN_DOCK, HIDDEN_LEDGE, LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL,
                                   SHIELD_LEDGE, SPIKE_SHELVES, SPIKE_TIP_Y, THORN_WALL_CROP,
                                   THORN_WALLS, TOP, WIDTH)
@@ -109,7 +109,7 @@ class LowerRouteBArt:
                                      (1210, left - 78, right + 122),
                                      (1380, left - 130, right + 192)), screen_height)
 
-        passage = (C_PASSAGE[0] - 105, C_PASSAGE[1], GOLEM_LEDGE[2], GOLEM_LEDGE[3])
+        passage = (C_PASSAGE[0] - 105, C_PASSAGE[1], C_APPROACH_LEDGE[2], C_APPROACH_LEDGE[3])
         entry = (A_ENTRY[0], A_ENTRY[1], A_ENTRY[2] + 110, A_ENTRY[3])
         for name, bounds, base_y in (("root-wedge", entry, None),
                                      ("connected-guard-wall", SHIELD_LEDGE, LEFT_WALL[1]),
@@ -117,7 +117,7 @@ class LowerRouteBArt:
                                      ("spike-bed-pier", PILLBUG_LEDGE, SPIKE_TIP_Y - 113)):
             draw_ruin_platform(camera, self.platform_images[name], self.platforms[name], bounds, base_y=base_y)
 
-        for x, surface, size in ((240, C_PASSAGE[3], 139), (1200, GOLEM_LEDGE[3], 66),
+        for x, surface, size in ((240, C_PASSAGE[3], 139), (1200, C_APPROACH_LEDGE[3], 66),
                                  (2760, SHIELD_LEDGE[3], 86), (3530, PILLBUG_LEDGE[3], 66)):
             draw_structure(self.marker, (207, 15, 1040, 1206), camera, x, surface, size * .70, size)
         draw_structure(self.rubble, (88, 133, 1454, 882), camera, 4880, A_ENTRY[3], 219, 122)

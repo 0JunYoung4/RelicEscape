@@ -12,7 +12,7 @@ from pico2d import pico2d as pico
 from main import Camera, RELIC_GLOW_IMAGE, RELIC_IMAGE
 from player import ASSET_ROOT, Animation, Player
 from lower_route_b import LowerRouteB
-from lower_route_b_layout import A_ENTRY, BOTTOM, GOLEM_LEDGE, PILLBUG_LEDGE, SHIELD_LEDGE, TOP
+from lower_route_b_layout import A_ENTRY, BOTTOM, PILLBUG_LEDGE, SHIELD_LEDGE, TOP
 from tools.preview_lower_route_a import read_render
 
 
@@ -37,7 +37,6 @@ def draw_scene(camera):
     glow.draw(*center, 104, 104)
     relic.draw(*center, 18, 18)
 
-    actor("stone-crystal-golem-idle-left-v1").draw(885, GOLEM_LEDGE[3], -1, 0, camera)
     actor("shield-stone-soldier-walk-right-v2").draw(2500, SHIELD_LEDGE[3], 1, 0, camera)
     crawl = Animation(ENEMIES / "stone-pillbug-moss-crawl-left.png",
                       [{"x": 0, "y": 0, "width": 170, "height": 72}], (85, 71), 1.0, 8)

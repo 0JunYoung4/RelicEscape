@@ -16,7 +16,7 @@ import main
 from health import MAX_HEALTH, SPIKE_DAMAGE, Health
 from lower_caves import LowerCaves
 from lower_route_b import HIDDEN_DOCK_PAUSE, PLAY_TERRAIN, SPAWN, SPIKES, LowerRouteB
-from lower_route_b_layout import (C_PASSAGE, GOLEM_LEDGE, HIDDEN_DOCK, HIDDEN_DOCK_DISTANCE,
+from lower_route_b_layout import (C_APPROACH_LEDGE, C_PASSAGE, HIDDEN_DOCK, HIDDEN_DOCK_DISTANCE,
                                   HIDDEN_LEDGE, PILLBUG_LEDGE, RAIL_ONE, RAIL_TWO, SHIELD_LEDGE,
                                   THORN_WALLS, WIDTH)
 from player import Player, STANDING_HITBOX_HEIGHT
@@ -145,7 +145,7 @@ class LowerRouteBTests(unittest.TestCase):
                 state.step = "exit"
                 return keydown(pico.SDLK_e)
             if step == "exit" and player.grounded:
-                self.assertEqual(player.y, GOLEM_LEDGE[3])
+                self.assertEqual(player.y, C_APPROACH_LEDGE[3])
                 if player.x <= C_PASSAGE[2] - 80:
                     return [pico.Event(pico.SDL_QUIT)]
                 state.direction = -1

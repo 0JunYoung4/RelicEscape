@@ -17,6 +17,7 @@ from health import SPIKE_DAMAGE
 from lower_caves import LowerCaves
 from lower_route_b import SPIKES, LowerRouteB
 from lower_route_c import CHECKPOINT, ENTRANCE_WIDTH, ENTRANCE_X, FLOOR, LEFT
+from pillbug import Pillbug
 from player import Player, STANDING_HITBOX_WIDTH
 
 
@@ -49,6 +50,30 @@ class LowerRouteCTests(unittest.TestCase):
         self.assertEqual(rooms.restart_room, "route_c")
         self.assertAlmostEqual(player.x, ENTRANCE_X + (ENTRANCE_WIDTH + STANDING_HITBOX_WIDTH) / 2)
         self.assertEqual(camera.x, LEFT)
+
+    def test_two_pillbugs_replace_the_golem_near_c_and_can_be_hit(self):
+        cave = SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096))
+        rooms = LowerCaves(cave)
+        player = Player(0, 0, main.WORLD_WIDTH)
+        camera = main.Camera(960, main.WORLD_WIDTH)
+        rooms.room = "route_b"
+        rooms.enter(player, camera)
+        self.assertTrue(player.recover_at(885, FLOOR, 0))
+        rooms.update_enemies(player, 0)
+        self.assertEqual(rooms.route_b.enemies, ())
+
+        bugs = rooms.route_c.enemies
+        self.assertEqual(len(bugs), 2)
+        for swing, bug in enumerate(bugs, start=1):
+            self.assertIsInstance(bug, Pillbug)
+            self.assertGreater(bug.support_edges[0], CHECKPOINT[0])
+            self.assertTrue(player.recover_at(bug.x + 96, FLOOR, 0))
+            rooms.follow_camera(player, camera)
+            self.assertEqual(rooms.room, "route_c")
+            player.slash, player.swing_id = (0.04, -1, "attack"), swing
+            hp = bug.hp
+            rooms.update_enemies(player, 0)
+            self.assertEqual(bug.hp, hp - player.attack_power)
 
     def test_relic_can_cross_the_seam_and_defeat_restarts_at_the_lantern(self):
         state = SimpleNamespace(step="to_c", direction=0)

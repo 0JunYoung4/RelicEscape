@@ -1,9 +1,11 @@
-"""The safe passage between B's golem ledge and the first boss entrance."""
+"""The passage and checkpoint before the first boss entrance."""
 
 from pico2d import pico2d as pico
 
 from lower_route_b_art import STRUCTURES, draw_rock_wall, draw_ruin_platform, draw_structure
 from lower_route_b_layout import BACKGROUND_BOTTOM, C_PASSAGE, TOP, WIDTH as B_WIDTH
+from pillbug import Pillbug
+from player import ASSET_ROOT
 
 
 LEFT, RIGHT = -1600, C_PASSAGE[0]
@@ -21,10 +23,15 @@ TERRAIN = (
 
 
 class LowerRouteC:
-    def __init__(self, b_art, stone_seal):
+    def __init__(self, b_art):
         self.cave_art = b_art
-        self.stone_seal = stone_seal
         self.arch = pico.load_image(str(STRUCTURES / "lower-cave-b1-entrance-v1.png"))
+        self.stone_seal = pico.load_image(str(ASSET_ROOT / "terrain/moss-combat-door-blocker-v1.png"))
+        pico.SDL_SetTextureColorMod(self.stone_seal.texture, 105, 130, 133)
+        self.enemies = (
+            Pillbug.on_platform((-527, FLOOR_BOUNDS[1], -302, FLOOR)),
+            Pillbug.on_platform((-260, FLOOR_BOUNDS[1], -32, FLOOR)),
+        )
         self.checkpoint_reached = False
 
     def check_arrival(self, player):
@@ -40,8 +47,10 @@ class LowerRouteC:
                        (LEFT + RIGHT) / 2, BACKGROUND_BOTTOM, width, TOP - BACKGROUND_BOTTOM, flip="h")
 
         draw_rock_wall(art.wall, camera, (
-            (FLOOR - 60, LEFT - 70, -1410), (FLOOR + 64, LEFT - 70, -1435),
-            (FLOOR + 335, LEFT - 80, -1445), (TOP, LEFT - 100, -1325),
+            (FLOOR - 48, LEFT - 105, -1165), (FLOOR + 54, LEFT - 110, -1118),
+            (FLOOR + 164, LEFT - 119, -1076), (FLOOR + 252, LEFT - 125, -1105),
+            (FLOOR + 332, LEFT - 115, -1032), (FLOOR + 450, LEFT - 135, -956),
+            (FLOOR + 588, LEFT - 135, -907), (TOP, LEFT - 145, -807),
         ), screen_height)
         name = "connected-passage"
         draw_ruin_platform(camera, art.platform_images[name], art.platforms[name], FLOOR_BOUNDS)

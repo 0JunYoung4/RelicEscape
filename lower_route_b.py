@@ -4,10 +4,9 @@ from math import hypot
 
 from pico2d import pico2d as pico
 
-from crystal_golem import CrystalGolem
 from health import SpikeBed
 from lower_route_b_art import LowerRouteBArt
-from lower_route_b_layout import (A_ENTRY, BOTTOM, C_PASSAGE, GOLEM_LEDGE, PILLBUG_LEDGE,
+from lower_route_b_layout import (A_ENTRY, BOTTOM, C_APPROACH_LEDGE, C_PASSAGE, PILLBUG_LEDGE,
                                   HIDDEN_DOCK, HIDDEN_DOCK_DISTANCE, HIDDEN_LEDGE, RAIL_ONE, RAIL_TWO,
                                   RIGHT_WALL, SHIELD_LEDGE, SPIKE_SHELVES, TERRAIN, THORN_WALL_CROP,
                                   THORN_WALL_PROFILE, THORN_WALLS, TOP, WIDTH)
@@ -53,7 +52,7 @@ SAFE_POSES = (
     (A_ENTRY, SPAWN),
     (PILLBUG_LEDGE, (3450, PILLBUG_LEDGE[3], 0)),
     (SHIELD_LEDGE, (2775, SHIELD_LEDGE[3], 0)),
-    (GOLEM_LEDGE, (1160, GOLEM_LEDGE[3], 0)),
+    (C_APPROACH_LEDGE, (1160, C_APPROACH_LEDGE[3], 0)),
     (C_PASSAGE, (480, C_PASSAGE[3], 0)),
 )
 
@@ -79,12 +78,9 @@ class LowerRouteB:
         self.pillbug = Pillbug.on_platform((3060, 85, 3380, PILLBUG_LEDGE[3]))
         self.pillbug.x = 3265
         self.shield = ShieldSoldier(2500, SHIELD_LEDGE[3], 2420, 2600)
-        self.golem = CrystalGolem.on_platform((710, 495, 1070, GOLEM_LEDGE[3]), direction=1)
-        self.golem.x = 885
         self.fights = (
             (self.pillbug, 3060, 3410),
             (self.shield, 2350, 2670),
-            (self.golem, 680, 1100),
         )
         self.awake = set()
 

@@ -92,7 +92,6 @@ class LowerCaves:
         self.floor = pico.load_image(str(terrain / "moss-gallery-floor.png"))
         self.ceiling = pico.load_image(str(terrain / "moss-gallery-ceiling.png"))
         self.combat_shell = pico.load_image(str(terrain / "moss-combat-room-shell-v5.png"))
-        self.combat_blocker = pico.load_image(str(terrain / "moss-combat-door-blocker-v1.png"))
         self.descent = pico.load_image(str(terrain / "moss-combat-descent-shaft-v2.png"))
         self.exit_cover = pico.load_image(str(terrain / "moss-combat-floor-cover-v4.png"))
         self.exit_rim = pico.load_image(str(terrain / "moss-combat-shaft-rim-v3.png"))
@@ -102,7 +101,6 @@ class LowerCaves:
         pico.SDL_SetTextureColorMod(self.floor.texture, 154, 163, 174)
         pico.SDL_SetTextureColorMod(self.ceiling.texture, 115, 123, 129)
         pico.SDL_SetTextureColorMod(self.combat_shell.texture, 166, 180, 178)
-        pico.SDL_SetTextureColorMod(self.combat_blocker.texture, 166, 180, 178)
         pico.SDL_SetTextureColorMod(self.exit_cover.texture, 166, 180, 178)
         pico.SDL_SetTextureColorMod(self.exit_rim.texture, 166, 180, 178)
         self.landing_width = cave.shaft.w * SHAFT_SCALE
@@ -204,7 +202,7 @@ class LowerCaves:
         if self.room == "combat" and self.encounter_started:
             return (*self.golems, *self.combat_pillbugs)
         if self.in_lower_route:
-            return tuple(enemy for route in (self.route_a, self.route_b) if route is not None
+            return tuple(enemy for route in (self.route_a, self.route_b, self.route_c) if route is not None
                          for enemy in route.enemies)
         return ()
 
@@ -250,7 +248,7 @@ class LowerCaves:
             if self.route_b is None:
                 self.route_b = LowerRouteB()
             if self.route_c is None:
-                self.route_c = LowerRouteC(self.route_b.art, self.combat_blocker)
+                self.route_c = LowerRouteC(self.route_b.art)
             if self.route_connection is None:
                 self.route_connection = LowerRouteConnection(self.route_a)
             if self.room == "route_a":
@@ -435,29 +433,27 @@ class LowerCaves:
             bug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses, death=self.pillbug_death)
 
     def draw_lower_route(self, camera):
-        route_a, route_b = self.route_a, self.route_b
+        route_a, route_b, route_c = self.route_a, self.route_b, self.route_c
         draw_a = route_a is not None and camera.x + camera.view_width > route_a.origin[0]
         draw_b = route_b is not None and camera.x < route_b.camera_right
-        if self.route_c is not None and camera.x < C_RIGHT:
-            self.route_c.draw(camera, self.cave.height)
+        draw_c = route_c is not None and camera.x < C_RIGHT
+        if draw_c:
+            route_c.draw(camera, self.cave.height)
         if draw_b:
             route_b.draw(camera, self.cave.height)
         if draw_a:
             route_a.draw(camera)
         if self.route_connection is not None:
             self.route_connection.draw(camera, self.cave.height)
-        if draw_a:
-            for bug in route_a.enemies:
-                bug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses,
-                         self.pillbug_emergence, self.pillbug_death)
+        for route, visible in ((route_a, draw_a), (route_c, draw_c)):
+            if visible:
+                for bug in route.enemies:
+                    bug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses,
+                             self.pillbug_emergence, self.pillbug_death)
         if draw_b:
             route_b.pillbug.draw(self.crawl, self.attack_poses, camera, self.hurt_poses,
                                  self.pillbug_emergence, self.pillbug_death)
             route_b.shield.draw(camera)
-            route_b.golem.draw(self.golem_walk, camera, self.golem_attack,
-                              self.golem_emergence, self.golem_death)
-            for projectile in self.projectiles:
-                projectile.draw(self.crystal_image, camera)
 
     def update_enemies(self, player, dt):
         route_b = self.route_b if self.in_lower_route else None
@@ -664,11 +660,9 @@ class LowerCaves:
     def update_projectiles(self, player, health, dt, now):
         if self.in_lower_route and self.route_b is not None:
             self.route_b.check_enemy_attack(player, health, now)
-            target = self.route_b.enemy_target(self.route_b.golem, player) or None
-        elif self.room == "combat":
-            target = player.get_hitbox()
-        else:
+        if self.room != "combat":
             return
+        target = player.get_hitbox()
         for projectile in self.projectiles:
             impact = projectile.update(dt, player.terrain, player.world_width, target,
                                         ground_y=player.ground_y)
