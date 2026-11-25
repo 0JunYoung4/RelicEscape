@@ -2,6 +2,7 @@
 
 import json
 
+from death_pixels import draw_blue_pixels
 from enemy_knockback import KNOCKBACK_DURATION, advance_knockback
 from player import ASSET_ROOT, Animation
 
@@ -15,6 +16,7 @@ KNOCKBACK_DISTANCE = 45.0
 KNOCKBACK_SPEED = 2 * KNOCKBACK_DISTANCE / KNOCKBACK_DURATION
 REAR_OPENING = 1.5
 TURN_COOLDOWN = .55
+DEATH_DISSOLVE_DURATION = .72
 
 
 def load_pose(version):
@@ -39,6 +41,7 @@ class ShieldSoldier:
         self.block_time = None
         self.bash_time = None
         self.bash_hit = False
+        self.death_time = None
         self.cooldown = TURN_COOLDOWN
         self.rear_time = 0.0
         self.walk, _ = load_pose("walk-right-v2")
@@ -46,6 +49,7 @@ class ShieldSoldier:
         self.bash, data = load_pose("bash-right-v1")
         self.bash_start = data["contact_start_ms"] / 1000
         self.bash_end = data["contact_end_ms"] / 1000
+        self.death, _ = load_pose("death-right-v1")
 
     def body_bounds(self):
         return self.x, self.floor_y, BODY_WIDTH, BODY_HEIGHT
@@ -69,6 +73,9 @@ class ShieldSoldier:
             self._turn_around()
         else:
             self.knockback_remaining = 0.0
+            self.block_time = None
+            self.bash_time = None
+            self.death_time = 0.0
         return True
 
     def _turn_around(self):
@@ -79,6 +86,10 @@ class ShieldSoldier:
         self.cooldown = max(self.cooldown, TURN_COOLDOWN)
 
     def update(self, dt, player_box, terrain, world_width):
+        if self.death_time is not None:
+            end = self.death.duration + DEATH_DISSOLVE_DURATION
+            self.death_time = min(end, self.death_time + max(0, dt))
+            return
         if self.hp == 0:
             return
         walk_time = dt
@@ -136,6 +147,9 @@ class ShieldSoldier:
         return max(left, min(front, right)), self.floor_y + 76
 
     def draw(self, camera):
+        if self.death_time is not None:
+            self.draw_death(camera)
+            return
         if self.hp == 0:
             return
         if self.bash_time is not None:
@@ -145,3 +159,14 @@ class ShieldSoldier:
         else:
             animation, elapsed = self.walk, self.walk_time
         animation.draw(self.x, self.floor_y, self.direction, elapsed, camera)
+
+    def draw_death(self, camera):
+        elapsed = self.death_time
+        if elapsed < self.death.duration:
+            self.death.draw(self.x, self.floor_y, self.direction, elapsed, camera)
+        elif elapsed < self.death.duration + DEATH_DISSOLVE_DURATION:
+            frame = self.death.frames[-1]
+            left, _, right, _ = frame["body_bounds"]
+            offset = ((left + right) / 2 - frame["foot_anchor"][0]) * self.death.scale
+            draw_blue_pixels(self.death, camera, self.x + self.direction * offset, self.floor_y,
+                             self.direction, elapsed - self.death.duration)

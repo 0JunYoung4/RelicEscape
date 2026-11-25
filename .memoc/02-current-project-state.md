@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 B1 시작 연출 시안 `python -m tools.preview_b1_intro`에서 등딱지 옆 `E` 조사로 화면 진동과 천장 먼지·자갈을 시작한다. `assets/concepts/b1-hermit-crab/right-passage-v1/shell-investigation-preview.gif`로 동작을 기록했다.
+
 - 2026-11-25 B1 첫 대면에서 소라게가 몸을 숨긴 등딱지만 보이게 했다. `assets/concepts/b1-hermit-crab/right-passage-v1/camera-entry-fight-preview-v2.gif`에 해당 자세와 중앙 카메라 전환·석문 하강을 합성했다.
 
 - 2026-11-25 B1은 오른쪽 통로에서 탐험 카메라로 들어오고, 중앙에서 전투가 시작되는 순간 카메라를 넓히면서 뒤쪽 석문을 닫는다. `assets/concepts/b1-hermit-crab/right-passage-v1/camera-entry-fight-preview.gif`에 최신 타이밍을 저장했다.
@@ -94,6 +96,7 @@ Last synced: 2026-11-05T03:23:05
 
 - 2026-11-25 본편 C 전실 구현. B 왼쪽 끝에서 같은 바닥으로 이어지며 석등 접근으로 재도전 지점을 활성화한다. B1 봉인문까지 플레이 가능하다. `lower_route_c.py`; B/C 유물 복귀와 C 재시작은 `tests/test_lower_route_c.py`에서 검증한다.
 - 2026-11-26 C 보스방 진입로의 v2 원화와 하부 암반 충돌을 본편에 적용했다. 새 원화는 B 쪽으로 점차 섞이고, 석등 렌즈는 재도전 지점을 활성화하면 빛난다. 검 피격 넉백은 수정 골렘 110, 방패병 45, 공벌레 187 월드 단위다.
+- 2026-11-26 B 방패병은 치명타 후 방패를 떨어뜨리며 6프레임으로 무너지고 푸른 입자가 되어 사라진다. 사망 시작과 동시에 방패 돌진과 접촉 피해가 끝난다. `docs/shield-soldier-death-preview.gif`.
 
 - 2026-11-25 B1 소라게 조립 외형 v2를 `assets/concepts/b1-hermit-crab/assembled-preview-v2.png`에 정리했다. 구멍 없는 팔 연결과 두꺼운 집게, 기본 상태의 뒤로 기운 집과 앞으로 서는 은신 상태를 각각 투명 PNG로 저장했다.
 

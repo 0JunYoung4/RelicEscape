@@ -13,6 +13,7 @@ os.environ.setdefault("SDL_RENDER_DRIVER", "software")
 from pico2d import pico2d as pico
 
 import main
+from death_pixels import draw_blue_pixels
 from enemy_knockback import KNOCKBACK_DURATION
 from health import MAX_HEALTH, SPIKE_DAMAGE, Health
 from lower_caves import LowerCaves
@@ -21,7 +22,7 @@ from lower_route_b_layout import (C_APPROACH_LEDGE, C_PASSAGE, PILLBUG_LEDGE, RA
                                   SHIELD_LEDGE, THORN_WALLS, WIDTH)
 from player import Player, STANDING_HITBOX_HEIGHT
 from rail import RAIL_TRAVEL_SPEED
-from shield_soldier import KNOCKBACK_DISTANCE, REAR_OPENING
+from shield_soldier import DEATH_DISSOLVE_DURATION, KNOCKBACK_DISTANCE, REAR_OPENING
 
 
 def keydown(key):
@@ -269,3 +270,46 @@ class LowerRouteBTests(unittest.TestCase):
         shield.update(.03, behind, PLAY_TERRAIN, WIDTH)
         self.assertEqual(shield.direction, -1)
         self.assertEqual(shield.hp, 65)
+
+    def test_lethal_rear_hit_collapses_then_dissolves_in_the_gorge(self):
+        cave = SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096))
+        room = LowerCaves(cave)
+        room.room = "route_b"
+        player = Player(*SPAWN[:2], WIDTH)
+        camera = main.Camera(960, WIDTH)
+        room.enter(player, camera)
+        shield = room.route_b.shield
+        shield.hp = player.attack_power
+        shield.bash_time = shield.bash_start
+        x, y, _, _ = shield.body_bounds()
+        self.assertTrue(player.recover_at(x - 84, y, 0))
+        room.follow_camera(player, camera)
+        player.slash = (0.04, 1, "attack")
+        player.swing_id = 1
+        room.update_enemies(player, 0)
+        player.slash = None
+
+        self.assertEqual((shield.hp, shield.death_time, shield.bash_time), (0, 0.0, None))
+        self.assertIsNone(shield.bash_contact((x, y, x + 30, y + 120)))
+        self.assertTrue(player.recover_at(x, y, 0))
+        self.assertFalse(Health(SPAWN).check_contact(player, (shield,), 1))
+        self.assertEqual(len(shield.death.frames), 6)
+        with patch.object(shield.death, "draw", wraps=shield.death.draw) as collapse, \
+                patch("shield_soldier.draw_blue_pixels", wraps=draw_blue_pixels) as dissolve:
+            room.draw(camera)
+            collapse.assert_called_once_with(x, y, 1, 0, camera)
+            room.update_enemies(player, shield.death.duration - .01)
+            room.draw(camera)
+            self.assertEqual(shield.death.frame_at(shield.death_time), 5)
+            dissolve.assert_not_called()
+
+            room.update_enemies(player, .02)
+            room.draw(camera)
+            dissolve.assert_called_once()
+            room.update_enemies(player, DEATH_DISSOLVE_DURATION)
+            collapse.reset_mock()
+            dissolve.reset_mock()
+            room.draw(camera)
+            collapse.assert_not_called()
+            dissolve.assert_not_called()
+        self.assertEqual((shield.x, shield.floor_y), (x, y))
