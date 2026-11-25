@@ -2,6 +2,7 @@
 
 import os
 import unittest
+from ctypes import byref, c_uint32
 from itertools import chain, count
 from unittest.mock import patch
 
@@ -11,8 +12,10 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 
 import main
 from pico2d import pico2d as pico
+from lower_route_b_layout import RAIL_ONE
 from player import CROUCH_DURATION, STANDING_HITBOX_HEIGHT, Player
-from rail import RAIL_MOUNT_RADIUS, RAIL_TRAVEL_SPEED, RailCarriage
+from rail import (RAIL_BEND_IMAGE, RAIL_IMAGE, RAIL_MOUNT_RADIUS, RAIL_TRAVEL_SPEED,
+                  RailCarriage, draw_rail)
 
 
 def keydown(key):
@@ -247,6 +250,33 @@ class RelicTests(unittest.TestCase):
         self.assertEqual(player_frames[return_frame + 4], (left, ground))
         x, y = carriage_frames[return_frame + 5]
         self.assertEqual(player_frames[return_frame + 6], (x, y - STANDING_HITBOX_HEIGHT / 2))
+
+    def test_bend_matches_straight_rail_thickness(self):
+        width, height = 450, 220
+        pico.open_canvas(width, height)
+        self.addCleanup(pico.close_canvas)
+        straight, bend = RAIL_ONE[:2]
+        camera = main.Camera(width, main.WORLD_WIDTH, main.EXPLORATION_CAMERA_ZOOM)
+        camera.x = 3300
+        track, curve = (pico.load_image(str(path)) for path in (RAIL_IMAGE, RAIL_BEND_IMAGE))
+        pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
+        pico.SDL_RenderClear(pico.renderer)
+        draw_rail(track, curve, camera, RAIL_ONE)
+
+        def visible_pixels(x, y, w, h):
+            pixels = (c_uint32 * (w * h))()
+            bounds = pico.SDL_Rect(x, height - y - h, w, h)
+            self.assertEqual(pico.SDL_RenderReadPixels(
+                pico.renderer, byref(bounds), pico.SDL_PIXELFORMAT_ARGB8888, pixels, w * 4,
+            ), 0, pico.SDL_GetError())
+            return sum(bool(pixel & 0xFFFFFF) for pixel in pixels)
+
+        straight_x, straight_y = map(round, camera.world_to_screen(*straight.point_at(0.5)))
+        bend_x, bend_y = map(round, camera.world_to_screen(*bend.point_at(0.9)))
+        straight_width = visible_pixels(straight_x, straight_y - 22, 1, 44)
+        bend_width = visible_pixels(bend_x - 22, bend_y, 44, 1)
+        self.assertEqual(straight_width, 18)
+        self.assertAlmostEqual(bend_width, straight_width, delta=2)
 
     def test_carriage_travels_by_distance_through_the_first_curve(self):
         straight, bend, *_ = main.TEST_RAIL_PATH
