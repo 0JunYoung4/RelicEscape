@@ -1,0 +1,149 @@
+{
+  "units": "Pixels in each named PNG, measured from its top-left. Attachment scale is relative to the base.",
+  "source": "atlas-v1.png",
+  "parts": {
+    "body-upright": {
+      "file": "body-upright-v1.png",
+      "atlas_origin": [
+        4,
+        0
+      ],
+      "size": [
+        733,
+        677
+      ]
+    },
+    "body-retracted": {
+      "file": "body-retracted-v1.png",
+      "atlas_origin": [
+        781,
+        72
+      ],
+      "size": [
+        753,
+        601
+      ]
+    },
+    "claw-left": {
+      "file": "claw-left-v1.png",
+      "atlas_origin": [
+        8,
+        730
+      ],
+      "size": [
+        486,
+        275
+      ]
+    },
+    "claw-right": {
+      "file": "claw-right-v1.png",
+      "atlas_origin": [
+        518,
+        730
+      ],
+      "size": [
+        483,
+        276
+      ]
+    },
+    "crystal-left": {
+      "file": "crystal-left-v1.png",
+      "atlas_origin": [
+        1017,
+        728
+      ],
+      "size": [
+        195,
+        262
+      ]
+    },
+    "crystal-right": {
+      "file": "crystal-right-v1.png",
+      "atlas_origin": [
+        1286,
+        733
+      ],
+      "size": [
+        210,
+        257
+      ]
+    }
+  },
+  "poses": {
+    "upright": {
+      "base": "body-upright",
+      "ground": [
+        371,
+        667
+      ],
+      "attachments": [
+        {
+          "part": "claw-left",
+          "socket": [
+            160,
+            426
+          ],
+          "pivot": [
+            48,
+            82
+          ],
+          "scale": 0.49
+        },
+        {
+          "part": "claw-right",
+          "socket": [
+            607,
+            426
+          ],
+          "pivot": [
+            435,
+            82
+          ],
+          "scale": 0.49
+        }
+      ]
+    },
+    "retracted-right": {
+      "base": "body-retracted",
+      "ground": [
+        371,
+        592
+      ],
+      "attachments": [
+        {
+          "part": "crystal-right",
+          "socket": [
+            611,
+            239
+          ],
+          "pivot": [
+            95,
+            248
+          ],
+          "scale": 0.57
+        }
+      ]
+    },
+    "retracted-left": {
+      "base": "body-retracted",
+      "ground": [
+        371,
+        592
+      ],
+      "attachments": [
+        {
+          "part": "crystal-left",
+          "socket": [
+            137,
+            198
+          ],
+          "pivot": [
+            89,
+            253
+          ],
+          "scale": 0.57
+        }
+      ]
+    }
+  }
+}

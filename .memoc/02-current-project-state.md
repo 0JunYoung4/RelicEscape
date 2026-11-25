@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 소라게 보스의 기본·은신 몸체, 좌우 집게, 좌우 수정 투명 PNG와 조립 미리보기를 `assets/concepts/b1-hermit-crab/`에 제작했다. `parts-v1.json`은 집게의 회전축과 수정 위치를 기록한 시안이다.
+
 - 2026-11-25 B 개편 구상. 첫 레일은 바닥·천장 가시벽 사이를 통과하고, 두 번째 레일은 가시층 아래로 돌아 숨겨진 유물 발판에 선택 정차한다. 양방향 가시벽 PNG `assets/structures/map1-lower-route/lower-cave-thorn-wall-v1.png` 제작. 게임 배치·충돌은 미구현.
 
 - 2026-11-25 B1 보스방 기획 v2를 `docs/map1-b1-boss-room-blockout-v2.png`에 정리했다. C 왼쪽 통로, 좌우 레일과 상단 발판, 소라게 집게 2곳과 은신 때 하나씩 드러나는 푸른 수정 2곳을 배치했다. 두 은신 구간과 게임 적용 범위는 기획 단계다.
