@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 첫 대면에서 소라게가 몸을 숨긴 등딱지만 보이게 했다. `assets/concepts/b1-hermit-crab/right-passage-v1/camera-entry-fight-preview-v2.gif`에 해당 자세와 중앙 카메라 전환·석문 하강을 합성했다.
+
 - 2026-11-25 B1은 오른쪽 통로에서 탐험 카메라로 들어오고, 중앙에서 전투가 시작되는 순간 카메라를 넓히면서 뒤쪽 석문을 닫는다. `assets/concepts/b1-hermit-crab/right-passage-v1/camera-entry-fight-preview.gif`에 최신 타이밍을 저장했다.
 
 - 2026-11-25 B1은 플레이어가 오른쪽 진입 통로를 빠져나온 뒤 석문이 내려와 길을 막는다. `assets/concepts/b1-hermit-crab/right-passage-v1/right-passage-lock-preview.gif`에 진입·봉쇄 연출을 저장했다.
