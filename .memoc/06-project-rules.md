@@ -15,6 +15,8 @@ Durable user and project preferences live here. Update when the user gives a rul
 
 ## Operating Rules
 
+- 2026-11-25 사용자 지정: 할로우 나이트의 분위기가 게임 미술 전반의 기준이다. 맵의 식물 실루엣과 조형물, 깊이와 조명으로 탐험하는 동안 시각적 즐거움을 주도록 하고 프로젝트 고유의 문양과 자산으로 표현한다.
+
 - 2026-11-25 사용자 지정: 맵을 만들거나 수정할 때 [장식 23종](../assets/terrain/moss-grotto-floor-decor/README.md)을 기본으로 활용한다. 검은 윤곽, 짙은 청록 그림자, 둥근 불규칙한 형태, 짧은 이끼빛을 새 자산에도 적용한다.
 
 - 2026-11-25 사용자 지정: 뒷배경, 바닥·발판, 천장, 벽, 맵 조형물, 가까운 전경을 각각 독립 제작·렌더링한다. 한 번에 한 레이어씩 만들고 단독 시안을 확인한다. 원경은 지형 뒤에, 전경은 캐릭터 앞 양옆에 그린다. [맵 제작 세부 기준](../docs/reference-production-guide.md#맵-미술-제작과-렌더링-기준)
