@@ -6,8 +6,8 @@ from math import ceil
 from pico2d import pico2d as pico
 
 from lower_route_a import EXIT_LEDGE
-from lower_route_b import PLAY_TERRAIN, SPIKES
-from lower_route_b_layout import A_ENTRY, WIDTH as B_WIDTH
+from lower_route_b import PLAY_TERRAIN
+from lower_route_b_layout import A_ENTRY, BOTTOM, WIDTH as B_WIDTH
 from player import ASSET_ROOT
 
 
@@ -22,9 +22,10 @@ class LowerRouteConnection:
     def __init__(self, route_a):
         self.plate = pico.load_image(str(ASSET_ROOT / "terrain/lower-route-ab-passage-v1.png"))
         pico.SDL_SetTextureBlendMode(self.plate.texture, pico.SDL_BLENDMODE_BLEND)
+        self.ground_y = BOTTOM
         self.terrain = (*PLAY_TERRAIN, *route_a.terrain,
-                        (0, route_a.ground_y, PASSAGE_LEFT, SPIKES[0].y),
-                        (PASSAGE_LEFT, route_a.ground_y, PASSAGE_RIGHT, PASSAGE_FLOOR))
+                        (PASSAGE_LEFT, BOTTOM, PASSAGE_RIGHT, PASSAGE_FLOOR),
+                        (PASSAGE_RIGHT, BOTTOM, route_a.world_width, route_a.ground_y))
 
     @staticmethod
     def blend(x, b_value, a_value):

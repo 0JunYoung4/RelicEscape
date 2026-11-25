@@ -2,11 +2,15 @@
 
 from ctypes import c_int
 import json
+from math import ceil
 
 from pico2d import pico2d as pico
 
-from lower_route_b_layout import (A_ENTRY, BOTTOM, C_PASSAGE, GOLEM_LEDGE, LEFT_WALL,
-                                  PILLBUG_LEDGE, RIGHT_WALL, SHIELD_LEDGE, SPIKE_TIP_Y, TOP, WIDTH)
+from health import SPIKE_HEIGHT
+from lower_route_b_layout import (A_ENTRY, BACKGROUND_BOTTOM, BOTTOM, C_PASSAGE, GOLEM_LEDGE,
+                                  HIDDEN_DOCK, HIDDEN_LEDGE, LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL,
+                                  SHIELD_LEDGE, SPIKE_SHELVES, SPIKE_TIP_Y, THORN_WALL_CROP,
+                                  THORN_WALLS, TOP, WIDTH)
 from player import ASSET_ROOT
 
 
@@ -55,23 +59,19 @@ def draw_ruin_platform(camera, image, entry, bounds, *, base_y=None):
                    (crop_right - crop_left) * scale, (crop_bottom - crop_top) * height_scale)
 
 
-def draw_spike_bank(spikes, camera, screen_height):
-    bed_top = min(screen_height, camera.world_to_screen(0, -300)[1])
-    if bed_top > 0:
-        pico.draw_rectangle(0, 0, camera.screen_width, bed_top, 5, 13, 15, filled=True)
+def draw_spike_bank(spikes, camera, left, right, tip):
     source = (40, 53, 2133, 640)
-    # Two overlapping rows hide the repeated outline and cover every part of the floor.
-    pico.SDL_SetTextureColorMod(spikes.texture, 95, 134, 140)
-    for index in range(9):
-        draw_structure(spikes, source, camera, index * 612 + 50, -315, 730, 102,
-                       flip="h" if index % 2 else "")
-    pico.SDL_SetTextureColorMod(spikes.texture, 195, 210, 203)
-    x = -175
-    for index, width in enumerate((630, 740, 668, 798, 640, 760, 695, 840, 637)):
-        height = 102 + (index * 13) % 23
-        draw_structure(spikes, source, camera, x + width / 2, SPIKE_TIP_Y - height,
-                       width, height, flip="h" if index % 2 else "")
-        x += width - 55
+    tiles = ceil((right - left) / 650)
+    stride = (right - left) / tiles
+    # Keep both rows entirely within the shelf, leaving the rail shafts clear.
+    for tint, height, offset in (((95, 134, 140), 82, -13), ((195, 210, 203), 96, 0)):
+        pico.SDL_SetTextureColorMod(spikes.texture, *tint)
+        for index in range(tiles):
+            start = max(left, left + index * stride - 33)
+            end = min(right, left + (index + 1) * stride + 33)
+            if start < camera.x + camera.view_width and end > camera.x:
+                draw_structure(spikes, source, camera, (start + end) / 2, tip + offset - height,
+                               end - start, height, flip="h" if index % 2 else "")
 
 
 class LowerRouteBArt:
@@ -81,16 +81,23 @@ class LowerRouteBArt:
         self.marker = pico.load_image(str(STRUCTURES / "lower-cave-safe-waymarker-v1.png"))
         self.rubble = pico.load_image(str(STRUCTURES / "lower-cave-landing-rubble-v1.png"))
         self.spikes = pico.load_image(str(STRUCTURES / "lower-cave-thorn-bed-v1.png"))
+        self.thorn_wall = pico.load_image(str(STRUCTURES / "lower-cave-thorn-wall-v1.png"))
         pico.SDL_SetTextureColorMod(self.rubble.texture, 139, 175, 186)
         self.platforms = json.loads((PLATFORMS / "manifest.json").read_text(encoding="utf-8"))["platforms"]
         self.platform_images = {
             name: pico.load_image(str(PLATFORMS / self.platforms[name]["image"]))
-            for name in ("root-wedge", "connected-guard-wall", "connected-passage", "spike-bed-pier")
+            for name in ("root-wedge", "connected-guard-wall", "connected-passage", "spike-bed-pier",
+                         "short-root-step", "waterworn-sill")
         }
 
     def draw(self, camera, screen_height):
-        self.background.draw_to_origin(*camera.world_to_screen(0, BOTTOM),
-                                       WIDTH * camera.zoom, (TOP - BOTTOM) * camera.zoom)
+        if camera.y < BACKGROUND_BOTTOM:
+            # The flipped lower section meets the existing panorama at the same source edge.
+            crop = (0, round(self.background.h * .88), self.background.w, self.background.h)
+            draw_structure(self.background, crop, camera, WIDTH / 2, BOTTOM,
+                           WIDTH, BACKGROUND_BOTTOM - BOTTOM, flip="v")
+        self.background.draw_to_origin(*camera.world_to_screen(0, BACKGROUND_BOTTOM),
+                                       WIDTH * camera.zoom, (TOP - BACKGROUND_BOTTOM) * camera.zoom)
         wall = self.wall
         left, bottom, right, top = RIGHT_WALL
         draw_rock_wall(wall, camera, ((bottom - 16, left + 60, right - 58),
@@ -114,4 +121,51 @@ class LowerRouteBArt:
                                  (2760, SHIELD_LEDGE[3], 86), (3530, PILLBUG_LEDGE[3], 66)):
             draw_structure(self.marker, (207, 15, 1040, 1206), camera, x, surface, size * .70, size)
         draw_structure(self.rubble, (88, 133, 1454, 882), camera, 4880, A_ENTRY[3], 219, 122)
-        draw_spike_bank(self.spikes, camera, screen_height)
+        self.draw_hazards(camera)
+        if camera.y < HIDDEN_LEDGE[3]:
+            name = "short-root-step"
+            draw_ruin_platform(camera, self.platform_images[name], self.platforms[name], HIDDEN_LEDGE,
+                               base_y=HIDDEN_LEDGE[1])
+
+    def draw_hazards(self, camera):
+        for (left, bottom, right, top), hanging in THORN_WALLS:
+            if right > camera.x and left < camera.x + camera.view_width:
+                draw_structure(self.thorn_wall, THORN_WALL_CROP, camera, (left + right) / 2, bottom,
+                               right - left, top - bottom, flip="hv" if hanging else "")
+        for left, bottom, right, top in SPIKE_SHELVES:
+            if right <= camera.x or left >= camera.x + camera.view_width:
+                continue
+            name = "waterworn-sill"
+            count = ceil((right - left) / 490)
+            stride = (right - left) / count
+            for index in range(count):
+                start = max(left, left + index * stride - 20)
+                end = min(right, left + (index + 1) * stride + 20)
+                if start < camera.x + camera.view_width and end > camera.x:
+                    draw_ruin_platform(camera, self.platform_images[name], self.platforms[name],
+                                       (start, bottom, end, top), base_y=bottom)
+            draw_spike_bank(self.spikes, camera, left, right, SPIKE_TIP_Y)
+        if camera.y < BOTTOM + SPIKE_HEIGHT:
+            draw_spike_bank(self.spikes, camera, 0, WIDTH, BOTTOM + SPIKE_HEIGHT)
+
+    @staticmethod
+    def draw_hidden_relic(camera, screen_height, collected):
+        x, y = camera.world_to_screen(*HIDDEN_DOCK)
+        if not 0 <= x < camera.screen_width or not 0 <= y < screen_height:
+            return
+        radius = max(2, round(9 * camera.zoom))
+        pico.draw_circle(round(x), round(y), radius, 224, 177, 103)
+        if collected:
+            return
+        # The amber collectible is distinct from the blue relic carried by the rail.
+        x, y = camera.world_to_screen(HIDDEN_DOCK[0], HIDDEN_LEDGE[3] + 32)
+        y = screen_height - y
+        r = 14 * camera.zoom
+        vertices = (pico.SDL_Vertex * 4)(
+            pico.SDL_Vertex((x, y - r), (255, 232, 167, 255)),
+            pico.SDL_Vertex((x - r, y), (235, 176, 86, 255)),
+            pico.SDL_Vertex((x + r, y), (180, 106, 47, 255)),
+            pico.SDL_Vertex((x, y + r), (143, 73, 40, 255)),
+        )
+        indices = (c_int * 6)(0, 1, 2, 1, 3, 2)
+        pico.SDL_RenderGeometry(pico.renderer, None, vertices, 4, indices, 6)

@@ -15,9 +15,12 @@ from pico2d import pico2d as pico
 import main
 from health import MAX_HEALTH, SPIKE_DAMAGE, Health
 from lower_caves import LowerCaves
-from lower_route_b import PLAY_TERRAIN, SPAWN, SPIKES, LowerRouteB
-from lower_route_b_layout import C_PASSAGE, GOLEM_LEDGE, PILLBUG_LEDGE, SHIELD_LEDGE, WIDTH
-from player import Player
+from lower_route_b import HIDDEN_DOCK_PAUSE, PLAY_TERRAIN, SPAWN, SPIKES, LowerRouteB
+from lower_route_b_layout import (C_PASSAGE, GOLEM_LEDGE, HIDDEN_DOCK, HIDDEN_DOCK_DISTANCE,
+                                  HIDDEN_LEDGE, PILLBUG_LEDGE, RAIL_ONE, RAIL_TWO, SHIELD_LEDGE,
+                                  THORN_WALLS, WIDTH)
+from player import Player, STANDING_HITBOX_HEIGHT
+from rail import RAIL_TRAVEL_SPEED
 from shield_soldier import REAR_OPENING
 
 
@@ -67,7 +70,7 @@ class LowerRouteBTests(unittest.TestCase):
             state.direction = 0
             keys[pico.SDL_SCANCODE_C] = 0
             keys[pico.SDL_SCANCODE_SPACE] = 1
-            if next(frames) > 1150:
+            if next(frames) > 2000:
                 self.fail(f"Stopped at {step}: {player.x:.1f}, {player.y:.1f}, wall={player.wall_direction}")
             if step in ("first_dock", "retry_dock"):
                 if step == "retry_dock" and (state.health.current == MAX_HEALTH
@@ -118,6 +121,24 @@ class LowerRouteBTests(unittest.TestCase):
                     return keydown(pico.SDLK_e)
             if step == "second_launch":
                 self.assertTrue(second.relic_mounted)
+                state.step = "to_hidden_dock"
+                return keydown(pico.SDLK_x)
+            if step == "to_hidden_dock":
+                keys[pico.SDL_SCANCODE_C] = 1
+                if second.distance == HIDDEN_DOCK_DISTANCE:
+                    state.step = "hidden_ledge"
+                    return keydown(pico.SDLK_e)
+            if step == "hidden_ledge":
+                self.assertTrue(player.grounded)
+                self.assertAlmostEqual(player.x, HIDDEN_DOCK[0])
+                self.assertEqual(player.y, HIDDEN_LEDGE[3])
+                self.assertTrue(state.room.route_b.hidden_relic_collected)
+                self.assertFalse(second.relic_mounted)
+                state.step = "hidden_launch"
+                return keydown(pico.SDLK_e)
+            if step == "hidden_launch":
+                self.assertTrue(second.relic_mounted)
+                self.assertEqual(second.distance, HIDDEN_DOCK_DISTANCE)
                 state.step = "second_ride"
                 return keydown(pico.SDLK_x)
             if step == "second_ride" and second.distance == 0:
@@ -150,10 +171,46 @@ class LowerRouteBTests(unittest.TestCase):
             main.run_opening_cave(False, after_relic=True)
         self.assertEqual(health_samples, [(MAX_HEALTH - SPIKE_DAMAGE, SPAWN, (4620, 280))])
         self.assertTrue(state.room.has_relic)
+        self.assertTrue(state.room.route_b.hidden_relic_collected)
         self.assertEqual(state.step, "exit")
         self.assertGreater(len(view_positions), 75)
         self.assertTrue(all(0 <= x < main.SCREEN_WIDTH and 0 <= y < main.SCREEN_HEIGHT
                             for x, y in view_positions))
+
+    def test_rail_paths_clear_thorns_and_terrain_at_recall_height(self):
+        route = LowerRouteB()
+        player = Player(*SPAWN[:2], WIDTH)
+        route.enter(player)
+        for path in (RAIL_ONE, RAIL_TWO):
+            for segment in path:
+                for step in range(51):
+                    x, y = segment.point_at(step / 50)
+                    self.assertTrue(player.recover_at(x, y - STANDING_HITBOX_HEIGHT / 2, 0), (x, y))
+                    self.assertFalse(any(spike.overlaps(player.get_hitbox()) for spike in SPIKES), (x, y))
+
+        for (left, bottom, right, top), _ in THORN_WALLS:
+            feet = bottom + min((top - bottom) / 2, 100)
+            self.assertTrue(player.recover_at((left + right) / 2, feet, 0))
+            health = Health(SPAWN)
+            self.assertTrue(route.check_spikes(player, health, 1))
+            self.assertEqual(health.current, MAX_HEALTH - SPIKE_DAMAGE)
+
+    def test_second_rail_waits_then_passes_the_optional_pickup(self):
+        route = LowerRouteB()
+        player = Player(*SPAWN[:2], WIDTH)
+        route.enter(player)
+        self.assertTrue(player.recover_at(2320, SHIELD_LEDGE[3], 0))
+        self.assertEqual(route.use_relic(player, relic_placed=False), (True, None))
+        carriage = route.carriages[1]
+        carriage.direction = -1
+        route.update(player, (carriage.length - HIDDEN_DOCK_DISTANCE) / RAIL_TRAVEL_SPEED + .01)
+        self.assertEqual(carriage.distance, HIDDEN_DOCK_DISTANCE)
+        self.assertEqual(route.prompt(player, False), (HIDDEN_DOCK, False))
+        route.update(player, HIDDEN_DOCK_PAUSE / 2)
+        self.assertEqual(carriage.distance, HIDDEN_DOCK_DISTANCE)
+        route.update(player, HIDDEN_DOCK_PAUSE + HIDDEN_DOCK_DISTANCE / RAIL_TRAVEL_SPEED)
+        self.assertEqual(carriage.distance, 0)
+        self.assertFalse(route.hidden_relic_collected)
 
     def test_spikes_restore_last_ledge_without_reviving_enemies(self):
         route = LowerRouteB()

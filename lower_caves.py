@@ -245,7 +245,7 @@ class LowerCaves:
                 self.route_b.enter(player)
             player.world_width = camera.world_width = self.route_a.world_width
             player.terrain = self.route_connection.terrain
-            player.ground_y = self.route_a.ground_y
+            player.ground_y = self.route_connection.ground_y
             camera.zoom = camera.normal_zoom
             self.follow_camera(player, camera)
             return

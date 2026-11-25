@@ -40,16 +40,21 @@ HIT_PARTICLES = (
 
 @dataclass(frozen=True)
 class SpikeBed:
-    left: int
-    right: int
-    y: int
+    left: float
+    right: float
+    y: float
     art_margin: int = 0
+    height: float = SPIKE_HEIGHT
+
+    @property
+    def top(self):
+        return self.y + self.height
 
     def overlaps(self, hitbox, clearance=0):
         left, bottom, right, top = hitbox
         return (
             right > self.left - clearance and left < self.right + clearance
-            and bottom < self.y + SPIKE_HEIGHT and top > self.y
+            and bottom < self.top and top > self.y
         )
 
     def draw(self, image, camera, show_hitboxes):
@@ -59,7 +64,7 @@ class SpikeBed:
             return
         if image is not None:
             left, root = camera.world_to_screen(art_left, self.y - SPIKE_ROOT_DEPTH)
-            right, tip = camera.world_to_screen(art_right, self.y + SPIKE_HEIGHT)
+            right, tip = camera.world_to_screen(art_right, self.top)
             tiles = ceil((art_right - art_left) / SPIKE_TILE_WIDTH)
             width = (right - left) / tiles
             root, tip = round(root), round(tip)
@@ -69,7 +74,7 @@ class SpikeBed:
                 image.draw_to_origin(x1, root, x2 - x1, tip - root)
         if show_hitboxes:
             left, base = map(round, camera.world_to_screen(self.left, self.y))
-            right, tip = map(round, camera.world_to_screen(self.right, self.y + SPIKE_HEIGHT))
+            right, tip = map(round, camera.world_to_screen(self.right, self.top))
             pico.draw_rectangle(left, base, right, tip, 245, 164, 85)
 
 
@@ -111,7 +116,7 @@ class Health:
                 continue
             left, _, right, top = hitbox
             hit_x = (max(left, spikes.left) + min(right, spikes.right)) / 2
-            self.hit_position = hit_x, min(top, spikes.y + SPIKE_HEIGHT)
+            self.hit_position = hit_x, min(top, spikes.top)
             self.hit_at = now
             self.returned_at = None
             self.current = max(0, self.current - SPIKE_DAMAGE)

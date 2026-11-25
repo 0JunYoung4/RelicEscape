@@ -281,7 +281,7 @@ class RelicTests(unittest.TestCase):
         self.assertAlmostEqual(bend_width, straight_width, delta=2)
 
     def test_cyan_channel_continues_through_curves_and_joins(self):
-        width, height = 1050, 400
+        width, height = 1050, 730
         pico.open_canvas(width, height)
         self.addCleanup(pico.close_canvas)
         track, curve = (pico.load_image(str(path)) for path in (RAIL_IMAGE, RAIL_BEND_IMAGE))

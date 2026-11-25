@@ -5,11 +5,12 @@ from math import hypot
 from pico2d import pico2d as pico
 
 from crystal_golem import CrystalGolem
-from health import SPIKE_HEIGHT, SpikeBed
+from health import SpikeBed
 from lower_route_b_art import LowerRouteBArt
 from lower_route_b_layout import (A_ENTRY, BOTTOM, C_PASSAGE, GOLEM_LEDGE, PILLBUG_LEDGE,
-                                  RAIL_ONE, RAIL_TWO, RIGHT_WALL, SHIELD_LEDGE,
-                                  SPIKE_TIP_Y, TERRAIN, TOP, WIDTH)
+                                  HIDDEN_DOCK, HIDDEN_DOCK_DISTANCE, HIDDEN_LEDGE, RAIL_ONE, RAIL_TWO,
+                                  RIGHT_WALL, SHIELD_LEDGE, SPIKE_SHELVES, TERRAIN, THORN_WALL_CROP,
+                                  THORN_WALL_PROFILE, THORN_WALLS, TOP, WIDTH)
 from pillbug import Pillbug
 from player import STANDING_HITBOX_HEIGHT
 from rail import (RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE, RAIL_MOUNT_RADIUS,
@@ -18,12 +19,34 @@ from shield_soldier import BASH_DAMAGE, ShieldSoldier
 
 
 SPAWN = (4780, A_ENTRY[3], 0)
-SPIKES = (SpikeBed(0, WIDTH, SPIKE_TIP_Y - SPIKE_HEIGHT),)
+HIDDEN_DOCK_PAUSE = 1.25
+HIDDEN_RELIC_PICKUP_RADIUS = 50
+
+
+def _thorn_wall_spikes(bounds, hanging):
+    left, bottom, right, top = bounds
+    profile = THORN_WALL_PROFILE
+    source_width = THORN_WALL_CROP[2] - THORN_WALL_CROP[0]
+    scale_x = (right - left) / source_width
+    height = (top - bottom) / len(profile)
+    for index, (edge_left, edge_right) in enumerate(profile):
+        if hanging:
+            edge_left, edge_right = source_width - edge_right, source_width - edge_left
+        row = index if hanging else len(profile) - 1 - index
+        yield SpikeBed(left + edge_left * scale_x, left + edge_right * scale_x,
+                       bottom + row * height, height=height)
+
+
+SPIKES = (
+    *(SpikeBed(left, right, top) for left, _, right, top in SPIKE_SHELVES),
+    *(spikes for wall, hanging in THORN_WALLS for spikes in _thorn_wall_spikes(wall, hanging)),
+    SpikeBed(0, WIDTH, BOTTOM),
+)
 # Keep the painted shelf cores solid and join the top of the hanging wall to the roof.
-PLAY_TERRAIN = (*TERRAIN, (18, 360, 1110, 500), (1000, 140, 1315, 495),
+PLAY_TERRAIN = (*TERRAIN, *SPIKE_SHELVES, HIDDEN_LEDGE, (18, 360, 1110, 500), (1000, 140, 1315, 495),
                 (2265, 332, 2860, 495), (4475, -45, WIDTH, 90),
                 (3085, -16, 3615, 85), (3160, -145, 3525, -16),
-                (3165, BOTTOM, 3520, -145),
+                (3165, -350, 3520, -145),
                 (RIGHT_WALL[0], RIGHT_WALL[3], RIGHT_WALL[2] + 50, 1270),
                 (0, 1270, WIDTH, TOP))
 SAFE_POSES = (
@@ -50,6 +73,8 @@ class LowerRouteB:
             self.reset_carriage(carriage)
         self.rail_attempt = None
         self.safe_pose = SPAWN
+        self.dock_pause = 0.0
+        self.hidden_relic_collected = False
         # Leave the right edge of each ledge open for landing.
         self.pillbug = Pillbug.on_platform((3060, 85, 3380, PILLBUG_LEDGE[3]))
         self.pillbug.x = 3265
@@ -83,7 +108,7 @@ class LowerRouteB:
     def enter(self, player):
         player.world_width = WIDTH
         player.terrain = PLAY_TERRAIN
-        player.ground_y = SPIKES[0].y
+        player.ground_y = BOTTOM
         player.recover_at(*SPAWN)
         player.facing = -1
 
@@ -99,12 +124,19 @@ class LowerRouteB:
     def nearby_carriage(self, player, relic_placed):
         if relic_placed or not player.grounded:
             return None
+        if self.on_hidden_ledge(player):
+            return self.carriages[1] if abs(player.x - HIDDEN_DOCK[0]) <= RAIL_MOUNT_RADIUS else None
         _, bottom, _, top = player.get_hitbox()
         for carriage in self.carriages:
             x, y = carriage.segments[-1].end
             if hypot(player.x - x, (bottom + top) / 2 - y) <= RAIL_MOUNT_RADIUS:
                 return carriage
         return None
+
+    @staticmethod
+    def on_hidden_ledge(player):
+        left, _, right, top = HIDDEN_LEDGE
+        return player.grounded and player.y == top and left <= player.x < right
 
     def use_relic(self, player, *, relic_placed):
         if self.mounted_carriage is not None:
@@ -114,6 +146,10 @@ class LowerRouteB:
         if carriage is None:
             return False, None
         self.reset_carriage(carriage)
+        if carriage is self.carriages[1]:
+            self.dock_pause = 0.0
+            if self.on_hidden_ledge(player):
+                carriage.distance = HIDDEN_DOCK_DISTANCE
         carriage.relic_mounted = True
         self.rail_attempt = carriage
         return True, None
@@ -121,18 +157,36 @@ class LowerRouteB:
     def prompt(self, player, relic_placed):
         carriage = self.mounted_carriage
         if carriage is not None:
+            if carriage is self.carriages[1] and self.dock_pause > 0:
+                return HIDDEN_DOCK, False
             x, y = carriage.segments[-1].end
             if carriage.distance == carriage.length and abs(player.x - x) <= 160:
                 return (x, y), True
             return (player.x, player.y + STANDING_HITBOX_HEIGHT), False
         carriage = self.nearby_carriage(player, relic_placed)
-        return (carriage.segments[-1].end, False) if carriage is not None else None
+        if carriage is not None:
+            return (HIDDEN_DOCK if self.on_hidden_ledge(player) else carriage.segments[-1].end), False
+        return None
 
     def update(self, player, dt):
         if self.mounted_carriage is not None:
             self.mounted_carriage.check_attack(player)
-        for carriage in self.carriages:
-            carriage.move(dt)
+        first, second = self.carriages
+        first.move(dt)
+        if self.dock_pause > 0:
+            wait = min(dt, self.dock_pause)
+            self.dock_pause -= wait
+            if self.dock_pause > 0:
+                return
+            if second.relic_mounted:
+                second.direction = -1
+            dt -= wait
+        previous = second.distance
+        second.move(dt)
+        if second.relic_mounted and previous > HIDDEN_DOCK_DISTANCE >= second.distance:
+            second.distance = HIDDEN_DOCK_DISTANCE
+            second.direction = 0
+            self.dock_pause = HIDDEN_DOCK_PAUSE
 
     def check_spikes(self, player, health, now):
         if player.grounded and not health.recovering(now):
@@ -145,8 +199,13 @@ class LowerRouteB:
         hit = health.check_spikes(player, SPIKES, now)
         health.safe_pose = self.safe_pose
         if hit and self.rail_attempt is not None:
+            if self.rail_attempt is self.carriages[1]:
+                self.dock_pause = 0.0
             self.reset_carriage(self.rail_attempt)
             self.rail_attempt = None
+        if not hit and not health.recovering(now) and self.on_hidden_ledge(player):
+            if abs(player.x - HIDDEN_DOCK[0]) <= HIDDEN_RELIC_PICKUP_RADIUS:
+                self.hidden_relic_collected = True
         return hit
 
     def enemy_target(self, enemy, player):
@@ -176,3 +235,4 @@ class LowerRouteB:
             draw_rail(self.rail, self.bend, camera, carriage.segments)
             self.mount.draw(*camera.world_to_screen(*carriage.position),
                             self.mount.w * scale, self.mount.h * scale)
+        self.art.draw_hidden_relic(camera, screen_height, self.hidden_relic_collected)
