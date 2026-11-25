@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 하단 A–B 통로의 B 쪽 절벽에 중앙 원화와 같은 암반을 연결했다. 접합부 배치와 검증은 [하단 A–B 절벽 연결부](../docs/lower-route-ab-terrain-join.md)에 기록했다.
+
 - 2026-11-26 B1 중앙 바위의 `ceiling-boulder-shatter-sheet-v2.png`와 `ceiling-boulder-shatter-preview-v2.gif`를 독립 파편 PNG 아홉 개로 다시 만들었다. 충돌 뒤 파편은 등딱지 경사를 타고 양옆으로 튄다.
 
 - 2026-11-26 B1 천장 암석 충돌용 독립 파편 아홉 개를 `assets/concepts/b1-hermit-crab/ceiling-rock-v2/debris-v1/`에 저장했다. 큰 돌덩이·중간 파편·작은 자갈은 각각 세 개이며 투명 PNG와 3 × 3 아틀라스 형태다.
