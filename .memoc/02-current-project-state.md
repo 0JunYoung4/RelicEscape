@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 보스방 기획 v2를 `docs/map1-b1-boss-room-blockout-v2.png`에 정리했다. C 왼쪽 통로, 좌우 레일과 상단 발판, 소라게 집게 2곳과 은신 때 하나씩 드러나는 푸른 수정 2곳을 배치했다. 두 은신 구간과 게임 적용 범위는 기획 단계다.
+
 - 2026-11-25 유물 레일 곡선은 직선 단면으로 만든 반경 72·96·216 스프라이트를 사용한다. `python -m tools.bake_rail_bends`로 아틀라스를 재생성한다. `tests/test_relic.py`에서 본편 A·B와 장치 시험룸의 발광선 연결을 검사한다.
 
 - 2026-11-24 A·B를 한 월드 좌표계와 카메라에 놓고 900 월드 단위의 수평 돌길을 연결했다. 오갈 때 유물·레일 상태가 유지된다. 원화는 내장 image_gen, 실행 화면은 `docs/map1-lower-route-ab-connection.png`.
