@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1은 플레이어가 오른쪽 진입 통로를 빠져나온 뒤 석문이 내려와 길을 막는다. `assets/concepts/b1-hermit-crab/right-passage-v1/right-passage-lock-preview.gif`에 진입·봉쇄 연출을 저장했다.
+
 - 2026-11-25 B1 초기 배치도에 있고 둥지 v2 지형 레이어에서 빠졌던 C 방향 진입 통로를 `assets/concepts/b1-hermit-crab/right-passage-v1/` 시안에 복원했다. 새 낮은 천장 아래로 바닥을 잇고, 전경은 검은 그림자로 낮추며 통행 높이의 알파를 비웠다.
 
 - 2026-11-25 기본 실행 전투방에 `assets/terrain/combat-room-v2/`의 원경·검은 암벽·천장·이끼 발판·전경을 연결했다. 공벌레 2마리와 수정 골렘 2마리를 모두 잡으면 정적과 틈빛을 거쳐 중앙 바닥이 무너지고 A파트로 내려갈 수 있다.
