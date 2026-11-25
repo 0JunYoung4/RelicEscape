@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-26 [하단 A–B 비석의 레이어 구도](../docs/lower-route-ab-depth.md)를 적용했다. 게임 이동과 렌더러로 두 고정 구도·양방향 카메라·아래층 착지를 검사했다. 전체화면 수동 키 조작은 미확인이다.
+
 - 2026-11-26 하단 A–B 절벽의 몸체 알파와 보행선 `y=180`을 [접합부 문서](../docs/lower-route-ab-terrain-join.md)와 `tests/test_lower_route_a.py`에서 확인할 수 있다. SDL과 Direct3D 11에서 자동 이동과 카메라 비교를 실행했다. 전체화면 수동 조작은 미확인이다.
 
 - 2026-11-25 A 첫 레일 위층에 유물 설치 발판, 아래층에 3초 시작 발판을 배치했다. `LowerRouteA.update_seal`은 일반 이동과 `E` 도착 뒤에 호출된다. `tests/test_lower_route_a.py`에서 실제 입력으로 퍼즐 개방과 연속 A→B 진행을 확인한다. 쌍날 파수꾼과 공명 골렘은 `docs/DESIGN_DISCUSSION.md`의 전투 후속 후보다.

@@ -15,6 +15,8 @@ Durable project decisions live here. Keep entries short, dated, and useful to fu
 
 ## Decision Log
 
+- 2026-11-26 A–B 비석의 식생은 원화 앵커를 지형과 같은 카메라 좌표로 옮긴다. 깊이는 색·크기·겹침으로 만들고, 통로의 낮은 전경 뒤에서도 게임 신호가 보이도록 그리기 우선순위를 둔다. [배치 기준](../docs/lower-route-ab-depth.md)
+
 - 2026-11-26 이어진 절벽을 만들 때 원화의 보행선과 월드 좌표를 맞추고, 하나의 불투명한 암반 표면과 외곽 알파를 사용한다. A–B의 배치와 재사용 기준은 [접합부 문서](../docs/lower-route-ab-terrain-join.md)에 기록했다.
 
 - 2026-11-26 사용자 지정으로 B1 천장 암석 충돌에는 새로 제작한 독립 파편 이미지를 사용한다. 온전한 암석은 파편의 재질 참고로 쓴다.

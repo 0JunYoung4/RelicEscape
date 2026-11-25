@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 하단 A–B 중앙 비석과 식생을 원경·중경·부착 장식·근경으로 구성했다. 배치와 검증은 [비석과 공간 깊이](../docs/lower-route-ab-depth.md)에 있다.
+
 - 2026-11-26 하단 A–B 통로의 B 쪽 절벽에 중앙 원화와 같은 암반을 연결했다. 접합부 배치와 검증은 [하단 A–B 절벽 연결부](../docs/lower-route-ab-terrain-join.md)에 기록했다.
 
 - 2026-11-26 B1 중앙 바위의 `ceiling-boulder-shatter-sheet-v2.png`와 `ceiling-boulder-shatter-preview-v2.gif`를 독립 파편 PNG 아홉 개로 다시 만들었다. 충돌 뒤 파편은 등딱지 경사를 타고 양옆으로 튄다.
