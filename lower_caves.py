@@ -407,8 +407,8 @@ class LowerCaves:
             return
         if self.room == "combat":
             self.art.draw_background(camera, tint=COMBAT_BACKGROUND_TINT)
-            self.art.combat_scenery().draw_background(camera, COMBAT_LEFT_WALL,
-                                                     COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
+            scenery = self.art.combat_scenery()
+            scenery.draw_background(camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
             self.art.draw_motes(camera, 0, COMBAT_CEILING_Y,
                                 left=COMBAT_LEFT_WALL, right=COMBAT_RIGHT_WALL,
                                 count=8, opacity_scale=.45)
@@ -420,6 +420,7 @@ class LowerCaves:
                 self.art.draw_floor(camera, 0, COMBAT_WIDTH, 0)
             for x1, y1, x2, y2 in COMBAT_PLATFORMS:
                 self.art.draw_platform(camera, (x1, y1, x2, y2))
+            scenery.draw_floor_plants(camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
             self.draw_combat_gate(camera)
             self.wall_effects.draw(camera)
             self.art.draw_corner(camera, COMBAT_LEFT_WALL, COMBAT_CEILING_Y, width=120)

@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-25 전투방 전용 배경·식생은 `CombatScenery.draw_background`와 `draw_floor_plants`에서 그린다. `tools/preview_combat_atmosphere.py --projectiles --prefix relic-grotto --output-dir .cache/relic-grotto`로 공벌레, 수정탄, 상단, 개방 큐, 하강 화면을 확인한다.
+
 - 2026-11-25 전투방 클리어 뒤 `LowerCaves.exit_cue_time`이 정적과 틈새 빛을 진행하고 그 뒤 돌벽·덮개를 연다. `CombatScenery.draw_exit_seam`은 덮개 왼쪽 끝에 빛을 그린다. `tools/preview_combat_atmosphere.py`의 `-seam.png`로 상단 발판 시점에서 확인할 수 있다.
 
 - 2026-11-25 첫 전투방 순서는 `lower_caves.py`의 `combat_phase`와 `update_combat_encounter`에서 관리한다. 문이 닫히는 동안 적이 표시되거나 피해를 주지 않는다. 공벌레 사망 연출은 골렘 단계에서도 계속 재생된다. `tests/test_combat_trigger.py`와 `tests/test_combat_clear.py`에서 순서를 확인한다.

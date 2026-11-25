@@ -33,11 +33,15 @@
 
 천장 덩굴을 화면 상단에 붙이거나 천장의 화면 진입 여부에 따라 배치 기준을 바꾸지 않는다. 이끼 통로는 기존 포자 영역 상단과 같은 `GALLERY_CEILING_Y=900`, 전투방은 실제 천장 `COMBAT_CEILING_Y`에 배치한다. 천장 위는 검게 채우고, 기존 불규칙한 아래 윤곽은 유지한다. 카메라는 두 구간 모두 캐릭터의 가로·세로 위치를 따라가며 천장을 보이게 하려는 높이 제한을 사용하지 않는다. 지상에서는 발밑 여백을 확보하고, 하강 통로는 기존 추적을 유지한다. [통로 지상](ceiling-vines-gallery-floor.png) · [통로 발판](ceiling-vines-gallery-platform.png) · [전투방 지상](ceiling-vines-combat-floor.png) · [전투방 상승](ceiling-vines-combat-high.png) · [높이별 비교 GIF](ceiling-vines-follow.gif).
 
-## 전투방의 깊이와 조명 개선
+## 전투방 전용 원경과 식생
 
-최신 전투방은 녹색 거리의 넓은 전투 여백과 투사체 대비, 실크송 High Halls의 어두운 가장자리를 참고했다. 청록색 원경을 차분한 남청색으로 누르고 폐아치의 대비를 낮췄다. 우측 상단의 빛줄기는 수정탄이 지나가는 높이 위에서 흩어지고, 바닥 뒤의 낮고 넓은 빛은 공벌레의 등판을 드러낸다. 포자는 18개에서 8개로 줄이고 밝기를 낮췄다. 천장 덩굴 띠는 세로로 줄이고 좌우 큰 뿌리는 벽 쪽으로 당겼다. 기존 세 발판과 네 몬스터의 배치, 천장 고정 기준, 하강 통로 계산을 유지했다. [HK-GP05](references/hollow-knight-silksong/index.html#HK-GP05) · [HK-GP37](references/hollow-knight-silksong/index.html#HK-GP37) · [SS-HH-06](references/hollow-knight-silksong/index.html#SS-HH-06)
+원경 한 장에 뿌리가 파고든 부서진 석조 고리, 층층이 멀어지는 안개, 왼쪽 천장 틈에서 들어오는 빛을 담았다. 중앙 공중은 남청색 면을 넓게 남겨 골렘과 수정탄이 드러난다. 지면 양끝에는 크기와 방향을 달리한 호박빛 열매 식생을 배치해 청록 원경에 따뜻한 색을 더했다. [HK-GP05](references/hollow-knight-silksong/index.html#HK-GP05) · [SS-MG-04](references/hollow-knight-silksong/index.html#SS-MG-04) · [SS-HH-06](references/hollow-knight-silksong/index.html#SS-HH-06)
 
-두 골렘의 실제 발사 코드로 수정탄을 만들고 같은 카메라와 비행 시점에서 전후 화면을 렌더링했다. `.\.venv\Scripts\python.exe tools/preview_combat_atmosphere.py --projectiles --prefix combat-readability`로 최신 화면을 다시 만들 수 있다. 앞으로 이미지를 생성할 때는 [제작 가이드](reference-production-guide.md)에서 관련 참고를 골라 실제 화면을 보고, 참고 ID와 가져온 표현 원리를 프롬프트 또는 자산 메타데이터에 기록한다.
+두 원화는 내장 imagegen으로 생성했고 원본을 게임에 사용한다. 원경은 지형보다 느리게 이동하고 식생은 바닥에 고정된다. `.\.venv\Scripts\python.exe tools/preview_combat_atmosphere.py --projectiles --prefix relic-grotto --output-dir .cache/relic-grotto`로 공벌레 단계, 수정탄, 상승, 덮개 틈새와 하강 장면을 렌더링할 수 있다.
+
+### 앞서 조정한 전투방의 명암
+
+이전 미술은 오른쪽 상단 사선 빛과 대비를 낮춘 중경 폐아치를 사용했다. 포자를 18개에서 8개로 줄이고 천장 뿌리를 벽 쪽으로 당겼다. 두 골렘의 실제 발사 코드로 수정탄을 만들어 같은 카메라와 비행 시점에서 비교했다. [당시 전후 비교](combat-readability-comparison.jpg) · [당시 수정탄 화면](combat-readability-projectiles.png)
 
 ### 이전 전투방 미술 기록
 
@@ -66,10 +70,12 @@ SDL 소프트웨어 렌더로 위 화면과 GIF를 생성해 확인했다. 재�
 | 천장 전경 실루엣 | [전경](../assets/terrain/green-cavern-canopy-v1.png) | [프롬프트](../assets/terrain/green-cavern-canopy-v1.prompt.txt) |
 | 모서리 덩굴 장식 | [덩굴](../assets/terrain/green-cavern-corner-ivy-v1.png) | [프롬프트](../assets/terrain/green-cavern-corner-ivy-v1.prompt.txt) |
 | 유물 통로의 지면 기둥 | [기둥](../assets/terrain/green-cavern-ground-pillar-v2.png) | [프롬프트](../assets/terrain/green-cavern-ground-pillar-v2.prompt.txt) |
-| 전투방 중경 폐아치 | [중경](../assets/terrain/green-combat-midground-ruins-v1.png) | [프롬프트](../assets/terrain/green-combat-midground-ruins-v1.prompt.txt) |
+| 전투방 석조 고리 원경 | [원경](../assets/terrain/moss-combat-relic-grotto-v1.png) | [프롬프트](../assets/terrain/moss-combat-relic-grotto-v1.prompt.txt) |
+| 전투방 호박빛 열매 | [식생](../assets/terrain/moss-combat-seedpods-v1.png) | [프롬프트](../assets/terrain/moss-combat-seedpods-v1.prompt.txt) |
+| 이전 전투방 중경 폐아치 | [중경](../assets/terrain/green-combat-midground-ruins-v1.png) | [프롬프트](../assets/terrain/green-combat-midground-ruins-v1.prompt.txt) |
 | 전투방 근접 뿌리와 큰 잎 | [전경](../assets/terrain/green-combat-foreground-roots-v1.png) | [프롬프트](../assets/terrain/green-combat-foreground-roots-v1.prompt.txt) |
 
-전투방 신규2종은 내장 imagegen의 투명 원본 PNG를 편집 없이 보관하며, 원본 자체를 렌더에 사용한다. 용도·크기·고정점은 각 PNG와 같은 이름의 JSON에 기록했다. 조명은 SDL의 색·알파 메시로 그려 별도 이미지가 없다.
+이전 중경 폐아치와 근접 뿌리는 투명 원본 PNG이며, 용도·크기·고정점은 각 PNG와 같은 이름의 JSON에 기록했다. 덮개 틈새 빛은 SDL의 색·알파 메시로 그린다.
 
 사용자 참고 이미지7장은 [참고 폴더](references/green-cavern-style/)에 보관했다.
 

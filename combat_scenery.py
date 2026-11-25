@@ -16,11 +16,11 @@ class CombatScenery:
     def __init__(self, width, height):
         self.width, self.height = width, height
         terrain = ASSET_ROOT / "terrain"
-        self.ruins = pico.load_image(str(terrain / "green-combat-midground-ruins-v1.png"))
+        self.grotto = pico.load_image(str(terrain / "moss-combat-relic-grotto-v1.png"))
+        self.seedpods = pico.load_image(str(terrain / "moss-combat-seedpods-v1.png"))
         self.roots = pico.load_image(str(terrain / "green-combat-foreground-roots-v1.png"))
-        pico.SDL_SetTextureColorMod(self.ruins.texture, 133, 155, 175)
-        pico.SDL_SetTextureAlphaMod(self.ruins.texture, 77)
         pico.SDL_SetTextureColorMod(self.roots.texture, 99, 123, 143)
+        pico.SDL_SetTextureAlphaMod(self.seedpods.texture, 216)
 
     @contextmanager
     def room_clip(self, camera, left, right, ceiling, *, margin=0):
@@ -92,52 +92,26 @@ class CombatScenery:
                       for alpha in (0, 185, 245, 185, 245, 0)]
             self.geometry(camera, points, colors, (0, 3, 1, 1, 3, 2, 2, 3, 4, 2, 4, 5))
 
-    def light_shaft(self, camera, left, right, ceiling):
-        span = right - left
-        points, colors = [], []
-        # The upper-right beam fades above the crystal flight path.
-        rows = ((1.04, .76, 50, 0), (.90, .72, 92, 45),
-                (.77, .68, 136, 24), (.62, .63, 175, 0))
-        for height, center, half_width, opacity in rows:
-            for across, strength in ((-1, 0), (-.55, .5), (0, 1), (.55, .5), (1, 0)):
-                points.append((left + span * center + half_width * across, ceiling * height))
-                colors.append((139, 173, 190, round(opacity * strength)))
-        triangles = []
-        for row in range(len(rows) - 1):
-            for column in range(4):
-                first = row * 5 + column
-                triangles.extend((first, first + 5, first + 1, first + 1, first + 5, first + 6))
-        self.geometry(camera, points, colors, triangles)
-
     def draw_background(self, camera, left, right, ceiling):
-        # Include the low entrance recess so its background shares the room's mood.
         with self.room_clip(camera, left - 360, right + 360, ceiling) as visible:
             if not visible:
                 return
-            span = right - left
-            with self.alpha_geometry():
-                # Keep the side platforms and the air above them in the same quiet values.
-                points = [(left + span * x, ceiling * y)
-                          for y in (0, .50, 1) for x in (-.25, 0, .26, .58, 1, 1.25)]
-                colors = [(7, 16, 30, alpha) for row in ((72, 72, 65, 61, 68, 68),
-                                                        (93, 93, 82, 78, 84, 84),
-                                                        (118, 118, 74, 46, 86, 86)) for alpha in row]
-                triangles = []
-                for row in range(2):
-                    for column in range(5):
-                        first = row * 6 + column
-                        triangles.extend((first, first + 6, first + 1,
-                                          first + 1, first + 6, first + 7))
-                self.geometry(camera, points, colors, triangles)
-            width = span * .84
-            height = width * self.ruins.h / self.ruins.w
-            self.ruins.draw_to_origin(*camera.world_to_screen(left + span * .08, -28),
+            width = (right - left) * 1.46
+            height = width * self.grotto.h / self.grotto.w
+            # Overscan lets the distant roots shift more slowly than the floor and walls.
+            x = (left + right - width) / 2 + camera.x * .10
+            y = -200 + camera.y * .12
+            self.grotto.draw_to_origin(*camera.world_to_screen(x, y),
                                       width * camera.zoom, height * camera.zoom)
-            with self.alpha_geometry():
-                # Diffuse light behind the low pillbug silhouettes brings out their outline.
-                self.soft_light(camera, (left + span * .50, 35),
-                                (span * .67, 260), (84, 134, 151), 105)
-                self.light_shaft(camera, left, right, ceiling)
+
+    def draw_floor_plants(self, camera, left, right, ceiling):
+        with self.room_clip(camera, left, right, ceiling) as visible:
+            if not visible:
+                return
+            for x, width, flip in ((left + 132, 260, ""), (right - 122, 214, "h")):
+                height = width * self.seedpods.h / self.seedpods.w
+                self.seedpods.composite_draw(0, flip, *camera.world_to_screen(x, height / 2 - 11),
+                                             width * camera.zoom, height * camera.zoom)
 
     def draw_foreground(self, camera, left, right, ceiling):
         with self.room_clip(camera, left, right, ceiling, margin=64) as visible:

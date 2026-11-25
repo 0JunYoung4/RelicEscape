@@ -52,6 +52,8 @@ class CombatSceneryTests(unittest.TestCase):
         before = self.pixels()
         self.scenery.draw_background(self.camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL,
                                       COMBAT_CEILING_Y)
+        self.scenery.draw_floor_plants(self.camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL,
+                                        COMBAT_CEILING_Y)
         self.scenery.draw_foreground(self.camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL,
                                       COMBAT_CEILING_Y)
         after = self.pixels()
@@ -62,6 +64,8 @@ class CombatSceneryTests(unittest.TestCase):
         before = self.pixels()
         self.scenery.draw_background(self.camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL,
                                       COMBAT_CEILING_Y)
+        self.scenery.draw_floor_plants(self.camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL,
+                                        COMBAT_CEILING_Y)
         self.scenery.draw_foreground(self.camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL,
                                       COMBAT_CEILING_Y)
         self.assertEqual(before, self.pixels())
@@ -70,7 +74,8 @@ class CombatSceneryTests(unittest.TestCase):
         clip = pico.SDL_Rect(180, 100, 480, 300)
         pico.SDL_RenderSetClipRect(pico.renderer, byref(clip))
         pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_ADD)
-        for draw in (self.scenery.draw_background, self.scenery.draw_foreground):
+        for draw in (self.scenery.draw_background, self.scenery.draw_floor_plants,
+                     self.scenery.draw_foreground):
             draw(self.camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
             actual = pico.SDL_Rect()
             pico.SDL_RenderGetClipRect(pico.renderer, byref(actual))
