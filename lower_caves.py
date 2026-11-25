@@ -248,7 +248,11 @@ class LowerCaves:
         return (destination is None or self.room != "combat" or not self.entrance_locked
                 or destination[0] >= COMBAT_ENTRANCE_BARRIER[2])
 
-    def enter(self, player, camera, *, from_right=False, shaft_offset=None):
+    def update_relic_seal(self, player, now):
+        if self.in_lower_route and self.route_a.update_seal(player, now):
+            player.terrain = self.route_connection.terrain
+
+    def enter(self, player, camera, *, from_right=False, shaft_offset=None, seal_open=False):
         self.shaft_visibility = 0.0
         self.wall_effects.clear()
         self.wall_effects.progress = self.entrance_progress
@@ -259,7 +263,7 @@ class LowerCaves:
             golem.attack_target = None
         if self.in_lower_route:
             if self.route_a is None:
-                self.route_a = LowerRouteA(A_ORIGIN)
+                self.route_a = LowerRouteA(A_ORIGIN, seal_open=seal_open)
             if self.route_b is None:
                 self.route_b = LowerRouteB()
             if self.route_c is None:

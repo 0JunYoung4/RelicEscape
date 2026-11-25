@@ -1,10 +1,20 @@
+---
+memoc: true
+type: state
+scope: project-memory
+created: 2026-11-25T11:57:14
+updated: 2026-11-25T11:57:14
+status: active
+tags:
+  - memoc
+  - memoc/state
+---
 # Session Summary
 Last: 2026-11-25 (Asia/Seoul)
 
-- 전투방 부서진 석조 고리 원경·호박빛 식생 적용. 공벌레 → 골렘 → 정적·틈빛 → 하강. R 초기화.
-- 본편 A·B·C 연속. B–C 원경·이끼 돌길 통합. C 공벌레 두 마리와 석등, B1 봉인문.
-- B 두 레일의 가시벽과 C 입구 천장을 덩굴로 연결. 지면 아래 숨은 방은 후속 작업.
-- 본편·시험룸에서 C 유지로 유물 위치 확인. 놓거나 회수하면 복귀.
-- 2맵 전체 배치 `docs/INITIAL_DESIGN.md` 6절.
-- 골렘·공벌레 명중 섬광/파편, 골렘은 충전 유지. `docs/golem-hit-impact.gif`.
+- A 첫 레일 뒤 3초 발판: 위층 유물 설치 → 아래 발판 → E 귀환 → B 개방. 사망 시 개방 유지, R 초기화.
+- 쌍날 파수꾼·공명 골렘 후보 `docs/DESIGN_DISCUSSION.md`.
+- 전투방 석조 고리 원경·호박빛 식생. 공벌레 → 골렘 → 정적·틈빛 → 하강.
+- A·B·C 연속. C 공벌레 둘, 석등, B1 봉인문. B 지면 속 숨은 방은 후속 작업.
+- C 유지로 유물 확인. 2맵 구성 `docs/INITIAL_DESIGN.md` 6절.
 - 오프닝 `--opening`. 재개 `.memoc/04-handoff.md`.

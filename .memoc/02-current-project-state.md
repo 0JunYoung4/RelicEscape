@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 A 첫 레일 뒤에 필수 3초 발판 봉인문을 연결했다. 위층에 `E` 설치 → 아래 발판 접촉 → 3초 안에 `E` 위층 복귀 → 왼쪽 B 연결문 개방. 실패 후 재시도, 사망 시 개방 유지, `R` 초기화. 쌍날 파수꾼과 공명 골렘은 `docs/DESIGN_DISCUSSION.md`에 후속 콘셉트로 보관했다.
+
 - 2026-11-25 B1 조립 외형 v5를 `assets/concepts/b1-hermit-crab/assembled-preview-v5.png`에 정리했다. 기존 760 대비 높이 860 가안, 긴 다리와 높이 든 좌우 집게, 몸통 아래의 납작한 돌판을 적용했다. 단일 바닥에서 집게 밑에 실제 플레이어 스프라이트를 배치했다.
 
 - 2026-11-25 전투방 전용 원경에 부서진 석조 고리·뿌리·왼쪽 틈빛을 그렸고 지면 양끝에 호박빛 열매를 배치했다. `combat_scenery.py`가 원경 시차와 전투방 클립을 처리한다. 원화와 프롬프트는 `assets/terrain/moss-combat-relic-grotto-v1.*`, `moss-combat-seedpods-v1.*`.

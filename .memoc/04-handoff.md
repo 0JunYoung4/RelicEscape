@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-25 A 첫 레일 위층에 유물 설치 발판, 아래층에 3초 시작 발판을 배치했다. `LowerRouteA.update_seal`은 일반 이동과 `E` 도착 뒤에 호출된다. `tests/test_lower_route_a.py`에서 실제 입력으로 퍼즐 개방과 연속 A→B 진행을 확인한다. 쌍날 파수꾼과 공명 골렘은 `docs/DESIGN_DISCUSSION.md`의 전투 후속 후보다.
+
 - 2026-11-25 전투방 전용 배경·식생은 `CombatScenery.draw_background`와 `draw_floor_plants`에서 그린다. `tools/preview_combat_atmosphere.py --projectiles --prefix relic-grotto --output-dir .cache/relic-grotto`로 공벌레, 수정탄, 상단, 개방 큐, 하강 화면을 확인한다.
 
 - 2026-11-25 전투방 클리어 뒤 `LowerCaves.exit_cue_time`이 정적과 틈새 빛을 진행하고 그 뒤 돌벽·덮개를 연다. `CombatScenery.draw_exit_seam`은 덮개 왼쪽 끝에 빛을 그린다. `tools/preview_combat_atmosphere.py`의 `-seam.png`로 상단 발판 시점에서 확인할 수 있다.

@@ -17,7 +17,9 @@ import main
 from health import Health
 from lower_caves import LowerCaves
 from lower_route_a import (BUTTON_CENTER, ENTRY_LEDGE, ENTRY_STEP, EXIT_LEDGE, GROUND_Y,
-                           LOWER_DOCK, OVERHANG, RECOVERY, RECESS_BACK, UPPER_DOCK, WIDTH, LowerRouteA)
+                           LOWER_DOCK, OVERHANG, RECOVERY, RECESS_BACK, SEAL_LOWER_PLATE,
+                           SEAL_OPEN_DURATION, SEAL_PLATE_HALF_WIDTH, SEAL_UPPER_PLATE,
+                           SEAL_WINDOW, UPPER_DOCK, WIDTH, LowerRouteA)
 from lower_route_connection import A_ORIGIN, PASSAGE_FLOOR, PASSAGE_LEFT, PASSAGE_RIGHT
 from player import Player, STANDING_HITBOX_HEIGHT
 from pillbug import EMERGE_DURATION
@@ -128,9 +130,59 @@ class LowerRouteATests(unittest.TestCase):
             self.tick(1, jump=frame % 12 == 0)
             self.assertLess(self.player.y, EXIT_LEDGE[3])
 
-    def test_opening_loop_uses_the_lift_and_walks_to_b_without_a_camera_cut(self):
+    def test_timed_seal_expires_and_rearms_on_a_new_press(self):
+        cave = SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096))
+        room = LowerCaves(cave)
+        room.room = "route_a"
+        room.enter(self.player, self.camera)
+        route = room.route_a
+        lower_x, lower_y = route.point(*SEAL_LOWER_PLATE)
+        upper_x, upper_y = route.point(*SEAL_UPPER_PLATE)
+        closed_barrier = route.seal_barrier
+        self.assertIn(closed_barrier, self.player.terrain)
+        gate_x = (closed_barrier[0] + closed_barrier[2]) / 2
+        self.assertFalse(self.player.teleport_to(gate_x, upper_y, 0))
+
+        self.assertTrue(self.player.recover_at(upper_x, upper_y, 0))
+        room.update_relic_seal(self.player, 0)
+        self.assertFalse(route.seal_unlocked)
+        self.assertTrue(self.player.recover_at(lower_x, lower_y + 30, 0))
+        room.update_relic_seal(self.player, .5)
+        self.assertEqual(route.seal_remaining, 0)
+
+        self.assertTrue(self.player.recover_at(lower_x, lower_y, 0))
+        room.update_relic_seal(self.player, 1)
+        self.assertEqual(route.seal_remaining, SEAL_WINDOW)
+        room.update_relic_seal(self.player, 1 + SEAL_WINDOW)
+        room.update_relic_seal(self.player, 2 + SEAL_WINDOW)
+        self.assertEqual(route.seal_remaining, 0)
+        self.assertTrue(self.player.recover_at(upper_x, upper_y, 0))
+        room.update_relic_seal(self.player, 2 + SEAL_WINDOW)
+        self.assertFalse(route.seal_unlocked)
+
+        self.assertTrue(self.player.recover_at(lower_x, lower_y, 0))
+        room.update_relic_seal(self.player, 6)
+        self.assertEqual(route.seal_remaining, SEAL_WINDOW)
+        self.assertTrue(self.player.recover_at(upper_x, upper_y, 0))
+        room.update_relic_seal(self.player, 8.95)
+        self.assertTrue(route.seal_unlocked)
+        room.update_relic_seal(self.player, 8.95 + SEAL_OPEN_DURATION / 2)
+        self.assertNotIn(closed_barrier, self.player.terrain)
+        self.assertIn(route.seal_barrier, self.player.terrain)
+        room.update_relic_seal(self.player, 10)
+        self.assertTrue(self.player.teleport_to(gate_x, upper_y, 0))
+        self.assertIsNone(route.seal_barrier)
+
+        restarted = LowerCaves(cave)
+        restarted.room = "route_b"
+        restarted.enter(self.player, self.camera, seal_open=route.seal_unlocked)
+        self.assertNotIn(closed_barrier, self.player.terrain)
+        self.assertTrue(restarted.route_a.seal_unlocked)
+
+    def test_opening_loop_solves_the_seal_and_walks_to_b_without_a_camera_cut(self):
         frame = count()
-        state = SimpleNamespace(room=None, player=None, launched=False, recalled=False, mounted=False)
+        state = SimpleNamespace(room=None, player=None, launched=False, recalled=False, mounted=False,
+                                seal_step="upper")
         keys = [0] * pico.SDL_NUM_SCANCODES
         moving_views = []
         dock_views = []
@@ -154,7 +206,7 @@ class LowerRouteATests(unittest.TestCase):
         def events():
             nonlocal dock_frames, anchor_point
             index = next(frame)
-            if state.player.x < PASSAGE_LEFT - 100 or index > 450:
+            if state.player.x < PASSAGE_LEFT - 100 or index > 800:
                 return [pico.Event(pico.SDL_QUIT)]
             route = state.room.route_a
             carriage = route.carriage
@@ -177,14 +229,28 @@ class LowerRouteATests(unittest.TestCase):
                 state.launched = carriage.relic_mounted
                 state.recalled = True
                 return [keydown(pico.SDLK_e)]
-            if state.recalled and state.player.x < PASSAGE_RIGHT + 150 and anchor_point is None:
+            if state.recalled and state.seal_step == "upper":
+                if route.on_seal_plate(state.player, SEAL_UPPER_PLATE):
+                    state.seal_step = "lower"
+                    return [keydown(pico.SDLK_e)]
+            elif state.seal_step == "lower" and route.seal_remaining:
+                self.assertTrue(route.on_seal_plate(state.player, SEAL_LOWER_PLATE))
+                state.seal_step = "exit"
+                return [keydown(pico.SDLK_e)]
+            if state.seal_step == "exit" and state.player.x < PASSAGE_RIGHT + 150 and anchor_point is None:
                 anchor_point = state.player.x
                 return [keydown(pico.SDLK_e)]
             return []
 
         def movement():
-            if state.recalled and state.player.grounded:
+            if not state.recalled:
+                return 0, False, False
+            if state.seal_step == "exit":
                 return -1, True, False
+            plate = SEAL_UPPER_PLATE if state.seal_step == "upper" else SEAL_LOWER_PLATE
+            x, _ = state.room.route_a.point(*plate)
+            if state.player.x < x - SEAL_PLATE_HALF_WIDTH / 4:
+                return 1, True, False
             return 0, False, False
 
         def record(room, camera):
@@ -235,6 +301,7 @@ class LowerRouteATests(unittest.TestCase):
             else:
                 self.assertLess(x, 0)
         self.assertFalse(state.room.route_a.carriage.relic_mounted)
+        self.assertTrue(state.room.route_a.seal_unlocked)
         self.assertEqual(state.room.room, "route_b")
         self.assertLess(state.player.x, PASSAGE_LEFT - 100)
         self.assertEqual(state.player.y, PASSAGE_FLOOR)

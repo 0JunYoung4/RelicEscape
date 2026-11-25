@@ -21,12 +21,18 @@ A_ORIGIN = (PASSAGE_RIGHT, PASSAGE_FLOOR - EXIT_LEDGE[3])
 
 class LowerRouteConnection:
     def __init__(self, route_a):
+        self.route_a = route_a
         self.plate = pico.load_image(str(ASSET_ROOT / "terrain/lower-route-ab-passage-v1.png"))
         pico.SDL_SetTextureBlendMode(self.plate.texture, pico.SDL_BLENDMODE_BLEND)
         self.ground_y = BOTTOM
-        self.terrain = (*C_TERRAIN, *PLAY_TERRAIN, *route_a.terrain,
-                        (PASSAGE_LEFT, BOTTOM, PASSAGE_RIGHT, PASSAGE_FLOOR),
-                        (PASSAGE_RIGHT, BOTTOM, route_a.world_width, route_a.ground_y))
+        self.base_terrain = (*C_TERRAIN, *PLAY_TERRAIN, *route_a.terrain,
+                             (PASSAGE_LEFT, BOTTOM, PASSAGE_RIGHT, PASSAGE_FLOOR),
+                             (PASSAGE_RIGHT, BOTTOM, route_a.world_width, route_a.ground_y))
+
+    @property
+    def terrain(self):
+        barrier = self.route_a.seal_barrier
+        return (*self.base_terrain, barrier) if barrier is not None else self.base_terrain
 
     @staticmethod
     def blend(x, b_value, a_value):

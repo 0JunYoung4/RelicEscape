@@ -840,6 +840,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
         elif lower is not None and health.ready_to_restart(frame_start):
             room = lower.restart_room
             has_relic = lower.has_relic
+            seal_open = lower.in_lower_route and lower.route_a.seal_unlocked
             lower = LowerCaves(cave)
             lower.room = room
             if room == "combat" or lower.in_lower_route:
@@ -847,7 +848,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
             if after_relic and room == "gallery":
                 lower.start_after_relic(player, camera)
             else:
-                lower.enter(player, camera)
+                lower.enter(player, camera, seal_open=seal_open)
             travel.reset()
             health = Health((player.x, player.y, player.crouch_time), returned_at=frame_start)
             pressed_keys.clear()
@@ -880,6 +881,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
                              jump_held=jump_held, crouching=crouching, attack_pressed=pico.SDLK_x in pressed_keys)
                 if lower.room != previous_room and not (was_on_lower_route and lower.in_lower_route):
                     travel.reset()
+            lower.update_relic_seal(player, frame_start)
             if lower.room == "route_b" and lower.route_b.check_spikes(player, health, frame_start):
                 travel.reset()
                 lower.projectiles.clear()
