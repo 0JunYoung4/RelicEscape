@@ -1,12 +1,10 @@
 """A walkable join with one world scale and a shared camera."""
 
-from pico2d import pico2d as pico
-
 from lower_route_a import EXIT_LEDGE
 from lower_route_b import PLAY_TERRAIN
 from lower_route_b_layout import A_ENTRY, BOTTOM, WIDTH as B_WIDTH
 from lower_route_c import TERRAIN as C_TERRAIN
-from player import ASSET_ROOT
+from lower_route_passage_art import PASSAGE_LAYERS, PassageArt
 
 
 PASSAGE_LEFT = B_WIDTH
@@ -30,8 +28,7 @@ PASSAGE_ART_TOP = PASSAGE_FLOOR + PASSAGE_ART_FLOOR_ROW * PASSAGE_ART_SCALE_Y
 class LowerRouteConnection:
     def __init__(self, route_a):
         self.route_a = route_a
-        self.plate = pico.load_image(str(ASSET_ROOT / "terrain/lower-route-ab-passage-joined-v2.png"))
-        pico.SDL_SetTextureBlendMode(self.plate.texture, pico.SDL_BLENDMODE_BLEND)
+        self.art = PassageArt((PASSAGE_ART_X, PASSAGE_ART_TOP), (PASSAGE_ART_SCALE_X, PASSAGE_ART_SCALE_Y))
         self.ground_y = BOTTOM
         self.base_terrain = (*C_TERRAIN, *PLAY_TERRAIN, *route_a.terrain,
                              (PASSAGE_LEFT, BOTTOM, PASSAGE_RIGHT, PASSAGE_FLOOR),
@@ -50,10 +47,11 @@ class LowerRouteConnection:
         return b_value + (a_value - b_value) * weight
 
     def draw(self, camera, screen_height):
-        width = self.plate.w * PASSAGE_ART_SCALE_X
-        if camera.x >= PASSAGE_ART_X + width or camera.x + camera.view_width <= PASSAGE_ART_X:
+        if not self.art.visible(camera, screen_height):
             return
-        x, y = camera.world_to_screen(PASSAGE_ART_X, PASSAGE_ART_TOP)
-        dest = pico.SDL_FRect(x, screen_height - y, width * camera.zoom,
-                             self.plate.h * PASSAGE_ART_SCALE_Y * camera.zoom)
-        pico.SDL_RenderCopyF(pico.renderer, self.plate.texture, None, dest)
+        # Draw scenery in front of the bank, before enemies, player, relics and marks.
+        for layer in PASSAGE_LAYERS:
+            self.draw_layer(camera, screen_height, layer)
+
+    def draw_layer(self, camera, screen_height, layer):
+        self.art.draw_layer(camera, screen_height, layer)

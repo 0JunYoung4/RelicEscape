@@ -25,6 +25,7 @@ from lower_route_connection import (A_ORIGIN, PASSAGE_ART_FLOOR_ROW, PASSAGE_ART
                                     PASSAGE_ART_SCALE_Y, PASSAGE_ART_X, PASSAGE_FLOOR,
                                     PASSAGE_LEFT, PASSAGE_RIGHT)
 from lower_route_b_layout import A_ENTRY
+from lower_route_passage_art import PASSAGE_ART
 from player import ASSET_ROOT, Player, STANDING_HITBOX_HEIGHT
 from pillbug import EMERGE_DURATION
 
@@ -53,13 +54,23 @@ class LowerRouteATests(unittest.TestCase):
         self.route.update(self.player, 1 / 60)
 
     def test_connected_cliff_has_an_opaque_collision_core_and_a_clear_exterior(self):
-        with Image.open(ASSET_ROOT / "terrain/lower-route-ab-passage-joined-v2.png") as plate:
+        with Image.open(PASSAGE_ART / "terrain.png") as plate:
             alpha = plate.getchannel("A")
         left = round((A_ENTRY[0] + 12 - PASSAGE_ART_X) / PASSAGE_ART_SCALE_X)
         right = round((PASSAGE_LEFT + 12 - PASSAGE_ART_X) / PASSAGE_ART_SCALE_X)
         bottom = PASSAGE_ART_FLOOR_ROW + round((A_ENTRY[3] - A_ENTRY[1]) / PASSAGE_ART_SCALE_Y)
         self.assertEqual(alpha.crop((left, PASSAGE_ART_FLOOR_ROW, right, bottom)).getextrema(), (255, 255))
         self.assertEqual(alpha.crop((0, 0, left, PASSAGE_ART_FLOOR_ROW - 8)).getextrema(), (0, 0))
+
+    def test_layered_passage_preserves_the_visible_ground_pixels(self):
+        with (
+            Image.open(ASSET_ROOT / "terrain/lower-route-ab-passage-joined-v2.png") as original,
+            Image.open(PASSAGE_ART / "terrain.png") as terrain,
+        ):
+            self.assertEqual(terrain.size, original.size)
+            ground = (0, PASSAGE_ART_FLOOR_ROW, original.width, original.height)
+            self.assertEqual(terrain.crop(ground).convert("RGBa").tobytes(),
+                             original.crop(ground).convert("RGBa").tobytes())
 
     def test_ground_button_emerges_two_pillbugs_once_and_powers_the_rail(self):
         room = LowerCaves(SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096)))
