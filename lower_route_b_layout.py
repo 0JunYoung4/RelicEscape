@@ -21,10 +21,11 @@ TERRAIN = (C_PASSAGE, C_APPROACH_LEDGE, SHIELD_LEDGE, LEFT_WALL, PILLBUG_LEDGE, 
 SPIKE_SHELVES = ((0, -350, 1408, SPIKE_BASE_Y), (1616, -350, 1842, SPIKE_BASE_Y),
                  (2050, -350, WIDTH, SPIKE_BASE_Y))
 THORN_WALL_CROP = (106, 14, 605, 2158)
+LOWER_RAIL_THORN_WALL = (1598, -250, 1860, TOP + 120)
 THORN_WALLS = (
     ((3890, -265, 4130, 720), False),
     ((3940, 1020, 4080, 1620), True),
-    ((1598, -250, 1860, 1275), True),
+    (LOWER_RAIL_THORN_WALL, True),
 )
 # Horizontal extents in the trimmed sprite, in bands from the pointed end to the base.
 THORN_WALL_PROFILE = (

@@ -8,7 +8,8 @@ from pico2d import pico2d as pico
 
 from health import SPIKE_HEIGHT
 from lower_route_b_layout import (A_ENTRY, BACKGROUND_BOTTOM, BOTTOM, C_APPROACH_LEDGE, C_PASSAGE,
-                                  HIDDEN_DOCK, HIDDEN_LEDGE, LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL,
+                                  HIDDEN_DOCK, HIDDEN_LEDGE, LEFT_WALL, LOWER_RAIL_THORN_WALL,
+                                  PILLBUG_LEDGE, RIGHT_WALL,
                                   SHIELD_LEDGE, SPIKE_SHELVES, SPIKE_TIP_Y, THORN_WALL_CROP,
                                   THORN_WALLS, TOP, WIDTH)
 from player import ASSET_ROOT
@@ -82,6 +83,7 @@ class LowerRouteBArt:
         self.rubble = pico.load_image(str(STRUCTURES / "lower-cave-landing-rubble-v1.png"))
         self.spikes = pico.load_image(str(STRUCTURES / "lower-cave-thorn-bed-v1.png"))
         self.thorn_wall = pico.load_image(str(STRUCTURES / "lower-cave-thorn-wall-v1.png"))
+        self.canopy = pico.load_image(str(ASSET_ROOT / "terrain/green-cavern-canopy-v1.png"))
         pico.SDL_SetTextureColorMod(self.rubble.texture, 139, 175, 186)
         self.platforms = json.loads((PLATFORMS / "manifest.json").read_text(encoding="utf-8"))["platforms"]
         self.platform_images = {
@@ -134,6 +136,10 @@ class LowerRouteBArt:
             if right > camera.x and left < camera.x + camera.view_width:
                 draw_structure(self.thorn_wall, THORN_WALL_CROP, camera, (left + right) / 2, bottom,
                                right - left, top - bottom, flip="hv" if hanging else "")
+        # Put the hanging canopy in front of the root so the ceiling and wall interleave.
+        left, _, right, _ = LOWER_RAIL_THORN_WALL
+        draw_structure(self.canopy, (420, 0, 950, 456), camera, (left + right) / 2,
+                       TOP - 215, 510, 315)
         for left, bottom, right, top in SPIKE_SHELVES:
             if right <= camera.x or left >= camera.x + camera.view_width:
                 continue
