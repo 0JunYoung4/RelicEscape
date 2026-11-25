@@ -13,6 +13,7 @@
 ## Git
 
 - Commit repository changes at the end of each completed task. Include only changes made for that task.
+- For map work, commit each completed work unit with a Korean commit message. Push only when the user explicitly requests it.
 
 ## Character asset source
 
@@ -30,6 +31,8 @@
 
 ## Map art and rendering
 
+- Lead level design and environment art from the user's room purpose, mood, core mechanics, and progression conditions. Plan the room shape, routes, platforms, passages, landmarks, layer placement, and asset specifications. Make routine placement and art decisions autonomously. When multiple directions fit, recommend one and build a reviewable draft. See [the map design workflow](.memoc/06-project-rules.md#맵-레벨-디자인과-환경-아트).
+- Finish and review one room at a time. Verify depth, visual cohesion, and gameplay readability in the running game and iterate. If game views are inaccessible, request the specific camera views and gameplay states needed for review.
 - Reuse suitable sprites from the [23-piece map decoration set](assets/terrain/moss-grotto-floor-decor/README.md) when building or revising map areas. Match new map art to its crisp dark contours, deep teal shadows, rounded shapes, and restrained moss-green highlights. Vary cluster size, spacing, and silhouette across each area.
 - Follow the [layer production and rendering rules](docs/reference-production-guide.md#맵-미술-제작과-렌더링-기준). Create and preview the far background, floor, ceiling, walls when applicable, world decorations, and near foreground as independently adjustable assets. Render the far background behind the terrain and actors, and near foreground silhouettes in front of them at the edges.
 

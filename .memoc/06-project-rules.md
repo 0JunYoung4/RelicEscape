@@ -36,6 +36,14 @@ Durable user and project preferences live here. Update when the user gives a rul
 - Update `.memoc/04-handoff.md` after substantial work so the next agent can resume quickly.
 - Use `.memoc/05-done-checklist.md` before saying substantial work is complete.
 
+## 맵 레벨 디자인과 환경 아트
+
+- 2026-11-26 사용자 지정. 사용자가 방의 목적과 분위기, 핵심 기믹, 진행 조건을 주면 에이전트가 방의 형태, 진입과 이탈 동선, 발판과 통로, 조형물의 형태, 원경·중경·전경 배치를 구체적으로 설계한다.
+- 소품의 종류·위치와 세부 미술은 공간의 용도와 공통 미술 기준에 맞춰 판단한다. 여러 방향이 가능하면 적합한 안과 선택 근거를 제시하고 그 안으로 검토할 수 있는 초안을 만든다. 사용자에게는 진행이나 분위기를 좌우하는 방향과 검토 결과를 보여준다.
+- 조형물은 주변 지형·식생·빛과 함께 설계한다. 사용할 기존 자산과 새 이미지의 역할, 크기, 배율, 부착 기준점, 레이어를 에이전트가 정한다.
+- 방 하나를 먼저 완성하고 실제 게임 화면과 이동 중 깊이감·통일감·플레이 가독성을 검토해 수정한다. 직접 볼 수 없으면 필요한 카메라 구도와 플레이 상태를 구체적으로 지정해 캡처를 요청한다.
+- 완료한 작업 단위마다 한국어 메시지로 로컬 커밋한다. 푸시는 사용자의 별도 요청이 있을 때 진행한다.
+
 ## Agent Behavior Preferences
 
 - Be factual and operational in memory docs.
