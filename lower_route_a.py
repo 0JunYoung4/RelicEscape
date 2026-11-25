@@ -6,8 +6,8 @@ from pico2d import pico2d as pico
 
 from pillbug import Pillbug
 from player import ASSET_ROOT, STANDING_HITBOX_HEIGHT, TAKEOFF_FRAME_DURATION
-from rail import (BEND_ART_RADIUS, RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE,
-                  RAIL_IMAGE, RailCarriage, RailSegment, draw_rail)
+from rail import (RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE,
+                  RailCarriage, RailSegment, draw_rail)
 
 
 ART_ZOOM = .4
@@ -44,12 +44,13 @@ RECOVERY_RADIUS = 108
 LOWER_DOCK = world(725, 594)
 UPPER_DOCK = world(605, 329)
 RAIL_X = 975 / ART_ZOOM
+LIFT_BEND_RADIUS = 72
 
 
 def lift_path():
     left, bottom = LOWER_DOCK
     exit_x, top = UPPER_DOCK
-    radius = BEND_ART_RADIUS
+    radius = LIFT_BEND_RADIUS
     lower_center = RAIL_X - radius, bottom + radius
     upper_center = RAIL_X - radius, top - radius
     return (

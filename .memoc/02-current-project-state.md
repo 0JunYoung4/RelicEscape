@@ -15,7 +15,7 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
-- 2026-11-25 유물 레일은 곡선 반경과 관계없이 직선과 같은 두께로 렌더링한다. 본편 A·B와 장치 시험룸이 `rail.py`를 공유한다. `tests/test_relic.py`에서 B의 직선과 곡선 두께를 비교한다.
+- 2026-11-25 유물 레일 곡선은 직선 단면으로 만든 반경 72·96·216 스프라이트를 사용한다. `python -m tools.bake_rail_bends`로 아틀라스를 재생성한다. `tests/test_relic.py`에서 본편 A·B와 장치 시험룸의 발광선 연결을 검사한다.
 
 - 2026-11-24 A·B를 한 월드 좌표계와 카메라에 놓고 900 월드 단위의 수평 돌길을 연결했다. 오갈 때 유물·레일 상태가 유지된다. 원화는 내장 image_gen, 실행 화면은 `docs/map1-lower-route-ab-connection.png`.
 

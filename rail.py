@@ -1,30 +1,18 @@
 """Connect straight and quarter-turn rail pieces and move their carriage."""
 
-from ctypes import c_int
 from dataclasses import dataclass
 from math import atan2, cos, hypot, pi, sin, tau
 from pathlib import Path
-
-from pico2d import pico2d as pico
 
 
 RAIL_MOUNT_RADIUS = 90
 RAIL_TRAVEL_SPEED = 660
 RAIL_ART_SCALE = 3  # World units per pixel at the authored size.
-BEND_ART_RADIUS = 72
 RAIL_ASSETS = Path(__file__).resolve().parent / "assets/sprites/rail"
 RAIL_IMAGE = RAIL_ASSETS / "relic-track-blue-v4.png"
-RAIL_BEND_IMAGE = RAIL_ASSETS / "relic-track-bend-v2.png"
+RAIL_BEND_IMAGE = RAIL_ASSETS / "relic-track-bends-v3.png"
 RAIL_CARRIAGE_IMAGE = RAIL_ASSETS / "relic-carriage-v2.png"
-BEND_STEPS = 16
-BEND_DIRECTIONS = tuple(
-    (cos(step * pi / (2 * BEND_STEPS)), sin(step * pi / (2 * BEND_STEPS)))
-    for step in range(BEND_STEPS + 1)
-)
-BEND_TRIANGLES = (c_int * (6 * BEND_STEPS))(*(
-    index for start in range(0, 2 * BEND_STEPS, 2)
-    for index in (start, start + 1, start + 2, start + 1, start + 3, start + 2)
-))
+BEND_RADII = (72, 96, 216)  # Atlas columns, at one texel per world unit.
 
 
 @dataclass(frozen=True)
@@ -142,28 +130,22 @@ def _draw_straight(image, camera, segment, index, segment_count, thickness):
 def _draw_bend(image, camera, segment, thickness):
     cx, cy = segment.center
     sx, sy = map(round, camera.world_to_screen(cx, cy))
-    sign_x = -1 if min(segment.start[0], segment.end[0]) < cx else 1
-    sign_y = 1 if max(segment.start[1], segment.end[1]) > cy else -1
+    flip_x = min(segment.start[0], segment.end[0]) < cx
+    flip_y = max(segment.start[1], segment.end[1]) > cy
+    flip = ("h" if flip_x else "") + ("v" if flip_y else "")
+    radius = round(segment.radius)
+    column = BEND_RADII.index(radius)
+    cell_size = image.h
+    size = radius + cell_size - BEND_RADII[-1]
     # Snap the centerline's endpoints the same way as the adjoining straights.
     end_x, end_y = map(round, camera.world_to_screen(
-        cx + sign_x * segment.radius, cy + sign_y * segment.radius,
+        cx + (-radius if flip_x else radius), cy + (radius if flip_y else -radius),
     ))
-    radius_x = abs(end_x - sx)
-    radius_y = abs(end_y - sy)
-    half_width = thickness / 2
-    art_half_width = image.w - BEND_ART_RADIUS
-    vertices = []
-    # Map the bend's inner and outer edges separately so only the radius changes.
-    for dx, dy in BEND_DIRECTIONS:
-        for edge in (-1, 1):
-            offset = edge * half_width
-            art_radius = BEND_ART_RADIUS + edge * art_half_width
-            vertices.append(pico.SDL_Vertex(
-                (sx + sign_x * (radius_x + offset) * dx,
-                 pico.canvas_height - (sy + sign_y * (radius_y + offset) * dy)),
-                (255, 255, 255, 255),
-                (art_radius * dx / image.w, art_radius * dy / image.h),
-            ))
-    geometry = (pico.SDL_Vertex * len(vertices))(*vertices)
-    pico.SDL_RenderGeometry(pico.renderer, image.texture, geometry, len(vertices),
-                            BEND_TRIANGLES, len(BEND_TRIANGLES))
+    width = abs(end_x - sx) + (thickness + 1) // 2
+    height = abs(end_y - sy) + (thickness + 1) // 2
+    left = sx - width if flip_x else sx
+    bottom = sy if flip_y else sy - height
+    image.clip_composite_draw(
+        column * cell_size, cell_size - size, size, size, 0, flip,
+        left + width / 2, bottom + height / 2, width, height,
+    )

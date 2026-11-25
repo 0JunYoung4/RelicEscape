@@ -16,10 +16,10 @@ sys.path.insert(0, str(ROOT))
 from PIL import Image
 from pico2d import pico2d as pico
 
-from lower_route_a import ART_ZOOM as ZOOM, HOLE_PIXEL as HOLE, SHADOW_BOUNDS, lift_path
+from lower_route_a import ART_ZOOM as ZOOM, HOLE_PIXEL as HOLE, LIFT_BEND_RADIUS, SHADOW_BOUNDS, lift_path
 from main import CAMERA_ZOOM, Camera, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE, RELIC_IMAGE
 from player import Player
-from rail import BEND_ART_RADIUS, RAIL_ART_SCALE, RAIL_TRAVEL_SPEED, RailCarriage, RailSegment, draw_rail
+from rail import RAIL_ART_SCALE, RAIL_TRAVEL_SPEED, RailCarriage, RailSegment, draw_rail
 
 
 SHADOW = ROOT / "assets/terrain/lower-route-a-ceiling-shadow-v2.png"
@@ -35,7 +35,7 @@ WALK_END = (1950, 404)
 def rail_path(height, version=2):
     if version == 3:
         return lift_path()
-    radius = BEND_ART_RADIUS * ZOOM
+    radius = LIFT_BEND_RADIUS * ZOOM
     upper_x, upper = V2_UPPER_DOCK
     lower_x, lower = V2_LOWER_DOCK
     top_center = (V2_RAIL_X - radius, upper + radius)

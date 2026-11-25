@@ -4,6 +4,7 @@ import os
 import unittest
 from ctypes import byref, c_uint32
 from itertools import chain, count
+from math import floor
 from unittest.mock import patch
 
 os.environ["SDL_VIDEODRIVER"] = "dummy"
@@ -12,7 +13,8 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 
 import main
 from pico2d import pico2d as pico
-from lower_route_b_layout import RAIL_ONE
+from lower_route_a import lift_path
+from lower_route_b_layout import RAIL_ONE, RAIL_TWO
 from player import CROUCH_DURATION, STANDING_HITBOX_HEIGHT, Player
 from rail import (RAIL_BEND_IMAGE, RAIL_IMAGE, RAIL_MOUNT_RADIUS, RAIL_TRAVEL_SPEED,
                   RailCarriage, draw_rail)
@@ -277,6 +279,42 @@ class RelicTests(unittest.TestCase):
         bend_width = visible_pixels(bend_x - 22, bend_y, 44, 1)
         self.assertEqual(straight_width, 18)
         self.assertAlmostEqual(bend_width, straight_width, delta=2)
+
+    def test_cyan_channel_continues_through_curves_and_joins(self):
+        width, height = 1050, 400
+        pico.open_canvas(width, height)
+        self.addCleanup(pico.close_canvas)
+        track, curve = (pico.load_image(str(path)) for path in (RAIL_IMAGE, RAIL_BEND_IMAGE))
+        pixels = (c_uint32 * (width * height))()
+        bounds = pico.SDL_Rect(0, 0, width, height)
+
+        def is_cyan(x, y):
+            pixel = pixels[(height - 1 - y) * width + x]
+            return (pixel >> 8 & 0xFF) > 155 and (pixel & 0xFF) > 150
+
+        for path in (lift_path(), RAIL_ONE, RAIL_TWO, main.TEST_RAIL_PATH):
+            left = min(segment.start[0] for segment in path) - 30.2
+            bottom = min(segment.start[1] for segment in path) - 48.7
+            for zoom in (main.AIM_CAMERA_ZOOM, main.EXPLORATION_CAMERA_ZOOM):
+                camera = main.Camera(width, main.WORLD_WIDTH, zoom, y=bottom)
+                camera.x = left
+                pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
+                pico.SDL_RenderClear(pico.renderer)
+                draw_rail(track, curve, camera, path)
+                self.assertEqual(pico.SDL_RenderReadPixels(
+                    pico.renderer, byref(bounds), pico.SDL_PIXELFORMAT_ARGB8888, pixels, width * 4,
+                ), 0, pico.SDL_GetError())
+                for segment in path:
+                    if segment.center is None:
+                        continue
+                    with self.subTest(bend=segment.start, zoom=zoom):
+                        for step in range(101):
+                            x, y = map(floor, camera.world_to_screen(*segment.point_at(step / 100)))
+                            # The nearest bright pixel can land beside the mathematical centerline.
+                            self.assertTrue(any(
+                                is_cyan(x + dx, y + dy)
+                                for dx, dy in ((0, 0), (-1, 0), (1, 0), (0, -1), (0, 1))
+                            ), f"Missing cyan light at {step}% of the bend")
 
     def test_carriage_travels_by_distance_through_the_first_curve(self):
         straight, bend, *_ = main.TEST_RAIL_PATH
