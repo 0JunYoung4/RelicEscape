@@ -1,0 +1,29 @@
+{
+  "image": "ceiling-boulder-shatter-sheet-v2.png",
+  "frame_size": [
+    664,
+    504
+  ],
+  "columns": 6,
+  "frame_count": 24,
+  "fps": 25,
+  "loop": false,
+  "impact_anchor": [
+    332,
+    264
+  ],
+  "anchor_coordinates": "frame top-left, pixel coordinates",
+  "intact_source": "ceiling-boulder.png",
+  "debris_sources": [
+    "debris-v1/shard-large-01.png",
+    "debris-v1/shard-large-02.png",
+    "debris-v1/shard-large-03.png",
+    "debris-v1/shard-medium-01.png",
+    "debris-v1/shard-medium-02.png",
+    "debris-v1/shard-medium-03.png",
+    "debris-v1/shard-small-01.png",
+    "debris-v1/shard-small-02.png",
+    "debris-v1/shard-small-03.png"
+  ],
+  "frame_order": "row-major"
+}
