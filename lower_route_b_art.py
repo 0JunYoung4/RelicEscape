@@ -8,8 +8,7 @@ from pico2d import pico2d as pico
 
 from health import SPIKE_HEIGHT
 from lower_route_b_layout import (A_ENTRY, BACKGROUND_BOTTOM, BOTTOM, C_APPROACH_LEDGE, C_PASSAGE,
-                                  HIDDEN_DOCK, HIDDEN_LEDGE, LEFT_WALL, LOWER_RAIL_THORN_WALL,
-                                  PILLBUG_LEDGE, RIGHT_WALL,
+                                  HIDDEN_DOCK, HIDDEN_LEDGE, LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL,
                                   SHIELD_LEDGE, SPIKE_SHELVES, SPIKE_TIP_Y, THORN_WALL_CROP,
                                   THORN_WALLS, TOP, WIDTH)
 from player import ASSET_ROOT
@@ -17,6 +16,11 @@ from player import ASSET_ROOT
 
 STRUCTURES = ASSET_ROOT / "structures/map1-lower-route"
 PLATFORMS = ASSET_ROOT / "terrain/ruin-platforms"
+CEILING_SPANS = (
+    (-1200, 1250, TOP + 74, 358, False),
+    (820, 3260, TOP + 64, 380, True),
+    (2830, WIDTH, TOP + 94, 370, False),
+)
 
 
 def draw_rock_wall(texture, camera, profile, screen_height):
@@ -126,6 +130,7 @@ class LowerRouteBArt:
             draw_structure(self.marker, (207, 15, 1040, 1206), camera, x, surface, size * .70, size)
         draw_structure(self.rubble, (88, 133, 1454, 882), camera, 4880, A_ENTRY[3], 219, 122)
         self.draw_hazards(camera)
+        self.draw_ceiling(camera, screen_height)
         if camera.y < HIDDEN_LEDGE[3]:
             name = "short-root-step"
             draw_ruin_platform(camera, self.platform_images[name], self.platforms[name], HIDDEN_LEDGE,
@@ -136,10 +141,6 @@ class LowerRouteBArt:
             if right > camera.x and left < camera.x + camera.view_width:
                 draw_structure(self.thorn_wall, THORN_WALL_CROP, camera, (left + right) / 2, bottom,
                                right - left, top - bottom, flip="hv" if hanging else "")
-        # Put the hanging canopy in front of the root so the ceiling and wall interleave.
-        left, _, right, _ = LOWER_RAIL_THORN_WALL
-        draw_structure(self.canopy, (420, 0, 950, 456), camera, (left + right) / 2,
-                       TOP - 215, 510, 315)
         for left, bottom, right, top in SPIKE_SHELVES:
             if right <= camera.x or left >= camera.x + camera.view_width:
                 continue
@@ -155,6 +156,32 @@ class LowerRouteBArt:
             draw_spike_bank(self.spikes, camera, left, right, SPIKE_TIP_Y)
         if camera.y < BOTTOM + SPIKE_HEIGHT:
             draw_spike_bank(self.spikes, camera, 0, WIDTH, BOTTOM + SPIKE_HEIGHT)
+
+    def draw_ceiling(self, camera, screen_height):
+        # Overlap the canopy strips and feather their ends into the painted roof.
+        # Drawing over the hazards tucks both hanging thorn walls into the roots.
+        view_right = camera.x + camera.view_width
+        view_top = camera.y + screen_height / camera.zoom
+        for left, right, top, height, flipped in CEILING_SPANS:
+            bottom = top - height
+            if right <= camera.x or left >= view_right or bottom >= view_top or top <= camera.y:
+                continue
+            stops = ((left, 0), (left + 260, 255), (right - 170, 255), (right, 0))
+            vertices, indices = [], []
+            for index, (x, alpha) in enumerate(stops):
+                u = (x - left) / (right - left)
+                if flipped:
+                    u = 1 - u
+                for y, v in ((top, 0), (bottom, 1)):
+                    sx, sy = camera.world_to_screen(x, y)
+                    vertices.append(pico.SDL_Vertex((sx, screen_height - sy), (255, 255, 255, alpha), (u, v)))
+                if index:
+                    first = 2 * (index - 1)
+                    indices.extend((first, first + 1, first + 2, first + 1, first + 2, first + 3))
+            geometry = (pico.SDL_Vertex * len(vertices))(*vertices)
+            triangles = (c_int * len(indices))(*indices)
+            pico.SDL_RenderGeometry(pico.renderer, self.canopy.texture, geometry, len(vertices),
+                                    triangles, len(indices))
 
     @staticmethod
     def draw_hidden_relic(camera, screen_height, collected):
