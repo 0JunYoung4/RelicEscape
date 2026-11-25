@@ -12,6 +12,7 @@ from crystal_projectile import DAMAGE as CRYSTAL_DAMAGE
 from hit_impact import IMPACT_DURATION, HitImpact
 from lower_route_a import LowerRouteA
 from lower_route_b import LowerRouteB
+from lower_route_c import CHECKPOINT as C_CHECKPOINT, LEFT as C_LEFT, RIGHT as C_RIGHT, LowerRouteC
 from lower_route_connection import A_ORIGIN, PASSAGE_CENTER, LowerRouteConnection
 from opening_cave import SHAFT_FLOOR, SHAFT_SCALE, SHAFT_TOP
 from pillbug import Pillbug
@@ -109,6 +110,7 @@ class LowerCaves:
         self.room = "landing"
         self.route_a = None
         self.route_b = None
+        self.route_c = None
         self.route_connection = None
         self.passage_time = None
         self.pickup_time = None
@@ -174,7 +176,13 @@ class LowerCaves:
 
     @property
     def in_lower_route(self):
-        return self.room in ("route_a", "route_b")
+        return self.room in ("route_a", "route_b", "route_c")
+
+    @property
+    def restart_room(self):
+        if self.in_lower_route and self.route_c is not None and self.route_c.checkpoint_reached:
+            return "route_c"
+        return "route_b" if self.room == "route_c" else self.room
 
     @property
     def route(self):
@@ -183,7 +191,11 @@ class LowerCaves:
         for route in (self.route_a, self.route_b):
             if route is not None and route.mounted_carriage is not None:
                 return route
-        return self.route_a if self.room == "route_a" else self.route_b
+        if self.room == "route_a":
+            return self.route_a
+        if self.room == "route_b":
+            return self.route_b
+        return None
 
     @property
     def enemies(self):
@@ -237,20 +249,27 @@ class LowerCaves:
                 self.route_a = LowerRouteA(A_ORIGIN)
             if self.route_b is None:
                 self.route_b = LowerRouteB()
+            if self.route_c is None:
+                self.route_c = LowerRouteC(self.route_b.art, self.combat_blocker)
             if self.route_connection is None:
                 self.route_connection = LowerRouteConnection(self.route_a)
             if self.room == "route_a":
                 self.route_a.enter(player, shaft_offset=shaft_offset)
-            else:
+            elif self.room == "route_b":
                 self.route_b.enter(player)
+            player.world_left = camera.world_left = C_LEFT
             player.world_width = camera.world_width = self.route_a.world_width
             player.terrain = self.route_connection.terrain
             player.ground_y = self.route_connection.ground_y
+            if self.room == "route_c":
+                player.recover_at(*C_CHECKPOINT)
+                player.facing = -1
             camera.zoom = camera.normal_zoom
             self.follow_camera(player, camera)
             return
         landing = self.room == "landing"
         width = self.landing_width if landing else (COMBAT_WIDTH if self.room == "combat" else GALLERY_WIDTH)
+        player.world_left = camera.world_left = 0
         player.world_width = camera.world_width = width
         player.terrain = () if landing else (self.combat_terrain() if self.room == "combat" else GALLERY_TERRAIN)
         player.ground_y = 0
@@ -269,7 +288,11 @@ class LowerCaves:
     def follow_camera(self, player, camera):
         if self.in_lower_route and self.route_connection is not None:
             # The section name selects a checkpoint and hazard rules, not a room load.
-            self.room = "route_a" if player.x >= PASSAGE_CENTER else "route_b"
+            if player.x < C_RIGHT:
+                self.room = "route_c"
+                self.route_c.check_arrival(player)
+            else:
+                self.room = "route_a" if player.x >= PASSAGE_CENTER else "route_b"
             camera.follow(player.x)
             view_height = self.cave.height / camera.zoom
             camera.y = self.route_connection.blend(
@@ -415,6 +438,8 @@ class LowerCaves:
         route_a, route_b = self.route_a, self.route_b
         draw_a = route_a is not None and camera.x + camera.view_width > route_a.origin[0]
         draw_b = route_b is not None and camera.x < route_b.camera_right
+        if self.route_c is not None and camera.x < C_RIGHT:
+            self.route_c.draw(camera, self.cave.height)
         if draw_b:
             route_b.draw(camera, self.cave.height)
         if draw_a:

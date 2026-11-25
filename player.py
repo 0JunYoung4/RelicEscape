@@ -91,6 +91,7 @@ class Player:
         self.y = ground_y if spawn_y is None else spawn_y
         self.ground_y = ground_y
         self.vertical_speed = 0.0
+        self.world_left = 0
         self.world_width = world_width
         self.facing = 1
         self.state = "idle"
@@ -373,7 +374,7 @@ class Player:
                 distance = min(distance, x1 - right)
             elif distance < 0 and left >= x2 - CONTACT_EPSILON and left + distance <= x2:
                 distance = max(distance, x2 - left)
-        self.x = max(WORLD_MARGIN, min(self.world_width - WORLD_MARGIN, self.x + distance))
+        self.x = max(self.world_left + WORLD_MARGIN, min(self.world_width - WORLD_MARGIN, self.x + distance))
 
     def _move_vertical(self, distance):
         left, bottom, right, top = self.get_hitbox()

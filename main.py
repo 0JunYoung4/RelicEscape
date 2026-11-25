@@ -182,6 +182,7 @@ class Camera:
         self.screen_width = screen_width
         self.normal_zoom = zoom
         self.zoom = zoom
+        self.world_left = 0
         self.world_width = world_width
         self.x = 0.0
         self.y = y
@@ -192,7 +193,7 @@ class Camera:
         return self.screen_width / self.zoom
 
     def _clamp_x(self, x):
-        return max(0.0, min(max(0.0, self.world_width - self.view_width), x))
+        return max(self.world_left, min(self.world_width - self.view_width, x))
 
     def follow(self, player_x):
         self.x = self._clamp_x(player_x - self.view_width / 2)
@@ -825,6 +826,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
             lower = None
             travel.reset()
             health = Health(opening_cave.SPAWN)
+            camera.world_left = player.world_left = 0
             camera.world_width = player.world_width = opening_cave.WORLD_WIDTH
             approach.reset(player)
             camera.zoom = camera.normal_zoom
@@ -836,11 +838,11 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
             direction, running, crouching = 0, False, False
             jump_held = False
         elif lower is not None and health.ready_to_restart(frame_start):
-            room = lower.room
+            room = lower.restart_room
             has_relic = lower.has_relic
             lower = LowerCaves(cave)
             lower.room = room
-            if room in ("combat", "route_a", "route_b"):
+            if room == "combat" or lower.in_lower_route:
                 lower.has_relic = has_relic
             if after_relic and room == "gallery":
                 lower.start_after_relic(player, camera)
@@ -911,7 +913,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
             if relic_view_held and not health.recovering(frame_start):
                 target = mounted_position or travel.anchor_position
                 if target is not None:
-                    if route is not None:
+                    if lower.in_lower_route:
                         bottom, top = lower.route_camera_bounds(target[0])
                         camera.focus_relic(target, bottom=bottom, top=top)
                     else:

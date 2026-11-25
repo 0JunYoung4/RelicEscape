@@ -8,6 +8,7 @@ from pico2d import pico2d as pico
 from lower_route_a import EXIT_LEDGE
 from lower_route_b import PLAY_TERRAIN
 from lower_route_b_layout import A_ENTRY, BOTTOM, WIDTH as B_WIDTH
+from lower_route_c import TERRAIN as C_TERRAIN
 from player import ASSET_ROOT
 
 
@@ -23,7 +24,7 @@ class LowerRouteConnection:
         self.plate = pico.load_image(str(ASSET_ROOT / "terrain/lower-route-ab-passage-v1.png"))
         pico.SDL_SetTextureBlendMode(self.plate.texture, pico.SDL_BLENDMODE_BLEND)
         self.ground_y = BOTTOM
-        self.terrain = (*PLAY_TERRAIN, *route_a.terrain,
+        self.terrain = (*C_TERRAIN, *PLAY_TERRAIN, *route_a.terrain,
                         (PASSAGE_LEFT, BOTTOM, PASSAGE_RIGHT, PASSAGE_FLOOR),
                         (PASSAGE_RIGHT, BOTTOM, route_a.world_width, route_a.ground_y))
 
