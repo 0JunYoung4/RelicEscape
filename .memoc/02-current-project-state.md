@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 바위 소라게가 플레이어 바로 앞까지 접근하고 멈춘 뒤 집게를 높게 들어 0.64초 버티고 수직으로 내려찍는 시안을 제작했다. `assets/concepts/b1-hermit-crab/claw-approach-slam-preview-v1.gif`에 접근·공격과 회피를 연결했다.
+
 - 2026-11-25 B1 바위 소라게의 빠른 좌우 이동 시안 `assets/concepts/b1-hermit-crab/boss-scuttle-preview-v2.gif`를 만들었다. 접근 구간을 방향당 2.24초에서 1.12초로 줄였다.
 
 - 2026-11-25 B1 바위 소라게의 양방향 이동 시안 `assets/concepts/b1-hermit-crab/boss-scuttle-preview-v1.gif`와 방향별 16프레임 투명 시트를 만들었다. 둥지 양쪽에서 플레이어 쪽으로 다가갈 때 짧은 네 다리가 번갈아 딛고 선두 집게가 낮아지는 동작을 담았다.
