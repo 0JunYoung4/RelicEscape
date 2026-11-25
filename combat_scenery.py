@@ -83,6 +83,15 @@ class CombatScenery:
                               1 + nxt, 1 + steps + step, 1 + steps + nxt))
         self.geometry(camera, points, colors, triangles)
 
+    def draw_exit_seam(self, camera, x, strength):
+        with self.alpha_geometry():
+            self.soft_light(camera, (x, 12), (57, 57), (83, 195, 195), round(133 * strength))
+            points = ((x - 18, 1), (x - 5, 3), (x + 4, 6),
+                      (x - 5, 0), (x + 4, 2), (x + 16, 9))
+            colors = [(174, 248, 240, round(alpha * strength))
+                      for alpha in (0, 185, 245, 185, 245, 0)]
+            self.geometry(camera, points, colors, (0, 3, 1, 1, 3, 2, 2, 3, 4, 2, 4, 5))
+
     def light_shaft(self, camera, left, right, ceiling):
         span = right - left
         points, colors = [], []

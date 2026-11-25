@@ -64,6 +64,9 @@ COMBAT_RIM_WIDTH = 997
 COMBAT_SHAFT_ART_WIDTH = 392
 COMBAT_SHAFT_FLOOR = -960
 COMBAT_ROUTE_SEAM = COMBAT_SHAFT_FLOOR + 96
+COMBAT_EXIT_QUIET_DURATION = .5
+COMBAT_EXIT_LIGHT_DURATION = .6
+COMBAT_EXIT_DELAY = COMBAT_EXIT_QUIET_DURATION + COMBAT_EXIT_LIGHT_DURATION
 COMBAT_EXIT_DURATION = .7
 COMBAT_FLOOR_BANKS = ((0, -COMBAT_COVER_THICKNESS, COMBAT_EXIT_LEFT, 0),
                       (COMBAT_EXIT_RIGHT, -COMBAT_COVER_THICKNESS, COMBAT_WIDTH, 0),
@@ -129,6 +132,7 @@ class LowerCaves:
         self.combat_phase = "waiting"
         self.entrance_progress = 0.0
         self.wall_effects = StoneWallEffects(COMBAT_ENTRANCE_BARRIER[0], COMBAT_ENTRANCE_BARRIER[2])
+        self.exit_cue_time = 0.0
         self.exit_progress = 0.0
         self.shaft_visibility = 0.0
         golem_path = ASSET_ROOT / "sprites/enemies/stone-crystal-golem-walk-left-v2.json"
@@ -223,6 +227,11 @@ class LowerCaves:
         return progress * progress * (3 - 2 * progress)
 
     @property
+    def exit_seam_light(self):
+        progress = max(0.0, self.exit_cue_time - COMBAT_EXIT_QUIET_DURATION) / COMBAT_EXIT_LIGHT_DURATION
+        return min(1.0, progress) * max(0.0, 1 - 2 * self.exit_progress)
+
+    @property
     def entrance_locked(self):
         return self.combat_phase not in ("waiting", "cleared") or self.entrance_progress > 0
 
@@ -312,6 +321,12 @@ class LowerCaves:
                 camera.y = max(COMBAT_SHAFT_FLOOR + base, player.y + base)
                 return
             camera.y = max(base, player.y - self.cave.height * 0.40 / camera.zoom)
+            if self.room == "combat" and self.exit_cue_time and not self.exit_open:
+                pan = min(1.0, self.exit_cue_time / COMBAT_EXIT_QUIET_DURATION)
+                weight = pan * pan * (3 - 2 * pan) * (1 - self.exit_slide)
+                # Bring the seam into view from the upper platform while keeping the hero in frame.
+                seam_view = max(base / 2, player.y - self.cave.height * .80 / camera.zoom)
+                camera.y += min(0.0, seam_view - camera.y) * weight
 
     def route_camera_bounds(self, x):
         if self.route_connection is None:
@@ -513,8 +528,11 @@ class LowerCaves:
         elif self.combat_phase == "golems" and all(golem.hp == 0 for golem in self.golems):
             self.combat_phase = "cleared"
         if self.combat_phase == "cleared":
-            self.entrance_progress = max(0.0, self.entrance_progress - dt / COMBAT_GATE_DURATION)
-            self.exit_progress = min(1.0, self.exit_progress + dt / COMBAT_EXIT_DURATION)
+            cue_step = min(dt, COMBAT_EXIT_DELAY - self.exit_cue_time)
+            self.exit_cue_time += cue_step
+            opening_step = dt - cue_step
+            self.entrance_progress = max(0.0, self.entrance_progress - opening_step / COMBAT_GATE_DURATION)
+            self.exit_progress = min(1.0, self.exit_progress + opening_step / COMBAT_EXIT_DURATION)
             if self.exit_progress > 0:
                 player.ground_y = COMBAT_SHAFT_FLOOR
 
@@ -565,6 +583,7 @@ class LowerCaves:
         left, right = COMBAT_EXIT_LEFT, COMBAT_EXIT_RIGHT
         slide = self.exit_slide
         width = right - left
+        cover_left = left + width * slide
         # The supporting shoulders remain in place while the top cap slides away.
         # Match the floor plane and socket depth separately; feathered banks blend over the floor.
         image, art = self.exit_rim, self.rim_art
@@ -584,13 +603,16 @@ class LowerCaves:
         visible_pixels = round(image.w * (1 - slide))
         if visible_pixels:
             height = COMBAT_COVER_THICKNESS * image.h / (image.h - self.art.floor_art["surface_y"])
-            self.art.draw_surface(camera, image, left + width * slide, -COMBAT_COVER_THICKNESS,
+            self.art.draw_surface(camera, image, cover_left, -COMBAT_COVER_THICKNESS,
                                   width * (1 - slide), height, source_right=visible_pixels,
                                   profile_origin=left)
         # Hide the cover and socket's buried rock with one continuous floor shadow.
         self.draw_combat_shadows(camera)
         if self.exit_progress > 0 and self.shaft_visibility > 0:
-            self.draw_combat_passage(camera, left + width * slide)
+            self.draw_combat_passage(camera, cover_left)
+        light = self.exit_seam_light
+        if light > 0:
+            self.art.combat_scenery().draw_exit_seam(camera, cover_left, light)
 
     def draw_combat_passage(self, camera, cover_left):
         if self.exit_open:

@@ -15,8 +15,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from PIL import Image
 from pico2d import pico2d as pico
 from crystal_golem import ATTACK_RELEASE, EMERGE_DURATION as GOLEM_EMERGE_DURATION
-from lower_caves import (COMBAT_CENTER_X, COMBAT_EXIT_DURATION, COMBAT_GATE_DURATION,
-                         COMBAT_WIDTH, LowerCaves)
+from lower_caves import (COMBAT_CENTER_X, COMBAT_EXIT_DELAY, COMBAT_EXIT_DURATION, COMBAT_GATE_DURATION,
+                         COMBAT_PLATFORMS, COMBAT_WIDTH, LowerCaves)
 from main import Camera
 from pillbug import EMERGE_DURATION as PILLBUG_EMERGE_DURATION
 from player import Player
@@ -26,7 +26,6 @@ def render(room, player, camera, path=None):
     pico.clear_canvas()
     room.draw(camera)
     room.draw_combat_exit(camera)
-    room.draw_combat_gate(camera)
     player.draw(camera)
     room.draw_hit_impacts(camera)
     room.draw_foreground(camera)
@@ -102,6 +101,10 @@ if __name__ == "__main__":
         room.projectiles.clear()
     for golem in room.golems:
         golem.hp = 0
+    room.update_enemies(player, COMBAT_EXIT_DELAY)
+    player.recover_at(COMBAT_CENTER_X, COMBAT_PLATFORMS[1][3], 0)
+    room.follow_camera(player, camera)
+    render(room, player, camera, output / f"{args.prefix}-seam.png")
     room.update_enemies(player, COMBAT_EXIT_DURATION)
     room.shaft_visibility = 1
     player.recover_at(COMBAT_CENTER_X, -300, 0)

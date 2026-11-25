@@ -13,7 +13,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 from pico2d import pico2d as pico
 
 from health import Health
-from lower_caves import (COMBAT_CENTER_X, COMBAT_EXIT_DURATION, COMBAT_GATE_DURATION,
+from lower_caves import (COMBAT_CENTER_X, COMBAT_EXIT_DELAY, COMBAT_EXIT_DURATION, COMBAT_GATE_DURATION,
                          COMBAT_TRIGGER_RADIUS, COMBAT_WIDTH, LowerCaves)
 from main import Camera
 from player import Player
@@ -106,7 +106,7 @@ class CombatTriggerTests(unittest.TestCase):
         self.room.update_enemies(self.player, 0)
         for golem in self.room.golems:
             golem.hp = 0
-        self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
+        self.room.update_enemies(self.player, COMBAT_EXIT_DELAY + COMBAT_EXIT_DURATION)
         self.player.recover_at(COMBAT_CENTER_X, 0, 0)
         self.room.update_enemies(self.player, .1)
         self.assertTrue(self.room.exit_open)

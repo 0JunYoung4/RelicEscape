@@ -12,7 +12,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 
 from pico2d import pico2d as pico
 
-from lower_caves import (COMBAT_CENTER_X, COMBAT_COVER_THICKNESS, COMBAT_EXIT_LEFT,
+from lower_caves import (COMBAT_CENTER_X, COMBAT_COVER_THICKNESS, COMBAT_EXIT_DELAY, COMBAT_EXIT_LEFT,
                          COMBAT_EXIT_RIGHT, COMBAT_WIDTH, LowerCaves)
 from main import Camera
 
@@ -57,6 +57,18 @@ class CombatExitArtTests(unittest.TestCase):
                     self.assertEqual(self.pixel(x, -180), (0, 0, 0))
                 for x in (30, COMBAT_WIDTH - 30):
                     self.assertEqual(self.pixel(x, 400), (0, 0, 0))
+
+    def test_light_slips_through_closed_seam_without_revealing_the_shaft(self):
+        self.camera = Camera(960, COMBAT_WIDTH, zoom=.8, y=-235)
+        self.camera.follow(COMBAT_CENTER_X)
+        self.render(0)
+        before = self.pixel(COMBAT_EXIT_LEFT + 2, 4)
+        self.room.exit_cue_time = COMBAT_EXIT_DELAY
+        self.render(0)
+        after = self.pixel(COMBAT_EXIT_LEFT + 2, 4)
+        self.assertGreater(after[1] - before[1], 40)
+        self.assertGreater(after[2] - before[2], 40)
+        self.assertEqual(self.pixel(COMBAT_EXIT_LEFT + 45, -180), (0, 0, 0))
 
     def test_passage_render_restores_the_previous_renderer_clip(self):
         self.room.exit_progress = .5

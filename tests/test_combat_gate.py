@@ -14,7 +14,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 from pico2d import pico2d as pico
 
 import main
-from lower_caves import (COMBAT_CENTER_X, COMBAT_ENTRANCE_BARRIER, COMBAT_EXIT_DURATION,
+from lower_caves import (COMBAT_CENTER_X, COMBAT_ENTRANCE_BARRIER, COMBAT_EXIT_DELAY, COMBAT_EXIT_DURATION,
                          COMBAT_GATE_DURATION, COMBAT_WIDTH, LowerCaves)
 from player import Player
 
@@ -72,6 +72,8 @@ class CombatGateTests(unittest.TestCase):
         self.assertEqual(self.room.entrance_progress, 1)
         self.assertFalse(self.room.exit_open)
         self.room.golems[-1].hp = 0
+        self.room.update_enemies(self.player, COMBAT_EXIT_DELAY)
+        self.assertEqual((self.room.entrance_progress, self.room.exit_progress), (1, 0))
         self.room.update_enemies(self.player, COMBAT_GATE_DURATION / 2)
         self.assertTrue(self.room.entrance_locked)
         self.assertGreater(self.room.entrance_progress, 0)
@@ -96,7 +98,7 @@ class CombatGateTests(unittest.TestCase):
         self.clear_pillbugs()
         for golem in self.room.golems:
             golem.hp = 0
-        self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
+        self.room.update_enemies(self.player, COMBAT_EXIT_DELAY + COMBAT_EXIT_DURATION)
         self.assertTrue(self.room.allows_relic_destination(outside))
 
     def test_fresh_encounter_has_an_open_entrance_and_completed_room_never_reseals(self):
@@ -107,7 +109,7 @@ class CombatGateTests(unittest.TestCase):
         self.clear_pillbugs()
         for golem in self.room.golems:
             golem.hp = 0
-        self.room.update_enemies(self.player, COMBAT_EXIT_DURATION)
+        self.room.update_enemies(self.player, COMBAT_EXIT_DELAY + COMBAT_EXIT_DURATION)
         self.room.room = "gallery"
         self.room.enter(self.player, self.camera)
         self.room.room = "combat"

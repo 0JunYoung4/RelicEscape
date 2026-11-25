@@ -39,6 +39,7 @@ class CanopyTrackingTests(unittest.TestCase):
         self.room.has_relic = True
         self.room.room = "gallery"
         self.room.passage_time = None
+        self.room.exit_cue_time = 0
         self.room.exit_progress = 0
         self.camera = Camera(960, GALLERY_WIDTH, zoom=.5)
         self.camera.x = 2040

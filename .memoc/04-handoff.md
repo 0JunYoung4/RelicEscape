@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-25 전투방 클리어 뒤 `LowerCaves.exit_cue_time`이 정적과 틈새 빛을 진행하고 그 뒤 돌벽·덮개를 연다. `CombatScenery.draw_exit_seam`은 덮개 왼쪽 끝에 빛을 그린다. `tools/preview_combat_atmosphere.py`의 `-seam.png`로 상단 발판 시점에서 확인할 수 있다.
+
 - 2026-11-25 첫 전투방 순서는 `lower_caves.py`의 `combat_phase`와 `update_combat_encounter`에서 관리한다. 문이 닫히는 동안 적이 표시되거나 피해를 주지 않는다. 공벌레 사망 연출은 골렘 단계에서도 계속 재생된다. `tests/test_combat_trigger.py`와 `tests/test_combat_clear.py`에서 순서를 확인한다.
 
 - 2026-11-25 C 전실과 재도전 석등, B1 봉인문을 연결했다. B1 방 연결 시 `lower_route_c.py`의 왼쪽 입구 충돌을 실제 동선으로 교체한다. 사용자 우선순위에 따라 B 하부는 원래 지면 안에 별도 숨겨진 방을 만드는 후속 과제로 기록했다.
