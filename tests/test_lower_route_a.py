@@ -11,6 +11,7 @@ os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
 os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 os.environ.setdefault("SDL_RENDER_DRIVER", "software")
 
+from PIL import Image
 from pico2d import pico2d as pico
 
 import main
@@ -20,8 +21,11 @@ from lower_route_a import (BUTTON_CENTER, ENTRY_LEDGE, ENTRY_STEP, EXIT_LEDGE, G
                            LOWER_DOCK, OVERHANG, RECOVERY, RECESS_BACK, SEAL_LOWER_PLATE,
                            SEAL_OPEN_DURATION, SEAL_PLATE_HALF_WIDTH, SEAL_UPPER_PLATE,
                            SEAL_WINDOW, UPPER_DOCK, WIDTH, LowerRouteA)
-from lower_route_connection import A_ORIGIN, PASSAGE_FLOOR, PASSAGE_LEFT, PASSAGE_RIGHT
-from player import Player, STANDING_HITBOX_HEIGHT
+from lower_route_connection import (A_ORIGIN, PASSAGE_ART_FLOOR_ROW, PASSAGE_ART_SCALE_X,
+                                    PASSAGE_ART_SCALE_Y, PASSAGE_ART_X, PASSAGE_FLOOR,
+                                    PASSAGE_LEFT, PASSAGE_RIGHT)
+from lower_route_b_layout import A_ENTRY
+from player import ASSET_ROOT, Player, STANDING_HITBOX_HEIGHT
 from pillbug import EMERGE_DURATION
 
 
@@ -47,6 +51,15 @@ class LowerRouteATests(unittest.TestCase):
     def tick(self, direction=0, *, jump=False, attack=False):
         self.player.update(direction, True, 1 / 60, jump_pressed=jump, attack_pressed=attack)
         self.route.update(self.player, 1 / 60)
+
+    def test_connected_cliff_has_an_opaque_collision_core_and_a_clear_exterior(self):
+        with Image.open(ASSET_ROOT / "terrain/lower-route-ab-passage-joined-v2.png") as plate:
+            alpha = plate.getchannel("A")
+        left = round((A_ENTRY[0] + 12 - PASSAGE_ART_X) / PASSAGE_ART_SCALE_X)
+        right = round((PASSAGE_LEFT + 12 - PASSAGE_ART_X) / PASSAGE_ART_SCALE_X)
+        bottom = PASSAGE_ART_FLOOR_ROW + round((A_ENTRY[3] - A_ENTRY[1]) / PASSAGE_ART_SCALE_Y)
+        self.assertEqual(alpha.crop((left, PASSAGE_ART_FLOOR_ROW, right, bottom)).getextrema(), (255, 255))
+        self.assertEqual(alpha.crop((0, 0, left, PASSAGE_ART_FLOOR_ROW - 8)).getextrema(), (0, 0))
 
     def test_ground_button_emerges_two_pillbugs_once_and_powers_the_rail(self):
         room = LowerCaves(SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096)))

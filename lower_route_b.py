@@ -200,9 +200,9 @@ class LowerRouteB:
             if hit is not None:
                 health.take_enemy_hit(hit, now, BASH_DAMAGE)
 
-    def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0]):
+    def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0], draw_entry=True):
         self.art.draw(camera, screen_height, passage_left=passage_left, secret_revealed=self.secret_revealed,
-                      secret_relic_collected=self.secret_relic_collected)
+                      secret_relic_collected=self.secret_relic_collected, draw_entry=draw_entry)
         scale = RAIL_ART_SCALE * camera.zoom
         for carriage in self.carriages:
             draw_rail(self.rail, self.bend, camera, carriage.segments)

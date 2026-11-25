@@ -118,7 +118,7 @@ class LowerRouteBArt:
         }
 
     def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0],
-             secret_revealed=False, secret_relic_collected=False):
+             secret_revealed=False, secret_relic_collected=False, draw_entry=True):
         panorama_width = WIDTH - passage_left
         panorama_height = TOP - BACKGROUND_BOTTOM
         if camera.y < BACKGROUND_BOTTOM:
@@ -143,9 +143,11 @@ class LowerRouteBArt:
 
         passage = (min(passage_left, C_PASSAGE[0] - 105), C_PASSAGE[1], C_APPROACH_LEDGE[2], C_APPROACH_LEDGE[3])
         passage_base = 104  # Keep the ledge depth when extending its surface into C.
-        entry = (A_ENTRY[0], A_ENTRY[1], A_ENTRY[2] + 110, A_ENTRY[3])
-        for name, bounds, base_y in (("root-wedge", entry, None),
-                                     ("connected-guard-wall", SHIELD_LEDGE, LEFT_WALL[1]),
+        if draw_entry:
+            entry = (A_ENTRY[0], A_ENTRY[1], A_ENTRY[2] + 110, A_ENTRY[3])
+            draw_ruin_platform(camera, self.platform_images["root-wedge"], self.platforms["root-wedge"], entry)
+            draw_structure(self.rubble, (88, 133, 1454, 882), camera, 4880, A_ENTRY[3], 219, 122)
+        for name, bounds, base_y in (("connected-guard-wall", SHIELD_LEDGE, LEFT_WALL[1]),
                                      ("connected-passage", passage, passage_base),
                                      ("spike-bed-pier", PILLBUG_LEDGE, -313)):
             draw_ruin_platform(camera, self.platform_images[name], self.platforms[name], bounds, base_y=base_y)
@@ -153,7 +155,6 @@ class LowerRouteBArt:
         for x, surface, size in ((1200, C_APPROACH_LEDGE[3], 66), (2760, SHIELD_LEDGE[3], 86),
                                  (3530, PILLBUG_LEDGE[3], 66)):
             draw_structure(self.marker, (207, 15, 1040, 1206), camera, x, surface, size * .70, size)
-        draw_structure(self.rubble, (88, 133, 1454, 882), camera, 4880, A_ENTRY[3], 219, 122)
         self.draw_hazards(camera)
         if camera.y < STONE_SURFACE:
             self.draw_basement(camera, screen_height, secret_revealed, secret_relic_collected)
