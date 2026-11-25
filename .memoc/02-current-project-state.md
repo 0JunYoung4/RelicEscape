@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-25 B1 바위 소라게의 조립 외형 v4와 실제 게임 배율 기준 비교 이미지 `assets/concepts/b1-hermit-crab/assembled-preview-v4.png`를 제작했다. 기본 자세 높이 760을 가정해 높이 140인 수정 골렘 및 플레이어와 같은 바닥에 두고 확인했다.
+
 - 2026-11-25 B1 바위 소라게 외형 v3를 `assets/concepts/b1-hermit-crab/assembled-preview-v3.png`에 정리했다. 기존 수정 골렘의 회청색 돌 면·픽셀 외곽·이끼를 참고한 기본·은신 투명 PNG와 기존 동굴 배경에서의 비교 시안이다.
 
 - 2026-11-25 C 입구에 공벌레 두 마리를 배치하고 B 왼쪽 발판의 수정 골렘을 제거했다. 공벌레 순찰은 석등 앞까지 닿지 않는다. B1 아치 뒤부터 천장까지 암벽을 이어 문이 암벽 안쪽에 보이게 했다. `lower_route_c.py`.
