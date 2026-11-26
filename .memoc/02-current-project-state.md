@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 [B1 전투 설계 가안](../docs/b1-hermit-crab-combat-design.md)에 집게·단발 낙하, 체력 50% 은신과 유물 레일, 해제 후 2연속 낙하를 기록했다. 공격 전조·반격 시간·재도전 조건은 구현 전 가안이다. [할로우 나이트 일반 적 9종·보스 10종 참고 자료](../docs/hollow-knight-combat-pattern-study.md)는 후속 전투에 재사용한다.
+
 - 2026-11-26 B1 시작 포효 2초 시안과 투명 보스·공기 파동·돌먼지 시트를 제작했다. 바위 충돌 직후부터의 합성과 자산 기준점은 [B1 포효](../assets/concepts/b1-hermit-crab/roar-v1/README.md)에 있다. 본편 연결 전이다.
 
 - 2026-11-26 하단 A–B 중앙 비석과 식생을 원경·중경·부착 장식·근경으로 구성했다. 배치와 검증은 [비석과 공간 깊이](../docs/lower-route-ab-depth.md)에 있다.

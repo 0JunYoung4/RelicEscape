@@ -26,7 +26,7 @@ _None yet. Link implementation pages from [project/README.md](project/README.md)
 
 ## Knowledge Pages
 
-_None yet. Use `memoc ingest` or `memoc note "<title>"` to create source-backed knowledge pages._
+- [할로우 나이트 전투 패턴 참고 자료](knowledge/hollow-knight-combat-patterns.md)
 
 ## Related Core Memory
 

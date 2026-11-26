@@ -78,6 +78,8 @@ B파트에서는 오른쪽 출발대에서 `E`로 유물을 끼우고 왼쪽을 
 
 [녹색 거리 참고 이미지 갤러리 45장](docs/references/hollow-knight-greenpath/index.html) · [맵·텍스처·몬스터 분석](docs/hollow-knight-greenpath-study.md) · [전경·배경·그림자·조명 분석](docs/hollow-knight-layer-lighting-study.md)
 
+[할로우 나이트 전투 패턴 참고 자료](docs/hollow-knight-combat-pattern-study.md) · [B1 바위 소라게 전투 설계](docs/b1-hermit-crab-combat-design.md)
+
 [초기 기획서 v1.1](docs/INITIAL_DESIGN.md)
 
 확정한 규칙, 제작 범위, 제안 중인 세부 사항과 4주 개발 계획을 기록합니다. 끼임 복구 방식, 벽 이동 조작, 순간이동 직후 공격 상태는 추가로 결정할 항목입니다.
