@@ -37,6 +37,17 @@ class CombatRoomTests(unittest.TestCase):
                           running=False, jump_pressed=False, jump_held=False,
                           crouching=False, attack_pressed=False)
 
+    def test_thin_ledge_light_clips_render_without_software_triangle_errors(self):
+        self.lower.room = "combat"
+        self.lower.enter(self.player, self.camera)
+        for self.camera.x, self.camera.y in ((0, -216), (0, 200), (160, 350)):
+            with self.subTest(x=self.camera.x, y=self.camera.y):
+                pico.clear_canvas()
+                pico.SDL_ClearError()
+                self.lower.draw(self.camera)
+                self.lower.draw_foreground(self.camera)
+                self.assertFalse(pico.SDL_GetError())
+
     def test_gallery_right_exit_enters_from_left_and_can_return_with_relic(self):
         self.lower.room, self.lower.has_relic = "gallery", True
         self.lower.enter(self.player, self.camera)
@@ -233,7 +244,7 @@ class CombatRoomTests(unittest.TestCase):
                 patch.object(main, "perf_counter", side_effect=count(step=1 / 60)), \
                 patch.object(main, "sleep"), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
-                patch.object(pico, "get_events", side_effect=read_events), \
+                patch.object(main, "poll_events", side_effect=read_events), \
                 patch.object(pico, "update_canvas", side_effect=record_frame):
             self.assertIsNone(main.run_opening_cave(False))
         self.assertEqual(rooms[0].room, "combat")

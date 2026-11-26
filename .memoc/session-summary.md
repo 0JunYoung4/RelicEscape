@@ -10,9 +10,10 @@ tags:
   - memoc/state
 ---
 # Session Summary
-Last: 2026-11-26 (Asia/Seoul)
+Last: 2026-11-27 (Asia/Seoul)
 
-- A·B·C 독립 석벽·중경·전경 본편 적용. B–C 배경은 지형 전에 연결. C SDL565·관련52개 통과.
+- 입력 대기·정점 중복 제거. 전체222개 통과. `docs/runtime-performance.md`.
+- A·B·C 독립 석벽 레이어 적용. B–C 배경은 지형 전 합성.
 - B1 v4 수로 유적·포효 SDL 검수. 본편 미연결.
 - A 3초 발판 설치→아래→E 귀환→B. 사망 시 유지, R 초기화.
 - 공벌레→골렘→틈빛→바닥 붕괴. 수정 골렘 HP45, 방패병 HP65.

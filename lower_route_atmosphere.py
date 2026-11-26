@@ -1,15 +1,19 @@
 """Depth and fixed light sources for the lower caves."""
 
-from ctypes import byref, c_int
-from math import ceil, cos, sin, tau
+from ctypes import byref
+from math import ceil
 
 from pico2d import pico2d as pico
 
 from player import ASSET_ROOT
+from render_mesh import VERTEX_SIZE, grid_indices, index_buffer, pack_vertex, unit_circle, vertex_buffer
 
 
 ROUTE_ART = ASSET_ROOT / "terrain/lower-route-art-v2"
 COMBAT_ART = ASSET_ROOT / "terrain/combat-room-v2"
+_LIGHT_CIRCLE = unit_circle(24)
+_LIGHT_INDICES = index_buffer(tuple(value for i in range(24)
+                                   for value in (0, i + 1, (i + 1) % 24 + 1)))
 
 
 def load_image(path):
@@ -35,50 +39,49 @@ def draw_layer(image, camera, bounds, *, tint=(255, 255, 255), opacity=255,
     columns = ceil((view_right - view_left) * camera.zoom / spacing)
     rows = ceil((view_top - view_bottom) * camera.zoom / spacing)
     stride = columns + 1
-    vertices, indices = [], []
+    column_data = []
+    for column in range(stride):
+        x = view_left + (view_right - view_left) * column / columns
+        u = u0 + (x - left) / width * (u1 - u0)
+        weight = 1.0
+        if fade_range is not None:
+            fade_left, fade_right = fade_range
+            weight = max(0.0, min(1.0, (x - fade_left) / (fade_right - fade_left)))
+            weight = weight * weight * (3 - 2 * weight)
+        column_data.append((x, u, round(opacity * weight)))
+    count = stride * (rows + 1)
+    geometry = vertex_buffer(count)
+    offset = 0
     for row in range(rows + 1):
         y = view_top - (view_top - view_bottom) * row / rows
         v = v0 + (top - y) / height * (v1 - v0)
-        for column in range(stride):
-            x = view_left + (view_right - view_left) * column / columns
-            u = u0 + (x - left) / width * (u1 - u0)
-            weight = 1.0
-            if fade_range is not None:
-                fade_left, fade_right = fade_range
-                weight = max(0.0, min(1.0, (x - fade_left) / (fade_right - fade_left)))
-                weight = weight * weight * (3 - 2 * weight)
+        for x, u, alpha in column_data:
             sx, sy = camera.world_to_screen(x, y)
             color = shade(x, y, tint) if shade is not None else tint
-            vertices.append(pico.SDL_Vertex((sx, pico.canvas_height - sy),
-                                            (*color, round(opacity * weight)), (u, v)))
-            if row and column:
-                corner = len(vertices) - 1
-                indices.extend((corner - stride - 1, corner - stride, corner - 1,
-                                corner - stride, corner, corner - 1))
-    geometry = (pico.SDL_Vertex * len(vertices))(*vertices)
-    triangles = (c_int * len(indices))(*indices)
-    pico.SDL_RenderGeometry(pico.renderer, image.texture, geometry, len(vertices), triangles, len(indices))
+            pack_vertex(geometry, offset, sx, pico.canvas_height - sy, *color, alpha, u, v)
+            offset += VERTEX_SIZE
+    triangles = grid_indices(columns, rows)
+    pico.SDL_RenderGeometry(pico.renderer, image.texture, geometry, count, triangles, len(triangles))
 
 
 def draw_soft_light(camera, center, radius, color, opacity):
     """Draw a feathered world-space ellipse without changing the caller's blend state."""
     center_x, center_y = center
     rx, ry = radius
-    if center_x + rx < camera.x or center_x - rx > camera.x + camera.view_width:
+    if (center_x + rx < camera.x or center_x - rx > camera.x + camera.view_width
+            or center_y + ry < camera.y or center_y - ry > camera.y + pico.canvas_height / camera.zoom):
         return
     sx, sy = camera.world_to_screen(center_x, center_y)
-    points = [pico.SDL_Vertex((sx, pico.canvas_height - sy), (*color, opacity))]
-    for index in range(24):
-        angle = tau * index / 24
-        x, y = camera.world_to_screen(center_x + rx * cos(angle), center_y + ry * sin(angle))
-        points.append(pico.SDL_Vertex((x, pico.canvas_height - y), (*color, 0)))
-    vertices = (pico.SDL_Vertex * len(points))(*points)
-    indices = (c_int * 72)(*(value for i in range(24) for value in (0, i + 1, (i + 1) % 24 + 1)))
+    vertices = vertex_buffer(25)
+    pack_vertex(vertices, 0, sx, pico.canvas_height - sy, *color, opacity, 0, 0)
+    for index, (cosine, sine) in enumerate(_LIGHT_CIRCLE, 1):
+        x, y = camera.world_to_screen(center_x + rx * cosine, center_y + ry * sine)
+        pack_vertex(vertices, index * VERTEX_SIZE, x, pico.canvas_height - y, *color, 0, 0, 0)
     previous = pico.SDL_BlendMode()
     pico.SDL_GetRenderDrawBlendMode(pico.renderer, byref(previous))
     pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)
     try:
-        pico.SDL_RenderGeometry(pico.renderer, None, vertices, len(points), indices, len(indices))
+        pico.SDL_RenderGeometry(pico.renderer, None, vertices, 25, _LIGHT_INDICES, len(_LIGHT_INDICES))
     finally:
         pico.SDL_SetRenderDrawBlendMode(pico.renderer, previous)
 
@@ -103,23 +106,23 @@ def draw_parallax(image, camera, screen_height, bounds, tint):
     # Subdivide the clipped quad so software rendering also works at full viewport size.
     columns = ceil((visible_right - visible_left) * camera.zoom / 400)
     rows = ceil((visible_top - visible_bottom) * camera.zoom / 400)
-    vertices, triangles = [], []
     stride = columns + 1
+    column_data = []
+    for col_index in range(stride):
+        x = visible_left + (visible_right - visible_left) * col_index / columns
+        column_data.append((x, u + (x - left) / image_width))
+    count = stride * (rows + 1)
+    geometry = vertex_buffer(count)
+    offset = 0
     for row_index in range(rows + 1):
         y = visible_top - (visible_top - visible_bottom) * row_index / rows
         row = v + (top - y) / image_height
-        for col_index in range(stride):
-            x = visible_left + (visible_right - visible_left) * col_index / columns
-            column = u + (x - left) / image_width
+        for x, column in column_data:
             sx, sy = camera.world_to_screen(x, y)
-            vertices.append(pico.SDL_Vertex((sx, screen_height - sy), (*tint, 255), (column, row)))
-            if row_index and col_index:
-                corner = len(vertices) - 1
-                triangles.extend((corner - stride - 1, corner - stride, corner - 1,
-                                  corner - stride, corner, corner - 1))
-    geometry = (pico.SDL_Vertex * len(vertices))(*vertices)
-    indices = (c_int * len(triangles))(*triangles)
-    pico.SDL_RenderGeometry(pico.renderer, image.texture, geometry, len(vertices), indices, len(triangles))
+            pack_vertex(geometry, offset, sx, screen_height - sy, *tint, 255, column, row)
+            offset += VERTEX_SIZE
+    indices = grid_indices(columns, rows)
+    pico.SDL_RenderGeometry(pico.renderer, image.texture, geometry, count, indices, len(indices))
 
 
 class RouteAtmosphere:
@@ -141,13 +144,13 @@ class RouteAtmosphere:
         left, right = x - width / 2, x + width / 2
         if right <= camera.x or left >= camera.x + camera.view_width:
             return
-        vertices = []
+        geometry = vertex_buffer(8)
+        offset = 0
         for depth, alpha in ((0, 123), (.68, 123), (.90, 47), (1, 0)):
             for index, side in enumerate((left, right)):
                 sx, sy = camera.world_to_screen(side, bottom + height * (1 - depth))
                 column = 1 - index if flip else index
-                vertices.append(pico.SDL_Vertex((sx, pico.canvas_height - sy), (115, 158, 161, alpha),
-                                                (column, depth)))
-        geometry = (pico.SDL_Vertex * 8)(*vertices)
-        triangles = (c_int * 18)(0, 1, 2, 1, 3, 2, 2, 3, 4, 3, 5, 4, 4, 5, 6, 5, 7, 6)
+                pack_vertex(geometry, offset, sx, pico.canvas_height - sy, 115, 158, 161, alpha, column, depth)
+                offset += VERTEX_SIZE
+        triangles = index_buffer((0, 1, 2, 1, 3, 2, 2, 3, 4, 3, 5, 4, 4, 5, 6, 5, 7, 6))
         pico.SDL_RenderGeometry(pico.renderer, self.ruins[name].texture, geometry, 8, triangles, 18)

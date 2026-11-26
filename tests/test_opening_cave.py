@@ -34,7 +34,7 @@ class OpeningCaveTests(unittest.TestCase):
             draw(scene, camera, **kwargs)
 
         with patch.object(main, "configure_display", return_value=False), \
-                patch.object(pico, "get_events", side_effect=events), \
+                patch.object(main, "poll_events", side_effect=events), \
                 patch.object(main, "read_movement", return_value=(0, False, False)), \
                 patch.object(main, "sleep"), \
                 patch.object(main, "run_game") as test_room, \
@@ -58,7 +58,7 @@ class OpeningCaveTests(unittest.TestCase):
 
         pico.open_canvas(main.SCREEN_WIDTH, main.SCREEN_HEIGHT)
         self.addCleanup(pico.close_canvas)
-        with patch.object(pico, "get_events", side_effect=commands), \
+        with patch.object(main, "poll_events", side_effect=commands), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(main, "read_movement", return_value=(1, False, False)), \
                 patch.object(main, "perf_counter", side_effect=count(step=1 / 60)), \

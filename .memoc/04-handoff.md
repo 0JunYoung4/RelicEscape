@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-27 성능 수정은 `input_events.py`, `render_mesh.py`, `lower_route_atmosphere.py`, `combat_scenery.py`와 `main`에 있다. 입력은 `poll_events`를 사용해 pico 내부 대기와 FPS 제목 갱신을 피하고 게임 루프가 프레임 대기를 담당한다. 고정 메시 정보는 캐시하되 카메라 정점은 매 호출 독립 생성한다. software의 얇은 클립 광원만 재사용 흰 텍셀 경로로 `width invalid`를 해결한다. [측정·재현](../docs/runtime-performance.md)과 [수치](../docs/runtime-performance-results.json). native10장 일치·전체측정1200화면 오류0. 소프트웨어 C 합성 병목 및 실제 전체화면 장시간 체감은 남은 확인 항목이다. 프로파일은 다른 테스트와 동시에 실행하지 않는다.
+
 - 2026-11-26 C 최신 미술은 `lower_route_c_scenery.py`와 [별도 석벽 레이어](../assets/terrain/lower-route-c-wall-v1/README.md)다. C 문·석등·지형은 기존 `c-terrain.png`와 좌표를 유지한다. B/C 배경은 B 지형 전에 그리고 C는 x0~690에서 사라진다. 옛 C 먼 비석·아치·광막을 다시 덮지 않는다. `python -m tools.preview_lower_route_c_wall`로 기준값·SDL565·왕복·점프·석등·재시작을 재현한다. 관련52개 통과. 봉인문 열림·C→B1은 미구현이며, 장시간 전체화면 수동 조작·기기별 성능은 미측정이다.
 
 - 2026-11-26 B 최신 미술은 `lower_route_b_scenery.py`와 [별도 원화](../assets/terrain/lower-route-b-wall-v1/README.md)다. B 지형과 레일은 기존 렌더러로 그린다. `python -m tools.preview_lower_route_b_wall`가 추적한 geometry baseline과 SDL1207화면·두 레일·비밀방·양방향 연결을 재검수한다. A–B의 옛 far는 다시 덮지 않으며 C 배경은 새 C 렌더러가 담당한다. 장시간 전체화면 수동 조작과 기기별 성능은 미측정이다.

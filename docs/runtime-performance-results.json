@@ -1,0 +1,2096 @@
+{
+  "date": "2026-11-27",
+  "baseline_commit": "dea80ae",
+  "comparison": [
+    {
+      "backend": "software",
+      "scene": "opening-static",
+      "before_median_ms": 14.53985000262037,
+      "after_median_ms": 14.18930001091212,
+      "median_change_percent": -2.410960165648701,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "software",
+      "scene": "opening-moving",
+      "before_median_ms": 15.167600009590387,
+      "after_median_ms": 13.805249996948987,
+      "median_change_percent": -8.981974813286175,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "software",
+      "scene": "combat-static",
+      "before_median_ms": 30.369649990461767,
+      "after_median_ms": 29.950000054668635,
+      "median_change_percent": -1.3818069550519452,
+      "screenshot_pixels_equal": false
+    },
+    {
+      "backend": "software",
+      "scene": "combat-moving",
+      "before_median_ms": 31.329400022514164,
+      "after_median_ms": 28.051150031387806,
+      "median_change_percent": -10.463813506707819,
+      "screenshot_pixels_equal": false
+    },
+    {
+      "backend": "software",
+      "scene": "a-static",
+      "before_median_ms": 49.35420001856983,
+      "after_median_ms": 50.07110000588,
+      "median_change_percent": 1.452561255253726,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "software",
+      "scene": "a-moving",
+      "before_median_ms": 51.18609999772161,
+      "after_median_ms": 50.07789994124323,
+      "median_change_percent": -2.1650410102111883,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "software",
+      "scene": "b-static",
+      "before_median_ms": 50.416699959896505,
+      "after_median_ms": 44.69230002723634,
+      "median_change_percent": -11.35417418675475,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "software",
+      "scene": "b-moving",
+      "before_median_ms": 49.19994994997978,
+      "after_median_ms": 47.204700007569045,
+      "median_change_percent": -4.055390187264929,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "software",
+      "scene": "c-static",
+      "before_median_ms": 72.01000006170943,
+      "after_median_ms": 75.20195003598928,
+      "median_change_percent": 4.432648203783485,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "software",
+      "scene": "c-moving",
+      "before_median_ms": 76.55179995344952,
+      "after_median_ms": 81.46284997928888,
+      "median_change_percent": 6.415329265707315,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "native",
+      "scene": "opening-static",
+      "before_median_ms": 1.3629500172100961,
+      "after_median_ms": 1.379899971652776,
+      "median_change_percent": 1.2436226001431683,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "native",
+      "scene": "opening-moving",
+      "before_median_ms": 1.4414999750442803,
+      "after_median_ms": 1.2595499865710735,
+      "median_change_percent": -12.622267889225425,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "native",
+      "scene": "combat-static",
+      "before_median_ms": 10.870999947655946,
+      "after_median_ms": 6.2814499833621085,
+      "median_change_percent": -42.21828706091988,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "native",
+      "scene": "combat-moving",
+      "before_median_ms": 10.692999989259988,
+      "after_median_ms": 6.149200024083257,
+      "median_change_percent": -42.493219580477955,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "native",
+      "scene": "a-static",
+      "before_median_ms": 5.793499993160367,
+      "after_median_ms": 2.6501499814912677,
+      "median_change_percent": -54.256494612583836,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "native",
+      "scene": "a-moving",
+      "before_median_ms": 5.962050054222345,
+      "after_median_ms": 2.793799969367683,
+      "median_change_percent": -53.14027987086247,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "native",
+      "scene": "b-static",
+      "before_median_ms": 3.1131499563343823,
+      "after_median_ms": 1.6055000596679747,
+      "median_change_percent": -48.4284380069378,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "native",
+      "scene": "b-moving",
+      "before_median_ms": 2.847400028258562,
+      "after_median_ms": 1.5496000414714217,
+      "median_change_percent": -45.57842150408562,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "native",
+      "scene": "c-static",
+      "before_median_ms": 2.8009999659843743,
+      "after_median_ms": 1.7106999875977635,
+      "median_change_percent": -38.92538349258563,
+      "screenshot_pixels_equal": true
+    },
+    {
+      "backend": "native",
+      "scene": "c-moving",
+      "before_median_ms": 2.3574999650008976,
+      "after_median_ms": 1.8294500187039375,
+      "median_change_percent": -22.398725520098118,
+      "screenshot_pixels_equal": true
+    }
+  ],
+  "before": {
+    "native": {
+      "metadata": {
+        "backend": "native",
+        "renderer": "direct3d11",
+        "renderer_flags": 10,
+        "accelerated": true,
+        "vsync": false,
+        "window_hidden": true,
+        "logical_size": [
+          960,
+          540
+        ],
+        "window_size": [
+          2560,
+          1440
+        ],
+        "renderer_output_size": [
+          2560,
+          1440
+        ],
+        "driver_display_mode": [
+          2560,
+          1440,
+          240
+        ],
+        "display_mode_note": "Native desktop mode",
+        "python": "3.13.15 (tags/v3.13.15:4061bc4, Aug  5 2026, 13:05:39) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "simulation_dt_seconds": 0.016666666666666666,
+        "warmup_frames": 10,
+        "measured_frames": 60,
+        "profile_frames_per_case": 8,
+        "timing_note": "CPU elapsed update, draw submission, and present. Hidden accelerated present does not measure full GPU completion.",
+        "excluded": [
+          "SDL setup",
+          "asset loading",
+          "sleep",
+          "vsync wait",
+          "screenshot readback",
+          "PNG encoding",
+          "cProfile pass"
+        ],
+        "scope_note": "Fixed gameplay scenes, idle player update and deterministic moving camera. No input-event polling or operating-system compositor benchmark."
+      },
+      "cases": [
+        {
+          "name": "opening-static",
+          "scene": "opening",
+          "moving_camera": false,
+          "camera": {
+            "x": 1640.0,
+            "y": 160.0,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.03460003063082695,
+              "p95_ms": 0.05170004442334175,
+              "max_ms": 0.0727000879123807,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 1.1612499947659671,
+              "p95_ms": 1.524300081655383,
+              "max_ms": 1.801100093871355,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.1421500346623361,
+              "p95_ms": 0.3774999640882015,
+              "max_ms": 0.41750003583729267,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 1.3629500172100961,
+              "p95_ms": 1.692799967713654,
+              "max_ms": 2.0315999863669276,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "e4b4812e0111594fb7e00529629f2310216564ac42e53f412b70c51835233908",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "opening-moving",
+          "scene": "opening",
+          "moving_camera": true,
+          "camera": {
+            "x": 1521.962470067718,
+            "y": 240.90169943749473,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.03739999374374747,
+              "p95_ms": 0.0638000201433897,
+              "max_ms": 0.12229999992996454,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 1.1746499803848565,
+              "p95_ms": 1.6422999324277043,
+              "max_ms": 1.79130001924932,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.17600000137463212,
+              "p95_ms": 0.43810007628053427,
+              "max_ms": 0.564300105907023,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 1.4414999750442803,
+              "p95_ms": 1.8209000118076801,
+              "max_ms": 1.9990999717265368,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "65c35f45ea4e61e91a6703ed5ae0a37297e1b94194c639f4007ad22bcb243914",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "combat-static",
+          "scene": "combat",
+          "moving_camera": false,
+          "camera": {
+            "x": 0,
+            "y": -216.0,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.06305001443251967,
+              "p95_ms": 0.125700025819242,
+              "max_ms": 0.5894999485462904,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 10.607749980408698,
+              "p95_ms": 12.51070003490895,
+              "max_ms": 12.822499964386225,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.20099995890632272,
+              "p95_ms": 0.4338999278843403,
+              "max_ms": 0.4992999602109194,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 10.870999947655946,
+              "p95_ms": 12.804499943740666,
+              "max_ms": 13.255300000309944,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "6b2dc97c4f3761c113648267a8c36c3679cdc3f451d1230259ad56d591a822b5",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "combat-moving",
+          "scene": "combat",
+          "moving_camera": true,
+          "camera": {
+            "x": 0,
+            "y": -135.09830056250527,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.06709998706355691,
+              "p95_ms": 0.10679999832063913,
+              "max_ms": 0.417300034314394,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 10.302700044121593,
+              "p95_ms": 12.097900034859776,
+              "max_ms": 12.450200039893389,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.2040499821305275,
+              "p95_ms": 0.44650002382695675,
+              "max_ms": 0.5728000542148948,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 10.692999989259988,
+              "p95_ms": 12.542800046503544,
+              "max_ms": 12.723200023174286,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "573f2fb207ea66f32a63c6fec0eb920c1d3161c787f48a2243813b92ea52be0d",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "a-static",
+          "scene": "a",
+          "moving_camera": false,
+          "camera": {
+            "x": 7102.5,
+            "y": -707.5,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.06465002661570907,
+              "p95_ms": 0.07639999967068434,
+              "max_ms": 0.21870003547519445,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 5.435400002170354,
+              "p95_ms": 6.239600013941526,
+              "max_ms": 6.388899986632168,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.24590000975877047,
+              "p95_ms": 0.4569999873638153,
+              "max_ms": 0.5701000336557627,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 5.793499993160367,
+              "p95_ms": 6.604199996218085,
+              "max_ms": 6.742400000803173,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "7538c7b85e15f72a59f199f47d7d64ff746aeddf2d3e87a72ee522a770509510",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "a-moving",
+          "scene": "a",
+          "moving_camera": true,
+          "camera": {
+            "x": 6984.462470067718,
+            "y": -626.5983005625053,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.06564991781488061,
+              "p95_ms": 0.11179991997778416,
+              "max_ms": 0.11769996490329504,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 5.612450011540204,
+              "p95_ms": 6.489000050351024,
+              "max_ms": 7.579000084660947,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.24224998196586967,
+              "p95_ms": 0.40829996578395367,
+              "max_ms": 0.6026000482961535,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 5.962050054222345,
+              "p95_ms": 6.789000006392598,
+              "max_ms": 7.915699970908463,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "ce52cb280dac61080695e370c4d40e25d90a00ebfa87bea31854bb6435d03281",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "b-static",
+          "scene": "b",
+          "moving_camera": false,
+          "camera": {
+            "x": 1540.0,
+            "y": 93.19999999999999,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.0673000467941165,
+              "p95_ms": 0.11630007065832615,
+              "max_ms": 0.16119994688779116,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 2.6971499901264906,
+              "p95_ms": 3.448899951763451,
+              "max_ms": 4.361399915069342,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.31284999568015337,
+              "p95_ms": 0.4862999776378274,
+              "max_ms": 0.5364000098779798,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 3.1131499563343823,
+              "p95_ms": 4.002899979241192,
+              "max_ms": 4.984700004570186,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "8e085104790fc2688e6901b0e58548fdb86d9dd560fbff3519e985a041815d14",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "b-moving",
+          "scene": "b",
+          "moving_camera": true,
+          "camera": {
+            "x": 1421.962470067718,
+            "y": 174.10169943749472,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.06634998135268688,
+              "p95_ms": 0.07619999814778566,
+              "max_ms": 0.36079995334148407,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 2.4675499880686402,
+              "p95_ms": 3.0743000097572803,
+              "max_ms": 3.429100033827126,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.2919000107795,
+              "p95_ms": 0.42810000013560057,
+              "max_ms": 0.4723999882116914,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 2.847400028258562,
+              "p95_ms": 3.49799997638911,
+              "max_ms": 3.8753000553697348,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "ca385569b57bd72f0b1ffb2c46acb2944281e870e694921d2b415d3509336181",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "c-static",
+          "scene": "c",
+          "moving_camera": false,
+          "camera": {
+            "x": -1600,
+            "y": 93.19999999999999,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.06120000034570694,
+              "p95_ms": 0.0914999982342124,
+              "max_ms": 0.12930005323141813,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 2.458200033288449,
+              "p95_ms": 2.9483999824151397,
+              "max_ms": 8.684700005687773,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.28979999478906393,
+              "p95_ms": 0.4029000410810113,
+              "max_ms": 0.5978000117465854,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 2.8009999659843743,
+              "p95_ms": 3.300099982880056,
+              "max_ms": 9.158400003798306,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "a2951ca9ace386e6119290654611a061e53874b61a806148742b4be27306a7a0",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "c-moving",
+          "scene": "c",
+          "moving_camera": true,
+          "camera": {
+            "x": -1600,
+            "y": 174.10169943749472,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.0597000471316278,
+              "p95_ms": 0.0790000194683671,
+              "max_ms": 0.13569998554885387,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 2.110399946104735,
+              "p95_ms": 4.953900002874434,
+              "max_ms": 5.711899953894317,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.12785004219040275,
+              "p95_ms": 0.2905000001192093,
+              "max_ms": 0.506000011228025,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 2.3574999650008976,
+              "p95_ms": 5.149200093001127,
+              "max_ms": 5.95899997279048,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "b7adb4a206169b53ca29659f5a5d1576935af7361c91212e0ba515253f3f63ad",
+          "sdl_error_after_measured_batch": null
+        }
+      ]
+    },
+    "software": {
+      "metadata": {
+        "backend": "software",
+        "renderer": "software",
+        "renderer_flags": 9,
+        "accelerated": false,
+        "vsync": false,
+        "window_hidden": true,
+        "logical_size": [
+          960,
+          540
+        ],
+        "window_size": [
+          960,
+          540
+        ],
+        "renderer_output_size": [
+          960,
+          540
+        ],
+        "driver_display_mode": [
+          1024,
+          768,
+          60
+        ],
+        "display_mode_note": "Dummy driver's virtual mode",
+        "python": "3.13.15 (tags/v3.13.15:4061bc4, Aug  5 2026, 13:05:39) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "simulation_dt_seconds": 0.016666666666666666,
+        "warmup_frames": 10,
+        "measured_frames": 60,
+        "profile_frames_per_case": 8,
+        "timing_note": "CPU elapsed update, draw submission, and present. Hidden accelerated present does not measure full GPU completion.",
+        "excluded": [
+          "SDL setup",
+          "asset loading",
+          "sleep",
+          "vsync wait",
+          "screenshot readback",
+          "PNG encoding",
+          "cProfile pass"
+        ],
+        "scope_note": "Fixed gameplay scenes, idle player update and deterministic moving camera. No input-event polling or operating-system compositor benchmark."
+      },
+      "cases": [
+        {
+          "name": "opening-static",
+          "scene": "opening",
+          "moving_camera": false,
+          "camera": {
+            "x": 1640.0,
+            "y": 160.0,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.039800070226192474,
+              "p95_ms": 0.0700999516993761,
+              "max_ms": 0.09809993207454681,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 14.490499976091087,
+              "p95_ms": 15.98499994724989,
+              "max_ms": 16.573900007642806,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.006149930413812399,
+              "p95_ms": 0.008800067007541656,
+              "max_ms": 0.062700011767447,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 14.53985000262037,
+              "p95_ms": 16.032999963499606,
+              "max_ms": 16.625599935650826,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "7feae5914609caf35780508973734b5c951b82228025c682b007f81ec3b3a562",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "opening-moving",
+          "scene": "opening",
+          "moving_camera": true,
+          "camera": {
+            "x": 1521.962470067718,
+            "y": 240.90169943749473,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.05204998888075352,
+              "p95_ms": 0.08849997539073229,
+              "max_ms": 0.28490007389336824,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 15.113850007764995,
+              "p95_ms": 18.526599975302815,
+              "max_ms": 19.06399999279529,
+              "over_16_67_ms": 16,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.006649934221059084,
+              "p95_ms": 0.009999959729611874,
+              "max_ms": 0.0914999982342124,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 15.167600009590387,
+              "p95_ms": 18.587699974887073,
+              "max_ms": 19.13789997342974,
+              "over_16_67_ms": 17,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "21544008a211fc6754ba16e43b6a6a635278f5b5ccd1217bbf78a4829fde399b",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "combat-static",
+          "scene": "combat",
+          "moving_camera": false,
+          "camera": {
+            "x": 0,
+            "y": -216.0,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.06375001976266503,
+              "p95_ms": 0.09169999975711107,
+              "max_ms": 0.12970005627721548,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 30.30124999349937,
+              "p95_ms": 33.68579992093146,
+              "max_ms": 40.13380000833422,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.004150031600147486,
+              "p95_ms": 0.005600042641162872,
+              "max_ms": 0.018400023691356182,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 30.369649990461767,
+              "p95_ms": 33.78189995419234,
+              "max_ms": 40.21809995174408,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "dd95a248beb3e216a8fcb3b6ca634f1bdbd7c507316daf5319ce96de83d1deaa",
+          "sdl_error_after_measured_batch": "Parameter 'width' is invalid"
+        },
+        {
+          "name": "combat-moving",
+          "scene": "combat",
+          "moving_camera": true,
+          "camera": {
+            "x": 0,
+            "y": -135.09830056250527,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.07055001333355904,
+              "p95_ms": 0.09770004544407129,
+              "max_ms": 0.12509990483522415,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 31.2497999984771,
+              "p95_ms": 34.75809993688017,
+              "max_ms": 40.10410001501441,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.004499917849898338,
+              "p95_ms": 0.005700043402612209,
+              "max_ms": 0.006900052540004253,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 31.329400022514164,
+              "p95_ms": 34.840599982999265,
+              "max_ms": 40.189600083976984,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "b196924ccfc5b8c962b9fc701c8a2f779e8fd25b48e70b6cf7df7bc5994c4ba3",
+          "sdl_error_after_measured_batch": "Parameter 'width' is invalid"
+        },
+        {
+          "name": "a-static",
+          "scene": "a",
+          "moving_camera": false,
+          "camera": {
+            "x": 7102.5,
+            "y": -707.5,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.07094995817169547,
+              "p95_ms": 0.08679996244609356,
+              "max_ms": 0.11730007827281952,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 49.27045002114028,
+              "p95_ms": 55.11129996739328,
+              "max_ms": 59.08949999138713,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.00689999433234334,
+              "p95_ms": 0.008600065484642982,
+              "max_ms": 0.01279998105019331,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 49.35420001856983,
+              "p95_ms": 55.189400096423924,
+              "max_ms": 59.18570002540946,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "5b8d5aca6ce94a2ef2b284f84ec225be51477349dfdfc0b4051be0a43519358a",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "a-moving",
+          "scene": "a",
+          "moving_camera": true,
+          "camera": {
+            "x": 6984.462470067718,
+            "y": -626.5983005625053,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.07789995288476348,
+              "p95_ms": 0.10740000288933516,
+              "max_ms": 0.13010005932301283,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 51.09890003222972,
+              "p95_ms": 55.03280006814748,
+              "max_ms": 56.60789995454252,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.0070999376475811005,
+              "p95_ms": 0.008399947546422482,
+              "max_ms": 0.014899997040629387,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 51.18609999772161,
+              "p95_ms": 55.12999999336898,
+              "max_ms": 56.68190005235374,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "94c8581efd1b704e1273b2d6dba276cc7d123545944a6b9564157f693b7d2104",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "b-static",
+          "scene": "b",
+          "moving_camera": false,
+          "camera": {
+            "x": 1540.0,
+            "y": 93.19999999999999,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.08204998448491096,
+              "p95_ms": 0.15460001304745674,
+              "max_ms": 0.23669993970543146,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 50.29799998737872,
+              "p95_ms": 59.03569993097335,
+              "max_ms": 70.92339999508113,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.0077500008046627045,
+              "p95_ms": 0.01009996049106121,
+              "max_ms": 0.05749997217208147,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 50.416699959896505,
+              "p95_ms": 59.1443000594154,
+              "max_ms": 71.1503999773413,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "1b40350025ca65aafe6d5171b601c71eb3969e8ba7bcb4ef1d52a5580212a4b3",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "b-moving",
+          "scene": "b",
+          "moving_camera": true,
+          "camera": {
+            "x": 1421.962470067718,
+            "y": 174.10169943749472,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.07800001185387373,
+              "p95_ms": 0.11010002344846725,
+              "max_ms": 0.15929993242025375,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 49.105499929282814,
+              "p95_ms": 53.74350002966821,
+              "max_ms": 57.535899919457734,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.0070999376475811005,
+              "p95_ms": 0.008499948307871819,
+              "max_ms": 0.009499955922365189,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 49.19994994997978,
+              "p95_ms": 53.8384000537917,
+              "max_ms": 57.6347999740392,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "155dac03746047492ed755d62bf1f02eda53327272a287df4dfb0a3766c8d8f3",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "c-static",
+          "scene": "c",
+          "moving_camera": false,
+          "camera": {
+            "x": -1600,
+            "y": 93.19999999999999,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.07255002856254578,
+              "p95_ms": 0.10379997547715902,
+              "max_ms": 0.20720006432384253,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 71.92489999579266,
+              "p95_ms": 79.21639992855489,
+              "max_ms": 95.42420005891472,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.0071999384090304375,
+              "p95_ms": 0.008999952115118504,
+              "max_ms": 0.01479999627918005,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 72.01000006170943,
+              "p95_ms": 79.29520006291568,
+              "max_ms": 95.51909996662289,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "8696fc5f46ff090687ac260a9fc9dd17c81f6383ead110782a50016d7738c7db",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "c-moving",
+          "scene": "c",
+          "moving_camera": true,
+          "camera": {
+            "x": -1600,
+            "y": 174.10169943749472,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.07660000119358301,
+              "p95_ms": 0.11270004324615002,
+              "max_ms": 0.12509990483522415,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 76.46405004197732,
+              "p95_ms": 85.78389999456704,
+              "max_ms": 93.07220007758588,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.0077500008046627045,
+              "p95_ms": 0.010899966582655907,
+              "max_ms": 0.03290001768618822,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 76.55179995344952,
+              "p95_ms": 85.86949994787574,
+              "max_ms": 93.17840007133782,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "41ffc8c0808446250de42b7ab43c391b89534883f27fa86ab21b1c40a49fd6f4",
+          "sdl_error_after_measured_batch": null
+        }
+      ]
+    }
+  },
+  "after": {
+    "native": {
+      "metadata": {
+        "backend": "native",
+        "renderer": "direct3d11",
+        "renderer_flags": 10,
+        "accelerated": true,
+        "vsync": false,
+        "window_hidden": true,
+        "logical_size": [
+          960,
+          540
+        ],
+        "window_size": [
+          2560,
+          1440
+        ],
+        "renderer_output_size": [
+          2560,
+          1440
+        ],
+        "driver_display_mode": [
+          2560,
+          1440,
+          240
+        ],
+        "display_mode_note": "Native desktop mode",
+        "python": "3.13.15 (tags/v3.13.15:4061bc4, Aug  5 2026, 13:05:39) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "simulation_dt_seconds": 0.016666666666666666,
+        "warmup_frames": 10,
+        "measured_frames": 60,
+        "profile_frames_per_case": 8,
+        "timing_note": "CPU elapsed update, draw submission, and present. Hidden accelerated present does not measure full GPU completion.",
+        "excluded": [
+          "SDL setup",
+          "asset loading",
+          "sleep",
+          "vsync wait",
+          "screenshot readback",
+          "PNG encoding",
+          "cProfile pass"
+        ],
+        "scope_note": "Fixed gameplay scenes, idle player update and deterministic moving camera. No input-event polling or operating-system compositor benchmark."
+      },
+      "cases": [
+        {
+          "name": "opening-static",
+          "scene": "opening",
+          "moving_camera": false,
+          "camera": {
+            "x": 1640.0,
+            "y": 160.0,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.0363999861292541,
+              "p95_ms": 0.07890001870691776,
+              "max_ms": 0.21329999435693026,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 1.1570999631658196,
+              "p95_ms": 1.4633999671787024,
+              "max_ms": 1.6314000822603703,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.15044998144730926,
+              "p95_ms": 0.24060008581727743,
+              "max_ms": 0.35630003549158573,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 1.379899971652776,
+              "p95_ms": 1.6823000041767955,
+              "max_ms": 1.8164000939577818,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "e4b4812e0111594fb7e00529629f2310216564ac42e53f412b70c51835233908",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "opening-moving",
+          "scene": "opening",
+          "moving_camera": true,
+          "camera": {
+            "x": 1521.962470067718,
+            "y": 240.90169943749473,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.03550003748387098,
+              "p95_ms": 0.059399986639618874,
+              "max_ms": 0.06770004983991385,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 1.074400031939149,
+              "p95_ms": 1.3512000441551208,
+              "max_ms": 2.0815000170841813,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.11675001587718725,
+              "p95_ms": 0.2087999600917101,
+              "max_ms": 0.4808000521734357,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 1.2595499865710735,
+              "p95_ms": 1.5289000002667308,
+              "max_ms": 2.351999981328845,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "65c35f45ea4e61e91a6703ed5ae0a37297e1b94194c639f4007ad22bcb243914",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "combat-static",
+          "scene": "combat",
+          "moving_camera": false,
+          "camera": {
+            "x": 0,
+            "y": -216.0,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.0648999703116715,
+              "p95_ms": 0.1175999641418457,
+              "max_ms": 0.3171999705955386,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 5.994050006847829,
+              "p95_ms": 7.19780009239912,
+              "max_ms": 7.932400098070502,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.20424998365342617,
+              "p95_ms": 0.3562000347301364,
+              "max_ms": 0.4591000033542514,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 6.2814499833621085,
+              "p95_ms": 7.511699921451509,
+              "max_ms": 8.200200041756034,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "6b2dc97c4f3761c113648267a8c36c3679cdc3f451d1230259ad56d591a822b5",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "combat-moving",
+          "scene": "combat",
+          "moving_camera": true,
+          "camera": {
+            "x": 0,
+            "y": -135.09830056250527,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.06719998782500625,
+              "p95_ms": 0.1023999648168683,
+              "max_ms": 0.36399997770786285,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 5.820350081194192,
+              "p95_ms": 6.813399959355593,
+              "max_ms": 7.027999963611364,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.20254997070878744,
+              "p95_ms": 0.5372000159695745,
+              "max_ms": 0.6420999998226762,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 6.149200024083257,
+              "p95_ms": 7.056899950839579,
+              "max_ms": 7.30000005569309,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "573f2fb207ea66f32a63c6fec0eb920c1d3161c787f48a2243813b92ea52be0d",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "a-static",
+          "scene": "a",
+          "moving_camera": false,
+          "camera": {
+            "x": 7102.5,
+            "y": -707.5,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.058500037994235754,
+              "p95_ms": 0.08969998452812433,
+              "max_ms": 0.255499966442585,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 2.3916499922052026,
+              "p95_ms": 4.141299985349178,
+              "max_ms": 5.118399974890053,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.16629998572170734,
+              "p95_ms": 0.3428999334573746,
+              "max_ms": 0.4896000027656555,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 2.6501499814912677,
+              "p95_ms": 4.364100052043796,
+              "max_ms": 5.315600079484284,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "7538c7b85e15f72a59f199f47d7d64ff746aeddf2d3e87a72ee522a770509510",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "a-moving",
+          "scene": "a",
+          "moving_camera": true,
+          "camera": {
+            "x": 6984.462470067718,
+            "y": -626.5983005625053,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.05780009087175131,
+              "p95_ms": 0.09180000051856041,
+              "max_ms": 0.12069998774677515,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 2.535699983127415,
+              "p95_ms": 5.2201999351382256,
+              "max_ms": 5.629200022667646,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.18134998390451074,
+              "p95_ms": 0.33930002246052027,
+              "max_ms": 0.4053999437019229,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 2.793799969367683,
+              "p95_ms": 5.564399994909763,
+              "max_ms": 5.797899910248816,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "ce52cb280dac61080695e370c4d40e25d90a00ebfa87bea31854bb6435d03281",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "b-static",
+          "scene": "b",
+          "moving_camera": false,
+          "camera": {
+            "x": 1540.0,
+            "y": 93.19999999999999,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.06059999577701092,
+              "p95_ms": 0.11959997937083244,
+              "max_ms": 0.1417000312358141,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 1.422650006134063,
+              "p95_ms": 5.2764000138267875,
+              "max_ms": 8.244200027547777,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.11614995310083032,
+              "p95_ms": 0.37379993591457605,
+              "max_ms": 0.5756000755354762,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 1.6055000596679747,
+              "p95_ms": 5.440099979750812,
+              "max_ms": 8.43629997689277,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "8e085104790fc2688e6901b0e58548fdb86d9dd560fbff3519e985a041815d14",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "b-moving",
+          "scene": "b",
+          "moving_camera": true,
+          "camera": {
+            "x": 1421.962470067718,
+            "y": 174.10169943749472,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.06079999729990959,
+              "p95_ms": 0.0828000484034419,
+              "max_ms": 0.13289996422827244,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 1.3418499729596078,
+              "p95_ms": 1.894199987873435,
+              "max_ms": 9.295099996961653,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.11070002801716328,
+              "p95_ms": 0.37519994657486677,
+              "max_ms": 0.5886000581085682,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 1.5496000414714217,
+              "p95_ms": 2.0794000010937452,
+              "max_ms": 9.559600031934679,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "ca385569b57bd72f0b1ffb2c46acb2944281e870e694921d2b415d3509336181",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "c-static",
+          "scene": "c",
+          "moving_camera": false,
+          "camera": {
+            "x": -1600,
+            "y": 93.19999999999999,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.05909998435527086,
+              "p95_ms": 0.09740004315972328,
+              "max_ms": 0.5390000296756625,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 1.4843500102870166,
+              "p95_ms": 1.7543000867590308,
+              "max_ms": 1.8588000675663352,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.17755007138475776,
+              "p95_ms": 0.26789994444698095,
+              "max_ms": 0.3358999965712428,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 1.7106999875977635,
+              "p95_ms": 2.0459999796003103,
+              "max_ms": 2.1515999687835574,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "a2951ca9ace386e6119290654611a061e53874b61a806148742b4be27306a7a0",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "c-moving",
+          "scene": "c",
+          "moving_camera": true,
+          "camera": {
+            "x": -1600,
+            "y": 174.10169943749472,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.058150035329163074,
+              "p95_ms": 0.1262999139726162,
+              "max_ms": 0.19639998208731413,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 1.5067000058479607,
+              "p95_ms": 2.216299995779991,
+              "max_ms": 2.3898000363260508,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.20290003158152103,
+              "p95_ms": 0.4944000393152237,
+              "max_ms": 0.6607999093830585,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 1.8294500187039375,
+              "p95_ms": 2.5055999867618084,
+              "max_ms": 2.5551000144332647,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "b7adb4a206169b53ca29659f5a5d1576935af7361c91212e0ba515253f3f63ad",
+          "sdl_error_after_measured_batch": null
+        }
+      ]
+    },
+    "software": {
+      "metadata": {
+        "backend": "software",
+        "renderer": "software",
+        "renderer_flags": 9,
+        "accelerated": false,
+        "vsync": false,
+        "window_hidden": true,
+        "logical_size": [
+          960,
+          540
+        ],
+        "window_size": [
+          960,
+          540
+        ],
+        "renderer_output_size": [
+          960,
+          540
+        ],
+        "driver_display_mode": [
+          1024,
+          768,
+          60
+        ],
+        "display_mode_note": "Dummy driver's virtual mode",
+        "python": "3.13.15 (tags/v3.13.15:4061bc4, Aug  5 2026, 13:05:39) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "simulation_dt_seconds": 0.016666666666666666,
+        "warmup_frames": 10,
+        "measured_frames": 60,
+        "profile_frames_per_case": 8,
+        "timing_note": "CPU elapsed update, draw submission, and present. Hidden accelerated present does not measure full GPU completion.",
+        "excluded": [
+          "SDL setup",
+          "asset loading",
+          "sleep",
+          "vsync wait",
+          "screenshot readback",
+          "PNG encoding",
+          "cProfile pass"
+        ],
+        "scope_note": "Fixed gameplay scenes, idle player update and deterministic moving camera. No input-event polling or operating-system compositor benchmark."
+      },
+      "cases": [
+        {
+          "name": "opening-static",
+          "scene": "opening",
+          "moving_camera": false,
+          "camera": {
+            "x": 1640.0,
+            "y": 160.0,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.049099966417998075,
+              "p95_ms": 0.09009998757392168,
+              "max_ms": 0.14469993766397238,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 14.132849988527596,
+              "p95_ms": 16.18339994456619,
+              "max_ms": 19.61349998600781,
+              "over_16_67_ms": 2,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.0070999376475811005,
+              "p95_ms": 0.008400063961744308,
+              "max_ms": 0.05440006498247385,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 14.18930001091212,
+              "p95_ms": 16.236600000411272,
+              "max_ms": 19.66089999768883,
+              "over_16_67_ms": 2,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "7feae5914609caf35780508973734b5c951b82228025c682b007f81ec3b3a562",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "opening-moving",
+          "scene": "opening",
+          "moving_camera": true,
+          "camera": {
+            "x": 1521.962470067718,
+            "y": 240.90169943749473,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.048600020818412304,
+              "p95_ms": 0.06089999806135893,
+              "max_ms": 0.09550002869218588,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 13.727049983572215,
+              "p95_ms": 15.637999982573092,
+              "max_ms": 16.2632999708876,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.006799993570894003,
+              "p95_ms": 0.008299946784973145,
+              "max_ms": 0.03650004509836435,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 13.805249996948987,
+              "p95_ms": 15.685899998061359,
+              "max_ms": 16.323800082318485,
+              "over_16_67_ms": 0,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "21544008a211fc6754ba16e43b6a6a635278f5b5ccd1217bbf78a4829fde399b",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "combat-static",
+          "scene": "combat",
+          "moving_camera": false,
+          "camera": {
+            "x": 0,
+            "y": -216.0,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.07199996616691351,
+              "p95_ms": 0.09670003782957792,
+              "max_ms": 0.11799996718764305,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 29.860550013836473,
+              "p95_ms": 32.33499999623746,
+              "max_ms": 36.10799997113645,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.006599992047995329,
+              "p95_ms": 0.0078000593930482864,
+              "max_ms": 0.008200062438845634,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 29.950000054668635,
+              "p95_ms": 32.45029994286597,
+              "max_ms": 36.178500042296946,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "ae0d2389ccd5237ad1f15c5f144a099a3083fef72a14a5da9e7c07b78d4bd1c3",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "combat-moving",
+          "scene": "combat",
+          "moving_camera": true,
+          "camera": {
+            "x": 0,
+            "y": -135.09830056250527,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.0703000114299357,
+              "p95_ms": 0.0860999571159482,
+              "max_ms": 0.10730000212788582,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 27.968050038907677,
+              "p95_ms": 32.856900012120605,
+              "max_ms": 35.787299973890185,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.006900052540004253,
+              "p95_ms": 0.008800067007541656,
+              "max_ms": 0.055999960750341415,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 28.051150031387806,
+              "p95_ms": 32.958899973891675,
+              "max_ms": 35.92629998456687,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "ea83eec23d9b8df3527fce1faf66aea8854dae8b25f544dbb88266ee203a5c53",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "a-static",
+          "scene": "a",
+          "moving_camera": false,
+          "camera": {
+            "x": 7102.5,
+            "y": -707.5,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.07810001261532307,
+              "p95_ms": 0.10830000974237919,
+              "max_ms": 0.40030002128332853,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 49.989350023679435,
+              "p95_ms": 65.35169994458556,
+              "max_ms": 71.028400096111,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.00790000194683671,
+              "p95_ms": 0.009500072337687016,
+              "max_ms": 0.018099904991686344,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 50.07110000588,
+              "p95_ms": 65.45059999916703,
+              "max_ms": 71.14989997353405,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "5b8d5aca6ce94a2ef2b284f84ec225be51477349dfdfc0b4051be0a43519358a",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "a-moving",
+          "scene": "a",
+          "moving_camera": true,
+          "camera": {
+            "x": 6984.462470067718,
+            "y": -626.5983005625053,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.0816499232314527,
+              "p95_ms": 0.13109995052218437,
+              "max_ms": 0.13770000077784061,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 49.98865007655695,
+              "p95_ms": 54.33690000791103,
+              "max_ms": 69.94990003295243,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.0075499992817640305,
+              "p95_ms": 0.009499955922365189,
+              "max_ms": 0.024499953724443913,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 50.07789994124323,
+              "p95_ms": 54.44300000090152,
+              "max_ms": 70.05260000005364,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "94c8581efd1b704e1273b2d6dba276cc7d123545944a6b9564157f693b7d2104",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "b-static",
+          "scene": "b",
+          "moving_camera": false,
+          "camera": {
+            "x": 1540.0,
+            "y": 93.19999999999999,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.07015001028776169,
+              "p95_ms": 0.09720004163682461,
+              "max_ms": 0.30260009225457907,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 44.5299000130035,
+              "p95_ms": 47.15799994301051,
+              "max_ms": 47.91250010021031,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.0072499969974160194,
+              "p95_ms": 0.008599949069321156,
+              "max_ms": 0.01209997572004795,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 44.69230002723634,
+              "p95_ms": 47.24980005994439,
+              "max_ms": 47.986999968998134,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "1b40350025ca65aafe6d5171b601c71eb3969e8ba7bcb4ef1d52a5580212a4b3",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "b-moving",
+          "scene": "b",
+          "moving_camera": true,
+          "camera": {
+            "x": 1421.962470067718,
+            "y": 174.10169943749472,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.08274998981505632,
+              "p95_ms": 0.1276999246329069,
+              "max_ms": 0.18039997667074203,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 47.118899994529784,
+              "p95_ms": 54.71890000626445,
+              "max_ms": 57.085599983111024,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.007900060154497623,
+              "p95_ms": 0.0100000761449337,
+              "max_ms": 0.02359994687139988,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 47.204700007569045,
+              "p95_ms": 54.814099916256964,
+              "max_ms": 57.23929998930544,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "155dac03746047492ed755d62bf1f02eda53327272a287df4dfb0a3766c8d8f3",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "c-static",
+          "scene": "c",
+          "moving_camera": false,
+          "camera": {
+            "x": -1600,
+            "y": 93.19999999999999,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.07650000043213367,
+              "p95_ms": 0.09600003249943256,
+              "max_ms": 0.10930001735687256,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 75.11105004232377,
+              "p95_ms": 83.9325999841094,
+              "max_ms": 98.00520003773272,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.007700000423938036,
+              "p95_ms": 0.009999959729611874,
+              "max_ms": 0.02010003663599491,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 75.20195003598928,
+              "p95_ms": 84.02219996787608,
+              "max_ms": 98.10880001168698,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "8696fc5f46ff090687ac260a9fc9dd17c81f6383ead110782a50016d7738c7db",
+          "sdl_error_after_measured_batch": null
+        },
+        {
+          "name": "c-moving",
+          "scene": "c",
+          "moving_camera": true,
+          "camera": {
+            "x": -1600,
+            "y": 174.10169943749472,
+            "zoom": 0.5
+          },
+          "timings": {
+            "update": {
+              "median_ms": 0.08525000885128975,
+              "p95_ms": 0.12649991549551487,
+              "max_ms": 0.15159999020397663,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "draw": {
+              "median_ms": 81.36950002517551,
+              "p95_ms": 93.46040000673383,
+              "max_ms": 118.73779993038625,
+              "over_16_67_ms": 60,
+              "frames": 60
+            },
+            "present": {
+              "median_ms": 0.007800001185387373,
+              "p95_ms": 0.008800067007541656,
+              "max_ms": 0.011999974958598614,
+              "over_16_67_ms": 0,
+              "frames": 60
+            },
+            "total": {
+              "median_ms": 81.46284997928888,
+              "p95_ms": 93.62080006394535,
+              "max_ms": 118.81900008302182,
+              "over_16_67_ms": 60,
+              "frames": 60
+            }
+          },
+          "screenshot_pixel_sha256": "41ffc8c0808446250de42b7ab43c391b89534883f27fa86ab21b1c40a49fd6f4",
+          "sdl_error_after_measured_batch": null
+        }
+      ]
+    }
+  },
+  "events": {
+    "native": {
+      "legacy_pico_get_events": {
+        "median_ms": 1.9990999717265368,
+        "p95_ms": 2.509000012651086,
+        "max_ms": 2.659299992956221,
+        "over_16_67_ms": 0,
+        "frames": 240
+      },
+      "app_poll_events": {
+        "median_ms": 0.001100008375942707,
+        "p95_ms": 0.002600019797682762,
+        "max_ms": 0.008500064723193645,
+        "over_16_67_ms": 0,
+        "frames": 240
+      }
+    },
+    "software": {
+      "legacy_pico_get_events": {
+        "median_ms": 1.996649953071028,
+        "p95_ms": 2.506099990569055,
+        "max_ms": 3.0062999576330185,
+        "over_16_67_ms": 0,
+        "frames": 240
+      },
+      "app_poll_events": {
+        "median_ms": 0.000700005330145359,
+        "p95_ms": 0.0011998927220702171,
+        "max_ms": 0.001400010660290718,
+        "over_16_67_ms": 0,
+        "frames": 240
+      }
+    }
+  },
+  "software_combat_pixel_difference": {
+    "combat-static": {
+      "mean_absolute_rgb": [
+        0.05904128086419753,
+        0.06342206790123457,
+        0.06311921296296297
+      ],
+      "max_channel_difference": 2
+    },
+    "combat-moving": {
+      "mean_absolute_rgb": [
+        0.07320601851851852,
+        0.07860532407407407,
+        0.07789544753086419
+      ],
+      "max_channel_difference": 2
+    }
+  },
+  "tests": {
+    "command": ".venv/Scripts/python.exe -B -m unittest discover -s tests",
+    "passed": 222,
+    "seconds": 221.569,
+    "exit_code": 0
+  }
+}

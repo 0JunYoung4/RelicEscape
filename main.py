@@ -12,6 +12,7 @@ from pico2d import pico2d as pico
 import opening_cave
 from opening_cutscene import SigilApproach
 from health import Health, SpikeBed
+from input_events import poll_events
 from launcher import FLIGHT_RADIUS, Crossbow
 from lower_caves import LowerCaves
 from lighting import Lighting
@@ -554,7 +555,7 @@ def run_title(fullscreen):
             previous_frame = -1
             while True:
                 frame_start = perf_counter()
-                events = pico.get_events()
+                events = poll_events()
                 keys = {event.key for event in events if event.type == pico.SDL_KEYDOWN}
                 if quit_requested(events) or pico.SDLK_ESCAPE in keys:
                     return None
@@ -578,7 +579,6 @@ def run_title(fullscreen):
                 if alpha:
                     pico.SDL_SetTextureAlphaMod(prompt.texture, alpha)
                     prompt.draw(SCREEN_WIDTH / 2, TITLE_PROMPT_Y)
-                pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
                 pico.update_canvas()
                 sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
         finally:
@@ -621,7 +621,7 @@ def run_game(fullscreen):
         frame_start = perf_counter()
         delta_time = min(frame_start - previous_time, 0.05)
         previous_time = frame_start
-        events = pico.get_events()
+        events = poll_events()
         if quit_requested(events):
             return None
 
@@ -768,7 +768,6 @@ def run_game(fullscreen):
         health.draw_hud(SCREEN_HEIGHT, frame_start)
         draw_relic_indicator(relic_center)
         health.draw_blackout(SCREEN_WIDTH, SCREEN_HEIGHT, frame_start)
-        pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
         pico.update_canvas()
         sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
 
@@ -803,7 +802,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
         frame_start = perf_counter()
         delta_time = min(frame_start - previous_time, 0.05)
         previous_time = frame_start
-        events = pico.get_events()
+        events = poll_events()
         if quit_requested(events):
             return None
         pressed_keys = {event.key for event in events if event.type == pico.SDL_KEYDOWN}
@@ -981,7 +980,6 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
         health.draw_hud(SCREEN_HEIGHT, frame_start)
         draw_relic_indicator(relic_center)
         health.draw_blackout(SCREEN_WIDTH, SCREEN_HEIGHT, frame_start)
-        pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
         pico.update_canvas()
         sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
 
@@ -990,6 +988,7 @@ def main(*, test_room=False, after_relic=False, opening=False):
     pico.SDL_SetHint(pico.SDL_HINT_RENDER_SCALE_QUALITY, b"0")
     pico.open_canvas(SCREEN_WIDTH, SCREEN_HEIGHT)
     try:
+        pico.SDL_SetWindowTitle(pico.window, b"RelicEscape")
         fullscreen = configure_display()
         while fullscreen is not None:
             fullscreen = run_title(fullscreen)

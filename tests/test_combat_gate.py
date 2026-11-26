@@ -174,7 +174,7 @@ class CombatGateMainLoopTests(unittest.TestCase):
                     patch.object(main, "perf_counter", side_effect=count(step=1 / 60)), \
                     patch.object(main, "sleep"), \
                     patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
-                    patch.object(pico, "get_events", side_effect=events):
+                    patch.object(main, "poll_events", side_effect=events):
                 self.assertIsNone(main.run_opening_cave(False))
                 sequence.reset_mock()
                 room_factory.reset_mock()

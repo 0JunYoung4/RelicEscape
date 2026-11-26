@@ -65,7 +65,7 @@ class RelicTests(unittest.TestCase):
                 patch.object(main, "run_title", return_value=False), \
                 patch.object(main, "perf_counter", side_effect=clock), \
                 patch.object(main, "read_movement", side_effect=lambda: (direction, False, False)), \
-                patch.object(pico, "get_events", side_effect=events), \
+                patch.object(main, "poll_events", side_effect=events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(main, "sleep"), patch.object(main, "draw_scene", new=record_scene), \
                 patch.object(main.ReturnMark, "draw", new=record_mark):
@@ -121,7 +121,7 @@ class RelicTests(unittest.TestCase):
 
         with patch.object(main, "TEST_SPAWN", (start_x, main.GROUND_Y, 0.0)), \
                 patch.object(main, "run_title", return_value=True), \
-                patch.object(pico, "get_events", side_effect=events), \
+                patch.object(main, "poll_events", side_effect=events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(main, "read_movement", return_value=(1, False, False)), \
                 patch.object(main, "perf_counter", side_effect=count(step=1 / 60)), \
@@ -226,7 +226,7 @@ class RelicTests(unittest.TestCase):
 
         with patch.object(main, "Player", new=create_player), \
                 patch.object(main, "run_title", return_value=True), \
-                patch.object(pico, "get_events", new=frame_events), \
+                patch.object(main, "poll_events", new=frame_events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(pico, "SDL_GetKeyboardState", return_value=held), \
                 patch.object(main, "read_movement", return_value=(0, False, False)), \

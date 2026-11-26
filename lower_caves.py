@@ -81,18 +81,8 @@ class LowerCaves:
         self.cave = cave
         self.art = MossCaveArt(cave.width, cave.height)
         self.shrine = RelicShrine(cave.height)
-        terrain = ASSET_ROOT / "terrain"
-        self.backdrop = pico.load_image(str(terrain / "moss-gallery-backdrop.png"))
-        self.entry_backdrop = pico.load_image(str(terrain / "moss-gallery-entry.png"))
         self.attack_hints = pico.load_image(str(ASSET_ROOT / "ui/gallery-attack-hints.png"))
         self.wall_jump_hint = pico.load_image(str(ASSET_ROOT / "ui/gallery-wall-jump-hint.png"))
-        self.platform = pico.load_image(str(terrain / "moss-gallery-small-platform.png"))
-        self.floor = pico.load_image(str(terrain / "moss-gallery-floor.png"))
-        self.ceiling = pico.load_image(str(terrain / "moss-gallery-ceiling.png"))
-        pico.SDL_SetTextureColorMod(self.backdrop.texture, 166, 180, 178)
-        pico.SDL_SetTextureColorMod(self.entry_backdrop.texture, 166, 180, 178)
-        pico.SDL_SetTextureColorMod(self.floor.texture, 154, 163, 174)
-        pico.SDL_SetTextureColorMod(self.ceiling.texture, 115, 123, 129)
         self.landing_width = cave.shaft.w * SHAFT_SCALE
         self.door_x = self.landing_width * 0.965
         self.room = "landing"

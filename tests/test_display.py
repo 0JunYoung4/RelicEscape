@@ -106,12 +106,15 @@ class DisplayTests(unittest.TestCase):
         press = pico.Event(pico.SDL_KEYDOWN)
         press.key = pico.SDLK_F11
         quit_event = pico.Event(pico.SDL_QUIT)
-        with patch.object(pico, "get_events", side_effect=[[], [press], [], [quit_event]]), \
+        with patch.object(main, "poll_events", side_effect=[[], [press], [], [quit_event]]), \
                 patch.object(main, "read_movement", return_value=(0, False, False)), \
                 patch.object(main, "sleep"), \
+                patch.object(pico, "SDL_SetWindowTitle", wraps=pico.SDL_SetWindowTitle) as title, \
                 patch.object(main, "set_fullscreen", wraps=main.set_fullscreen) as switch:
             main.main(test_room=True)
             self.assertEqual([call.args[0] for call in switch.call_args_list], [True, False])
+            title.assert_called_once()
+            self.assertEqual(title.call_args.args[1], b"RelicEscape")
 
     def test_escape_returns_to_title_and_enter_starts_a_fresh_run(self):
         enter, mount, toggle, escape = (pico.Event(pico.SDL_KEYDOWN) for _ in range(4))
@@ -124,7 +127,7 @@ class DisplayTests(unittest.TestCase):
         def record_scene(player, camera, *args, **kwargs):
             game_frames.append((player.x, kwargs["rail_relic_image"] is not None))
 
-        with patch.object(pico, "get_events", side_effect=events), \
+        with patch.object(main, "poll_events", side_effect=events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(pico, "close_canvas", wraps=pico.close_canvas) as close, \
                 patch.object(main, "read_movement", return_value=(0, False, False)), \
@@ -178,7 +181,7 @@ class DisplayTests(unittest.TestCase):
                 patch.object(main, "sleep"), \
                 patch.object(main, "Player", wraps=main.Player) as player, \
                 patch.object(main, "draw_scene", wraps=main.draw_scene) as game_scene, \
-                patch.object(pico, "get_events", new=get_events), \
+                patch.object(main, "poll_events", new=get_events), \
                 patch.object(pico, "update_canvas", new=record_canvas):
             main.main(test_room=True)
 

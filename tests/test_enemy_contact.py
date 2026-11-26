@@ -111,7 +111,7 @@ class EnemyContactTests(unittest.TestCase):
                 patch.object(main, "perf_counter", side_effect=count(step=1 / 120)), \
                 patch.object(main, "sleep"), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
-                patch.object(pico, "get_events", side_effect=read_events), \
+                patch.object(main, "poll_events", side_effect=read_events), \
                 patch.object(Health, "draw_hud", new=record_hud):
             self.assertIsNone(main.run_opening_cave(False))
         self.assertIn((0, "gallery"), frames)

@@ -198,7 +198,7 @@ class LowerRouteCTests(unittest.TestCase):
         with patch.object(LowerCaves, "start_after_relic", new=start), \
                 patch.object(LowerCaves, "draw", new=record), \
                 patch.object(LowerRouteB, "check_spikes", new=near_fatal_spikes), \
-                patch.object(pico, "get_events", side_effect=events), \
+                patch.object(main, "poll_events", side_effect=events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(main, "read_movement", side_effect=lambda: (state.direction, True, False)), \
                 patch.object(main, "perf_counter", side_effect=lambda: next(clock)), \

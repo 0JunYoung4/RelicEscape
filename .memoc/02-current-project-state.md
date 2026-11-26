@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-27 입력의 중복 대기·제목 갱신을 제거하고 공통 정점 기록·인덱스/원형 캐시·화면 밖 빛 생략을 적용했다. 미사용 이미지5개 로딩을 제거했다. Direct3D11 CPU 경과 중앙값은 전투방10.87→6.28ms, A5.79→2.65ms이며 native 비교10장은 픽셀 일치다. [전체 성능·검증 기록](../docs/runtime-performance.md). 소프트웨어 합성 병목과 장시간 전체화면 체감은 별도 확인 대상이다.
+
 - 2026-11-26 [C 독립 석벽 전실](../assets/terrain/lower-route-c-wall-v1/README.md)을 본편에 적용했다. 새 배경·부조·전경과 국소 틈빛을 A·B 재질에 맞추고 B–C 배경을 지형 전에 이어 그린다. 문·석등·지형·공벌레 배치 기준값 일치, C SDL565·관련52개 검사 통과. [C 전후](../docs/c-passage-wall-comparison.jpg) · [왕복](../docs/c-passage-wall-connection.webp). 봉인문은 기존 닫힘 상태이며 C→B1은 미연결이다.
 
 - 2026-11-26 [B 석벽 레이어](../assets/terrain/lower-route-b-wall-v1/README.md)를 본편에 적용했다. A와 같은 재질의 별도 배경·중경·전경, 레일 받침과 접촉 그림자, 틈빛을 연결했다. A–B의 이전 푸른 원경을 정리하고 C 카메라 경계의 중경 팝을 제거했다. 지형·레일·가시·장치 스냅샷 일치, SDL1207·관련49개 검사 통과. [B 전후](../docs/b-passage-wall-comparison.jpg)

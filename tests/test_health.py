@@ -117,7 +117,7 @@ class HealthTests(unittest.TestCase):
         with patch.object(main, "Player", side_effect=create_player), \
                 patch.object(main, "configure_display", return_value=False), \
                 patch.object(main, "run_title", return_value=False), \
-                patch.object(pico, "get_events", side_effect=read_events), \
+                patch.object(main, "poll_events", side_effect=read_events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(pico, "update_canvas", side_effect=record_visible_pixels), \
                 patch.object(main, "read_movement", return_value=(0, False, False)), \

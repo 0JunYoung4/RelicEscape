@@ -143,7 +143,7 @@ class OpeningCutsceneTests(unittest.TestCase):
         with patch.object(main, "configure_display", return_value=False), \
                 patch.object(main, "run_title", return_value=False), \
                 patch.object(main, "Player", new=create_player), \
-                patch.object(pico, "get_events", side_effect=events), \
+                patch.object(main, "poll_events", side_effect=events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(pico, "SDL_GetKeyboardState", return_value=keys), \
                 patch.object(main, "read_movement", return_value=(-1, True, True)), \

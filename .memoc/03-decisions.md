@@ -15,6 +15,8 @@ Durable project decisions live here. Keep entries short, dated, and useful to fu
 
 ## Decision Log
 
+- 2026-11-27 입력은 앱의 `input_events.poll_events`가 기존 이벤트 변환을 보존하고, 시간 대기는 `main`의 60fps 제한이 담당한다. 설치 pico2D나 전역 함수는 바꾸지 않는다. `render_mesh`는 ABI를 검증하고 고정 인덱스·원형 좌표만 제한 캐시로 공유하며, 동적 정점 버퍼는 중첩 호출을 위해 독립 생성한다. [실측과 한계](../docs/runtime-performance.md)
+
 - 2026-11-26 사용자 요청으로 C의 지형·봉인문·석등·공벌레 배치를 유지하고 A·B와 같은 재질의 배경·중경·전경을 별도 제작했다. B 배경과 C 배경을 모두 지형 전에 그려 연결부의 보행면을 보존한다. C 석벽은 B 위에서 월드 x0~690으로 사라지고, 기존 C용 먼 비석·아치·광막을 대체한다. [C 레이어](../assets/terrain/lower-route-c-wall-v1/README.md)
 
 - 2026-11-26 사용자 요청으로 B의 지형·레일·장치 구조를 유지하고 A와 같은 젖은 석벽·이끼·균열빛의 배경·중경·전경을 별도 제작해 적용했다. A–B 접합부의 배경을 새 석벽으로 잇고 기존 보행선과 연결 지형을 사용한다. 공통 메시·부드러운 조명 그리기는 `lower_route_atmosphere.py`에서 재사용한다. [B 레이어](../assets/terrain/lower-route-b-wall-v1/README.md)

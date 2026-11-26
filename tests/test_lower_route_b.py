@@ -147,7 +147,7 @@ class LowerRouteBTests(unittest.TestCase):
         with patch.object(LowerCaves, "start_after_relic", new=start), \
                 patch.object(LowerCaves, "draw", new=record), \
                 patch.object(LowerRouteB, "check_spikes", new=after_step), \
-                patch.object(pico, "get_events", side_effect=events), \
+                patch.object(main, "poll_events", side_effect=events), \
                 patch.object(pico, "SDL_GetKeyboardFocus", return_value=True), \
                 patch.object(pico, "SDL_GetKeyboardState", return_value=keys), \
                 patch.object(main, "read_movement", side_effect=lambda: (state.direction, True, False)), \

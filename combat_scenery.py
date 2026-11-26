@@ -2,7 +2,7 @@
 
 import json
 from contextlib import contextmanager
-from ctypes import byref, c_int
+from ctypes import byref, c_int, c_ubyte
 from math import ceil, cos, floor, radians, sin, tau
 
 from PIL import Image
@@ -11,6 +11,7 @@ from pico2d import pico2d as pico
 from combat_room_lighting import CombatRoomLighting
 from combat_vegetation import CombatVegetation
 from player import ASSET_ROOT
+from render_mesh import VERTEX_SIZE, grid_indices, index_buffer, pack_vertex, unit_circle, vertex_buffer
 
 
 COMBAT_BACKGROUND_TINT = (172, 191, 224)
@@ -27,6 +28,13 @@ MIDGROUND_RUINS = (
 )
 FALLING_ROCKS = ((.10, .05, 19, -26), (.29, .02, -8, 34), (.48, 0, -24, -21),
                  (.68, .035, 16, 25), (.89, .06, 26, -32))
+_LIGHT_STEPS = 32
+_LIGHT_RING = unit_circle(_LIGHT_STEPS)
+_LIGHT_FACES = tuple(value for step in range(_LIGHT_STEPS)
+                     for value in (0, 1 + step, 1 + (step + 1) % _LIGHT_STEPS,
+                                   1 + step, 1 + _LIGHT_STEPS + step, 1 + (step + 1) % _LIGHT_STEPS,
+                                   1 + (step + 1) % _LIGHT_STEPS, 1 + _LIGHT_STEPS + step,
+                                   1 + _LIGHT_STEPS + (step + 1) % _LIGHT_STEPS))
 
 
 def _load_distant_stele():
@@ -67,6 +75,20 @@ class CombatScenery:
         pico.SDL_SetTextureAlphaMod(self.seedpods.texture, 205)
         self.lighting = CombatRoomLighting(self)
         self.vegetation = CombatVegetation(height)
+        self._geometry_image = None
+        info = pico.SDL_RendererInfo()
+        pico.SDL_GetRendererInfo(pico.renderer, byref(info))
+        if info.flags & pico.SDL_RENDERER_SOFTWARE:
+            # SDL's untextured software triangles reject some thin clipped spans.
+            # A white texel uses the textured path with the same vertex colors.
+            texture = pico.SDL_CreateTexture(pico.renderer, pico.SDL_PIXELFORMAT_RGBA32,
+                                             pico.SDL_TEXTUREACCESS_STATIC, 1, 1)
+            if not texture:
+                raise RuntimeError(pico.SDL_GetError())
+            self._geometry_image = pico.Image(texture)
+            white = (c_ubyte * 4)(255, 255, 255, 255)
+            if pico.SDL_UpdateTexture(texture, None, white, 4) != 0:
+                raise RuntimeError(pico.SDL_GetError())
 
     @contextmanager
     def room_clip(self, camera, left, right, ceiling, *, margin=0, bottom=0):
@@ -101,33 +123,43 @@ class CombatScenery:
         finally:
             pico.SDL_SetRenderDrawBlendMode(pico.renderer, previous)
 
-    def geometry(self, camera, points, colors, triangles):
-        vertices = []
-        for (x, y), color in zip(points, colors):
+    def geometry(self, camera, points, colors, triangles, *, clipped_light=False):
+        data = vertex_buffer(len(points))
+        for index, ((x, y), color) in enumerate(zip(points, colors)):
             sx, sy = camera.world_to_screen(x, y)
-            vertices.append(pico.SDL_Vertex((sx, self.height - sy), color))
-        data = (pico.SDL_Vertex * len(vertices))(*vertices)
-        indices = (c_int * len(triangles))(*triangles)
-        pico.SDL_RenderGeometry(pico.renderer, None, data, len(vertices), indices, len(triangles))
+            pack_vertex(data, index * VERTEX_SIZE, sx, self.height - sy, *color, 0, 0)
+        indices = index_buffer(tuple(triangles))
+        texture = None
+        if clipped_light and self._geometry_image is not None:
+            texture = self._geometry_image.texture
+            blend = pico.SDL_BlendMode()
+            pico.SDL_GetRenderDrawBlendMode(pico.renderer, byref(blend))
+            pico.SDL_SetTextureBlendMode(texture, blend)
+        pico.SDL_RenderGeometry(pico.renderer, texture, data, len(points), indices, len(triangles))
 
     def soft_light(self, camera, center, size, color, opacity):
         """A center and two rings avoid a hard ellipse around a light source."""
         cx, cy = center
         rx, ry = size
+        if (opacity <= 0 or cx + rx < camera.x or cx - rx > camera.x + camera.view_width
+                or cy + ry < camera.y or cy - ry > camera.y + self.height / camera.zoom):
+            return
+        clipped_light = False
+        if pico.SDL_RenderIsClipEnabled(pico.renderer):
+            clip = pico.SDL_Rect()
+            pico.SDL_RenderGetClipRect(pico.renderer, byref(clip))
+            sx, sy = camera.world_to_screen(cx, cy)
+            if (sx + rx * camera.zoom < clip.x or sx - rx * camera.zoom > clip.x + clip.w
+                    or self.height - sy + ry * camera.zoom < clip.y
+                    or self.height - sy - ry * camera.zoom > clip.y + clip.h):
+                return
+            clipped_light = clip.w < 2 * rx * camera.zoom or clip.h < 2 * ry * camera.zoom
         points, colors = [(cx, cy)], [(*color, opacity)]
-        steps = 32
         for radius, alpha in ((.42, opacity // 2), (1, 0)):
-            for step in range(steps):
-                angle = tau * step / steps
-                points.append((cx + cos(angle) * rx * radius, cy + sin(angle) * ry * radius))
+            for ux, uy in _LIGHT_RING:
+                points.append((cx + ux * rx * radius, cy + uy * ry * radius))
                 colors.append((*color, alpha))
-        triangles = []
-        for step in range(steps):
-            nxt = (step + 1) % steps
-            triangles.extend((0, 1 + step, 1 + nxt,
-                              1 + step, 1 + steps + step, 1 + nxt,
-                              1 + nxt, 1 + steps + step, 1 + steps + nxt))
-        self.geometry(camera, points, colors, triangles)
+        self.geometry(camera, points, colors, _LIGHT_FACES, clipped_light=clipped_light)
 
     def draw_exit_seam(self, camera, x, strength):
         with self.alpha_geometry():
@@ -190,7 +222,7 @@ class CombatScenery:
 
     def draw_lit_sprite(self, name, camera, left, bottom, width, height, shade, *, columns, rows):
         """Sample the local light across a textured layer while preserving its silhouette."""
-        vertices, triangles = [], []
+        vertices = vertex_buffer(columns * rows)
         for row in range(rows):
             v = row / (rows - 1)
             y = bottom + v * height
@@ -198,14 +230,11 @@ class CombatScenery:
                 u = col / (columns - 1)
                 x = left + u * width
                 sx, sy = camera.world_to_screen(x, y)
-                vertices.append(pico.SDL_Vertex((sx, self.height - sy), (*shade(x, y, v), 255), (u, 1 - v)))
-                if row and col:
-                    i = row * columns + col
-                    triangles.extend((i - columns - 1, i - columns, i - 1, i - columns, i, i - 1))
-        data = (pico.SDL_Vertex * len(vertices))(*vertices)
-        indices = (c_int * len(triangles))(*triangles)
+                pack_vertex(vertices, (row * columns + col) * VERTEX_SIZE,
+                            sx, self.height - sy, *shade(x, y, v), 255, u, 1 - v)
+        indices = grid_indices(columns - 1, rows - 1)
         pico.SDL_RenderGeometry(pico.renderer, self.images[name].texture,
-                                data, len(vertices), indices, len(triangles))
+                                vertices, len(vertices), indices, len(indices))
 
     def draw_sprite(self, name, camera, x, bottom, width=None, height=None):
         image = self.images[name]
