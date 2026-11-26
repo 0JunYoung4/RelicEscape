@@ -180,7 +180,7 @@
 
 이어 중앙의 큰 돌이 등딱지 위로 떨어지면 소라게가 눈을 뜬다. 넓은 전투 카메라로 전환하고 오른쪽 통로의 석문이 닫힌 뒤, 소라게가 몸을 낮춰 잠깐 버틴다. 고개를 먼저 들어 올리고 양쪽 집게가 따라 열리며 포효한다. 공기 파동이 퍼지고 발밑 먼지와 자갈이 튄다. 왼쪽과 오른쪽 집게가 차례로 내려오고 몸이 자세를 되찾으면 전투로 이어진다. [보스 단독 포효 애니메이션](../assets/concepts/b1-hermit-crab/roar-v4/README.md) · [분리 효과 자산](../assets/concepts/b1-hermit-crab/roar-v1/README.md)
 
-조사 입력부터 화면 흔들림과 낙진까지의 앞 장면은 `python -m tools.preview_b1_intro`로 확인한다.
+조사 입력부터 화면 흔들림과 낙진까지의 앞 장면은 `python -m tools.preview_b1_intro`로 확인한다. 조사 입력 처리, 진동과 포효의 순서, 전투로 넘기는 조건은 [B1 행동트리](b1-hermit-crab-combat-design.md#행동트리)에 정리했다.
 
 #### B1 전투 페이즈
 

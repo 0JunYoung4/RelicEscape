@@ -15,6 +15,8 @@ Durable project decisions live here. Keep entries short, dated, and useful to fu
 
 ## Decision Log
 
+- 2026-11-27 사용자 지정으로 B1은 입장 뒤 등딱지 앞에서 `E`로 조사해야 화면이 흔들리고 포효를 거쳐 시작한다. 조사 3.20초와 포효 2초 시안을 기준으로 삼고 도입 낙석과 은신 해제용 암석을 구분한다. [행동트리와 연출 조건](../docs/b1-hermit-crab-combat-design.md#행동트리)
+
 - 2026-11-27 사용자 요청으로 하단 통로 카메라는 할로우 나이트의 낮은 보행선·짧은 점프 여유 구간을 참고한다. `route_camera.py`에 줌0.45, 발22%, 상승44%·하강16% 경계와 시간 보간을 모았다. 전투방 기본0.5, 명시 순간이동의 즉시 재설정은 유지한다. B 석등은 원본 전체 형태를 읽히는190월드 높이로 배치하고 지형과 같은 변환으로 조명한다. [구현·검증](../docs/b-passage-surfaces-camera.md)
 
 - 2026-11-27 입력은 앱의 `input_events.poll_events`가 기존 이벤트 변환을 보존하고, 시간 대기는 `main`의 60fps 제한이 담당한다. 설치 pico2D나 전역 함수는 바꾸지 않는다. `render_mesh`는 ABI를 검증하고 고정 인덱스·원형 좌표만 제한 캐시로 공유하며, 동적 정점 버퍼는 중첩 호출을 위해 독립 생성한다. [실측과 한계](../docs/runtime-performance.md)

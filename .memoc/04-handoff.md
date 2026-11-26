@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-27 B1 구현은 [행동트리](../docs/b1-hermit-crab-combat-design.md#행동트리)에서 이어간다. 유효한 `E`를 조사에서 한 번 소비하고 진동→도입 낙석·입구 닫힘→포효 끝→첫 집게를 검수한다. 조사·포효는 별도 시안이며 본편 B1 코드는 아직 연결 전이다.
+
 - 2026-11-27 B 발판은 `lower_route_b_art.py`의 `lower-route-b-surfaces-v1`을 사용한다. 원래 공유 발판은 보존했다. `WAYMARKERS`는 x930/2660/3330, 높이190이며 렌즈와 바닥 조명은 동일 월드 변환이다. 카메라 조정은 `route_camera.py`, A/B 천장 위 노출 방지는 각 art 모듈이다. [비교·재현](../docs/b-passage-surfaces-camera.md). 전체229개 및 SDL B1207/A779/C565 검수, 전체화면 장시간 수동·추가 광원의 프레임 성능은 이번에 측정하지 않았다. 기존 잔랙 없음은 사용자의 직접 확인이다.
 
 - 2026-11-27 성능 수정은 `input_events.py`, `render_mesh.py`, `lower_route_atmosphere.py`, `combat_scenery.py`와 `main`에 있다. 입력은 `poll_events`를 사용해 pico 내부 대기와 FPS 제목 갱신을 피하고 게임 루프가 프레임 대기를 담당한다. 고정 메시 정보는 캐시하되 카메라 정점은 매 호출 독립 생성한다. software의 얇은 클립 광원만 재사용 흰 텍셀 경로로 `width invalid`를 해결한다. [측정·재현](../docs/runtime-performance.md)과 [수치](../docs/runtime-performance-results.json). native10장 일치·전체측정1200화면 오류0. 소프트웨어 C 합성 병목 및 실제 전체화면 장시간 체감은 남은 확인 항목이다. 프로파일은 다른 테스트와 동시에 실행하지 않는다.
