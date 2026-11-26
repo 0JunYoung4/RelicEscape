@@ -28,13 +28,13 @@ class Plant:
 
 # The two tiers of rounded leaves use the same asset. Keep the carving and walk line clear.
 BEHIND_STONE = (
-    Plant(FOLIAGE, "grass-soft-sedge", (425, 349), 232, (66, 194, 255), True),
-    Plant(FOLIAGE, "grass-rounded-tuft", (770, 320), 338, (75, 199, 255)),
+    Plant(FOLIAGE, "grass-soft-sedge", (425, 349), 232, (101, 162, 167), True),
+    Plant(FOLIAGE, "grass-rounded-tuft", (770, 320), 338, (110, 170, 164)),
 )
 ON_STONE = (
-    Plant(FOLIAGE, "vine-wall-creeper", (714, 203), 72, (174, 229, 213)),
-    Plant(DECOR, "split-moss-cushion", (627, 369), 112, (165, 213, 201)),
-    Plant(FOLIAGE, "grass-rounded-tuft", (651, 368), 120, (154, 238, 230), True),
+    Plant(FOLIAGE, "vine-wall-creeper", (714, 203), 72, (170, 221, 201)),
+    Plant(DECOR, "split-moss-cushion", (627, 369), 112, (161, 208, 189)),
+    Plant(FOLIAGE, "grass-rounded-tuft", (651, 368), 120, (151, 220, 196), True),
 )
 NEAR_BANK = (
     Plant(FOLIAGE, "shadow-arching-grass", (174, 540), 307, (118, 157, 173)),

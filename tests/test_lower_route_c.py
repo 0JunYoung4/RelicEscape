@@ -14,11 +14,13 @@ os.environ.setdefault("SDL_RENDER_DRIVER", "software")
 from pico2d import pico2d as pico
 
 import main
+from lower_route_atmosphere import draw_parallax
 from health import SPIKE_DAMAGE
 from lower_caves import LowerCaves
 from lower_route_b import SPIKES, LowerRouteB
 from lower_route_b_art import draw_ruin_platform
-from lower_route_b_layout import BACKGROUND_BOTTOM, C_APPROACH_LEDGE, WIDTH as B_WIDTH
+from lower_route_b_layout import BOTTOM, C_APPROACH_LEDGE, TOP
+from lower_route_connection import A_ORIGIN
 from lower_route_c import (ART_BLEND_END, ART_FLOOR_ROW, ART_LAMP_ROW, ART_SCALE, CHECKPOINT,
                            ENTRANCE_WIDTH, ENTRANCE_X, FLOOR, LEFT, LowerRouteC)
 from pillbug import Pillbug
@@ -64,12 +66,12 @@ class LowerRouteCTests(unittest.TestCase):
         rooms.room = "route_c"
         rooms.enter(player, camera)
         art = rooms.route_b.art
-        with patch.object(art.background, "draw_to_origin", wraps=art.background.draw_to_origin) as backdrop, \
+        with patch("lower_route_b_art.draw_parallax", wraps=draw_parallax) as backdrop, \
                 patch("lower_route_b_art.draw_ruin_platform", wraps=draw_ruin_platform) as draw_platform:
             rooms.draw(camera)
         backdrop.assert_called_once()
-        self.assertEqual(backdrop.call_args.args[:2], camera.world_to_screen(LEFT, BACKGROUND_BOTTOM))
-        self.assertEqual(backdrop.call_args.args[2], (B_WIDTH - LEFT) * camera.zoom)
+        self.assertEqual(backdrop.call_args.args,
+                         (art.background, camera, cave.height, (LEFT, BOTTOM, A_ORIGIN[0], TOP + 240), (216, 218, 204)))
         ledge = art.platform_images["connected-passage"]
         bounds = [call.args[3] for call in draw_platform.call_args_list if call.args[1] is ledge]
         self.assertEqual([(left, right, top) for left, _, right, top in bounds],

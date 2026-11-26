@@ -1,5 +1,7 @@
 """A walkable join with one world scale and a shared camera."""
 
+from pico2d import pico2d as pico
+
 from lower_route_a import EXIT_LEDGE
 from lower_route_b import PLAY_TERRAIN
 from lower_route_b_layout import A_ENTRY, BOTTOM, WIDTH as B_WIDTH
@@ -29,6 +31,9 @@ class LowerRouteConnection:
     def __init__(self, route_a):
         self.route_a = route_a
         self.art = PassageArt((PASSAGE_ART_X, PASSAGE_ART_TOP), (PASSAGE_ART_SCALE_X, PASSAGE_ART_SCALE_Y))
+        backdrop = self.art.plates["far"]
+        pico.SDL_SetTextureColorMod(backdrop.texture, 224, 214, 196)
+        backdrop.opacify(.86)
         self.ground_y = BOTTOM
         self.base_terrain = (*C_TERRAIN, *PLAY_TERRAIN, *route_a.terrain,
                              (PASSAGE_LEFT, BOTTOM, PASSAGE_RIGHT, PASSAGE_FLOOR),
@@ -49,9 +54,16 @@ class LowerRouteConnection:
     def draw(self, camera, screen_height):
         if not self.art.visible(camera, screen_height):
             return
-        # Draw scenery in front of the bank, before enemies, player, relics and marks.
-        for layer in PASSAGE_LAYERS:
+        # Keep the rock lip in front of the light and distant ruins.
+        for layer in PASSAGE_LAYERS[:-1]:
+            if layer == "middle":
+                self.route_a.atmosphere.draw_light(camera, PASSAGE_CENTER - 280, PASSAGE_FLOOR - 40,
+                                                   1420, 1030, strength=150)
             self.draw_layer(camera, screen_height, layer)
+
+    def draw_foreground(self, camera, screen_height):
+        if self.art.visible(camera, screen_height):
+            self.draw_layer(camera, screen_height, "near")
 
     def draw_layer(self, camera, screen_height, layer):
         self.art.draw_layer(camera, screen_height, layer)

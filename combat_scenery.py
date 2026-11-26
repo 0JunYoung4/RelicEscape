@@ -290,7 +290,10 @@ class CombatScenery:
             for col, (u, opacity) in enumerate(columns):
                 world_x, world_y = x0 + u * image.w, -v * image.h
                 x, y = camera.world_to_screen(world_x, world_y)
-                tint = tuple(round(channel * light) for channel in (220, 235, 239))
+                # Bring the lower shaft toward the lift's teal-green ambient light.
+                depth = min(1.0, max(0.0, (v - .04) / .55))
+                tint = tuple(round(channel * light) for channel in
+                             (220 - 9 * depth, 235 - 3 * depth, 239 - 19 * depth))
                 if col in (2, 3) and v <= .015:
                     opacity = 0
                 vertices.append(pico.SDL_Vertex((x, self.height - y), (*tint, opacity), (u, v)))

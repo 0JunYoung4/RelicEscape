@@ -4,6 +4,7 @@ from math import exp, hypot
 
 from pico2d import pico2d as pico
 
+from lower_route_atmosphere import ROUTE_ART, RouteAtmosphere, draw_parallax, load_image
 from pillbug import Pillbug
 from player import ASSET_ROOT, STANDING_HITBOX_HEIGHT, TAKEOFF_FRAME_DURATION
 from rail import (RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE,
@@ -77,7 +78,9 @@ class LowerRouteA:
         self.camera_bottom, self.camera_top = origin[1], origin[1] + HEIGHT
         self.ground_y = GROUND_Y + origin[1]
         self.terrain = tuple(self.bounds(box) for box in TERRAIN)
-        self.plate = pico.load_image(str(ASSET_ROOT / "concepts/map1-lower-route-a-v3-plate.png"))
+        self.plate = load_image(ROUTE_ART / "a-terrain.png")
+        self.background = load_image(ROUTE_ART / "a-far.png")
+        self.atmosphere = RouteAtmosphere()
         self.shadow = pico.load_image(str(ASSET_ROOT / "terrain/lower-route-a-ceiling-shadow-v2.png"))
         self.seal_stone = pico.load_image(str(ASSET_ROOT / "terrain/moss-combat-door-blocker-v1.png"))
         self.rail = pico.load_image(str(RAIL_IMAGE))
@@ -236,6 +239,11 @@ class LowerRouteA:
         self.shadow_opacity += (target - self.shadow_opacity) * (1 - exp(-14 * dt))
 
     def draw(self, camera):
+        draw_parallax(self.background, camera, pico.canvas_height,
+                      (*self.origin, self.world_width, self.camera_top), (217, 217, 210))
+        self.atmosphere.draw_ruin(camera, "broken-arch", *self.point(3200, GROUND_Y), 790, 490, flip="h")
+        self.atmosphere.draw_ruin(camera, "stele", *self.point(1390, EXIT_LEDGE[3] - 75), 340, 430)
+        self.atmosphere.draw_light(camera, *self.point(3710, ENTRY_LEDGE[3] - 15), 1500, 1140)
         self.plate.draw_to_origin(*camera.world_to_screen(*self.origin), WIDTH * camera.zoom, HEIGHT * camera.zoom)
         self.draw_seal(camera)
         if self.powered:

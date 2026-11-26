@@ -11,6 +11,7 @@ from crystal_projectile import DAMAGE as CRYSTAL_DAMAGE
 from hit_impact import IMPACT_DURATION, HitImpact
 from lower_route_a import LowerRouteA
 from lower_route_b import LowerRouteB
+from lower_route_b_layout import WIDTH as B_ROUTE_WIDTH
 from lower_route_c import CHECKPOINT as C_CHECKPOINT, LEFT as C_LEFT, RIGHT as C_RIGHT, LowerRouteC
 from lower_route_connection import A_ORIGIN, PASSAGE_CENTER, LowerRouteConnection
 from opening_cave import SHAFT_FLOOR, SHAFT_SCALE, SHAFT_TOP
@@ -427,10 +428,12 @@ class LowerCaves:
     def draw_lower_route(self, camera):
         route_a, route_b, route_c = self.route_a, self.route_b, self.route_c
         draw_a = route_a is not None and camera.x + camera.view_width > route_a.origin[0]
-        draw_b = route_b is not None and camera.x < route_b.camera_right
+        backdrop_right = A_ORIGIN[0] if self.route_connection is not None else B_ROUTE_WIDTH
+        draw_b = route_b is not None and camera.x < backdrop_right
         draw_c = route_c is not None and camera.x < C_RIGHT
         if draw_b:
             route_b.draw(camera, self.cave.height, passage_left=C_LEFT if route_c is not None else C_RIGHT,
+                         backdrop_right=backdrop_right,
                          draw_entry=self.route_connection is None)
         if route_c is not None:
             route_c.draw(camera, self.cave.height)
@@ -591,6 +594,8 @@ class LowerCaves:
             self.art.draw_canopy(camera, GALLERY_CEILING_Y)
         elif self.in_lower_route and self.route_a is not None:
             self.route_a.draw_foreground(camera)
+            if self.route_connection is not None:
+                self.route_connection.draw_foreground(camera, self.cave.height)
         if self.passage_time is not None:
             opacity = round(255 * min(1, self.passage_time / PASSAGE_TIME))
             pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)

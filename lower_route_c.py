@@ -4,6 +4,7 @@ from ctypes import c_int
 
 from pico2d import pico2d as pico
 
+from lower_route_atmosphere import ROUTE_ART, load_image
 from lower_route_b_layout import C_PASSAGE, C_PASSAGE_LEFT, STONE_SURFACE, TOP
 from pillbug import Pillbug
 from player import ASSET_ROOT
@@ -32,9 +33,8 @@ TERRAIN = (
 
 class LowerRouteC:
     def __init__(self):
-        self.plate = pico.load_image(str(ASSET_ROOT / "terrain/lower-route-c/antechamber-v2-plate.png"))
+        self.plate = load_image(ROUTE_ART / "c-terrain.png")
         pico.SDL_SetTextureBlendMode(self.plate.texture, pico.SDL_BLENDMODE_BLEND)
-        pico.SDL_SetTextureScaleMode(self.plate.texture, pico.SDL_ScaleModeLinear)
         self.lamp_glow = pico.load_image(str(ASSET_ROOT / "sprites/relic/relic-blue-glow-v1.png"))
         pico.SDL_SetTextureBlendMode(self.lamp_glow.texture, pico.SDL_BLENDMODE_ADD)
         pico.SDL_SetTextureScaleMode(self.lamp_glow.texture, pico.SDL_ScaleModeLinear)
@@ -56,6 +56,8 @@ class LowerRouteC:
         if self.checkpoint_reached:
             lamp_y = FLOOR + (ART_FLOOR_ROW - ART_LAMP_ROW) * ART_SCALE
             x, y = camera.world_to_screen(CHECKPOINT[0], lamp_y)
+            floor_x, floor_y = camera.world_to_screen(CHECKPOINT[0], FLOOR)
+            self.lamp_glow.draw(floor_x, floor_y + 4 * camera.zoom, 175 * camera.zoom, 44 * camera.zoom)
             self.lamp_glow.draw(x, y, 90 * camera.zoom, 90 * camera.zoom)
 
     def draw_plate(self, camera, screen_height):
@@ -78,7 +80,7 @@ class LowerRouteC:
                 if row and column:
                     a = (row - 1) * stride + column - 1
                     b = a + stride
-                    indices.extend((a, a + 1, b, a + 1, b, b + 1))
+                    indices.extend((a, a + 1, b, a + 1, b + 1, b))
         geometry = (pico.SDL_Vertex * len(vertices))(*vertices)
         triangles = (c_int * len(indices))(*indices)
         pico.SDL_RenderGeometry(pico.renderer, self.plate.texture, geometry, len(geometry), triangles, len(triangles))
