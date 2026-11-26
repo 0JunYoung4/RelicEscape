@@ -78,8 +78,6 @@ class LowerRouteBScenery:
             hit_x = left + width * (.78 - .55 * (top - surface) / height)
             draw_soft_light(camera, (hit_x, surface + 1), (width * .16, 9),
                             (177, 215, 171), round(strength * .22))
-        for x, y in ((1200, 590), (2760, 590), (3530, 180)):
-            draw_soft_light(camera, (x, y + 1), (48, 9), (3, 12, 15), 105)
         crop = (716 / 2172, 143 / 724, 1457 / 2172, 573 / 724)
         for x, y in SUPPORTS:
             draw_soft_light(camera, (x + 4, y - 5), (91, 46), (2, 10, 14), 105)

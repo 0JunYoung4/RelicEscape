@@ -1,0 +1,141 @@
+{
+  "coordinate_system": "Source PNG pixels from the top left",
+  "crop_format": [
+    "left",
+    "top",
+    "right",
+    "bottom"
+  ],
+  "walk_surface_format": [
+    "left",
+    "y",
+    "right"
+  ],
+  "platforms": {
+    "connected-guard-wall": {
+      "image": "connected-guard-wall.png",
+      "crop": [
+        6,
+        94,
+        1558,
+        998
+      ],
+      "walk_surface": [
+        19,
+        128,
+        1550
+      ],
+      "source_size": [
+        1562,
+        1007
+      ],
+      "source_original": "assets/terrain/ruin-platforms/connected-guard-wall-v1.png",
+      "alpha_bbox": [
+        0,
+        25,
+        1562,
+        1007
+      ]
+    },
+    "connected-passage": {
+      "image": "connected-passage.png",
+      "crop": [
+        16,
+        34,
+        2010,
+        757
+      ],
+      "walk_surface": [
+        31,
+        99,
+        1990
+      ],
+      "source_size": [
+        2023,
+        777
+      ],
+      "source_original": "assets/terrain/ruin-platforms/connected-passage-v1.png",
+      "alpha_bbox": [
+        0,
+        21,
+        2009,
+        777
+      ]
+    },
+    "spike-bed-pier": {
+      "image": "spike-bed-pier.png",
+      "crop": [
+        4,
+        88,
+        1371,
+        1105
+      ],
+      "walk_surface": [
+        20,
+        155,
+        1359
+      ],
+      "source_size": [
+        1374,
+        1145
+      ],
+      "source_original": "assets/terrain/ruin-platforms/spike-bed-pier-v2.png",
+      "alpha_bbox": [
+        0,
+        7,
+        1374,
+        1145
+      ]
+    },
+    "waterworn-sill": {
+      "image": "waterworn-sill.png",
+      "crop": [
+        6,
+        148,
+        1852,
+        722
+      ],
+      "walk_surface": [
+        35,
+        159,
+        1830
+      ],
+      "source_size": [
+        1858,
+        846
+      ],
+      "source_original": "assets/terrain/ruin-platforms/waterworn-sill-v2.png",
+      "alpha_bbox": [
+        0,
+        0,
+        1858,
+        822
+      ]
+    },
+    "root-wedge": {
+      "image": "root-wedge.png",
+      "crop": [
+        5,
+        87,
+        1773,
+        850
+      ],
+      "walk_surface": [
+        28,
+        176,
+        1751
+      ],
+      "source_size": [
+        1774,
+        887
+      ],
+      "source_original": "assets/terrain/ruin-platforms/root-wedge-v2.png",
+      "alpha_bbox": [
+        0,
+        0,
+        1774,
+        863
+      ]
+    }
+  }
+}

@@ -1,0 +1,732 @@
+{
+  "before": {
+    "geometry_unchanged": true,
+    "baseline": "C:\\Users\\bagj6\\source\\repos\\2DGP\\RelicEscape\\assets\\terrain\\lower-route-b-wall-v1\\layout-baseline.json",
+    "renderer_scope": "Actual LowerCaves B renderer, fixed normal follow-camera views, SDL software.",
+    "fixed_scenery_time_seconds": 1.25,
+    "views": [
+      {
+        "name": "01-left-connection-z040",
+        "player": [
+          1050,
+          590
+        ],
+        "zoom": 0.4,
+        "camera": [
+          -150.0,
+          -31.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "01-left-connection-z050",
+        "player": [
+          1050,
+          590
+        ],
+        "zoom": 0.5,
+        "camera": [
+          90.0,
+          93.19999999999999
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "01-left-connection-z065",
+        "player": [
+          1050,
+          590
+        ],
+        "zoom": 0.65,
+        "camera": [
+          311.53846153846155,
+          207.84615384615387
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "02-shield-wall-z040",
+        "player": [
+          2775,
+          590
+        ],
+        "zoom": 0.4,
+        "camera": [
+          1575.0,
+          -31.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "02-shield-wall-z050",
+        "player": [
+          2775,
+          590
+        ],
+        "zoom": 0.5,
+        "camera": [
+          1815.0,
+          93.19999999999999
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "02-shield-wall-z065",
+        "player": [
+          2775,
+          590
+        ],
+        "zoom": 0.65,
+        "camera": [
+          2036.5384615384614,
+          207.84615384615387
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "03-pillbug-pillar-z040",
+        "player": [
+          3450,
+          180
+        ],
+        "zoom": 0.4,
+        "camera": [
+          2250.0,
+          -441.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "03-pillbug-pillar-z050",
+        "player": [
+          3450,
+          180
+        ],
+        "zoom": 0.5,
+        "camera": [
+          2490.0,
+          -316.8
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "03-pillbug-pillar-z065",
+        "player": [
+          3450,
+          180
+        ],
+        "zoom": 0.65,
+        "camera": [
+          2711.5384615384614,
+          -202.15384615384613
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "04-a-entry-z040",
+        "player": [
+          4780,
+          180
+        ],
+        "zoom": 0.4,
+        "camera": [
+          3580.0,
+          -441.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "04-a-entry-z050",
+        "player": [
+          4780,
+          180
+        ],
+        "zoom": 0.5,
+        "camera": [
+          3820.0,
+          -316.8
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "04-a-entry-z065",
+        "player": [
+          4780,
+          180
+        ],
+        "zoom": 0.65,
+        "camera": [
+          4041.5384615384614,
+          -202.15384615384613
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "05-basement-z040",
+        "player": [
+          1740,
+          -690
+        ],
+        "zoom": 0.4,
+        "camera": [
+          540.0,
+          -900.0
+        ],
+        "room": "route_b",
+        "secret_revealed": true
+      },
+      {
+        "name": "05-basement-z050",
+        "player": [
+          1740,
+          -690
+        ],
+        "zoom": 0.5,
+        "camera": [
+          780.0,
+          -900.0
+        ],
+        "room": "route_b",
+        "secret_revealed": true
+      },
+      {
+        "name": "05-basement-z065",
+        "player": [
+          1740,
+          -690
+        ],
+        "zoom": 0.65,
+        "camera": [
+          1001.5384615384615,
+          -900.0
+        ],
+        "room": "route_b",
+        "secret_revealed": true
+      }
+    ],
+    "visual_review": "Inspect platform/wall joins and lamp scale against the player, wall-jump face and cyan rail. Image labels identify the two requested comparison compositions.",
+    "motion_validation_command": ".\\.venv\\Scripts\\python.exe -B -m tools.preview_lower_route_b_wall --output-dir .cache/b-surfaces-motion"
+  },
+  "after_same_camera": {
+    "geometry_unchanged": true,
+    "baseline": "C:\\Users\\bagj6\\source\\repos\\2DGP\\RelicEscape\\assets\\terrain\\lower-route-b-wall-v1\\layout-baseline.json",
+    "camera_baseline": {
+      "bottom": -900,
+      "top": 1370,
+      "right": 5000
+    },
+    "camera_current": {
+      "bottom": -900,
+      "top": 1610,
+      "right": 5000
+    },
+    "reference_cameras": "C:\\Users\\bagj6\\source\\repos\\2DGP\\RelicEscape\\docs\\b-passage-surfaces-results.json",
+    "renderer_scope": "Actual LowerCaves B renderer, recorded comparison cameras or normal current follow-camera, SDL software.",
+    "fixed_scenery_time_seconds": 1.25,
+    "views": [
+      {
+        "name": "01-left-connection-z040",
+        "player": [
+          1050,
+          590
+        ],
+        "zoom": 0.4,
+        "camera": [
+          -150.0,
+          -31.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "01-left-connection-z050",
+        "player": [
+          1050,
+          590
+        ],
+        "zoom": 0.5,
+        "camera": [
+          90.0,
+          93.19999999999999
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "01-left-connection-z065",
+        "player": [
+          1050,
+          590
+        ],
+        "zoom": 0.65,
+        "camera": [
+          311.53846153846155,
+          207.84615384615387
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "02-shield-wall-z040",
+        "player": [
+          2775,
+          590
+        ],
+        "zoom": 0.4,
+        "camera": [
+          1575.0,
+          -31.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "02-shield-wall-z050",
+        "player": [
+          2775,
+          590
+        ],
+        "zoom": 0.5,
+        "camera": [
+          1815.0,
+          93.19999999999999
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "02-shield-wall-z065",
+        "player": [
+          2775,
+          590
+        ],
+        "zoom": 0.65,
+        "camera": [
+          2036.5384615384614,
+          207.84615384615387
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "03-pillbug-pillar-z040",
+        "player": [
+          3450,
+          180
+        ],
+        "zoom": 0.4,
+        "camera": [
+          2250.0,
+          -441.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "03-pillbug-pillar-z050",
+        "player": [
+          3450,
+          180
+        ],
+        "zoom": 0.5,
+        "camera": [
+          2490.0,
+          -316.8
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "03-pillbug-pillar-z065",
+        "player": [
+          3450,
+          180
+        ],
+        "zoom": 0.65,
+        "camera": [
+          2711.5384615384614,
+          -202.15384615384613
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "04-a-entry-z040",
+        "player": [
+          4780,
+          180
+        ],
+        "zoom": 0.4,
+        "camera": [
+          3580.0,
+          -441.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "04-a-entry-z050",
+        "player": [
+          4780,
+          180
+        ],
+        "zoom": 0.5,
+        "camera": [
+          3820.0,
+          -316.8
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "04-a-entry-z065",
+        "player": [
+          4780,
+          180
+        ],
+        "zoom": 0.65,
+        "camera": [
+          4041.5384615384614,
+          -202.15384615384613
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "05-basement-z040",
+        "player": [
+          1740,
+          -690
+        ],
+        "zoom": 0.4,
+        "camera": [
+          540.0,
+          -900.0
+        ],
+        "room": "route_b",
+        "secret_revealed": true
+      },
+      {
+        "name": "05-basement-z050",
+        "player": [
+          1740,
+          -690
+        ],
+        "zoom": 0.5,
+        "camera": [
+          780.0,
+          -900.0
+        ],
+        "room": "route_b",
+        "secret_revealed": true
+      },
+      {
+        "name": "05-basement-z065",
+        "player": [
+          1740,
+          -690
+        ],
+        "zoom": 0.65,
+        "camera": [
+          1001.5384615384615,
+          -900.0
+        ],
+        "room": "route_b",
+        "secret_revealed": true
+      }
+    ],
+    "visual_review": "Inspect platform/wall joins and lamp scale against the player, wall-jump face and cyan rail. Image labels identify the two requested comparison compositions.",
+    "motion_validation_command": ".\\.venv\\Scripts\\python.exe -B -m tools.preview_lower_route_b_wall --output-dir .cache/b-surfaces-motion"
+  },
+  "final_camera": {
+    "geometry_unchanged": true,
+    "baseline": "C:\\Users\\bagj6\\source\\repos\\2DGP\\RelicEscape\\assets\\terrain\\lower-route-b-wall-v1\\layout-baseline.json",
+    "camera_baseline": {
+      "bottom": -900,
+      "top": 1370,
+      "right": 5000
+    },
+    "camera_current": {
+      "bottom": -900,
+      "top": 1610,
+      "right": 5000
+    },
+    "reference_cameras": null,
+    "renderer_scope": "Actual LowerCaves B renderer, recorded comparison cameras or normal current follow-camera, SDL software.",
+    "fixed_scenery_time_seconds": 1.25,
+    "views": [
+      {
+        "name": "01-left-connection-z045",
+        "player": [
+          1050,
+          590
+        ],
+        "zoom": 0.45,
+        "camera": [
+          -16.666666666666742,
+          326.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "02-shield-wall-z045",
+        "player": [
+          2775,
+          590
+        ],
+        "zoom": 0.45,
+        "camera": [
+          1708.3333333333333,
+          326.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "03-pillbug-pillar-z045",
+        "player": [
+          3450,
+          180
+        ],
+        "zoom": 0.45,
+        "camera": [
+          2383.333333333333,
+          -84.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "04-a-entry-z045",
+        "player": [
+          4780,
+          180
+        ],
+        "zoom": 0.45,
+        "camera": [
+          3713.333333333333,
+          -84.0
+        ],
+        "room": "route_b",
+        "secret_revealed": false
+      },
+      {
+        "name": "05-basement-z045",
+        "player": [
+          1740,
+          -690
+        ],
+        "zoom": 0.45,
+        "camera": [
+          673.3333333333333,
+          -900.0
+        ],
+        "room": "route_b",
+        "secret_revealed": true
+      }
+    ],
+    "visual_review": "Inspect platform/wall joins and lamp scale against the player, wall-jump face and cyan rail. Image labels identify the two requested comparison compositions.",
+    "motion_validation_command": ".\\.venv\\Scripts\\python.exe -B -m tools.preview_lower_route_b_wall --output-dir .cache/b-surfaces-motion"
+  },
+  "b_motion": {
+    "geometry_unchanged": true,
+    "camera_baseline": {
+      "bottom": -900,
+      "top": 1370,
+      "right": 5000
+    },
+    "camera_current": {
+      "bottom": -900,
+      "top": 1610,
+      "right": 5000
+    },
+    "baseline": "C:\\Users\\bagj6\\source\\repos\\2DGP\\RelicEscape\\assets\\terrain\\lower-route-b-wall-v1\\layout-baseline.json",
+    "verification": "Automated SDL renderer, synthetic camera sweeps, real Player jumps, moving relic rails.",
+    "sdl_samples": 1207,
+    "zoom_values": [
+      0.4,
+      0.45,
+      0.5,
+      0.65
+    ],
+    "jumps": [
+      {
+        "surface": "entry",
+        "apex_world_y": 382.49999999999983,
+        "landing_world_y": 180
+      },
+      {
+        "surface": "pillbug",
+        "apex_world_y": 382.49999999999983,
+        "landing_world_y": 180
+      },
+      {
+        "surface": "shield",
+        "apex_world_y": 792.5,
+        "landing_world_y": 590
+      }
+    ],
+    "rails": [
+      {
+        "rail": 1,
+        "start": [
+          4620,
+          280
+        ],
+        "end": [
+          3450.0,
+          280.0
+        ],
+        "length": 2185.18578948924
+      },
+      {
+        "rail": 2,
+        "start": [
+          2320,
+          690
+        ],
+        "end": [
+          1160.0,
+          690.0
+        ],
+        "length": 3495.18578948924
+      }
+    ],
+    "secret_states": [
+      "hidden",
+      "revealed",
+      "collected"
+    ],
+    "camera_top_headroom_verified": 240
+  },
+  "a_motion": {
+    "layout_unchanged": true,
+    "sdl_samples": 779,
+    "zoom_values": [
+      0.4,
+      0.45,
+      0.5
+    ],
+    "jumps": [
+      {
+        "surface": "floor",
+        "apex_world_y": -255.00000000000017,
+        "landing_world_y": -457.5
+      },
+      {
+        "surface": "entry",
+        "apex_world_y": 287.49999999999983,
+        "landing_world_y": 85.0
+      },
+      {
+        "surface": "upper",
+        "apex_world_y": 382.49999999999983,
+        "landing_world_y": 180.0
+      }
+    ],
+    "actual_zoom_notes": {
+      "tool_source_modified": false,
+      "performance_measured": false,
+      "actual_zoom_sample_counts": {
+        "0.45": 730,
+        "0.5": 24,
+        "0.4": 25
+      },
+      "zoom_label_note": "기존 도구 report.zoom_values와 sweep/04-c-zoom 파일명은 요청한 합성 줌 라벨이다. follow_route 호출 직후의 실제 줌은 0.45이며, 라벨별 줌 검증 통과를 뜻하지 않는다.",
+      "visual_review": "정상 0.45 정지 화면과 이동/점프 애니메이션의 처음·중간·끝을 확인했다.",
+      "rail_focus_note": "rail-focus는 follow_route 없이 focus_relic을 직접 호출하므로 실제 0.5 24개, 0.4 25개 샘플이다. 본편 C보기의 정상 0.45 줌을 흉내 낸 것은 아니다.",
+      "jump_setup_note": "도구가 구간별 recover_at 직후 follow_camera snap 없이 update를 시작하므로 점프 애니메이션 초반에는 합성 위치 전환의 카메라 정착도 포함된다. 본편 E/복귀는 별도 snap 호출을 사용한다.",
+      "normal_view_finding": {
+        "image": "06-a-b-join.png",
+        "status": "root 천장 내부 fill 후 동일 카메라 재렌더로 위끝 노출 해결 확인",
+        "world_a_top": 1102.5,
+        "view_top": 1116.0,
+        "exposed_height_world": 13.5,
+        "approx_edge_screen_x": 610,
+        "approx_edge_screen_y": 6,
+        "note": "A/B 연결 정지 화면에서 A천장 이미지 위끝과 시작 수직 이음이 보인다. root가 천장 core 또는 연결부 카메라 상한 처리를 검토 중이다.",
+        "fixed_image": "06-a-b-join-roof-fixed.png",
+        "camera": {
+          "x": 4543.333333333333,
+          "y": -84.0,
+          "zoom": 0.45
+        },
+        "sdl_error": null,
+        "post_fix_note": "천장 위 6px 띠가 불투명한 검은 내부로 채워졌다. A천장 시작의 수직 실루엣은 기존 지형 위치에 남으며, 새 배경 이미지 끝이나 빈 틈은 검토 화면에서 보이지 않았다."
+      },
+      "checks": [
+        "지형/장치 layout baseline 일치",
+        "SDL779샘플 오류 없음",
+        "실제 Player 점프3개 착지 완료",
+        "유물레일 끝까지 focus stress 완료"
+      ]
+    },
+    "legacy_sweep_labels": [
+      0.4,
+      0.5,
+      0.65
+    ]
+  },
+  "c_motion": {
+    "geometry_unchanged": true,
+    "enemy_placement_unchanged": true,
+    "sdl_samples": 565,
+    "zoom_values": [
+      0.45
+    ],
+    "checkpoint_grounded_trigger": true,
+    "checkpoint_airborne_trigger_rejected": true,
+    "restart_entry_relic_and_checkpoint_preserved": true,
+    "jump_apex_world_y": 792.5,
+    "jump_landed": true,
+    "b_c_crossing_both_directions": true,
+    "sealed_door_limit_x": -1160.0,
+    "door_opening_supported": false,
+    "door_opening_note": "The existing C/B1 doorway has a permanent sealed terrain boundary and no open state API.",
+    "verification": "Automated SDL camera samples, real Player movement and jump, existing checkpoint restart entry.",
+    "actual_zoom_notes": {
+      "tool_source_modified": false,
+      "performance_measured": false,
+      "actual_zoom_sample_counts": {
+        "0.45": 565
+      },
+      "zoom_label_note": "기존 도구 report.zoom_values와 sweep/04-c-zoom 파일명은 요청한 합성 줌 라벨이다. follow_route 호출 직후의 실제 줌은 0.45이며, 라벨별 줌 검증 통과를 뜻하지 않는다.",
+      "visual_review": "정상 0.45 정지 화면과 이동/점프 애니메이션의 처음·중간·끝을 확인했다.",
+      "normal_view_finding": "검토한 0.45 정지·점프·왕복 이동 화면에서 새 이미지 경계나 구멍이 보이지 않았다.",
+      "checks": [
+        "지형/장치/적 baseline 일치",
+        "SDL565샘플 오류 없음",
+        "착지 checkpoint 조건·공중 도착 거부 유지",
+        "문 충돌 경계 유지",
+        "점프 착지·B/C 양방향 이동·재입장 유지"
+      ],
+      "unavailable": "C/B1 문은 기존 코드에 열림 상태 API가 없어 개방 동작은 검증하지 않았다."
+    },
+    "legacy_sweep_labels": [
+      0.4,
+      0.5,
+      0.65
+    ]
+  },
+  "tests": {
+    "full_suite": 229,
+    "camera_recheck": 7,
+    "passed": true
+  },
+  "limitations": [
+    "Automated SDL movement and rendering, no new long fullscreen manual playtest or frame-time measurement."
+  ]
+}

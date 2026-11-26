@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-27 B 발판은 `lower_route_b_art.py`의 `lower-route-b-surfaces-v1`을 사용한다. 원래 공유 발판은 보존했다. `WAYMARKERS`는 x930/2660/3330, 높이190이며 렌즈와 바닥 조명은 동일 월드 변환이다. 카메라 조정은 `route_camera.py`, A/B 천장 위 노출 방지는 각 art 모듈이다. [비교·재현](../docs/b-passage-surfaces-camera.md). 전체229개 및 SDL B1207/A779/C565 검수, 전체화면 장시간 수동·추가 광원의 프레임 성능은 이번에 측정하지 않았다. 기존 잔랙 없음은 사용자의 직접 확인이다.
+
 - 2026-11-27 성능 수정은 `input_events.py`, `render_mesh.py`, `lower_route_atmosphere.py`, `combat_scenery.py`와 `main`에 있다. 입력은 `poll_events`를 사용해 pico 내부 대기와 FPS 제목 갱신을 피하고 게임 루프가 프레임 대기를 담당한다. 고정 메시 정보는 캐시하되 카메라 정점은 매 호출 독립 생성한다. software의 얇은 클립 광원만 재사용 흰 텍셀 경로로 `width invalid`를 해결한다. [측정·재현](../docs/runtime-performance.md)과 [수치](../docs/runtime-performance-results.json). native10장 일치·전체측정1200화면 오류0. 소프트웨어 C 합성 병목 및 실제 전체화면 장시간 체감은 남은 확인 항목이다. 프로파일은 다른 테스트와 동시에 실행하지 않는다.
 
 - 2026-11-26 C 최신 미술은 `lower_route_c_scenery.py`와 [별도 석벽 레이어](../assets/terrain/lower-route-c-wall-v1/README.md)다. C 문·석등·지형은 기존 `c-terrain.png`와 좌표를 유지한다. B/C 배경은 B 지형 전에 그리고 C는 x0~690에서 사라진다. 옛 C 먼 비석·아치·광막을 다시 덮지 않는다. `python -m tools.preview_lower_route_c_wall`로 기준값·SDL565·왕복·점프·석등·재시작을 재현한다. 관련52개 통과. 봉인문 열림·C→B1은 미구현이며, 장시간 전체화면 수동 조작·기기별 성능은 미측정이다.

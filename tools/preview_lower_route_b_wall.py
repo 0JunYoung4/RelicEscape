@@ -27,6 +27,7 @@ from lower_route_c import FLOOR as C_FLOOR, TERRAIN as C_TERRAIN
 from main import Camera, SCREEN_HEIGHT, SCREEN_WIDTH
 from player import Player
 from rail import RAIL_TRAVEL_SPEED
+from route_camera import B_CAMERA_HEADROOM
 from tools.preview_lower_route_a import read_render
 
 
@@ -85,7 +86,12 @@ def main(arguments):
         print("Saved B geometry snapshot", baseline)
         return
     expected = json.loads(baseline.read_text(encoding="utf-8"))
-    assert current == expected, "B geometry, rail, hazards, safe poses, or A/B connection changed"
+    assert {name: value for name, value in current.items() if name != "camera"} == {
+        name: value for name, value in expected.items() if name != "camera"
+    }, "B geometry, rail, hazards, safe poses, or A/B connection changed"
+    assert current["camera"]["bottom"] == expected["camera"]["bottom"]
+    assert current["camera"]["right"] == expected["camera"]["right"]
+    assert current["camera"]["top"] == expected["camera"]["top"] + B_CAMERA_HEADROOM
     output.mkdir(parents=True, exist_ok=True)
     pico.open_canvas(SCREEN_WIDTH, SCREEN_HEIGHT)
     cave = SimpleNamespace(width=SCREEN_WIDTH, height=SCREEN_HEIGHT,
@@ -136,6 +142,11 @@ def main(arguments):
                 for y in (layout.BOTTOM + 60, layout.SECRET_FLOOR_Y,
                           layout.PILLBUG_LEDGE[3], layout.SHIELD_LEDGE[3], layout.TOP - 30):
                     position(x, y)
+                    camera.zoom = zoom
+                    camera.follow(x)
+                    bottom, top = rooms.route_camera_bounds(x)
+                    view_height = SCREEN_HEIGHT / zoom
+                    camera.y = max(bottom, min(top - view_height, y - view_height * .22))
                     draw(f"sweep-{zoom}-{direction}")
 
     still("01-b-entry", 4720, layout.A_ENTRY[3])
@@ -236,10 +247,11 @@ def main(arguments):
     gallery.save(output / "runtime-gallery.jpg", quality=91)
     report = {
         "geometry_unchanged": True,
+        "camera_baseline": expected["camera"], "camera_current": current["camera"],
         "baseline": str(baseline),
         "verification": "Automated SDL renderer, synthetic camera sweeps, real Player jumps, moving relic rails.",
         "sdl_samples": len(samples),
-        "zoom_values": [.4, .5, .65],
+        "zoom_values": sorted({sample["zoom"] for sample in samples}),
         "jumps": jump_log,
         "rails": rail_reports,
         "secret_states": ["hidden", "revealed", "collected"],

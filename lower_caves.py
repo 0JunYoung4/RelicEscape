@@ -250,7 +250,6 @@ class LowerCaves:
             if self.room == "route_c":
                 player.recover_at(*C_CHECKPOINT)
                 player.facing = -1
-            camera.zoom = camera.normal_zoom
             self.follow_camera(player, camera)
             return
         landing = self.room == "landing"
@@ -271,7 +270,7 @@ class LowerCaves:
         camera.y = -self.cave.height * 0.20 / camera.zoom
         self.follow_camera(player, camera)
 
-    def follow_camera(self, player, camera):
+    def follow_camera(self, player, camera, dt=None):
         if self.in_lower_route and self.route_connection is not None:
             # The section name selects a checkpoint and hazard rules, not a room load.
             if player.x < C_RIGHT:
@@ -279,13 +278,10 @@ class LowerCaves:
                 self.route_c.check_arrival(player)
             else:
                 self.room = "route_a" if player.x >= PASSAGE_CENTER else "route_b"
-            camera.follow(player.x)
-            view_height = self.cave.height / camera.zoom
-            camera.y = self.route_connection.blend(
-                player.x, self.route_b.camera_y(player.y, view_height), self.route_a.camera_y(player.y, view_height))
+            camera.follow_route(player, self.cave.height, self.route_camera_bounds(player.x), dt)
             return
         if self.route is not None:
-            self.route.follow_camera(player, camera, self.cave.height)
+            self.route.follow_camera(player, camera, self.cave.height, dt)
             return
         camera.follow(player.x)
         if self.room in ("gallery", "combat"):
@@ -366,7 +362,7 @@ class LowerCaves:
             for route in (self.route_a, self.route_b):
                 if route is not None:
                     route.update(player, dt)
-        self.follow_camera(player, camera)
+        self.follow_camera(player, camera, dt)
 
     def draw(self, camera):
         if self.room == "landing":

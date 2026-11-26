@@ -122,6 +122,14 @@ class LowerRouteAArt:
 
     def draw_terrain(self, camera):
         x, y = self.origin
+        # The blended A/B camera can rise a few pixels above A's authored roof.
+        roof_top = y + HEIGHT
+        view_top = camera.y + pico.canvas_height / camera.zoom
+        left, right = max(x, camera.x), min(x + WIDTH, camera.x + camera.view_width)
+        if view_top > roof_top and left < right:
+            x0, y0 = camera.world_to_screen(left, roof_top)
+            x1, y1 = camera.world_to_screen(right, view_top)
+            pico.draw_rectangle(x0, y0, x1, y1, 0, 0, 0, filled=True)
         # The original collision bodies remain opaque below their painted surface rims.
         for left, bottom, right, top in ((0, -400, WIDTH, 182),
                                          (0, 170, 1190, 815),

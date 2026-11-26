@@ -1,0 +1,84 @@
+{
+  "mode": "built-in image_gen; style-transfer; transparent RGBA",
+  "references": [
+    {
+      "id": "SS-MG-03",
+      "decision": "Broad smooth stone masses, dark core and organic ledge silhouette."
+    },
+    {
+      "id": "HK-GP22",
+      "decision": "Readable ledge ends and attached roots with quiet stone surfaces."
+    },
+    {
+      "id": "SS-MF-04",
+      "decision": "Restrained warm landmark illumination within cool ruins."
+    }
+  ],
+  "inputs": [
+    "original assets/terrain/ruin-platforms/{source}: edit target",
+    "docs/combat-room-lighting-gameplay.png: style and palette",
+    "assets/concepts/b1-hermit-crab/platforms-v1/counterweight-step.png: brushwork only"
+  ],
+  "assets": [
+    {
+      "name": "connected-guard-wall",
+      "source": "connected-guard-wall-v1.png",
+      "detail": "Keep the long level upper ledge, central inset original hexagon, stepped underside, and the full deep straight RIGHT wall-jump face ending at the lower right exactly where they are. Keep that right edge vertical and intact.",
+      "prompt": "Use case: style-transfer. Image 1 is the EXACT existing RelicEscape B-passage platform edit target. Image 2 is RelicEscape's first combat-room gameplay image, only a STYLE/PALETTE reference. Image 3 is the project's matching B1 platform, only a STONE BRUSHWORK reference. Repaint IMAGE 1 only. Preserve its original framing, image aspect ratio, exact silhouette and occupied bounding box, all large structural positions, flat walkable top Y and left/right end anchors, same side view and genuine transparent RGBA background. This is a gameplay texture repaint, not a new shape. Match the combat room and image 3 with dark petroleum teal stone, clean hand-painted contour lines, broad smooth matte faceted planes, almost-black cool gaps, a few muted blue-green bevel highlights. Remove the pervasive photographic grain, sandpaper dimples, tiny etched fissures, random pale scratches and bright white mineral drips from every stone face. Keep main intentional cracks and original large carvings. Top highlight is restrained cool teal, not a bright white stripe. Foliage must become a few irregular clustered rounded dark-green leaves and moss cushions with simple masses and clear dark undersides, not repeating evenly spaced small ferns. Sparse short roots stay dark and attached. Do not paint haze, floor, scene backdrop, external shadow, glow, machinery, rail, characters, lamps or labels. Preserve natural alpha edges and margins. Entire object intact, no cropping, no isometric perspective. Keep the long level upper ledge, central inset original hexagon, stepped underside, and the full deep straight RIGHT wall-jump face ending at the lower right exactly where they are. Keep that right edge vertical and intact.",
+      "generated_path": "C:\\Users\\bagj6\\.codex\\generated_images\\01a21795-90e1-7660-9a82-c9ba87cdd0dd\\exec-54a50f65-9eab-4e67-b6e0-a6fdb69aea5a.png",
+      "saved_asset": "assets/terrain/lower-route-b-surfaces-v1/connected-guard-wall.png",
+      "output_size": [
+        1562,
+        1007
+      ]
+    },
+    {
+      "name": "connected-passage",
+      "source": "connected-passage-v1.png",
+      "detail": "Keep the full continuous long walkable cap, shallow left underside and thicker right lower rock extension. No new arches or footing gaps. Keep left and right upper ends aligned at the same level.",
+      "prompt": "Use case: style-transfer. Image 1 is the EXACT existing RelicEscape B-passage platform edit target. Image 2 is RelicEscape's first combat-room gameplay image, only a STYLE/PALETTE reference. Image 3 is the project's matching B1 platform, only a STONE BRUSHWORK reference. Repaint IMAGE 1 only. Preserve its original framing, image aspect ratio, exact silhouette and occupied bounding box, all large structural positions, flat walkable top Y and left/right end anchors, same side view and genuine transparent RGBA background. This is a gameplay texture repaint, not a new shape. Match the combat room and image 3 with dark petroleum teal stone, clean hand-painted contour lines, broad smooth matte faceted planes, almost-black cool gaps, a few muted blue-green bevel highlights. Remove the pervasive photographic grain, sandpaper dimples, tiny etched fissures, random pale scratches and bright white mineral drips from every stone face. Keep main intentional cracks and original large carvings. Top highlight is restrained cool teal, not a bright white stripe. Foliage must become a few irregular clustered rounded dark-green leaves and moss cushions with simple masses and clear dark undersides, not repeating evenly spaced small ferns. Sparse short roots stay dark and attached. Do not paint haze, floor, scene backdrop, external shadow, glow, machinery, rail, characters, lamps or labels. Preserve natural alpha edges and margins. Entire object intact, no cropping, no isometric perspective. Keep the full continuous long walkable cap, shallow left underside and thicker right lower rock extension. No new arches or footing gaps. Keep left and right upper ends aligned at the same level.",
+      "generated_path": "C:\\Users\\bagj6\\.codex\\generated_images\\01a21795-90e1-7660-9a82-c9ba87cdd0dd\\exec-97fff55d-adf4-4293-8935-9919a7fe742f.png",
+      "saved_asset": "assets/terrain/lower-route-b-surfaces-v1/connected-passage.png",
+      "output_size": [
+        2023,
+        777
+      ]
+    },
+    {
+      "name": "spike-bed-pier",
+      "source": "spike-bed-pier-v2.png",
+      "detail": "Keep the broad level cap, narrower downward tapered central pier, vertical depth and broad rooted foot. This pier must still visually extend down into the lower stone shelf. No holes through its body or new horizontal ledges.",
+      "prompt": "Use case: style-transfer. Image 1 is the EXACT existing RelicEscape B-passage platform edit target. Image 2 is RelicEscape's first combat-room gameplay image, only a STYLE/PALETTE reference. Image 3 is the project's matching B1 platform, only a STONE BRUSHWORK reference. Repaint IMAGE 1 only. Preserve its original framing, image aspect ratio, exact silhouette and occupied bounding box, all large structural positions, flat walkable top Y and left/right end anchors, same side view and genuine transparent RGBA background. This is a gameplay texture repaint, not a new shape. Match the combat room and image 3 with dark petroleum teal stone, clean hand-painted contour lines, broad smooth matte faceted planes, almost-black cool gaps, a few muted blue-green bevel highlights. Remove the pervasive photographic grain, sandpaper dimples, tiny etched fissures, random pale scratches and bright white mineral drips from every stone face. Keep main intentional cracks and original large carvings. Top highlight is restrained cool teal, not a bright white stripe. Foliage must become a few irregular clustered rounded dark-green leaves and moss cushions with simple masses and clear dark undersides, not repeating evenly spaced small ferns. Sparse short roots stay dark and attached. Do not paint haze, floor, scene backdrop, external shadow, glow, machinery, rail, characters, lamps or labels. Preserve natural alpha edges and margins. Entire object intact, no cropping, no isometric perspective. Keep the broad level cap, narrower downward tapered central pier, vertical depth and broad rooted foot. This pier must still visually extend down into the lower stone shelf. No holes through its body or new horizontal ledges.",
+      "generated_path": "C:\\Users\\bagj6\\.codex\\generated_images\\01a21795-90e1-7660-9a82-c9ba87cdd0dd\\exec-27f6dea8-b0e8-4888-859d-e8e91871f979.png",
+      "saved_asset": "assets/terrain/lower-route-b-surfaces-v1/spike-bed-pier.png",
+      "output_size": [
+        1374,
+        1145
+      ]
+    },
+    {
+      "name": "waterworn-sill",
+      "source": "waterworn-sill-v2.png",
+      "detail": "Keep the wide three-course low stone sill and its shallow uneven bottom. Preserve the original waterworn arch remnant in the right third but simplify its tiny chips into broad shadow planes.",
+      "prompt": "Use case: style-transfer. Image 1 is the EXACT existing RelicEscape B-passage platform edit target. Image 2 is RelicEscape's first combat-room gameplay image, only a STYLE/PALETTE reference. Image 3 is the project's matching B1 platform, only a STONE BRUSHWORK reference. Repaint IMAGE 1 only. Preserve its original framing, image aspect ratio, exact silhouette and occupied bounding box, all large structural positions, flat walkable top Y and left/right end anchors, same side view and genuine transparent RGBA background. This is a gameplay texture repaint, not a new shape. Match the combat room and image 3 with dark petroleum teal stone, clean hand-painted contour lines, broad smooth matte faceted planes, almost-black cool gaps, a few muted blue-green bevel highlights. Remove the pervasive photographic grain, sandpaper dimples, tiny etched fissures, random pale scratches and bright white mineral drips from every stone face. Keep main intentional cracks and original large carvings. Top highlight is restrained cool teal, not a bright white stripe. Foliage must become a few irregular clustered rounded dark-green leaves and moss cushions with simple masses and clear dark undersides, not repeating evenly spaced small ferns. Sparse short roots stay dark and attached. Do not paint haze, floor, scene backdrop, external shadow, glow, machinery, rail, characters, lamps or labels. Preserve natural alpha edges and margins. Entire object intact, no cropping, no isometric perspective. Keep the wide three-course low stone sill and its shallow uneven bottom. Preserve the original waterworn arch remnant in the right third but simplify its tiny chips into broad shadow planes.",
+      "generated_path": "C:\\Users\\bagj6\\.codex\\generated_images\\01a21795-90e1-7660-9a82-c9ba87cdd0dd\\exec-6a89ccda-332a-4116-b4a1-6c71f31fa873.png",
+      "saved_asset": "assets/terrain/lower-route-b-surfaces-v1/waterworn-sill.png",
+      "output_size": [
+        1858,
+        846
+      ]
+    },
+    {
+      "name": "root-wedge",
+      "source": "root-wedge-v2.png",
+      "detail": "Keep the long flat walking line, diagonal natural bedrock body and the same bent thick root following the left and lower stone. Preserve the original small projecting stone planes and full lower silhouette.",
+      "prompt": "Use case: style-transfer. Image 1 is the EXACT existing RelicEscape B-passage platform edit target. Image 2 is RelicEscape's first combat-room gameplay image, only a STYLE/PALETTE reference. Image 3 is the project's matching B1 platform, only a STONE BRUSHWORK reference. Repaint IMAGE 1 only. Preserve its original framing, image aspect ratio, exact silhouette and occupied bounding box, all large structural positions, flat walkable top Y and left/right end anchors, same side view and genuine transparent RGBA background. This is a gameplay texture repaint, not a new shape. Match the combat room and image 3 with dark petroleum teal stone, clean hand-painted contour lines, broad smooth matte faceted planes, almost-black cool gaps, a few muted blue-green bevel highlights. Remove the pervasive photographic grain, sandpaper dimples, tiny etched fissures, random pale scratches and bright white mineral drips from every stone face. Keep main intentional cracks and original large carvings. Top highlight is restrained cool teal, not a bright white stripe. Foliage must become a few irregular clustered rounded dark-green leaves and moss cushions with simple masses and clear dark undersides, not repeating evenly spaced small ferns. Sparse short roots stay dark and attached. Do not paint haze, floor, scene backdrop, external shadow, glow, machinery, rail, characters, lamps or labels. Preserve natural alpha edges and margins. Entire object intact, no cropping, no isometric perspective. Keep the long flat walking line, diagonal natural bedrock body and the same bent thick root following the left and lower stone. Preserve the original small projecting stone planes and full lower silhouette.",
+      "generated_path": "C:\\Users\\bagj6\\.codex\\generated_images\\01a21795-90e1-7660-9a82-c9ba87cdd0dd\\exec-0705cfd8-efc0-4c9d-a9e9-e5395fad2a25.png",
+      "saved_asset": "assets/terrain/lower-route-b-surfaces-v1/root-wedge.png",
+      "output_size": [
+        1774,
+        887
+      ]
+    }
+  ]
+}

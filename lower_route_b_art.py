@@ -6,9 +6,9 @@ from math import ceil
 
 from pico2d import pico2d as pico
 
-from lower_route_atmosphere import ROUTE_ART, draw_parallax, load_image
+from lower_route_atmosphere import ROUTE_ART, draw_parallax, draw_soft_light, load_image
 from lower_route_b_scenery import LowerRouteBScenery
-from lower_route_b_layout import (A_ENTRY, BOTTOM, C_APPROACH_LEDGE, C_PASSAGE,
+from lower_route_b_layout import (A_ENTRY, BOTTOM, C_APPROACH_LEDGE, C_PASSAGE, C_PASSAGE_LEFT,
                                   LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL, SECRET_FLOOR,
                                   SECRET_FLOOR_Y, SECRET_LEFT_WALL, SECRET_PASSAGE, SECRET_RELIC_X, SHIELD_LEDGE,
                                   STONE_SHELVES, STONE_SURFACE, THORN_WALL_CROP, THORN_WALLS, TOP, WIDTH)
@@ -16,10 +16,18 @@ from player import ASSET_ROOT
 
 
 STRUCTURES = ASSET_ROOT / "structures/map1-lower-route"
-PLATFORMS = ASSET_ROOT / "terrain/ruin-platforms"
+PLATFORMS = ASSET_ROOT / "terrain/lower-route-b-surfaces-v1"
 FLOOR_DECOR = ASSET_ROOT / "terrain/moss-grotto-floor-decor"
 ROCK_CORE = (8, 16, 23)
 AMBER_RELIC_CROP = (287, 158, 946, 1103)
+WAYMARKER_CROP = (207, 15, 1040, 1206)
+# The complete original prop, at a readable world scale beside a 140-unit player.
+# Keep the rail mouths and the existing landing/recovery positions clear.
+WAYMARKERS = ((930, C_APPROACH_LEDGE[3]), (2660, SHIELD_LEDGE[3]),
+              (3330, PILLBUG_LEDGE[3]))
+WAYMARKER_HEIGHT = 190
+WAYMARKER_WIDTH = WAYMARKER_HEIGHT * 833 / 1191
+WAYMARKER_LENS = ((639 - 207) / 833 - .5, (1206 - 562) / 1191)
 CEILING_SPANS = (
     (-1200, 1250, TOP + 74, 358, False),
     (820, 3260, TOP + 64, 380, True),
@@ -102,7 +110,7 @@ class LowerRouteBArt:
         self.background = load_image(ROUTE_ART / "bc-far.png")
         self.scenery = LowerRouteBScenery()
         self.wall = pico.load_image(str(ASSET_ROOT / "terrain/green-cavern-wall-v1.png"))
-        self.marker = pico.load_image(str(STRUCTURES / "lower-cave-safe-waymarker-v1.png"))
+        self.marker = load_image(STRUCTURES / "lower-cave-safe-waymarker-v1.png")
         self.rubble = pico.load_image(str(STRUCTURES / "lower-cave-landing-rubble-v1.png"))
         self.thorn_wall = pico.load_image(str(STRUCTURES / "lower-cave-thorn-wall-v1.png"))
         self.canopy = pico.load_image(str(ASSET_ROOT / "terrain/green-cavern-canopy-v1.png"))
@@ -113,7 +121,7 @@ class LowerRouteBArt:
         pico.SDL_SetTextureColorMod(self.rubble.texture, 139, 175, 186)
         self.platforms = json.loads((PLATFORMS / "manifest.json").read_text(encoding="utf-8"))["platforms"]
         self.platform_images = {
-            name: pico.load_image(str(PLATFORMS / self.platforms[name]["image"]))
+            name: load_image(PLATFORMS / self.platforms[name]["image"])
             for name in ("root-wedge", "connected-guard-wall", "connected-passage", "spike-bed-pier",
                          "waterworn-sill")
         }
@@ -148,13 +156,11 @@ class LowerRouteBArt:
                                      ("spike-bed-pier", PILLBUG_LEDGE, -313)):
             draw_ruin_platform(camera, self.platform_images[name], self.platforms[name], bounds, base_y=base_y)
 
-        for x, surface, size in ((1200, C_APPROACH_LEDGE[3], 66), (2760, SHIELD_LEDGE[3], 86),
-                                 (3530, PILLBUG_LEDGE[3], 66)):
-            draw_structure(self.marker, (207, 15, 1040, 1206), camera, x, surface, size * .70, size)
         for x, surface, width in ((996, C_APPROACH_LEDGE[3], 130), (2260, SHIELD_LEDGE[3], 94),
                                   (3170, PILLBUG_LEDGE[3], 110)):
             draw_structure(self.bead_moss, (114, 134, 2053, 585), camera, x, surface - 9, width, 21)
         self.scenery.draw_surfaces(camera)
+        self.draw_waymarkers(camera)
         self.draw_hazards(camera)
         if camera.y < STONE_SURFACE:
             self.draw_basement(camera, screen_height, secret_revealed, secret_relic_collected)
@@ -167,6 +173,24 @@ class LowerRouteBArt:
 
     def draw_foreground(self, camera):
         self.scenery.draw_foreground(camera)
+
+    def draw_waymarkers(self, camera):
+        for x, surface in WAYMARKERS:
+            if (x + 150 < camera.x or x - 150 > camera.x + camera.view_width
+                    or surface > camera.y + pico.canvas_height / camera.zoom
+                    or surface + WAYMARKER_HEIGHT + 25 < camera.y):
+                continue
+            lens = (x + WAYMARKER_WIDTH * WAYMARKER_LENS[0],
+                    surface - 2 + WAYMARKER_HEIGHT * WAYMARKER_LENS[1])
+            # A faint local halo, a warm cap reflection, and a separate contact shadow.
+            # Their world transform is identical to the lamp and its supporting ledge.
+            draw_soft_light(camera, lens, (104, 98), (233, 168, 75), 31)
+            draw_soft_light(camera, (lens[0], surface + 5), (137, 9), (246, 183, 91), 64)
+            draw_soft_light(camera, (x + 3, surface + 1), (64, 5), (2, 10, 13), 160)
+            draw_structure(self.marker, WAYMARKER_CROP, camera, x, surface - 2,
+                           WAYMARKER_WIDTH, WAYMARKER_HEIGHT)
+            draw_soft_light(camera, lens, (30, 35), (251, 186, 81), 55)
+            draw_soft_light(camera, lens, (9, 12), (255, 218, 134), 125)
 
     def draw_hazards(self, camera):
         for (left, bottom, right, top), hanging in THORN_WALLS:
@@ -220,6 +244,11 @@ class LowerRouteBArt:
         # Drawing over the hazards tucks both hanging thorn walls into the roots.
         view_right = camera.x + camera.view_width
         view_top = camera.y + screen_height / camera.zoom
+        # The higher camera may see above the wall painting. It is solid ceiling,
+        # not another exposed edge of the background texture.
+        roof_left, roof_right = max(camera.x, C_PASSAGE_LEFT), min(view_right, WIDTH)
+        if view_top > TOP and roof_left < roof_right:
+            fill_rock(camera, screen_height, (roof_left, TOP, roof_right, view_top))
         for left, right, top, height, flipped in CEILING_SPANS:
             bottom = top - height
             if right <= camera.x or left >= view_right or bottom >= view_top or top <= camera.y:

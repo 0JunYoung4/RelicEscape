@@ -9,6 +9,7 @@ from pillbug import Pillbug
 from player import ASSET_ROOT, STANDING_HITBOX_HEIGHT, TAKEOFF_FRAME_DURATION
 from rail import (RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE,
                   RailCarriage, RailSegment, draw_rail)
+from route_camera import camera_y
 
 
 ART_ZOOM = .4
@@ -140,13 +141,11 @@ class LowerRouteA:
             player.animation_time = TAKEOFF_FRAME_DURATION
         player.facing = -1
 
-    def follow_camera(self, player, camera, screen_height):
-        camera.follow(player.x)
-        camera.y = self.camera_y(player.y, screen_height / camera.zoom)
+    def follow_camera(self, player, camera, screen_height, dt=None):
+        camera.follow_route(player, screen_height, (self.camera_bottom, self.camera_top), dt)
 
     def camera_y(self, player_y, view_height):
-        target = player_y - view_height * .24
-        return max(self.camera_bottom, min(self.camera_top - view_height, target))
+        return camera_y(player_y, view_height, self.camera_bottom, self.camera_top)
 
     def can_reset(self, player):
         return (player.grounded and player.y == self.ground_y

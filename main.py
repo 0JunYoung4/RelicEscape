@@ -20,6 +20,7 @@ from player import ASSET_ROOT, STANDING_HITBOX_HEIGHT, Player
 from rail import (RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE,
                   RailCarriage, RailSegment, draw_rail)
 from return_effect import ReturnEffect, ReturnMark, ReturnMarkArt
+from route_camera import RouteCamera
 
 
 SCREEN_WIDTH = 960
@@ -188,6 +189,7 @@ class Camera:
         self.x = 0.0
         self.y = y
         self.transitioning = False
+        self.route_tracking = RouteCamera()
 
     @property
     def view_width(self):
@@ -198,6 +200,9 @@ class Camera:
 
     def follow(self, player_x):
         self.x = self._clamp_x(player_x - self.view_width / 2)
+
+    def follow_route(self, player, screen_height, bounds, dt=None):
+        self.route_tracking.follow(player, self, screen_height, bounds, dt)
 
     def focus_relic(self, position, *, bottom, top=inf):
         self.follow(position[0])

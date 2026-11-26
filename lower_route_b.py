@@ -16,6 +16,7 @@ from player import STANDING_HITBOX_HEIGHT
 from rail import (RAIL_ART_SCALE, RAIL_BEND_IMAGE, RAIL_CARRIAGE_IMAGE, RAIL_IMAGE, RAIL_MOUNT_RADIUS,
                   RailCarriage, draw_rail)
 from shield_soldier import BASH_DAMAGE, ShieldSoldier
+from route_camera import B_CAMERA_HEADROOM, camera_y
 
 
 SPAWN = (4780, A_ENTRY[3], 0)
@@ -56,7 +57,7 @@ SAFE_POSES = (
 
 
 class LowerRouteB:
-    camera_bottom, camera_top = BOTTOM, TOP
+    camera_bottom, camera_top = BOTTOM, TOP + B_CAMERA_HEADROOM
     camera_right = WIDTH
 
     def __init__(self):
@@ -107,14 +108,12 @@ class LowerRouteB:
         player.recover_at(*SPAWN)
         player.facing = -1
 
-    def follow_camera(self, player, camera, screen_height):
-        camera.follow(player.x)
-        camera.y = self.camera_y(player.y, screen_height / camera.zoom)
+    def follow_camera(self, player, camera, screen_height, dt=None):
+        camera.follow_route(player, screen_height, (self.camera_bottom, self.camera_top), dt)
 
     @staticmethod
     def camera_y(player_y, view_height):
-        target = player_y - view_height * .46
-        return max(BOTTOM, min(TOP - view_height, target))
+        return camera_y(player_y, view_height, LowerRouteB.camera_bottom, LowerRouteB.camera_top)
 
     def nearby_dock(self, player, relic_placed):
         if relic_placed or not player.grounded:
