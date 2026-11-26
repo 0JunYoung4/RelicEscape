@@ -1,6 +1,7 @@
 """The passage and checkpoint before the first boss entrance."""
 
 from ctypes import c_int
+from math import ceil
 
 from pico2d import pico2d as pico
 
@@ -29,6 +30,15 @@ TERRAIN = (
     (LEFT, FLOOR, ENTRANCE_X + ENTRANCE_WIDTH / 2, TOP),
     (LEFT, 1270, RIGHT, TOP),
 )
+
+
+def _subdivide(stops, max_span):
+    for (start, first), (end, last) in zip(stops, stops[1:]):
+        steps = ceil(abs(end - start) / max_span)
+        for index in range(steps):
+            fraction = index / steps
+            yield start + (end - start) * fraction, first + (last - first) * fraction
+    yield stops[-1]
 
 
 class LowerRouteC:
@@ -69,6 +79,10 @@ class LowerRouteC:
         art_bottom = FLOOR + (ART_FLOOR_ROW - last_row) * ART_SCALE
         rows = ((art_top, 0), (FLOOR, ART_FLOOR_ROW),
                 (art_bottom, last_row), (STONE_SURFACE, last_row))
+        # Keep the same fade and source anchors within SDL's software triangle limits.
+        max_span = 400 / camera.zoom
+        columns = tuple(_subdivide(columns, max_span))
+        rows = tuple(_subdivide(rows, max_span))
         vertices, indices = [], []
         stride = len(columns)
         for row, (y, pixel_y) in enumerate(rows):
@@ -76,7 +90,7 @@ class LowerRouteC:
                 sx, sy = camera.world_to_screen(x, y)
                 u = (x - ART_LEFT) / (ART_SCALE * self.plate.w)
                 v = pixel_y / self.plate.h
-                vertices.append(pico.SDL_Vertex((sx, screen_height - sy), (255, 255, 255, alpha), (u, v)))
+                vertices.append(pico.SDL_Vertex((sx, screen_height - sy), (255, 255, 255, round(alpha)), (u, v)))
                 if row and column:
                     a = (row - 1) * stride + column - 1
                     b = a + stride

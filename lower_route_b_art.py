@@ -222,18 +222,23 @@ class LowerRouteBArt:
             bottom = top - height
             if right <= camera.x or left >= view_right or bottom >= view_top or top <= camera.y:
                 continue
-            stops = ((left, 0), (left + 260, 255), (right - 170, 255), (right, 0))
+            visible_left, visible_right = max(left, camera.x), min(right, view_right)
+            visible_top, visible_bottom = min(top, view_top), max(bottom, camera.y)
+            stops = (visible_left, *(x for x in (left + 260, right - 170)
+                                     if visible_left < x < visible_right), visible_right)
             vertices, indices = [], []
-            for index, (x, alpha) in enumerate(stops):
+            for index, x in enumerate(stops):
+                alpha = round(255 * min(1, (x - left) / 260, (right - x) / 170))
                 u = (x - left) / (right - left)
                 if flipped:
                     u = 1 - u
-                for y, v in ((top, 0), (bottom, 1)):
+                for y in (visible_top, visible_bottom):
+                    v = (top - y) / height
                     sx, sy = camera.world_to_screen(x, y)
                     vertices.append(pico.SDL_Vertex((sx, screen_height - sy), (255, 255, 255, alpha), (u, v)))
                 if index:
                     first = 2 * (index - 1)
-                    indices.extend((first, first + 1, first + 2, first + 1, first + 2, first + 3))
+                    indices.extend((first, first + 1, first + 2, first + 1, first + 3, first + 2))
             geometry = (pico.SDL_Vertex * len(vertices))(*vertices)
             triangles = (c_int * len(indices))(*indices)
             pico.SDL_RenderGeometry(pico.renderer, self.canopy.texture, geometry, len(vertices),

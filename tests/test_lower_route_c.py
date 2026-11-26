@@ -77,6 +77,13 @@ class LowerRouteCTests(unittest.TestCase):
         self.assertEqual([(left, right, top) for left, _, right, top in bounds],
                          [(LEFT, C_APPROACH_LEDGE[2], FLOOR)])
 
+        camera.zoom = .65
+        player.recover_at(LEFT + 500, FLOOR + 170, 0)
+        rooms.follow_camera(player, camera)
+        pico.SDL_ClearError()
+        rooms.draw(camera)
+        self.assertFalse(pico.SDL_GetError())
+
     def test_lantern_lights_only_after_checkpoint_and_plate_stops_inside_b(self):
         route = LowerRouteC()
         player = Player(*CHECKPOINT[:2], main.WORLD_WIDTH)
