@@ -5,6 +5,7 @@ from contextlib import contextmanager
 from ctypes import byref, c_int
 from math import ceil, cos, floor, radians, sin, tau
 
+from PIL import Image
 from pico2d import pico2d as pico
 
 from combat_room_lighting import CombatRoomLighting
@@ -15,12 +16,39 @@ from player import ASSET_ROOT
 COMBAT_BACKGROUND_TINT = (172, 191, 224)
 COMBAT_ART_PATH = ASSET_ROOT / "terrain" / "combat-room-v2"
 COMBAT_ART = json.loads((COMBAT_ART_PATH / "manifest.json").read_text(encoding="utf-8"))
+FAR_STELES = (
+    (342, 110, 172, 428, ""),
+    (565, 126, 143, 471, "h"),
+    (1430, 134, 184, 397, "h"),
+)
 MIDGROUND_RUINS = (
     ("midground-stele", 416, -30, 332, 492),
     ("midground-broken-arch", 1110, -36, 432, 354),
 )
 FALLING_ROCKS = ((.10, .05, 19, -26), (.29, .02, -8, 34), (.48, 0, -24, -21),
                  (.68, .035, 16, 25), (.89, .06, 26, -32))
+
+
+def _load_distant_stele():
+    """Mix the stele with the cavern air and keep its original cutout."""
+    with Image.open(COMBAT_ART_PATH / "midground-stele.png") as source:
+        stele = source.convert("RGBA")
+    stele.thumbnail((360, 450), Image.Resampling.LANCZOS)
+    air = Image.new("RGB", stele.size, (23, 53, 66))
+    distant = Image.blend(stele.convert("RGB"), air, .76)
+    distant.putalpha(stele.getchannel("A"))
+
+    width, height = distant.size
+    texture = pico.SDL_CreateTexture(pico.renderer, pico.SDL_PIXELFORMAT_RGBA32,
+                                     pico.SDL_TEXTUREACCESS_STATIC, width, height)
+    if not texture:
+        raise RuntimeError(pico.SDL_GetError())
+    image = pico.Image(texture)
+    if pico.SDL_UpdateTexture(texture, None, distant.tobytes(), width * 4) != 0:
+        raise RuntimeError(pico.SDL_GetError())
+    pico.SDL_SetTextureBlendMode(texture, pico.SDL_BLENDMODE_BLEND)
+    pico.SDL_SetTextureScaleMode(texture, pico.SDL_ScaleModeLinear)
+    return image
 
 
 class CombatScenery:
@@ -34,6 +62,7 @@ class CombatScenery:
         for image in self.images.values():
             pico.SDL_SetTextureScaleMode(image.texture, pico.SDL_ScaleModeLinear)
         pico.SDL_SetTextureColorMod(self.images["background"].texture, *COMBAT_BACKGROUND_TINT)
+        self.distant_stele = _load_distant_stele()
         self.seedpods = pico.load_image(str(ASSET_ROOT / "terrain" / "moss-combat-seedpods-v1.png"))
         pico.SDL_SetTextureAlphaMod(self.seedpods.texture, 205)
         self.lighting = CombatRoomLighting(self)
@@ -115,9 +144,13 @@ class CombatScenery:
             if not visible:
                 return
             width = self.room_width * 1.14
-            x = (left + right - width) / 2 + camera.x * .10
-            far_bottom = -80 + camera.y * .10
+            far_dx, far_dy = camera.x * .10, camera.y * .10
+            x = (left + right - width) / 2 + far_dx
+            far_bottom = -80 + far_dy
             self.draw_sprite("background", camera, x, far_bottom, width, ceiling + 176)
+            for sx, sy, sw, sh, flip in FAR_STELES:
+                center = camera.world_to_screen(sx + sw / 2 + far_dx, sy + sh / 2 + far_dy)
+                self.distant_stele.composite_draw(0, flip, *center, sw * camera.zoom, sh * camera.zoom)
             # Keep the illustration's central glow behind the two brighter world-space shafts.
             with self.alpha_geometry():
                 self.soft_light(camera, (x + width * .566, far_bottom + ceiling * .945),
@@ -206,7 +239,7 @@ class CombatScenery:
         self.draw_sprite("vine-joint", camera, 244, 151, 126, 196)
         self.draw_sprite("vine-wall", camera, 1670, 489, 91, 204)
         banks = ((0, exit_left), (exit_right, self.room_width)) if broken else None
-        self.lighting.draw_floor_bounce(camera, ceiling, banks=banks)
+        self.lighting.draw_floor_bounce(camera, banks=banks)
         self.lighting.draw_ledge_bounce(camera, ceiling, platforms)
         self.vegetation.draw_terrain(camera, ceiling, exit_left, exit_right, broken=broken,
                                      tint_at=self.vegetation_tint(ceiling))
@@ -243,7 +276,6 @@ class CombatScenery:
 
             self.draw_lit_sprite("foreground", camera, 0, -318, self.room_width, 350,
                                  shade, columns=17, rows=6)
-            self.lighting.draw_foreground_air(camera)
 
     def draw_shaft(self, camera, exit_left, visibility):
         image = self.images["shaft"]

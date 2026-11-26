@@ -22,16 +22,22 @@ class _Shaft:
 
 
 _SHAFTS = (
-    _Shaft(740, 480, 140, 210, (151, 232, 201), 170),
-    _Shaft(1605, 1270, 151, 223, (141, 226, 198), 186),
+    _Shaft(740, 436, 140, 210, (151, 232, 201), 170),
+    _Shaft(1605, 1380, 151, 223, (141, 226, 198), 186),
 )
 _ROWS = (
-    (0.00, 0.00), (.045, .13), (.15, .34), (.28, .53), (.40, .64),
+    (0.00, .08), (.045, .22), (.15, .39), (.28, .54), (.40, .64),
     (.53, .70), (.65, .77), (.77, .84), (.87, .90), (.95, .98), (1.00, 1.00),
 )
 _COLUMNS = tuple(i / 9 for i in range(-9, 10))
 _RIM_COLOR = (204, 238, 212)
-_FOREGROUND_POOLS = ((350, -52, 148, 101), (1540, -73, 185, 110))
+
+
+def _tint_from_shafts(x, height, tint, strength):
+    exposure = max(exp(-3.2 * ((x - shaft.center(height)) / shaft.radius(height)) ** 2)
+                   for shaft in _SHAFTS)
+    weight = max(0.0, (exposure - .07) / .93) * strength
+    return tuple(round(ambient + (lit - ambient) * weight) for ambient, lit in zip(tint, _RIM_COLOR))
 
 
 @lru_cache(maxsize=8)
@@ -75,15 +81,16 @@ class CombatRoomLighting:
                 self.scenery.soft_light(camera, (shaft.center(.13), ceiling * .13),
                                         (132, 104), shaft.color, 22)
 
-    def draw_floor_bounce(self, camera, ceiling, *, banks=None):
-        """The localized reflection hugs the floor and stays above the exit shaft."""
+    def draw_floor_bounce(self, camera, *, banks=None):
+        """Carry the shaft footprint across the exposed stone lip of each bank."""
         banks = ((0, self.scenery.room_width),) if banks is None else banks
         with self.scenery.alpha_geometry():
             for left, right in banks:
-                with self.scenery.room_clip(camera, left, right, ceiling) as visible:
+                with self.scenery.room_clip(camera, left, right, 22, bottom=-5) as visible:
                     if visible:
                         for shaft in _SHAFTS:
-                            self.scenery.soft_light(camera, (shaft.floor_x, 4), (164, 25), shaft.color, 51)
+                            self.scenery.soft_light(camera, (shaft.floor_x, 2),
+                                                    (shaft.floor_radius * .82, 19), shaft.color, 55)
 
     def draw_ledge_bounce(self, camera, ceiling, platforms):
         """Catch a little green light along each exposed stone lip."""
@@ -96,30 +103,12 @@ class CombatRoomLighting:
                             self.scenery.soft_light(camera, (shaft.center(height), top - 1),
                                                     (shaft.radius(height) * .91, 8), shaft.color, 40)
 
-    def draw_foreground_air(self, camera):
-        """A little reflected light scatters in front of the leaves below the walk line."""
-        with self.scenery.room_clip(camera, 0, self.scenery.room_width, 0, bottom=-190) as visible:
-            if visible:
-                with self.scenery.alpha_geometry():
-                    for (x, y, rx, ry), shaft in zip(_FOREGROUND_POOLS, _SHAFTS):
-                        spill_x = shaft.floor_x + (x - shaft.floor_x) * .45
-                        self.scenery.soft_light(camera, (spill_x, -22), (rx, ry * .38), shaft.color, 27)
-                        self.scenery.soft_light(camera, (x, y + 12), (rx * .77, ry * .82), shaft.color, 55)
-
     def surface_tint(self, x, y, ceiling, tint, strength=1.0):
         """Light airborne and floor vegetation close to either shaft's footprint."""
         height = min(1.0, max(0.0, y / ceiling))
-        exposure = max(
-            exp(-3.2 * ((x - shaft.center(height)) / shaft.radius(height)) ** 2)
-            for shaft in _SHAFTS
-        )
-        weight = max(0.0, (exposure - .07) / .93) * strength
-        return tuple(round(ambient + (lit - ambient) * weight) for ambient, lit in zip(tint, _RIM_COLOR))
+        return _tint_from_shafts(x, height, tint, strength)
 
     def foreground_tint(self, x, y, tint, strength=1.0):
-        """Reflected light reaches only the inner edge of the near leaves and roots."""
-        exposure = max(exp(-((x - cx) / rx) ** 2 - ((y - cy) / ry) ** 2)
-                       for cx, cy, rx, ry in _FOREGROUND_POOLS)
-        weight = strength * exposure
-        return tuple(round(ambient + (lit - ambient) * weight)
-                     for ambient, lit in zip(tint, (250, 255, 198)))
+        """Let the floor light catch the nearest leaf tips and fade down into the roots."""
+        fade = max(0.0, 1 - abs(y - 4) / 93) ** 1.5
+        return _tint_from_shafts(x, 0, tint, strength * fade)

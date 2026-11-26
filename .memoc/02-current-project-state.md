@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 첫 전투방에서 천장 빛줄기가 닿는 월드 좌표를 기준으로 바닥 가장자리 이끼와 가까운 잎을 밝힌다. 잎의 기존 실루엣을 따라 윗면에서 아래로 빛을 줄인다. 같은 비석을 원경에 세 곳 배치하고 RGB를 공기색에 가깝게 섞었다. [바닥 전투 화면](../docs/combat-room-lighting-gameplay.png) · [맵 미술 지침](../MAP_VISUAL_GUIDE.md#7-조명과-접지감)
+
 - 2026-11-26 [B1 보스방 레이어 미술](../assets/concepts/b1-hermit-crab/room-art-v3/README.md)을 게임 테스트에 연결했다. 원경·중경·전경 PNG, 천장 광막, 입구 반사광과 입구→전투 카메라 검수 영상을 저장했다.
 
 - 2026-11-26 [B1 포효 게임 테스트 장면](../assets/concepts/b1-hermit-crab/roar-v4/README.md)을 추가했다. `python -m tools.preview_b1_roar_game`은 게임의 SDL 렌더러와 플레이어로 낙석 직후의 포효를 보여 준다. C 전실과 본편 진행은 유지했다.

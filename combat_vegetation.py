@@ -103,8 +103,8 @@ FLOOR_EDGE = (
 NEAR_BANK = (
     Plant("near-shadow-rounded-leaves", 115, -130, 240, (109, 143, 147)),
     Plant("shadow-low-moss-lobes", 230, -83, 181, (105, 147, 152), True),
-    Plant("shadow-fern-scroll", 345, -95, 98, (109, 146, 151), True),
-    Plant("near-shadow-ribbon-grass", 1575, -102, 255, (100, 140, 145), True),
+    Plant("shadow-fern-scroll", 414, -96, 95, (109, 146, 151), True),
+    Plant("near-shadow-ribbon-grass", 1440, -69, 230, (100, 140, 145), True),
     Plant("near-shadow-rounded-leaves", 1801, -121, 261, (112, 147, 158), True),
     Plant("shadow-fern-scroll", 1701, -112, 92, (111, 151, 151)),
 )

@@ -3,6 +3,7 @@ import gc
 import os
 import unittest
 from ctypes import byref, c_ubyte
+from unittest.mock import patch
 
 os.environ["SDL_VIDEODRIVER"] = "dummy"
 os.environ["SDL_AUDIODRIVER"] = "dummy"
@@ -89,21 +90,36 @@ class CombatSceneryTests(unittest.TestCase):
         pico.SDL_RenderSetClipRect(pico.renderer, None)
         pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)
 
-    def test_front_light_reaches_both_banks_without_covering_combat_or_shaft(self):
-        pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
-        pico.SDL_RenderClear(pico.renderer)
-        self.scenery.lighting.draw_foreground_air(self.camera)
-        pixels = self.pixels()
+    def test_front_light_brightens_leaf_surfaces_near_both_floor_contacts(self):
+        clear_color = bytes((251, 9, 189, 255))
 
-        def color(x, y):
-            start = (y * 960 + x) * 4
-            return tuple(pixels[start:start + 3])
+        def foreground():
+            pico.SDL_SetRenderDrawColor(pico.renderer, *clear_color)
+            pico.SDL_RenderClear(pico.renderer)
+            self.scenery.draw_foreground(self.camera, COMBAT_LEFT_WALL,
+                                          COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
+            return self.pixels()
 
-        self.assertGreater(color(175, 452)[1], 20)
-        self.assertGreater(color(770, 462)[1], 20)
-        self.assertEqual(color(480, 452), (0, 0, 0))
-        self.assertEqual(color(175, 421), (0, 0, 0))
-        self.assertEqual(color(770, 421), (0, 0, 0))
+        with patch.object(self.scenery.lighting, "foreground_tint",
+                          side_effect=lambda x, y, tint, strength=1.0: tint):
+            unlit = foreground()
+        lit = foreground()
+
+        stride = 960 * 4
+        self.assertEqual(lit[:416 * stride], unlit[:416 * stride])
+        self.assertEqual(lit[495 * stride:], unlit[495 * stride:])
+        for row in range(416, 495):
+            start, end = row * stride + 400 * 4, row * stride + 560 * 4
+            self.assertEqual(lit[start:end], unlit[start:end])
+
+        for x_min, x_max in ((165, 280), (635, 752)):
+            green_channels = ((y * 960 + x) * 4 + 1 for y in range(416, 480)
+                              for x in range(x_min, x_max))
+            self.assertGreater(sum(lit[index] > unlit[index] for index in green_channels), 20)
+
+        self.assertTrue(all(lit[index:index + 4] == clear_color
+                            for index in range(416 * stride, 495 * stride, 4)
+                            if unlit[index:index + 4] == clear_color))
 
     def test_new_foreground_tracks_world_points_during_a_camera_pan(self):
         def foreground():
