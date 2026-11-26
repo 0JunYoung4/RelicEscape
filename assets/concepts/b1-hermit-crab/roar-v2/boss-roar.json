@@ -1,0 +1,156 @@
+{
+  "source": "source-atlas.png",
+  "source_size": [
+    1536,
+    1024
+  ],
+  "frame_size": [
+    540,
+    363
+  ],
+  "pivot": [
+    275,
+    329
+  ],
+  "columns": 3,
+  "rows": 3,
+  "frame_count": 9,
+  "duration_ms": 2000,
+  "frames": [
+    {
+      "column": 0,
+      "row": 0,
+      "duration_ms": 280,
+      "source_crop": [
+        25,
+        0,
+        488,
+        314
+      ],
+      "art_offset": [
+        42,
+        39
+      ]
+    },
+    {
+      "column": 1,
+      "row": 0,
+      "duration_ms": 150,
+      "source_crop": [
+        509,
+        19,
+        1024,
+        304
+      ],
+      "art_offset": [
+        15,
+        57
+      ]
+    },
+    {
+      "column": 2,
+      "row": 0,
+      "duration_ms": 170,
+      "source_crop": [
+        1083,
+        40,
+        1477,
+        300
+      ],
+      "art_offset": [
+        77,
+        78
+      ]
+    },
+    {
+      "column": 0,
+      "row": 1,
+      "duration_ms": 90,
+      "source_crop": [
+        41,
+        327,
+        498,
+        641
+      ],
+      "art_offset": [
+        58,
+        20
+      ]
+    },
+    {
+      "column": 1,
+      "row": 1,
+      "duration_ms": 260,
+      "source_crop": [
+        513,
+        317,
+        1008,
+        641
+      ],
+      "art_offset": [
+        22,
+        10
+      ]
+    },
+    {
+      "column": 2,
+      "row": 1,
+      "duration_ms": 260,
+      "source_crop": [
+        1033,
+        327,
+        1518,
+        642
+      ],
+      "art_offset": [
+        23,
+        20
+      ]
+    },
+    {
+      "column": 0,
+      "row": 2,
+      "duration_ms": 150,
+      "source_crop": [
+        29,
+        671,
+        504,
+        992
+      ],
+      "art_offset": [
+        45,
+        11
+      ]
+    },
+    {
+      "column": 1,
+      "row": 2,
+      "duration_ms": 160,
+      "source_crop": [
+        505,
+        681,
+        976,
+        1000
+      ],
+      "art_offset": [
+        10,
+        21
+      ]
+    },
+    {
+      "column": 2,
+      "row": 2,
+      "duration_ms": 480,
+      "source_crop": [
+        1073,
+        681,
+        1502,
+        993
+      ],
+      "art_offset": [
+        66,
+        22
+      ]
+    }
+  ]
+}

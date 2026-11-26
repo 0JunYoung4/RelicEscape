@@ -13,6 +13,7 @@ tags:
 Last: 2026-11-26 (Asia/Seoul)
 
 - B1 전투 가안 `docs/b1-hermit-crab-combat-design.md`. 포효 시안·전투 본편 미연결.
+- B1 포효 새 원화 9장 `assets/concepts/b1-hermit-crab/roar-v2/`.
 - 원작 전투 조사 `docs/hollow-knight-combat-pattern-study.md`.
 - A–B 절벽 접합·비석/식생 깊이 적용.
 - A 3초 발판 설치→아래→E 귀환→B. 사망 시 유지, R 초기화.

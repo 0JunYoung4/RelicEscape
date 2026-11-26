@@ -1,0 +1,20 @@
+Built-in ImageGen, transparent background enabled.
+Input: assets/concepts/b1-hermit-crab/assembled-upright-v6.png
+Project reference HK-GP07 was inspected for the readable silhouette of one dominant engraved stone mass and the contrast between the large carving and smaller moss accents. It was not supplied to the generator.
+
+Use case: stylized-concept
+Asset type: one transparent 2D pixel-art GAME ANIMATION SPRITE SHEET, nine directly redrawn key poses
+Input image 1: RelicEscape's original B1 rock hermit crab upright design. Use it only as the character model sheet. Draw every frame as a new purposeful drawing from it, like nine cels made by the same key animator. Never apply a scale or mesh deformation of the reference.
+Goal: one loopable boss-intro roar, acted solely by lifting and tilting its rocky head upward and lifting and opening both very heavy claws. He has only two tiny square muted amber eyes in a black brow slot and the closed interlocking rock plates below. Keep those plates closed throughout. Absolutely NO drawn mouth, mouth opening, lips, teeth, tongue, or scream hole.
+Visual invariants: original chunky blue-gray layered slate carapace; one prominent incised angular spiral on the front plate; five restrained olive moss highlights at the same places; small warm square eyes; two very large heavy crescent-shaped stone pincers; four short braced stone legs; side edges in deep charcoal-teal. Same front-facing 2D camera and slight off-center shell from this specific original, no perspective rotation of camera. Keep scale consistent by locking the width of the shell's spiral plate and width of each claw palm between drawings. Shift height and extension with actual articulated plates, shoulders, arm joints and claw hinges, giving a weighty distinct silhouette. Clear central silhouette and coarse carved stone planes.
+Exactly nine full, distinct poses in a strict evenly spaced 3 columns x 3 rows grid in landscape (prefer about 3:2 image). Row-major:
+TOP LEFT: alert baseline, weight centered, both claw arms low and forward, eyes level.
+TOP MIDDLE: anticipation, bent legs, eyes and shell crest down, elbows tucked and claws angling in.
+TOP RIGHT: deepest crouch, massive weight compressed by bent leg joints, both fists nearly touching floor, no body scaling.
+MIDDLE LEFT: rising rapidly, head already leaning upward and left claw lifts diagonally first, second claw just starting.
+MIDDLE CENTER: PEAK ROAR, hinge the rocky brow and entire upper shell visibly UP AND BACK, eye slot high and looking skyward, face still sealed, both lifted stone claws swing out and hinge wide with visible gaps in pincers, each higher than neutral, hips up and feet braced on exactly the same floor, iconic heavy silhouette.
+MIDDLE RIGHT: sustained roar, crest still proudly up, right claw held fractionally higher than left, pincers fully spread, all facial plates closed.
+BOTTOM LEFT: rebound, shell and brow coming down and each claw drops at its own speed, left elbow settles first.
+BOTTOM MIDDLE: follow-through, claws almost low, head tilts down a little, knees absorb weight.
+BOTTOM RIGHT: recovered close to original alert stance, both heavy claws relaxed and tucked, face intact.
+Even margins around ALL cels including farthest pincers. Each pose has its own identical size cell with feet on the same invisible baseline near the bottom; anchor the shell center at center of each cell. Make room for widest apex. Everything fully inside its cell, no pose crosses into another cell. Consistent crisp hand-drawn game sprite, broad pixel clusters, strong outline, limited muted palette, readable at a small game size. No text, numbering, grids, guides, frames, shadows on floor, effects, aura, dust, particles, scattering rocks, background, scenery, or other characters. True transparent alpha throughout the blank canvas. The only painted pixels are the nine boss silhouettes.

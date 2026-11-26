@@ -15,6 +15,8 @@ Durable project decisions live here. Keep entries short, dated, and useful to fu
 
 ## Decision Log
 
+- 2026-11-26 사용자 지정으로 B1 포효의 보스 자세는 기존 이미지를 확대하거나 변형하지 않고 [새로 그린 자세](../assets/concepts/b1-hermit-crab/roar-v2/README.md)를 사용한다.
+
 - 2026-11-26 B1 전투 초안은 집게와 낙하를 순서대로 익힌 뒤 은신을 한 번 해제하고 연속 낙하를 상대하는 세 페이즈로 잡았다. 기존 0.64초 집게 자세와 낙하 1.4초 대기·0.8초 예고를 사용한다. 50% 전환, 반격 시간, 연계 순서는 [첫 플레이테스트 가안](../docs/b1-hermit-crab-combat-design.md)이다.
 
 - 2026-11-26 B1 시작은 바위 충돌로 눈을 뜬 소라게의 포효로 연출한다. 새 입을 그리지 않고 기존 얼굴로 고개를 젖히며 두 집게를 들어 벌린다. 공기 파동과 발밑 먼지·자갈은 각각 분리한다. [포효 시안](../assets/concepts/b1-hermit-crab/roar-v1/README.md)

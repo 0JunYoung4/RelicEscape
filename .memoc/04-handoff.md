@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-26 B1 포효 보스 단독 자산은 [roar-v2](../assets/concepts/b1-hermit-crab/roar-v2/README.md)가 최신이다. 셀 540 × 363, 바닥 기준점 (275, 329), 자세 9장과 가변 유지 시간 2초를 `boss-roar.json`에 기록했다. 효과는 v1에 있고 새 그림을 사용한 합성 및 본편 연결은 후속이다.
+
 - 2026-11-26 B1 본편 전투는 [페이즈·공격 판정 가안](../docs/b1-hermit-crab-combat-design.md)에서 이어간다. 도입 낙석과 은신 해제용 암석을 분리하고, 벽 근처 낙하 회피 폭·기본 베기 도달·은신 레일 실패 복구·바닥 복귀 대기·C 석등 재시작을 검증한다.
 
 - 2026-11-26 B1 바위 충돌 이후의 포효 시안을 만들었다. `tools.render_b1_roar_pose`, `tools.render_b1_roar_effects`, `tools.render_b1_roar_preview`로 24fps 시트와 보스방 GIF를 재생성한다. C 전실에서 B1 입장·전투 상태 전환을 구현할 때 포효 레이어를 연결한다. 기획과 기준점은 [포효 자산 문서](../assets/concepts/b1-hermit-crab/roar-v1/README.md)에 있다.
