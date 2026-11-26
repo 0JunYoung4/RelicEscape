@@ -1,0 +1,61 @@
+Built-in ImageGen with transparent background enabled.
+Character and keyframe reference: ../roar-v2/boss-roar-sheet.png.
+Project reference: HK-GP07 was previously consulted for the legibility of one large engraved stone silhouette and restrained small moss accents. The generator received only RelicEscape-owned images.
+Only cels identified in boss-roar.json are used in the final animation.
+
+---
+
+Lift atlas
+
+Use case: stylized-concept
+Asset type: newly drawn, game-ready B1 rock hermit crab in-between animation cels in one 3 by 3 transparent sprite sheet. The provided RelicEscape sheet is the exact character model and the 9 existing key cels in reading order (K1–K9). Create NEW DRAWINGS for intervening motion, not copies of those keys and not warped, resized, or interpolated pixels. Keep the same ALL-NINE-POSE front-facing camera, exact proportions and scale: dense blue-gray layered slate, front plate incised angular spiral, same sparse olive moss tufts, tiny amber square eyes, sealed interlocking stone plates below eyes, two huge matching stone pincers, stubby stone legs. No mouth opening, mouth, new teeth, tongue, or other facial detail. The shell pitches up through a physical change in the visible underside and eye height, while the claw shoulders and hinges articulate. Feet must stay on the same invisible floor, and the eye midpoint must remain in the center in x so each later insertion will not shift the character. Avoid style variation between cels; match the slightly pixelated RelicEscape stone image closely. On a 1536 × 1024 sheet, the three columns are approximately 512 px wide each. Target about 390 to 465 px wide per boss silhouette and 245 to 302 px tall within its cell, like the reference. All bodies must have comparable scale; the main spiral plate must stay the same size. Clean transparent background and clear gutters, no shadow, ground, background color, textures outside the silhouette, text, legend, guides, borders, other creature, dust, aura, or VFX.
+Draw exactly 9 different new cels in this order. The whole set is about the buildup and upward release, no repeat existing key frames.
+Row 1 left to right:
+A1: early crouch between K1 and K2, eyes down by just a few pixels, elbows bend slightly inward.
+A2: middle crouch between K2 and K3, just halfway down. Claws near floor, eyes at middle height between those two keys.
+A3: very first lift about one quarter from K3 to K4. Chin and body leaving the lowest point, both claws still low, weight over spread planted legs.
+Row 2 left to right:
+A4: halfway from K3 to K4; legs partially straighten, eye slot one-half higher, left claw angles slightly upward, right low.
+A5: three-quarters from K3 to K4, eyes nearly at K4 level, both claw elbows coming up. Keep arc continuous.
+A6: one-quarter from K4 to K5, left claw pivots and lifts diagonally a modest 20 degrees, opening upward slightly. Right claw only begins following. Brow just starting to pitch back.
+Row 3 left to right:
+A7: halfway from K4 to K5, left claw more open and rotated outward, right claw partly up and rotates after the left, eyes halfway higher, rock brow tilts back with real painted underside.
+A8: three-quarters from K4 to K5, both claws wide and high, right claw catching up, new intermediate between A7 and maximum lift, body still a bit lower than K5.
+A9: between K5 and K6; sustain upward head tilt, both claws are up and open, one sinks a tiny amount as the other steadies. A smaller shift than between adjacent old keys.
+Exactly 3 columns by 3 rows, with transparent generous gutters. No repeats and no labels.
+
+---
+
+Recovery atlas
+
+Use case: stylized-concept
+Asset type: newly drawn, game-ready B1 rock hermit crab in-between animation cels in one 3 by 3 transparent sprite sheet. The provided RelicEscape sheet is the exact character model and the 9 existing key cels in reading order (K1–K9). Create NEW DRAWINGS for intervening motion, not copies of those keys and not warped, resized, or interpolated pixels. Keep the same ALL-NINE-POSE front-facing camera, exact proportions and scale: dense blue-gray layered slate, front plate incised angular spiral, same sparse olive moss tufts, tiny amber square eyes, sealed interlocking stone plates below eyes, two huge matching stone pincers, stubby stone legs. No mouth opening, mouth, new teeth, tongue, or other facial detail. The shell pitches up through a physical change in the visible underside and eye height, while the claw shoulders and hinges articulate. Feet must stay on the same invisible floor, and the eye midpoint must remain in the center in x so each later insertion will not shift the character. Avoid style variation between cels; match the slightly pixelated RelicEscape stone image closely. On a 1536 × 1024 sheet, the three columns are approximately 512 px wide each. Target about 390 to 465 px wide per boss silhouette and 245 to 302 px tall within its cell, like the reference. All bodies must have comparable scale; the main spiral plate must stay the same size. Clean transparent background and clear gutters, no shadow, ground, background color, textures outside the silhouette, text, legend, guides, borders, other creature, dust, aura, or VFX.
+Draw exactly 9 different new cels in this order, focusing on the controlled descent and closing both claws. Each row of the output must be distinct from reference poses.
+Row 1 left to right:
+B1: one third from K6 (both claws up) to K7 (left lower and right still lifted): the left pincer dips only a little while the right stays high; body is still high.
+B2: two thirds from K6 to K7: left pincer has dipped most of the way, right stays high. The head rolls slightly forward.
+B3: one quarter from K7 to K8: from left low/right high, the high right claw begins rotating forward and downward from the shoulder, chest sinks just a little.
+Row 2 left to right:
+B4: halfway from K7 to K8: the right claw rotates through a 45-degree halfway orientation and is visibly halfway down. The left is low, body between both key heights.
+B5: three quarters from K7 to K8: right claw nearly down, fingers nearly forward, eyes descend low as the knees take the weight. Still a little higher than K8.
+B6: midpoint from K8 to K9: light final settling, both claws low, curl the fingers on left claw slightly inward and settle the shoulders, eye level between those keys.
+Row 3 left to right:
+B7: only slight movement from K8 toward K9 (first third between them), both claws still low and one leg easing, heavy shape.
+B8: final third from K8 toward K9, motion almost still, both claws retained in a restrained asymmetrical resting stance.
+B9: midpoint from K9 to K1 for seamless loop reset, shoulders and claw directions eased halfway but neutral height.
+Exactly 3 columns × 3 rows in one image. Preserve the exact material style. Make each in-between a real painted change in angles of the stone joints, smaller in angular and height motion than the keys. No labels in pixels.
+
+---
+
+Bridge atlas (the lift atlas is the second reference)
+
+Use case: stylized-concept
+Asset type: six newly hand-drawn game animation in-between cels for the original RelicEscape B1 rock hermit crab. Reference 1 is the existing aligned 9-pose 3×3 game sheet K1–K9 in reading order. Reference 2 is freshly drawn in-between sheet A1–A9. Draw the same original creature six additional times as new drawings. Match the reference character and visual scale with very high fidelity. Frontal fixed camera, chunky blue-gray slate plates, same left-of-center engraved angular spiral, a few olive moss caps, two square amber eyes with no white pupils, two heavy crescent pincers, stubby braced legs. The stone face always stays sealed, with exactly the original closed stone plates and no mouth opening, lips, teeth, tongue, or other expression detail. Change the pose with actual articulated stone shoulders, forearms and claw rotation and tilt of the head, never by stretching an image.
+Layout: one transparent 1536x1024 landscape sheet, exactly three equal columns and two equal rows. All six silhouettes centered on x=256/768/1280 and feet on y=418 for the first row or y=930 for the second row. Keep each silhouette around 385–460 px wide and 255–302px tall as in the source, with large transparent gaps and the silhouette fully inside its cell. The eye-height differences are important. Use these concrete local target y positions measured from the same foot baseline, so the later frames make a true visual bridge. Large outline and original slab geometry matter more than texture detail.
+TOP LEFT C1, early crouch between K1 and K2: both claws mostly forward, slightly tucked, eye midpoint about 122 px ABOVE the floor, head aligned, original broad alert width.
+TOP MIDDLE C2, release from crouch between A3 and A4: eyes exactly approximately 119 px above floor (halfway lift from low), knees halfway bent, both claws still low, left shoulder slightly higher.
+TOP RIGHT C3, between A7 and K5 just before the peak roar: solid form about 455 px wide. Eyes approximately 191 px above floor. Upper carapace tilts backward, both pincers aimed diagonally up and open; almost at K5 hold but not identical.
+BOTTOM LEFT C4, between K6 and K7: eyes approximately 184 px above floor. Big stone torso pitches a little forward out of the peak. Keep right claw open and high and lower left partway through its turn. Full shape ~450 px wide as reference.
+BOTTOM MIDDLE C5, between K7 and K8: eyes approximately 155 px above floor. Left claw stays low and right claw follows down through a diagonal, midway between raised and low. Total silhouette ~431 px wide. The leg joints follow without the feet coming off the floor.
+BOTTOM RIGHT C6, near the loop boundary between K9 and K1: eyes approximately 136 px above floor. Subtle settling; both bulky claws low in the neutral posture; ~405px wide.
+Restore true transparent alpha outside each creature; absolutely no colored matte, room, ground shadow, illustrated background, written cells or numerals, grid lines, light effects, particles, duplicate pincer, loose debris. Keep key shape scale stable from face to face.

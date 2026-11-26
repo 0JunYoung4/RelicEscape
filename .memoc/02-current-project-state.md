@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 [B1 포효 v3](../assets/concepts/b1-hermit-crab/roar-v3/README.md)에 새 중간 자세 11장을 넣어 보스 단독 시트를 20장으로 늘렸다. 원화 크기는 그대로이며 바닥·몸 중심만 맞췄다.
+
 - 2026-11-26 B1 포효 자세 9장을 새로 그려 [보스 단독 WebP와 투명 시트](../assets/concepts/b1-hermit-crab/roar-v2/README.md)로 제작했다. 보스 그림은 공통 바닥에 위치만 맞췄다. 본편 연결 전이다.
 
 - 2026-11-26 [B1 전투 설계 가안](../docs/b1-hermit-crab-combat-design.md)에 집게·단발 낙하, 체력 50% 은신과 유물 레일, 해제 후 2연속 낙하를 기록했다. 공격 전조·반격 시간·재도전 조건은 구현 전 가안이다. [할로우 나이트 일반 적 9종·보스 10종 참고 자료](../docs/hollow-knight-combat-pattern-study.md)는 후속 전투에 재사용한다.

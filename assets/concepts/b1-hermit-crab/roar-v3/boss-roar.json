@@ -1,0 +1,395 @@
+{
+  "sources": {
+    "v2": {
+      "path": "../roar-v2/source-atlas.png",
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    "lift": {
+      "path": "source-lift-atlas.png",
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    "recovery": {
+      "path": "source-recovery-atlas.png",
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    "bridge": {
+      "path": "source-bridge-atlas.png",
+      "size": [
+        1536,
+        1024
+      ]
+    }
+  },
+  "frame_size": [
+    540,
+    363
+  ],
+  "pivot": [
+    275,
+    329
+  ],
+  "columns": 5,
+  "rows": 4,
+  "frame_count": 20,
+  "duration_ms": 2000,
+  "frames": [
+    {
+      "source": "v2",
+      "source_crop": [
+        25,
+        0,
+        488,
+        314
+      ],
+      "art_offset": [
+        42,
+        38
+      ],
+      "column": 0,
+      "row": 0,
+      "duration_ms": 190,
+      "v2_key": 0,
+      "label": "K1"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        64,
+        33,
+        460,
+        320
+      ],
+      "art_offset": [
+        76,
+        48
+      ],
+      "column": 1,
+      "row": 0,
+      "duration_ms": 70,
+      "label": "A1"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        509,
+        19,
+        1024,
+        304
+      ],
+      "art_offset": [
+        15,
+        56
+      ],
+      "column": 2,
+      "row": 0,
+      "duration_ms": 90,
+      "v2_key": 1,
+      "label": "K2"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        574,
+        51,
+        971,
+        321
+      ],
+      "art_offset": [
+        75,
+        65
+      ],
+      "column": 3,
+      "row": 0,
+      "duration_ms": 60,
+      "label": "A2"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        1083,
+        40,
+        1477,
+        300
+      ],
+      "art_offset": [
+        77,
+        77
+      ],
+      "column": 4,
+      "row": 0,
+      "duration_ms": 60,
+      "v2_key": 2,
+      "label": "K3"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        1088,
+        54,
+        1481,
+        320
+      ],
+      "art_offset": [
+        77,
+        69
+      ],
+      "column": 0,
+      "row": 1,
+      "duration_ms": 40,
+      "label": "A3"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        63,
+        376,
+        458,
+        659
+      ],
+      "art_offset": [
+        67,
+        52
+      ],
+      "column": 1,
+      "row": 1,
+      "duration_ms": 40,
+      "label": "A4"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        566,
+        367,
+        976,
+        658
+      ],
+      "art_offset": [
+        60,
+        44
+      ],
+      "column": 2,
+      "row": 1,
+      "duration_ms": 30,
+      "label": "A5"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        41,
+        327,
+        498,
+        641
+      ],
+      "art_offset": [
+        46,
+        20
+      ],
+      "column": 3,
+      "row": 1,
+      "duration_ms": 30,
+      "v2_key": 3,
+      "label": "K4"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        1045,
+        368,
+        1495,
+        659
+      ],
+      "art_offset": [
+        32,
+        44
+      ],
+      "column": 4,
+      "row": 1,
+      "duration_ms": 30,
+      "label": "A6"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        31,
+        706,
+        476,
+        1001
+      ],
+      "art_offset": [
+        31,
+        40
+      ],
+      "column": 0,
+      "row": 2,
+      "duration_ms": 30,
+      "label": "A7"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        542,
+        703,
+        988,
+        1002
+      ],
+      "art_offset": [
+        39,
+        36
+      ],
+      "column": 1,
+      "row": 2,
+      "duration_ms": 20,
+      "label": "A8"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        1048,
+        702,
+        1501,
+        1002
+      ],
+      "art_offset": [
+        36,
+        35
+      ],
+      "column": 2,
+      "row": 2,
+      "duration_ms": 30,
+      "label": "A9"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        513,
+        317,
+        1008,
+        641
+      ],
+      "art_offset": [
+        10,
+        10
+      ],
+      "column": 3,
+      "row": 2,
+      "duration_ms": 210,
+      "v2_key": 4,
+      "label": "K5"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        1033,
+        327,
+        1518,
+        642
+      ],
+      "art_offset": [
+        21,
+        20
+      ],
+      "column": 4,
+      "row": 2,
+      "duration_ms": 200,
+      "v2_key": 5,
+      "label": "K6"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        29,
+        671,
+        504,
+        992
+      ],
+      "art_offset": [
+        33,
+        11
+      ],
+      "column": 0,
+      "row": 3,
+      "duration_ms": 100,
+      "v2_key": 6,
+      "label": "K7"
+    },
+    {
+      "source": "bridge",
+      "source_crop": [
+        1047,
+        628,
+        1513,
+        952
+      ],
+      "art_offset": [
+        41,
+        10
+      ],
+      "column": 1,
+      "row": 3,
+      "duration_ms": 50,
+      "label": "C6"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        505,
+        681,
+        976,
+        1000
+      ],
+      "art_offset": [
+        7,
+        21
+      ],
+      "column": 2,
+      "row": 3,
+      "duration_ms": 180,
+      "v2_key": 7,
+      "label": "K8"
+    },
+    {
+      "source": "recovery",
+      "source_crop": [
+        1087,
+        723,
+        1486,
+        998
+      ],
+      "art_offset": [
+        73,
+        60
+      ],
+      "column": 3,
+      "row": 3,
+      "duration_ms": 60,
+      "label": "B9"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        1073,
+        681,
+        1502,
+        993
+      ],
+      "art_offset": [
+        64,
+        22
+      ],
+      "column": 4,
+      "row": 3,
+      "duration_ms": 480,
+      "v2_key": 8,
+      "label": "K9"
+    }
+  ]
+}
