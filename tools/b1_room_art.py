@@ -3,19 +3,26 @@
 from ctypes import create_string_buffer
 from math import exp
 
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageOps
 from pico2d import pico2d as pico
 
+from tools.b1_combat_terrain import stage_terrain
 from tools.preview_b1_intro import ART, GROUND, SHELL_X, SIZE
-from tools.render_b1_roar_preview import PLAYER_X, rgba, stage_terrain
+from tools.render_b1_roar_preview import PLAYER_X, rgba
 
 
 WORLD_PER_ART_PIXEL = 2
 ROOM_SIZE = (2410, 790)
 FAR_SIZE = (2690, 950)
-ROOM_ART = ART.parent / "room-art-v3"
+ROOM_ART = ART.parent / "room-art-v4"
+BASE_ROOM_ART = ART.parent / "room-art-v3"
 NEUTRAL_VIEW_CENTER = (1168, 397)
 FAR_PARALLAX, MID_PARALLAX, NEAR_PARALLAX = .25, .62, 1.10
+FLOOR_LIGHTS = (
+    (1087, 376, (125, 188, 135), 52),
+    (1541, 256, (123, 164, 111), 40),
+    (2077, 377, (138, 160, 91), 42),
+)
 
 
 def rgba_texture(image):
@@ -54,6 +61,15 @@ def _air_mix(image, color, fraction):
     return mixed
 
 
+def _green_grade(image, shadows, highlights, fraction):
+    """Grade the color range on this layer while retaining its cutout alpha."""
+    rgb = image.convert("RGB")
+    tint = ImageOps.colorize(ImageOps.grayscale(rgb), shadows, highlights)
+    mixed = Image.blend(rgb, tint, fraction)
+    mixed.putalpha(image.getchannel("A"))
+    return mixed
+
+
 def _attached_vault():
     """Keep the overhead vault and wall return on the fixed room plane."""
     image = rgba(ART / "foreground.png")
@@ -87,34 +103,46 @@ def _light_pool(size, color, opacity):
     return rgba_texture(_pool_image(size, color, opacity))
 
 
-def _lit_terrain():
-    """Catch a little gate light on the slate overhang without changing its alpha."""
-    terrain = stage_terrain()
-    alpha = terrain.getchannel("A")
-    spill = _pool_image((385, 180), (192, 142, 91), 89)
-    x, y = 1857, 460
-    surface = alpha.crop((x, y, x + spill.width, y + spill.height))
+def _apply_surface_light(image, spill, x, y):
+    """Light visible surfaces at room coordinates while retaining their silhouette."""
+    patch = image.crop((x, y, x + spill.width, y + spill.height))
+    surface = patch.getchannel("A")
     mask = ImageChops.multiply(spill.getchannel("A"), surface)
-    terrain.paste(spill.convert("RGB"), (x, y), mask)
-    terrain.putalpha(alpha)
+    rgb = patch.convert("RGB")
+    rgb.paste(spill.convert("RGB"), (0, 0), mask)
+    rgb.putalpha(surface)
+    image.paste(rgb, (x, y))
+
+
+def _light_floor_edges(image):
+    for center, width, color, opacity in FLOOR_LIGHTS:
+        spill = _pool_image((width, 88), color, opacity)
+        _apply_surface_light(image, spill, center - width // 2, GROUND - 45)
+    return image
+
+
+def _lit_terrain():
+    terrain = _green_grade(stage_terrain(), (6, 19, 13), (144, 184, 121), .22)
+    _light_floor_edges(terrain)
+    _apply_surface_light(terrain, _pool_image((385, 180), (135, 162, 91), 84), 1857, 460)
     return terrain
 
 
-def _shaft():
+def _shaft(width, mouth, floor, narrow, wide, color, opacity):
     """Feathered light from a ceiling break, widening towards the arena."""
-    size = (530, GROUND)
+    size = (width, GROUND)
     values = []
     for y in range(size[1]):
         progress = y / (size[1] - 1)
-        center = 83 + 246 * progress
-        radius = 22 + 132 * progress
+        center = mouth + (floor - mouth) * progress
+        radius = narrow + (wide - narrow) * progress
         falloff = min(1, (1 - progress) / .22) * (1 - .51 * progress)
         for x in range(size[0]):
             u = (x - center) / radius
             edge = max(0, 1 - (u / 1.25) ** 2)
             scatter = .74 * exp(-2.5 * u * u) + .26 * exp(-16 * (u + .22) ** 2)
-            values.append(round(82 * falloff * edge * scatter))
-    return rgba_texture(_tinted_image(size, (162, 205, 202), values))
+            values.append(round(opacity * falloff * edge * scatter))
+    return rgba_texture(_tinted_image(size, color, values))
 
 
 def _view_bounds(camera):
@@ -143,20 +171,24 @@ def _parallax_origin(view, factor):
 
 class B1RoomArt:
     def __init__(self, art_dir=ROOM_ART):
+        near_dir = BASE_ROOM_ART if art_dir == ROOM_ART else art_dir
         far = _room_image(art_dir / "far-background.png", FAR_SIZE, opaque=True)
-        self.far = rgba_texture(_air_mix(far, (23, 48, 63), .18))
+        self.far = rgba_texture(_air_mix(far, (21, 52, 61), .12))
         middle = _room_image(art_dir / "midground.png", ROOM_SIZE)
-        self.middle = rgba_texture(_air_mix(middle, (31, 72, 83), .24))
+        middle = _green_grade(middle, (13, 28, 29), (119, 163, 124), .34)
+        self.middle = rgba_texture(_air_mix(middle, (28, 55, 61), .18))
         self.terrain = rgba_texture(_lit_terrain())
-        self.vault = rgba_texture(_attached_vault())
-        self.near = rgba_texture(_room_image(art_dir / "near-foreground.png", ROOM_SIZE))
+        self.vault = rgba_texture(_green_grade(_attached_vault(), (3, 10, 7), (101, 135, 81), .29))
+        edge = _room_image(ROOM_ART / "attached-foreground.png", ROOM_SIZE)
+        self.edge = rgba_texture(_light_floor_edges(edge))
+        near = _room_image(near_dir / "near-foreground.png", ROOM_SIZE)
+        self.near = rgba_texture(_green_grade(near, (3, 11, 8), (88, 122, 73), .31))
 
-        self.air = _light_pool((304, 96), (121, 161, 163), 29)
-        self.shaft = _shaft()
-        self.tunnel_glow = _light_pool((196, 96), (190, 147, 92), 66)
-        self.stone_bounce = _light_pool((96, 16), (170, 204, 183), 34)
-        self.tunnel_bounce = _light_pool((86, 14), (194, 149, 91), 59)
-        self.foot_shadow = _light_pool((128, 16), (10, 18, 18), 151)
+        self.air = _light_pool((304, 96), (75, 123, 117), 34)
+        self.shaft = _shaft(530, 83, 329, 22, 154, (126, 207, 158), 113)
+        self.stele_shaft = _shaft(380, 255, 173, 18, 113, (125, 174, 133), 66)
+        self.tunnel_glow = _light_pool((196, 96), (137, 163, 89), 65)
+        self.foot_shadow = _light_pool((128, 16), (8, 17, 13), 151)
 
     def draw_behind_actors(self, camera):
         view = _view_bounds(camera)
@@ -172,16 +204,18 @@ class B1RoomArt:
 
         air_x, air_y = _parallax_origin(view, .40)
         _draw_plate(camera, self.air, 543 + air_x, 445 + air_y, size=(1270, 290))
-        _draw_plate(camera, self.middle, *_parallax_origin(view, MID_PARALLAX))
+        middle_x, _ = _parallax_origin(view, MID_PARALLAX)
+        # Base rubble stays at floor height as the camera moves vertically.
+        _draw_plate(camera, self.middle, middle_x)
         _draw_plate(camera, self.shaft, 762, 0)
+        _draw_plate(camera, self.stele_shaft, 1368, 0)
         _draw_plate(camera, self.tunnel_glow, 1814, 493, size=(526, 268))
         _draw_plate(camera, self.terrain)
 
-        _draw_plate(camera, self.stone_bounce, 899, GROUND - 7, size=(376, 22))
-        _draw_plate(camera, self.tunnel_bounce, 1888, GROUND - 6, size=(377, 21))
         _draw_plate(camera, self.foot_shadow, SHELL_X - 141, GROUND - 4, size=(282, 15))
         _draw_plate(camera, self.foot_shadow, PLAYER_X - 20, GROUND - 3, size=(40, 9))
 
     def draw_in_front(self, camera):
         _draw_plate(camera, self.vault)
+        _draw_plate(camera, self.edge)
         _draw_plate(camera, self.near, *_parallax_origin(_view_bounds(camera), NEAR_PARALLAX))

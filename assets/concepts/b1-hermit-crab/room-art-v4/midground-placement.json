@@ -1,0 +1,121 @@
+{
+  "size": [
+    2410,
+    790
+  ],
+  "air_rgb": [
+    27,
+    56,
+    66
+  ],
+  "pieces_back_to_front": [
+    {
+      "asset": "broken-watergate",
+      "source": "source-midground-architecture.png",
+      "source_bounds": [
+        62,
+        94,
+        655,
+        675
+      ],
+      "placement": [
+        419,
+        284,
+        440,
+        425
+      ],
+      "air_mix": 0.1,
+      "exclude_source_bounds": [
+        620,
+        510,
+        655,
+        675
+      ]
+    },
+    {
+      "asset": "broken-arcade-return",
+      "source": "source-midground-architecture.png",
+      "source_bounds": [
+        1350,
+        385,
+        2060,
+        672
+      ],
+      "placement": [
+        1531,
+        511,
+        482,
+        198
+      ],
+      "air_mix": 0.2
+    },
+    {
+      "asset": "fractured-sluice-runnel",
+      "source": "source-midground-architecture.png",
+      "source_bounds": [
+        643,
+        526,
+        1298,
+        668
+      ],
+      "placement": [
+        638,
+        654,
+        248,
+        54
+      ],
+      "air_mix": 0.25
+    },
+    {
+      "asset": "collapsed-slate-ribs",
+      "source": "source-midground-props.png",
+      "source_bounds": [
+        10,
+        238,
+        727,
+        660
+      ],
+      "placement": [
+        426,
+        575,
+        231,
+        136
+      ],
+      "air_mix": 0.18
+    },
+    {
+      "asset": "spiral-water-marker",
+      "source": "source-midground-props.png",
+      "source_bounds": [
+        847,
+        9,
+        1316,
+        666
+      ],
+      "placement": [
+        1450,
+        455,
+        184,
+        258
+      ],
+      "air_mix": 0.18
+    },
+    {
+      "asset": "split-collar-rubble",
+      "source": "source-midground-props.png",
+      "source_bounds": [
+        1438,
+        410,
+        2127,
+        662
+      ],
+      "placement": [
+        1948,
+        653,
+        153,
+        56
+      ],
+      "air_mix": 0.18
+    }
+  ]
+}

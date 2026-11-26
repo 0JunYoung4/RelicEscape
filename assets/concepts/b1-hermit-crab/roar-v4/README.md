@@ -1,6 +1,6 @@
 # B1 포효 · 무게와 타이밍 보정
 
-[새 방 미술과 입구→전투 카메라](../room-art-v3/README.md)에서 최신 게임 테스트 화면을 볼 수 있다.
+[최신 방 미술과 실행 방법](../room-art-v4/README.md)에서 게임 테스트 화면을 볼 수 있다.
 
 [할로우 나이트의 Dung Defender 도입 영상 9:30](https://www.youtube.com/watch?v=91c-CuX6fhM&t=570s)에서 넓게 디딘 발을 고정한 채 양팔이 서로 다른 박자로 움직이는 점을 참고했다. [The Hollow Knight 전투](https://www.youtube.com/watch?v=qPL5Ex7U_DQ&t=3957s)의 시작 포효에서는 제자리에서 고개를 들어 올린 실루엣이 전투 신호가 된다. 이 두 가지 원리를 바위 소라게의 관절과 무게에 맞춰 적용했다.
 

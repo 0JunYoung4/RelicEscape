@@ -1,5 +1,7 @@
 # B1 바위 소라게 둥지 · 레이어와 조명
 
+[최신 B1 화면](../room-art-v4/README.md)은 중경 조형물을 추가하고 바닥과 발판에 첫 전투방 재질을 적용했다. 이 페이지의 캡처는 v3 기록이다.
+
 습한 암굴에 남은 옛 수로를 배경으로 삼았다. 중앙의 소라게, 주인공과 파동이 먼저 읽히도록 큰 석재는 양옆에 두고 기존 보행선과 장치를 기준으로 배치했다. 게임 테스트는 낙석 직후의 구도를 보여 준다.
 
 ![중앙 포효 구도](previews/boss-roar.png)
@@ -20,8 +22,4 @@
 
 SDL에서 네 고정 구도와 이동 영상을 확인했다. 이 테스트는 입구와 포효 장면을 검토하며 본편의 C 전실에서 B1로 들어가는 경로는 연결 전이다.
 
-```powershell
-.\.venv\Scripts\python.exe -m tools.preview_b1_roar_game --camera-tour
-.\.venv\Scripts\python.exe -m tools.preview_b1_roar_game --stills assets/concepts/b1-hermit-crab/room-art-v3/previews
-.\.venv\Scripts\python.exe -m tools.preview_b1_roar_game --camera-tour --capture assets/concepts/b1-hermit-crab/room-art-v3/previews/camera-tour.webp
-```
+[현재 테스트 실행 방법](../room-art-v4/README.md)
