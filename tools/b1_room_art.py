@@ -1,14 +1,15 @@
 """Layered art and local lighting for the B1 roar test room."""
 
 from ctypes import create_string_buffer
+from functools import lru_cache
 from math import exp
 
-from PIL import Image, ImageChops, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageOps
 from pico2d import pico2d as pico
 
-from tools.b1_combat_terrain import stage_terrain
+from tools.b1_combat_terrain import FLOOR_SOURCE, TERRAIN_ART, stage_terrain
 from tools.preview_b1_intro import ART, GROUND, SHELL_X
-from tools.render_b1_roar_preview import PLAYER_X, resize, rgba
+from tools.render_b1_roar_preview import resize, rgba
 
 
 WORLD_PER_ART_PIXEL = 2
@@ -17,11 +18,13 @@ FAR_SIZE = (2690, 950)
 ROOM_ART = ART.parent / "room-art-v4"
 BASE_ROOM_ART = ART.parent / "room-art-v3"
 NEUTRAL_VIEW_CENTER = (1168, 397)
-FAR_PARALLAX, MID_PARALLAX, NEAR_PARALLAX = .25, .62, 1.10
+FAR_PARALLAX, REAR_PARALLAX, MID_PARALLAX, NEAR_PARALLAX = .16, .34, .62, 1.08
+BEAM_MOUTH = (952, 71)
+BEAM_FLOOR_X = SHELL_X
 FLOOR_LIGHTS = (
-    (1087, 376, (125, 188, 135), 52),
-    (1541, 256, (123, 164, 111), 40),
-    (2077, 377, (138, 160, 91), 42),
+    (BEAM_FLOOR_X, 575, (149, 169, 133), 88),
+    (1548, 325, (83, 136, 125), 31),
+    (2077, 377, (121, 147, 106), 32),
 )
 
 
@@ -70,6 +73,59 @@ def _green_grade(image, shadows, highlights, fraction):
     return mixed
 
 
+def _far_art(source):
+    """Put the deepest arches in cool shadow and lift the air behind the boss."""
+    image = _green_grade(source, (6, 13, 22), (62, 96, 99), .65)
+    image = _air_mix(image, (12, 23, 31), .23)
+    x_offset = (FAR_SIZE[0] - ROOM_SIZE[0]) // 2
+    _apply_surface_light(image, _pool_image((1152, 620), (71, 110, 105), 137),
+                         BEAM_FLOOR_X + x_offset - 576, 228)
+    return image
+
+
+def _rear_ruins():
+    """Build recessed flights of stairs from the old slate, below the distant arches."""
+    image = Image.new("RGBA", (1590, 254))
+    source = rgba(FLOOR_SOURCE)
+    slate = source.crop((30, 363, source.width - 20, source.height))
+    flights = (
+        (0, 83, 347, (.28, .46, .65, .82), False),
+        (388, 151, 376, (.32, .53, .76), True),
+        (805, 140, 307, (.24, .53, .79), False),
+        (1120, 65, 470, (.28, .49, .67, .81), True),
+    )
+    for x, y, width, breaks, flip in flights:
+        height = image.height - y
+        terrace = resize(slate, (width, height))
+        silhouette = Image.new("L", terrace.size)
+        pen = ImageDraw.Draw(silhouette)
+        nosing = Image.new("RGBA", terrace.size)
+        lip = ImageDraw.Draw(nosing)
+        left = 0
+        for step, edge in enumerate((*breaks, 1)):
+            right = min(width - 1, round(edge * width))
+            upper = step * 11
+            pen.rectangle((left, upper, right, height - 1), fill=255)
+            lip.line(((left, upper), (right - 2, upper)), fill=(91, 114, 103, 89), width=2)
+            left = right + 1
+        terrace.alpha_composite(nosing)
+        fade = Image.new("L", (1, height))
+        fade.putdata([round(255 * min(1, max(0, (height - 1 - row) / 77))) for row in range(height)])
+        terrace.putalpha(ImageChops.multiply(silhouette, fade.resize(terrace.size)))
+        if flip:
+            terrace = ImageOps.mirror(terrace)
+        image.alpha_composite(terrace, (x, y))
+    arch = rgba(TERRAIN_ART / "combat-room-v2/midground-broken-arch.png")
+    arch = resize(arch.crop(arch.getbbox()), (268, 197))
+    image.alpha_composite(arch, (1262, 16))
+    image = _green_grade(image, (14, 27, 35), (57, 81, 83), .83)
+    image = _air_mix(image, (36, 58, 64), .42)
+    blurred_alpha = image.getchannel("A").filter(ImageFilter.GaussianBlur(1.2))
+    image = image.filter(ImageFilter.GaussianBlur(.7))
+    image.putalpha(blurred_alpha)
+    return image
+
+
 def _attached_vault():
     """Keep the overhead vault and wall return on the fixed room plane."""
     image = rgba(ART / "foreground.png")
@@ -91,12 +147,21 @@ def _tinted_image(size, color, values):
     return image
 
 
+@lru_cache(maxsize=1)
+def _pool_alpha():
+    size = 128
+    mask = Image.new("L", (size, size))
+    mask.putdata([round(255 * max(0, 1 - ((x + .5) * 2 / size - 1) ** 2
+                                      - ((y + .5) * 2 / size - 1) ** 2) ** 2)
+                  for y in range(size) for x in range(size)])
+    return mask
+
+
 def _pool_image(size, color, opacity):
-    w, h = size
-    values = [round(opacity * max(0, 1 - ((x + .5) * 2 / w - 1) ** 2
-                                   - ((y + .5) * 2 / h - 1) ** 2) ** 2)
-              for y in range(h) for x in range(w)]
-    return _tinted_image(size, color, values)
+    image = Image.new("RGB", size, color)
+    mask = _pool_alpha().resize(size, Image.Resampling.BILINEAR)
+    image.putalpha(mask.point(lambda value: round(value * opacity / 255)))
+    return image
 
 
 def _light_pool(size, color, opacity):
@@ -122,27 +187,44 @@ def _light_floor_edges(image):
 
 
 def _lit_terrain():
-    terrain = _green_grade(stage_terrain(), (6, 19, 13), (144, 184, 121), .22)
+    terrain = _green_grade(stage_terrain(), (7, 17, 21), (150, 169, 151), .25)
     _light_floor_edges(terrain)
-    _apply_surface_light(terrain, _pool_image((385, 180), (135, 162, 91), 84), 1857, 460)
+    _apply_surface_light(terrain, _pool_image((395, 170), (105, 156, 143), 66), 710, 112)
+    _apply_surface_light(terrain, _pool_image((385, 180), (135, 162, 113), 48), 1857, 460)
     return terrain
 
 
-def _shaft(width, mouth, floor, narrow, wide, color, opacity):
+def _shaft(width, height, mouth, floor, narrow, wide, color, opacity):
     """Feathered light from a ceiling break, widening towards the arena."""
-    size = (width, GROUND)
+    size = (width, height)
     values = []
-    for y in range(size[1]):
-        progress = y / (size[1] - 1)
+    for y in range(height):
+        progress = y / (height - 1)
         center = mouth + (floor - mouth) * progress
         radius = narrow + (wide - narrow) * progress
-        falloff = min(1, (1 - progress) / .22) * (1 - .51 * progress)
-        for x in range(size[0]):
+        falloff = min(1, progress / .045, (1 - progress) / .13) * (1 - .34 * progress)
+        for x in range(width):
             u = (x - center) / radius
             edge = max(0, 1 - (u / 1.25) ** 2)
             scatter = .74 * exp(-2.5 * u * u) + .26 * exp(-16 * (u + .22) ** 2)
             values.append(round(opacity * falloff * edge * scatter))
     return rgba_texture(_tinted_image(size, color, values))
+
+
+def _foreground(source):
+    """Lift the lightward leaves, then thin the silhouettes at the side openings."""
+    image = _green_grade(source, (7, 14, 18), (86, 124, 107), .52)
+    _apply_surface_light(image, _pool_image((441, 213), (70, 123, 111), 115), 727, 0)
+    _apply_surface_light(image, _pool_image((352, 261), (67, 116, 111), 57), 1999, 403)
+    _apply_surface_light(image, _pool_image((327, 214), (60, 112, 109), 63), 0, 481)
+    alpha = image.getchannel("A")
+    for left in (0, 2090):
+        box = (left, 188, left + 320, 594)
+        faded = ImageChops.multiply(alpha.crop(box), ImageOps.invert(
+            _pool_image((320, 406), (0, 0, 0), 49).getchannel("A")))
+        alpha.paste(faded, box[:2])
+    image.putalpha(alpha)
+    return image
 
 
 def _view_bounds(camera):
@@ -162,6 +244,16 @@ def _draw_plate(camera, image, left=0, top=0, *, size=None):
                width * scale * camera.zoom, height * scale * camera.zoom)
 
 
+def _trim_plate(image, top=0):
+    left, upper, right, bottom = image.getbbox()
+    return rgba_texture(image.crop((left, upper, right, bottom))), left, upper + top
+
+
+def _draw_trimmed(camera, plate, dx=0, dy=0):
+    image, left, top = plate
+    _draw_plate(camera, image, left + dx, top + dy)
+
+
 def _parallax_origin(view, factor):
     left, top, right, bottom = view
     x, y = NEUTRAL_VIEW_CENTER
@@ -174,25 +266,35 @@ class B1RoomArt:
     def __init__(self, art_dir=ROOM_ART):
         near_dir = BASE_ROOM_ART if art_dir == ROOM_ART else art_dir
         far = _room_image(art_dir / "far-background.png", FAR_SIZE, opaque=True)
-        self.far = rgba_texture(_air_mix(far, (21, 52, 61), .12))
+        self.far = rgba_texture(_far_art(far))
+        pico.SDL_SetTextureBlendMode(self.far.texture, pico.SDL_BLENDMODE_NONE)
+        self.rear = _trim_plate(_rear_ruins())
         middle = _room_image(art_dir / "midground.png", ROOM_SIZE)
-        middle = _green_grade(middle, (13, 28, 29), (119, 163, 124), .34)
-        self.middle = rgba_texture(_air_mix(middle, (28, 55, 61), .18))
-        self.terrain = rgba_texture(_lit_terrain())
+        middle = _air_mix(_green_grade(middle, (12, 23, 29), (99, 132, 116), .46), (28, 49, 55), .17)
+        _apply_surface_light(middle, _pool_image((448, 450), (123, 159, 136), 78), 592, 276)
+        _apply_surface_light(middle, _pool_image((282, 335), (77, 129, 122), 72), 1435, 402)
+        self.middle = _trim_plate(middle)
+        terrain = _lit_terrain()
+        # Upload the middle rails and the floor as narrower strips for SDL's software path.
+        bands = ((0, 340), (340, 652), (652, ROOM_SIZE[1]))
+        self.terrain = tuple(_trim_plate(terrain.crop((0, top, ROOM_SIZE[0], bottom)), top)
+                             for top, bottom in bands)
         boulder = rgba(ART.parent / "ceiling-rock-v2/ceiling-boulder.png")
         boulder = resize(boulder.crop(boulder.getbbox()), (210, 219))
-        self.ceiling_boulder = rgba_texture(_green_grade(boulder, (6, 19, 13), (144, 184, 121), .22))
-        self.vault = rgba_texture(_green_grade(_attached_vault(), (3, 10, 7), (101, 135, 81), .29))
+        boulder = _green_grade(boulder, (6, 19, 23), (151, 184, 162), .37)
+        _apply_surface_light(boulder, _pool_image((160, 215), (110, 163, 150), 101), -26, -17)
+        self.ceiling_boulder = rgba_texture(boulder)
+        self.vault = _trim_plate(_foreground(_attached_vault()))
         edge = _room_image(ROOM_ART / "attached-foreground.png", ROOM_SIZE)
-        self.edge = rgba_texture(_light_floor_edges(edge))
+        self.edge = _trim_plate(_light_floor_edges(_foreground(edge)))
         near = _room_image(near_dir / "near-foreground.png", ROOM_SIZE)
-        self.near = rgba_texture(_green_grade(near, (3, 11, 8), (88, 122, 73), .31))
+        self.near = _trim_plate(_foreground(near))
 
-        self.air = _light_pool((304, 96), (75, 123, 117), 34)
-        self.shaft = _shaft(530, 83, 329, 22, 154, (126, 207, 158), 113)
-        self.stele_shaft = _shaft(380, 255, 173, 18, 113, (125, 174, 133), 66)
-        self.tunnel_glow = _light_pool((196, 96), (137, 163, 89), 65)
-        self.foot_shadow = _light_pool((128, 16), (8, 17, 13), 151)
+        self.air = _light_pool((280, 54), (69, 102, 105), 37)
+        self.shaft = _shaft(290, 320, 100, 169, 13, 87, (159, 209, 185), 104)
+        self.stele_shaft = _shaft(166, 275, 107, 70, 6, 52, (92, 156, 152), 36)
+        self.tunnel_glow = _light_pool((132, 58), (113, 146, 112), 42)
+        self.shadow = _light_pool((96, 18), (4, 9, 14), 189)
 
     def draw_behind_actors(self, camera):
         view = _view_bounds(camera)
@@ -206,22 +308,27 @@ class B1RoomArt:
         far_y = min(top, max(bottom - height, far_y))
         _draw_plate(camera, self.far, far_x, far_y)
 
-        air_x, air_y = _parallax_origin(view, .40)
-        _draw_plate(camera, self.air, 543 + air_x, 445 + air_y, size=(1270, 290))
+        rear_x, rear_y = _parallax_origin(view, REAR_PARALLAX)
+        _draw_trimmed(camera, self.rear, 349 + rear_x, 452 + rear_y)
+        _draw_plate(camera, self.air, 420 + rear_x, 526 + rear_y, size=(1650, 168))
         middle_x, _ = _parallax_origin(view, MID_PARALLAX)
         # Base rubble stays at floor height as the camera moves vertically.
-        _draw_plate(camera, self.middle, middle_x)
-        _draw_plate(camera, self.shaft, 762, 0)
-        _draw_plate(camera, self.stele_shaft, 1368, 0)
+        _draw_trimmed(camera, self.middle, middle_x)
+        _draw_plate(camera, self.shaft, BEAM_MOUTH[0] - 200, BEAM_MOUTH[1] - 13, size=(580, 652))
+        _draw_plate(camera, self.stele_shaft, 1375, 68, size=(332, 620))
         _draw_plate(camera, self.tunnel_glow, 1814, 493, size=(526, 268))
-        _draw_plate(camera, self.terrain)
+        for plate in self.terrain:
+            _draw_trimmed(camera, plate)
         # The shell-breaking boulder stays above the boss after the intro rockfall.
         _draw_plate(camera, self.ceiling_boulder, SHELL_X - 100, 42)
 
-        _draw_plate(camera, self.foot_shadow, SHELL_X - 141, GROUND - 4, size=(282, 15))
-        _draw_plate(camera, self.foot_shadow, PLAYER_X - 20, GROUND - 3, size=(40, 9))
+    def draw_actor_shadows(self, camera, boss_x, player_x):
+        _draw_plate(camera, self.shadow, boss_x - 185, GROUND - 7, size=(370, 25))
+        _draw_plate(camera, self.shadow, boss_x - 121, GROUND - 5, size=(87, 13))
+        _draw_plate(camera, self.shadow, boss_x + 34, GROUND - 5, size=(87, 13))
+        _draw_plate(camera, self.shadow, player_x - 25, GROUND - 4, size=(50, 12))
 
     def draw_in_front(self, camera):
-        _draw_plate(camera, self.vault)
-        _draw_plate(camera, self.edge)
-        _draw_plate(camera, self.near, *_parallax_origin(_view_bounds(camera), NEAR_PARALLAX))
+        _draw_trimmed(camera, self.vault)
+        _draw_trimmed(camera, self.edge)
+        _draw_trimmed(camera, self.near, *_parallax_origin(_view_bounds(camera), NEAR_PARALLAX))

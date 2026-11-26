@@ -1,23 +1,25 @@
-"""Fit the first combat room's terrain art to the B1 test room's existing surfaces."""
+"""Fit the hall's masonry and rail art to the existing B1 surfaces."""
 
 import json
 
-from PIL import Image, ImageChops, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageOps
 
-from tools.preview_b1_intro import ART, GROUND, ROOT
+from tools.preview_b1_intro import ART, GROUND, ROOT, SHELL_X
 from tools.render_b1_roar_preview import resize, rgba
 
 
-COMBAT_ART = ROOT / "assets/terrain/combat-room-v2"
-DECOR = ROOT / "assets/terrain/moss-grotto-floor-decor"
-FLOOR_WALKWAY_RIGHT = 1664
+TERRAIN_ART = ROOT / "assets/terrain"
+PLATFORM_ART = TERRAIN_ART / "ruin-platforms"
+DECOR = TERRAIN_ART / "moss-grotto-floor-decor"
+FLOOR_SOURCE = TERRAIN_ART / "ruins-floor-blue-fissures-v1.png"
+RAIL_CENTERS = (387, 1795)
 
 # Existing B1 art positions: left, walking surface, width, underside of the rock.
 LEDGES = (
-    ("platform-left", 142, 252, 449, 323, False),
-    ("platform-center", 724, 179, 257, 227, False),
-    ("platform-center", 1204, 183, 257, 236, True),
-    ("platform-right", 1588, 239, 449, 307, False),
+    ("root-wedge", 142, 252, 449, 323),
+    ("carved-buttress", 724, 179, 257, 227),
+    ("short-root-step", 1204, 183, 257, 236),
+    ("waterworn-sill", 1588, 239, 449, 307),
 )
 
 # Low clumps on the walking surface leave clear stretches under the boss and player.
@@ -25,10 +27,12 @@ FLOOR_MOSS = (
     ("bead-moss-patch", 226, 59, False),
     ("split-moss-cushion", 444, 92, True),
     ("low-hooked-grass", 571, 72, False),
+    ("moss-crack-shoots", 640, 34, False),
     ("bead-moss-patch", 777, 91, True),
     ("bead-moss-patch", 1426, 69, False),
     ("split-moss-cushion", 1582, 75, False),
     ("low-hooked-grass", 1860, 62, True),
+    ("low-club-spores", 1923, 37, False),
     ("bead-moss-patch", 2015, 72, True),
     ("split-moss-cushion", 2247, 81, False),
 )
@@ -50,40 +54,78 @@ REAR_BANK = (
 )
 
 
-def _short_center_ledge(image):
-    """Keep both original rounded ends without squeezing the center platform's moss."""
-    left_width, right_width, overlap = 388, 418, 112
-    left = image.crop((0, 0, left_width, image.height))
-    right = image.crop((image.width - right_width, 0, image.width, image.height))
-    result = Image.new("RGBA", (left_width + right_width - overlap, image.height))
-    result.paste(left, (0, 0))
-    join = left_width - overlap
-    fade = Image.new("L", (overlap, 1))
-    fade.putdata([round(255 * x / (overlap - 1)) for x in range(overlap)])
-    splice = Image.composite(right.crop((0, 0, overlap, image.height)),
-                             left.crop((join, 0, left_width, image.height)),
-                             fade.resize((overlap, image.height)))
-    result.paste(splice, (join, 0))
-    result.paste(right.crop((overlap, 0, right_width, image.height)), (left_width, 0))
-    return result
+def _place_ledge(canvas, entry, x, top, width, bottom):
+    left, upper, right, base = entry["crop"]
+    start, surface, end = entry["walk_surface"]
+    sx, sy = width / (end - start), (bottom - top) / (base - surface)
+    source = rgba(PLATFORM_ART / entry["image"]).crop((left, upper, right, base))
+    ledge = resize(source, (round((right - left) * sx), round((base - upper) * sy)))
+    shade = Image.new("L", (1, ledge.height))
+    shade.putdata([round(115 * (y / ledge.height) ** 2) for y in range(ledge.height)])
+    rgb = Image.composite(Image.new("RGB", ledge.size, (6, 13, 19)), ledge.convert("RGB"), shade.resize(ledge.size))
+    rgb.putalpha(ledge.getchannel("A"))
+    canvas.alpha_composite(rgb, (x + round((left - start) * sx), top + round((upper - surface) * sy)))
 
 
-def _place_ledge(canvas, source, x, top, width, bottom, lip, rock_base, flip):
-    scale_y = (bottom - top) / (rock_base - lip)
-    sprite = resize(source, (width, round(source.height * scale_y)))
-    if flip:
-        sprite = ImageOps.mirror(sprite)
-    canvas.alpha_composite(sprite, (x, top - round(lip * scale_y)))
+def _place_floor(canvas):
+    stone = rgba(FLOOR_SOURCE)
+    # Retain the old contact line while exposing the worn masonry below it.
+    floor = resize(stone.crop((0, 356, stone.width, stone.height)),
+                   (canvas.width, canvas.height - GROUND + 3))
+    aprons = Image.new("L", (floor.width, 8))
+    pen = ImageDraw.Draw(aprons)
+    for left, right in ((269, 308), (581, 615), (809, 835), (1136, 1189), (1458, 1501),
+                        (1748, 1778), (1978, 2013), (2189, 2258), (2332, 2360)):
+        pen.polygon(((left, 0), (right, 0), (right - 9, 2), (left + 15, 5)), fill=123)
+    worn = Image.composite(Image.new("RGB", aprons.size, (26, 36, 41)),
+                           floor.crop((0, 0, floor.width, aprons.height)).convert("RGB"),
+                           aprons.filter(ImageFilter.GaussianBlur(1)))
+    worn.putalpha(floor.getchannel("A").crop((0, 0, floor.width, aprons.height)))
+    floor.paste(worn)
+    canvas.alpha_composite(floor, (0, GROUND - 3))
+
+    engraving = Image.new("RGBA", (384, 46))
+    pen = ImageDraw.Draw(engraving)
+    corners = ((21, 16), (103, 3), (281, 3), (363, 16), (284, 32), (101, 32))
+    for start, end in zip(corners, (*corners[1:], corners[0])):
+        pen.line(((start[0], start[1] + 2), (end[0], end[1] + 2)), fill=(9, 16, 22, 145), width=2)
+        pen.line((start, end), fill=(153, 143, 101, 91), width=2)
+    pen.line(((91, 16), (155, 8), (224, 11), (268, 18), (216, 25), (155, 23), (132, 17),
+              (176, 13), (212, 17), (184, 20)), fill=(145, 145, 109, 92), width=2)
+    for cut in ((67, 6, 72, 16), (304, 6, 312, 12), (127, 26, 134, 36), (248, 23, 256, 35)):
+        pen.rectangle(cut, fill=(0, 0, 0, 0))
+    canvas.alpha_composite(engraving, (SHELL_X - 192, GROUND + 3))
+
+    shade = Image.new("L", (1, floor.height))
+    shade.putdata([round(169 * (y / (floor.height - 1)) ** 1.6) for y in range(floor.height)])
+    shadow = Image.new("RGBA", floor.size, (5, 12, 16))
+    shadow.putalpha(shade.resize(floor.size))
+    canvas.alpha_composite(shadow, (0, GROUND - 3))
 
 
-def _place_floor(canvas, floor_origin):
-    source = rgba(COMBAT_ART / "floor.png")
-    # The far-right pixels meet the old room wall and sit above the contact line.
-    source = source.crop((0, 0, FLOOR_WALKWAY_RIGHT, source.height))
-    source_ground = source.height + floor_origin
-    scale_y = (canvas.height - GROUND) / (source.height - source_ground)
-    floor = resize(source, (canvas.width, round(source.height * scale_y)))
-    canvas.alpha_composite(floor, (0, GROUND - round(source_ground * scale_y)))
+def _place_rails(canvas, platforms):
+    rails = ROOT / "assets/sprites/rail"
+    source = rgba(rails / "relic-track-blue-v4.png").transpose(Image.Transpose.ROTATE_90)
+    carriage = rgba(rails / "relic-carriage-v2.png")
+    bracket = rgba(TERRAIN_ART / "lower-route-a-wall-v1/rail-bracket.png").crop((544, 26, 1620, 692))
+    bracket = bracket.crop(bracket.getbbox())
+    top_mount = resize(bracket, (58, 34))
+    foot_mount = resize(bracket, (54, 28))
+    for x, ledge in zip(RAIL_CENTERS, (LEDGES[0], LEDGES[-1])):
+        anchor = ledge[2] + 16
+        length = GROUND - anchor
+        glow = Image.new("L", (38, length))
+        ImageDraw.Draw(glow).line((19, 9, 19, length - 8), fill=80, width=6)
+        halo = Image.new("RGBA", glow.size, (48, 125, 196))
+        halo.putalpha(glow.filter(ImageFilter.GaussianBlur(5)))
+        canvas.alpha_composite(halo, (x - 19, anchor))
+        canvas.alpha_composite(resize(source, (12, length)), (x - 6, anchor))
+    for name, left, top, width, bottom in LEDGES:
+        _place_ledge(canvas, platforms[name], left, top, width, bottom)
+    for x, ledge in zip(RAIL_CENTERS, (LEDGES[0], LEDGES[-1])):
+        canvas.alpha_composite(top_mount, (x - top_mount.width // 2, ledge[2] + 28))
+        canvas.alpha_composite(foot_mount, (x - foot_mount.width // 2, GROUND - 19))
+        canvas.alpha_composite(carriage, (x - carriage.width // 2, 389))
 
 
 def _place_decor(canvas, placements, tint, bottom):
@@ -99,37 +141,19 @@ def _place_decor(canvas, placements, tint, bottom):
 
 
 def stage_terrain():
-    """Compose the new floor and ledges with the existing B1 tunnel and hardware."""
-    manifest = json.loads((COMBAT_ART / "manifest.json").read_text(encoding="utf-8"))
-    lip_map = {name: (lip, rock_base) for name, lip, rock_base in manifest["platform_surfaces"]}
+    """Compose art over the B1 walk lines and retain the existing tunnel."""
+    platforms = json.loads((PLATFORM_ART / "manifest.json").read_text(encoding="utf-8"))["platforms"]
     old_terrain = rgba(ART / "terrain.png")
     canvas = Image.new("RGBA", old_terrain.size)
 
     gate = rgba(ART / "right-passage-gate.png")
     canvas.alpha_composite(gate, (2055, GROUND - gate.height))
-    # The cave wall ends above this split. The lower strip contains the old floor and plants.
     canvas.alpha_composite(old_terrain.crop((0, 0, old_terrain.width, 663)))
     _place_decor(canvas, REAR_BANK, (129, 166, 171), GROUND + 9)
-    _place_floor(canvas, manifest["terrain_origins"]["floor"][1])
-
-    rails = ROOT / "assets/sprites/rail"
-    source_track = rgba(rails / "relic-track-blue-v4.png").transpose(Image.Transpose.ROTATE_90)
-    carriage = rgba(rails / "relic-carriage-v2.png")
-    # Both ends begin inside their ledge, so the lit track never sticks out above the top.
-    for center, ledge in ((387, LEDGES[0]), (1795, LEDGES[-1])):
-        anchor = ledge[2] + 16
-        track = resize(source_track, (12, GROUND - anchor))
-        canvas.alpha_composite(track, (center - track.width // 2, anchor))
-        canvas.alpha_composite(carriage, (center - carriage.width // 2, 389))
-
-    platforms = {name: rgba(COMBAT_ART / f"{name}.png") for name in lip_map}
-    platforms["platform-center"] = _short_center_ledge(platforms["platform-center"])
-    for name, left, top, width, bottom, flip in LEDGES:
-        _place_ledge(canvas, platforms[name], left, top, width, bottom, *lip_map[name], flip)
-
+    _place_floor(canvas)
+    _place_rails(canvas, platforms)
     _place_decor(canvas, FLOOR_MOSS, (155, 198, 187), GROUND + 4)
-    scrap = rgba(DECOR / "split-slate-scrap.png")
-    scrap = scrap.crop(scrap.getbbox())
-    canvas.alpha_composite(resize(scrap, (57, 26)), (686, 675))
-    canvas.alpha_composite(ImageOps.mirror(resize(scrap, (47, 22))), (1480, 679))
+    _place_decor(canvas, (("split-slate-scrap", 328, 57, False), ("moss-rock-chips", 471, 66, True),
+                          ("split-slate-scrap", 1944, 60, True), ("weathered-marker-fragment", 2043, 43, False)),
+                 (166, 183, 185), GROUND + 2)
     return canvas

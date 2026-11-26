@@ -33,7 +33,8 @@ def _tour_view(elapsed_ms):
 
 def _draw_replay(stage, elapsed_ms, camera_tour):
     if camera_tour:
-        stage.draw(max(0, elapsed_ms - TOUR_ROAR_START_MS), camera_view=_tour_view(elapsed_ms))
+        stage.draw(max(0, elapsed_ms - TOUR_ROAR_START_MS), camera_view=_tour_view(elapsed_ms),
+                   ambient_ms=elapsed_ms)
     else:
         stage.draw(elapsed_ms)
 
