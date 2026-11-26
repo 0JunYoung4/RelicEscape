@@ -36,6 +36,18 @@
 - Reuse suitable sprites from the [23-piece map decoration set](assets/terrain/moss-grotto-floor-decor/README.md) when building or revising map areas. Match new map art to its crisp dark contours, deep teal shadows, rounded shapes, and restrained moss-green highlights. Vary cluster size, spacing, and silhouette across each area.
 - Follow the [layer production and rendering rules](docs/reference-production-guide.md#맵-미술-제작과-렌더링-기준). Create and preview the far background, floor, ceiling, walls when applicable, world decorations, and near foreground as independently adjustable assets. Render the far background behind the terrain and actors, and near foreground silhouettes in front of them at the edges.
 
+맵 미술, 배경 합성, 조명, 전경이나 카메라를 변경할 때 프로젝트 루트의 `MAP_VISUAL_GUIDE.md`에서 해당 작업에 필요한 기준을 참고한다. 관련 없는 코드 수정에 맵 재설계를 추가하지 않는다.
+
+- 목표는 거리감, 공기감, 일관된 소재와 플레이 가독성이다. 모든 맵의 색, 밝기, 안개와 전경을 동일하게 만들지 않는다.
+- 기존 렌더러와 에셋을 확인하고, 거리별 대비와 색 보정, 층 사이 공기감, 공통 환경광과 겹침부터 개선한다.
+- 공기색 혼합 시 원래 알파를 유지한다. 안개와 빛은 작용할 레이어를 정해 합성한다.
+- 시차는 카메라 이동량에 적용한다. 고정 카메라 구간은 정지 화면의 깊이 표현을 우선한다.
+- 붙어 있는 발판, 레일, 고정부와 지지대는 같은 변환을 사용한다.
+- 미술 개선에서는 실제 충돌, 점프 거리, 유물 도착점과 공격 판정을 기준으로 그림을 맞춘다. 게임플레이 변경은 해당 요청 범위에서 수행한다.
+- 사용자가 장식 하나하나를 지정하지 않아도 맵의 목적과 기존 테마에 맞춰 세부 배치를 구체화한다.
+- 대표 화면과 관련 동작을 확인한 뒤 공통 처리와 맵별 설정으로 정리하고, 요청된 범위까지 적용한다.
+- 결과에는 변경 이유와 실제 확인한 내용을 남긴다. 확인하지 않은 성능이나 플레이 결과를 통과했다고 보고하지 않는다.
+
 ## Presentation and planning deliverables
 
 - The user designated `발표&기획서/` as the location for future presentation and planning PPT files. Create and edit PPT deliverables there, using an appropriate presentation subfolder.

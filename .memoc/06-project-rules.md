@@ -44,6 +44,8 @@ Durable user and project preferences live here. Update when the user gives a rul
 - 방 하나를 먼저 완성하고 실제 게임 화면과 이동 중 깊이감·통일감·플레이 가독성을 검토해 수정한다. 직접 볼 수 없으면 필요한 카메라 구도와 플레이 상태를 구체적으로 지정해 캡처를 요청한다.
 - 완료한 작업 단위마다 한국어 메시지로 로컬 커밋한다. 푸시는 사용자의 별도 요청이 있을 때 진행한다.
 
+- 2026-11-26 사용자 지정. 맵 미술·합성·조명·전경·카메라 작업은 [맵 미술과 렌더링 공통 지침](../MAP_VISUAL_GUIDE.md)을 참고한다. 기존 플레이 판정과 요청 범위를 유지하며, 한 방의 팔레트나 효과를 다른 맵에 강제하지 않는다.
+
 ## Agent Behavior Preferences
 
 - Be factual and operational in memory docs.
