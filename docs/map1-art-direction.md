@@ -50,3 +50,7 @@ B에서 오른쪽으로 이어 들어오는 보행선의 돌 결을 왼쪽 봉�
 ![C 전실과 B1 봉인문 시안](../assets/concepts/map1-route-art-v2/boss-antechamber.png)
 
 이 이미지는 미술의 방향과 장치 가독성을 검토하는 합성 시안이다. 실제 제작에서는 현재 월드 좌표의 착지점, 발판 상면, 레일 경로, 가시와 봉인문의 판정을 기준으로 각 레이어를 맞춘다. [세부 프롬프트와 참고 이미지 기록](../assets/concepts/map1-route-art-v2/generation-prompts.md)
+
+## 이동 미리보기
+
+현재 게임의 플레이어 이동, 카메라 추적, 레일과 유물 순간이동을 재생하고 위 네 구간의 미술 시안을 합성했다. 하강·A 첫 착지, A–B 연결 절벽, B의 두 번째 레일과 착지, C 봉인문 접근 순으로 발췌했다. A–B 카메라 화면은 시안이 있는 폭 안에서 잘랐다. B의 적은 시안에 그려진 모습이고, C는 공벌레를 처리한 뒤 석등을 통과하는 상태다. 정지 시안은 한 판으로 합성했으므로 거리별 시차는 레이어 제작 단계에서 별도로 검토한다. [이동 GIF](../assets/concepts/map1-route-art-v2/movement-preview.gif) · [장면별 정지 이미지](../assets/concepts/map1-route-art-v2/movement-stills.png)
