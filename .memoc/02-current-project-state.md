@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 [B 석벽 레이어](../assets/terrain/lower-route-b-wall-v1/README.md)를 본편에 적용했다. A와 같은 재질의 별도 배경·중경·전경, 레일 받침과 접촉 그림자, 틈빛을 연결했다. A–B의 이전 푸른 원경을 정리하고 C 카메라 경계의 중경 팝을 제거했다. 지형·레일·가시·장치 스냅샷 일치, SDL1207·관련49개 검사 통과. [B 전후](../docs/b-passage-wall-comparison.jpg)
+
 - 2026-11-26 [A 석벽 통로](../assets/terrain/lower-route-a-wall-v1/README.md)를 별도 생성한 배경·중경·전경으로 본편 적용했다. 중앙·오른쪽 아치 회랑, 레일 고정구, 접촉 그림자, 지형에 막히는 광막과 표면 조명을 추가했다. 지형·장치 스냅샷 일치, SDL 779화면, 관련 테스트 47개 통과. [동일 구도 비교](../docs/a-passage-wall-comparison.jpg)
 
 - 2026-11-26 [A파트 석벽 시안 v1](../assets/concepts/map1-route-a-wall-v1/README.md)을 제작했다. 전투방 화풍과 기존 A 배치, 가까운 젖은 석벽·균열빛·약한 황록 반딧불이를 결합했다. 후속 사용자 승인에 따라 독립 레이어로 제작했다.

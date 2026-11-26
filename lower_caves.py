@@ -518,6 +518,8 @@ class LowerCaves:
         self.hit_impacts[:] = [impact for impact in self.hit_impacts if impact.age < IMPACT_DURATION]
         if self.in_lower_route and self.route_a is not None:
             self.route_a.update_shadow(player, dt)
+        if self.in_lower_route and self.route_b is not None:
+            self.route_b.art.scenery.time += dt
         if self.room == "combat":
             self.wall_effects.update(self.entrance_progress, dt)
         else:
@@ -595,6 +597,8 @@ class LowerCaves:
         elif self.room == "gallery":
             self.art.draw_canopy(camera, GALLERY_CEILING_Y)
         elif self.in_lower_route and self.route_a is not None:
+            if self.route_b is not None:
+                self.route_b.art.draw_foreground(camera)
             self.route_a.draw_foreground(camera)
             if self.route_connection is not None:
                 self.route_connection.draw_foreground(camera, self.cave.height)

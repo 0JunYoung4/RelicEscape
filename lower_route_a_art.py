@@ -1,12 +1,11 @@
 """Independent stone wall, wall reliefs and near leaves for the A passage."""
 
-from ctypes import byref, c_int
 import json
-from math import ceil, cos, exp, sin, tau
+from math import exp, sin
 
 from pico2d import pico2d as pico
 
-from lower_route_atmosphere import ROUTE_ART, load_image
+from lower_route_atmosphere import ROUTE_ART, draw_layer, draw_soft_light, load_image
 from player import ASSET_ROOT
 
 
@@ -67,43 +66,9 @@ class LowerRouteAArt:
 
     def draw_image(self, image, camera, bounds, *, tint=(255, 255, 255), opacity=255,
                    crop=None, fade_entry=False, clip_bottom=None, shade=None):
-        """Submit only visible texels, keeping SDL software triangles small."""
-        left, bottom, right, top = bounds
-        width, height = right - left, top - bottom
-        view_left, view_right = max(left, camera.x), min(right, camera.x + camera.view_width)
-        view_bottom = max(bottom, camera.y)
-        if clip_bottom is not None:
-            view_bottom = max(view_bottom, clip_bottom)
-        view_top = min(top, camera.y + pico.canvas_height / camera.zoom)
-        if view_left >= view_right or view_bottom >= view_top:
-            return
-        u0, v0, u1, v1 = crop or (0, 0, 1, 1)
-        spacing = 48 if shade is not None else 240
-        columns = ceil((view_right - view_left) * camera.zoom / spacing)
-        rows = ceil((view_top - view_bottom) * camera.zoom / spacing)
-        stride = columns + 1
-        vertices, indices = [], []
-        for row in range(rows + 1):
-            y = view_top - (view_top - view_bottom) * row / rows
-            v = v0 + (top - y) / height * (v1 - v0)
-            for column in range(stride):
-                x = view_left + (view_right - view_left) * column / columns
-                u = u0 + (x - left) / width * (u1 - u0)
-                weight = 1.0
-                if fade_entry:
-                    weight = max(0.0, min(1.0, (x - self.origin[0] + 900) / 720))
-                    weight = weight * weight * (3 - 2 * weight)
-                sx, sy = camera.world_to_screen(x, y)
-                color = shade(x, y, tint) if shade is not None else tint
-                vertices.append(pico.SDL_Vertex((sx, pico.canvas_height - sy),
-                                                (*color, round(opacity * weight)), (u, v)))
-                if row and column:
-                    corner = len(vertices) - 1
-                    indices.extend((corner - stride - 1, corner - stride, corner - 1,
-                                    corner - stride, corner, corner - 1))
-        geometry = (pico.SDL_Vertex * len(vertices))(*vertices)
-        triangles = (c_int * len(indices))(*indices)
-        pico.SDL_RenderGeometry(pico.renderer, image.texture, geometry, len(vertices), triangles, len(indices))
+        fade_range = (self.origin[0] - 900, self.origin[0] - 180) if fade_entry else None
+        draw_layer(image, camera, bounds, tint=tint, opacity=opacity, crop=crop,
+                   fade_range=fade_range, clip_bottom=clip_bottom, shade=shade)
 
     def draw_background(self, camera):
         x, y = self.origin
@@ -188,25 +153,7 @@ class LowerRouteAArt:
                      for channel, lit in zip(base, (251, 255, 229)))
 
     def soft_patch(self, camera, px, py, rx, ry, color, opacity):
-        center_x, center_y = self.point(px, py)
-        if center_x + rx * SCALE < camera.x or center_x - rx * SCALE > camera.x + camera.view_width:
-            return
-        sx, sy = camera.world_to_screen(center_x, center_y)
-        points = [pico.SDL_Vertex((sx, pico.canvas_height - sy), (*color, opacity))]
-        for index in range(24):
-            angle = tau * index / 24
-            x, y = camera.world_to_screen(center_x + rx * SCALE * cos(angle),
-                                          center_y + ry * SCALE * sin(angle))
-            points.append(pico.SDL_Vertex((x, pico.canvas_height - y), (*color, 0)))
-        vertices = (pico.SDL_Vertex * len(points))(*points)
-        indices = (c_int * 72)(*(value for i in range(24) for value in (0, i + 1, (i + 1) % 24 + 1)))
-        previous = pico.SDL_BlendMode()
-        pico.SDL_GetRenderDrawBlendMode(pico.renderer, byref(previous))
-        pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)
-        try:
-            pico.SDL_RenderGeometry(pico.renderer, None, vertices, len(points), indices, len(indices))
-        finally:
-            pico.SDL_SetRenderDrawBlendMode(pico.renderer, previous)
+        draw_soft_light(camera, self.point(px, py), (rx * SCALE, ry * SCALE), color, opacity)
 
     def draw_contacts(self, camera):
         for px, py, rx, ry in ((970, 619, 91, 9), (1808, 403, 132, 10),

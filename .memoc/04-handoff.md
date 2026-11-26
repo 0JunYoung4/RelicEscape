@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-26 B 최신 미술은 `lower_route_b_scenery.py`와 [별도 원화](../assets/terrain/lower-route-b-wall-v1/README.md)다. B 지형과 레일은 기존 렌더러로 그린다. `python -m tools.preview_lower_route_b_wall`가 추적한 geometry baseline과 SDL1207화면·두 레일·비밀방·양방향 연결을 재검수한다. A–B의 옛 far는 다시 덮지 않으며 C 아치는 camera.x 경계에서 끄지 않는다. 장시간 전체화면 수동 조작과 기기별 성능은 미측정이다.
+
 - 2026-11-26 A의 최신 본편 미술은 [독립 석벽 레이어](../assets/terrain/lower-route-a-wall-v1/README.md)다. `lower_route_a_art.py`의 `LIGHTS`, 시차 상수와 식생 배치로 조정한다. `python -m tools.preview_lower_route_a_wall`로 카메라·점프·유물 추적을 재현한다. 지형·장치 스냅샷과 관련 47개 테스트, SDL 779화면을 확인했다. 전체화면 장시간 수동 조작과 기기별 성능은 미측정이다.
 
 - 2026-11-26 [하단 동선 v2 미술](../docs/map1-art-direction.md)을 본편에 적용했다. `lower_route_atmosphere.py`는 원경 시차와 틈빛을, `tools.bake_lower_route_art`는 기존 A·C 원화에서 지형과 장치를 남기는 이미지 작업을 담당한다. [SDL 6장](../docs/map1-lower-route-runtime.jpg). 전체화면 수동 조작 체감과 장치별 렌더 성능은 미측정이다.

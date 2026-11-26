@@ -59,8 +59,7 @@ class LowerRouteConnection:
 
     def draw_background(self, camera, screen_height):
         if self.art.visible(camera, screen_height):
-            for layer in ("far", "middle"):
-                self.draw_layer(camera, screen_height, layer)
+            self.draw_layer(camera, screen_height, "middle")
 
     def draw_foreground(self, camera, screen_height):
         if self.art.visible(camera, screen_height):

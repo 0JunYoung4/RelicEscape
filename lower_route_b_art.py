@@ -7,6 +7,7 @@ from math import ceil
 from pico2d import pico2d as pico
 
 from lower_route_atmosphere import ROUTE_ART, RouteAtmosphere, draw_parallax, load_image
+from lower_route_b_scenery import LowerRouteBScenery
 from lower_route_b_layout import (A_ENTRY, BOTTOM, C_APPROACH_LEDGE, C_PASSAGE,
                                   LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL, SECRET_FLOOR,
                                   SECRET_FLOOR_Y, SECRET_LEFT_WALL, SECRET_PASSAGE, SECRET_RELIC_X, SHIELD_LEDGE,
@@ -100,6 +101,7 @@ class LowerRouteBArt:
     def __init__(self):
         self.background = load_image(ROUTE_ART / "bc-far.png")
         self.atmosphere = RouteAtmosphere()
+        self.scenery = LowerRouteBScenery()
         self.wall = pico.load_image(str(ASSET_ROOT / "terrain/green-cavern-wall-v1.png"))
         self.marker = pico.load_image(str(STRUCTURES / "lower-cave-safe-waymarker-v1.png"))
         self.rubble = pico.load_image(str(STRUCTURES / "lower-cave-landing-rubble-v1.png"))
@@ -116,6 +118,10 @@ class LowerRouteBArt:
             for name in ("root-wedge", "connected-guard-wall", "connected-passage", "spike-bed-pier",
                          "waterworn-sill")
         }
+        for image in self.platform_images.values():
+            pico.SDL_SetTextureColorMod(image.texture, 206, 225, 227)
+        pico.SDL_SetTextureColorMod(self.wall.texture, 192, 214, 220)
+        pico.SDL_SetTextureColorMod(self.canopy.texture, 205, 221, 220)
 
     def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0], backdrop_right=WIDTH,
              secret_revealed=False, secret_relic_collected=False, draw_entry=True):
@@ -148,6 +154,7 @@ class LowerRouteBArt:
         for x, surface, width in ((996, C_APPROACH_LEDGE[3], 130), (2260, SHIELD_LEDGE[3], 94),
                                   (3170, PILLBUG_LEDGE[3], 110)):
             draw_structure(self.bead_moss, (114, 134, 2053, 585), camera, x, surface - 9, width, 21)
+        self.scenery.draw_surfaces(camera)
         self.draw_hazards(camera)
         if camera.y < STONE_SURFACE:
             self.draw_basement(camera, screen_height, secret_revealed, secret_relic_collected)
@@ -156,15 +163,14 @@ class LowerRouteBArt:
     def draw_depth(self, camera, screen_height, passage_left, backdrop_right):
         draw_parallax(self.background, camera, screen_height,
                       (passage_left, BOTTOM, backdrop_right, TOP + 240), (216, 218, 204))
-        self.atmosphere.draw_ruin(camera, "broken-arch", 1030, 245, 900, 530)
-        self.atmosphere.draw_ruin(camera, "stele", 2610, -90, 420, 570, flip="h")
-        self.atmosphere.draw_ruin(camera, "broken-arch", 4120, 128, 1050, 690, flip="h")
-        self.atmosphere.draw_light(camera, 3310, 163, 1630, 1390)
-        self.atmosphere.draw_light(camera, 590, 480, 1330, 1090, strength=112)
         if passage_left < C_PASSAGE[0]:
             self.atmosphere.draw_ruin(camera, "stele", -650, 540, 400, 580)
             self.atmosphere.draw_ruin(camera, "broken-arch", -30, 525, 790, 540)
             self.atmosphere.draw_light(camera, -260, 550, 980, 790, strength=170)
+        self.scenery.draw_background(camera)
+
+    def draw_foreground(self, camera):
+        self.scenery.draw_foreground(camera)
 
     def draw_hazards(self, camera):
         for (left, bottom, right, top), hanging in THORN_WALLS:

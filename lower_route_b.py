@@ -205,7 +205,13 @@ class LowerRouteB:
                       secret_relic_collected=self.secret_relic_collected, backdrop_right=backdrop_right,
                       draw_entry=draw_entry)
         scale = RAIL_ART_SCALE * camera.zoom
-        for carriage in self.carriages:
-            draw_rail(self.rail, self.bend, camera, carriage.segments)
-            self.mount.draw(*camera.world_to_screen(*carriage.position),
-                            self.mount.w * scale, self.mount.h * scale)
+        for piece in (self.rail, self.bend):
+            pico.SDL_SetTextureColorMod(piece.texture, 214, 238, 241)
+        try:
+            for carriage in self.carriages:
+                draw_rail(self.rail, self.bend, camera, carriage.segments)
+                self.mount.draw(*camera.world_to_screen(*carriage.position),
+                                self.mount.w * scale, self.mount.h * scale)
+        finally:
+            for piece in (self.rail, self.bend):
+                pico.SDL_SetTextureColorMod(piece.texture, 255, 255, 255)
