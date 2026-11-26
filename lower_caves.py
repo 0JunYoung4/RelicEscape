@@ -395,7 +395,7 @@ class LowerCaves:
             self.art.draw_motes(camera, 0, COMBAT_CEILING_Y,
                                 left=COMBAT_LEFT_WALL, right=COMBAT_RIGHT_WALL,
                                 count=8, opacity_scale=.45)
-            scenery.draw_terrain(camera, COMBAT_PLATFORMS, COMBAT_EXIT_LEFT, COMBAT_EXIT_RIGHT,
+            scenery.draw_terrain(camera, COMBAT_PLATFORMS, COMBAT_EXIT_LEFT, COMBAT_EXIT_RIGHT, COMBAT_CEILING_Y,
                                  broken=self.exit_progress > 0)
             scenery.draw_floor_plants(camera, COMBAT_LEFT_WALL, COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
             self.draw_combat_gate(camera)

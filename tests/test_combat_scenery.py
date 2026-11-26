@@ -89,6 +89,22 @@ class CombatSceneryTests(unittest.TestCase):
         pico.SDL_RenderSetClipRect(pico.renderer, None)
         pico.SDL_SetRenderDrawBlendMode(pico.renderer, pico.SDL_BLENDMODE_BLEND)
 
+    def test_front_light_reaches_both_banks_without_covering_combat_or_shaft(self):
+        pico.SDL_SetRenderDrawColor(pico.renderer, 0, 0, 0, 255)
+        pico.SDL_RenderClear(pico.renderer)
+        self.scenery.lighting.draw_foreground_air(self.camera)
+        pixels = self.pixels()
+
+        def color(x, y):
+            start = (y * 960 + x) * 4
+            return tuple(pixels[start:start + 3])
+
+        self.assertGreater(color(175, 452)[1], 20)
+        self.assertGreater(color(770, 462)[1], 20)
+        self.assertEqual(color(480, 452), (0, 0, 0))
+        self.assertEqual(color(175, 421), (0, 0, 0))
+        self.assertEqual(color(770, 421), (0, 0, 0))
+
     def test_new_foreground_tracks_world_points_during_a_camera_pan(self):
         def foreground():
             pico.SDL_SetRenderDrawColor(pico.renderer, 61, 91, 111, 255)

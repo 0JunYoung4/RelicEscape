@@ -7,18 +7,17 @@ from math import ceil, cos, floor, radians, sin, tau
 
 from pico2d import pico2d as pico
 
+from combat_room_lighting import CombatRoomLighting
+from combat_vegetation import CombatVegetation
 from player import ASSET_ROOT
 
 
-COMBAT_BACKGROUND_TINT = (120, 145, 178)
+COMBAT_BACKGROUND_TINT = (172, 191, 224)
 COMBAT_ART_PATH = ASSET_ROOT / "terrain" / "combat-room-v2"
 COMBAT_ART = json.loads((COMBAT_ART_PATH / "manifest.json").read_text(encoding="utf-8"))
-FLOOR_DETAILS = (
-    ("grass-rounded-tuft", 335, 104), ("weathered-marker-fragment", 410, 88),
-    ("bead-moss-patch", 480, 96), ("grass-small-sprigs", 705, 43),
-    ("split-moss-cushion", 800, 79), ("grass-small-sprigs", 1190, 44),
-    ("mossy-ring-shard", 1510, 135), ("grass-soft-sedge", 1570, 126),
-    ("grass-rounded-tuft", 1662, 88),
+MIDGROUND_RUINS = (
+    ("midground-stele", 416, -30, 332, 492),
+    ("midground-broken-arch", 1110, -36, 432, 354),
 )
 FALLING_ROCKS = ((.10, .05, 19, -26), (.29, .02, -8, 34), (.48, 0, -24, -21),
                  (.68, .035, 16, 25), (.89, .06, 26, -32))
@@ -28,24 +27,17 @@ class CombatScenery:
     def __init__(self, width, height):
         self.width, self.height = width, height
         names = ("background", "foreground", "gate", "shaft", "vine-joint", "vine-wall", "vine-ceiling",
-                 *COMBAT_ART["terrain_origins"], *(entry[0] for entry in COMBAT_ART["platform_surfaces"]))
+                 *COMBAT_ART["terrain_origins"], *(entry[0] for entry in COMBAT_ART["platform_surfaces"]),
+                 *(entry[0] for entry in MIDGROUND_RUINS))
         self.images = {name: pico.load_image(str(COMBAT_ART_PATH / f"{name}.png")) for name in names}
         self.room_width = self.images["floor"].w
         for image in self.images.values():
             pico.SDL_SetTextureScaleMode(image.texture, pico.SDL_ScaleModeLinear)
-        terrain = ASSET_ROOT / "terrain"
-        self.seedpods = pico.load_image(str(terrain / "moss-combat-seedpods-v1.png"))
+        pico.SDL_SetTextureColorMod(self.images["background"].texture, *COMBAT_BACKGROUND_TINT)
+        self.seedpods = pico.load_image(str(ASSET_ROOT / "terrain" / "moss-combat-seedpods-v1.png"))
         pico.SDL_SetTextureAlphaMod(self.seedpods.texture, 205)
-        self.floor_details = {}
-        required = {name + ".png" for name, _, _ in FLOOR_DETAILS}
-        for folder in ("moss-grotto-floor-decor", "moss-grotto-foliage"):
-            root = terrain / folder
-            manifest = json.loads((root / "placement.json").read_text(encoding="utf-8"))
-            for entry in manifest["assets"]:
-                if entry["file"] in required:
-                    image = pico.load_image(str(root / entry["file"]))
-                    pico.SDL_SetTextureColorMod(image.texture, 126, 166, 154)
-                    self.floor_details[entry["file"][:-4]] = (image, entry)
+        self.lighting = CombatRoomLighting(self)
+        self.vegetation = CombatVegetation(height)
 
     @contextmanager
     def room_clip(self, camera, left, right, ceiling, *, margin=0, bottom=0):
@@ -124,7 +116,63 @@ class CombatScenery:
                 return
             width = self.room_width * 1.14
             x = (left + right - width) / 2 + camera.x * .10
-            self.draw_sprite("background", camera, x, -80 + camera.y * .10, width, ceiling + 176)
+            far_bottom = -80 + camera.y * .10
+            self.draw_sprite("background", camera, x, far_bottom, width, ceiling + 176)
+            # Keep the illustration's central glow behind the two brighter world-space shafts.
+            with self.alpha_geometry():
+                self.soft_light(camera, (x + width * .566, far_bottom + ceiling * .945),
+                                (410, 490), (9, 25, 39), 168)
+            self.lighting.draw_rear(camera, ceiling)
+        # Background color can reach the top of the shaft. Ruins, plants and light stop at the room floor.
+        with self.room_clip(camera, 0, self.room_width - 12, ceiling) as visible:
+            if visible:
+                self.draw_hanging_roots(camera, ceiling)
+                self.draw_midground(camera, ceiling)
+                self.vegetation.draw_background(camera, tint_at=self.vegetation_tint(ceiling))
+                self.lighting.draw_midair(camera, ceiling)
+
+    def vegetation_tint(self, ceiling):
+        return lambda x, y, tint, strength: self.lighting.surface_tint(x, y, ceiling, tint, strength)
+
+    def draw_hanging_roots(self, camera, ceiling):
+        """Deep-rooted silhouettes remain visible when the near roof is above the camera."""
+        roots = self.images["vine-ceiling"]
+        pico.SDL_SetTextureColorMod(roots.texture, 68, 103, 112)
+        try:
+            self.draw_sprite("vine-ceiling", camera, 417, ceiling - 334, 437, 346)
+            self.draw_sprite("vine-ceiling", camera, 1170, ceiling - 316, 450, 331)
+        finally:
+            pico.SDL_SetTextureColorMod(roots.texture, 255, 255, 255)
+
+    def draw_midground(self, camera, ceiling):
+        """Light the ruin surfaces independently of the distant ring and play terrain."""
+
+        def shade(x, y, v):
+            ambient = (round(104 + 47 * v), round(146 + 39 * v), round(169 + 27 * v))
+            return self.lighting.surface_tint(x, y, ceiling, ambient, .55 + .45 * v)
+
+        for name, left, bottom, width, height in MIDGROUND_RUINS:
+            self.draw_lit_sprite(name, camera, left + camera.x * .035, bottom + camera.y * .055,
+                                 width, height, shade, columns=5, rows=5)
+
+    def draw_lit_sprite(self, name, camera, left, bottom, width, height, shade, *, columns, rows):
+        """Sample the local light across a textured layer while preserving its silhouette."""
+        vertices, triangles = [], []
+        for row in range(rows):
+            v = row / (rows - 1)
+            y = bottom + v * height
+            for col in range(columns):
+                u = col / (columns - 1)
+                x = left + u * width
+                sx, sy = camera.world_to_screen(x, y)
+                vertices.append(pico.SDL_Vertex((sx, self.height - sy), (*shade(x, y, v), 255), (u, 1 - v)))
+                if row and col:
+                    i = row * columns + col
+                    triangles.extend((i - columns - 1, i - columns, i - 1, i - columns, i, i - 1))
+        data = (pico.SDL_Vertex * len(vertices))(*vertices)
+        indices = (c_int * len(triangles))(*triangles)
+        pico.SDL_RenderGeometry(pico.renderer, self.images[name].texture,
+                                data, len(vertices), indices, len(triangles))
 
     def draw_sprite(self, name, camera, x, bottom, width=None, height=None):
         image = self.images[name]
@@ -132,7 +180,7 @@ class CombatScenery:
         height = width * image.h / image.w if height is None else height
         image.draw_to_origin(*camera.world_to_screen(x, bottom), width * camera.zoom, height * camera.zoom)
 
-    def draw_terrain(self, camera, platforms, exit_left, exit_right, *, broken):
+    def draw_terrain(self, camera, platforms, exit_left, exit_right, ceiling, *, broken):
         floor = self.images["floor"]
         _, bottom = COMBAT_ART["terrain_origins"]["floor"]
         sections = ((0, round(exit_left)), (round(exit_right), floor.w)) if broken else ((0, floor.w),)
@@ -157,6 +205,11 @@ class CombatScenery:
         # The join covers the wall end while leaving the exposed jump edge clear.
         self.draw_sprite("vine-joint", camera, 244, 151, 126, 196)
         self.draw_sprite("vine-wall", camera, 1670, 489, 91, 204)
+        banks = ((0, exit_left), (exit_right, self.room_width)) if broken else None
+        self.lighting.draw_floor_bounce(camera, ceiling, banks=banks)
+        self.lighting.draw_ledge_bounce(camera, ceiling, platforms)
+        self.vegetation.draw_terrain(camera, ceiling, exit_left, exit_right, broken=broken,
+                                     tint_at=self.vegetation_tint(ceiling))
 
     def draw_gate(self, camera, bounds, progress):
         image = self.images["gate"]
@@ -175,22 +228,22 @@ class CombatScenery:
             height = width * self.seedpods.h / self.seedpods.w
             self.seedpods.draw_to_origin(*camera.world_to_screen(left - 14, -8),
                                          width * camera.zoom, height * camera.zoom)
-            for name, x, width in FLOOR_DETAILS:
-                image, entry = self.floor_details[name]
-                x0, y0, x1, y1 = entry["visible_bounds"]
-                anchor_x, anchor_y = entry["pivot_px"]
-                scale = width / (x1 - x0)
-                origin = camera.world_to_screen(x + (x0 - anchor_x) * scale, (anchor_y - y1) * scale - 4)
-                image.clip_draw_to_origin(x0, image.h - y1, x1 - x0, y1 - y0, *origin,
-                                          width * camera.zoom, (y1 - y0) * scale * camera.zoom)
 
     def draw_foreground(self, camera, left, right, ceiling):
         with self.room_clip(camera, 0, self.room_width, ceiling + 45, margin=64) as visible:
             if visible:
                 self.draw_sprite("vine-ceiling", camera, left + 153, ceiling - 112, 272, 144)
                 self.draw_sprite("vine-ceiling", camera, right - 355, ceiling - 94, 252, 128)
-        if camera.y + self.height / camera.zoom >= 0:
-            self.draw_sprite("foreground", camera, 0, -318, self.room_width, 350)
+        if camera.y < 32 and camera.y + self.height / camera.zoom >= 0:
+            self.vegetation.draw_foreground(camera, tint_at=self.lighting.foreground_tint)
+
+            def shade(x, y, v):
+                ambient = (round(110 + 41 * v), round(140 + 36 * v), round(158 + 35 * v))
+                return self.lighting.foreground_tint(x, y, ambient)
+
+            self.draw_lit_sprite("foreground", camera, 0, -318, self.room_width, 350,
+                                 shade, columns=17, rows=6)
+            self.lighting.draw_foreground_air(camera)
 
     def draw_shaft(self, camera, exit_left, visibility):
         image = self.images["shaft"]

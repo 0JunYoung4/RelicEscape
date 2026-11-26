@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 승인한 이끼 전투방 시안을 본편에 적용했다. 원경 폐고리 앞에 비석과 부서진 아치를 두고, 두 개의 천장 빛줄기가 유적·바닥·발판·앞쪽 잎에 층별로 닿는다. 기존 발판과 충돌 판정을 유지한다. SDL에서 [바닥 전투](../docs/combat-room-lighting-gameplay.png)·[상단 시점](../docs/combat-room-lighting-ceiling.png)·붕괴 뒤 하강로를 확인했다.
+
 - 2026-11-26 [B1 포효 v3](../assets/concepts/b1-hermit-crab/roar-v3/README.md)에 새 중간 자세 11장을 넣어 보스 단독 시트를 20장으로 늘렸다. 원화 크기는 그대로이며 바닥·몸 중심만 맞췄다.
 
 - 2026-11-26 B1 포효 자세 9장을 새로 그려 [보스 단독 WebP와 투명 시트](../assets/concepts/b1-hermit-crab/roar-v2/README.md)로 제작했다. 보스 그림은 공통 바닥에 위치만 맞췄다. 본편 연결 전이다.

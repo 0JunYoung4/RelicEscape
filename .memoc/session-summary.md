@@ -12,9 +12,9 @@ tags:
 # Session Summary
 Last: 2026-11-26 (Asia/Seoul)
 
-- B1 전투 가안 `docs/b1-hermit-crab-combat-design.md`. 포효 시안·전투 본편 미연결.
-- B1 포효 20장 `assets/concepts/b1-hermit-crab/roar-v3/`.
-- 원작 전투 조사 `docs/hollow-knight-combat-pattern-study.md`.
+- 전투방 이끼·중경 유적·빛줄기 2개 적용. 발판·충돌 유지.
+- B1 전투 가안 `docs/b1-hermit-crab-combat-design.md`.
+- B1 포효 v3 20장과 전투는 본편 미연결.
 - A–B 절벽 접합·비석/식생 깊이 적용.
 - A 3초 발판 설치→아래→E 귀환→B. 사망 시 유지, R 초기화.
 - 공벌레→골렘→틈빛→바닥 붕괴. 수정 골렘 HP45, 방패병 HP65.
