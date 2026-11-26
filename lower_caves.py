@@ -437,7 +437,9 @@ class LowerCaves:
                          draw_entry=self.route_connection is None)
         if route_c is not None:
             route_c.draw(camera, self.cave.height)
-        if draw_a:
+        if self.route_connection is not None:
+            self.route_connection.draw_background(camera, self.cave.height)
+        if route_a is not None and camera.x + camera.view_width > route_a.origin[0] - 900:
             route_a.draw(camera)
         if self.route_connection is not None:
             self.route_connection.draw(camera, self.cave.height)

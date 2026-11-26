@@ -6,7 +6,7 @@ from lower_route_a import EXIT_LEDGE
 from lower_route_b import PLAY_TERRAIN
 from lower_route_b_layout import A_ENTRY, BOTTOM, WIDTH as B_WIDTH
 from lower_route_c import TERRAIN as C_TERRAIN
-from lower_route_passage_art import PASSAGE_LAYERS, PassageArt
+from lower_route_passage_art import PassageArt
 
 
 PASSAGE_LEFT = B_WIDTH
@@ -54,12 +54,13 @@ class LowerRouteConnection:
     def draw(self, camera, screen_height):
         if not self.art.visible(camera, screen_height):
             return
-        # Keep the rock lip in front of the light and distant ruins.
-        for layer in PASSAGE_LAYERS[:-1]:
-            if layer == "middle":
-                self.route_a.atmosphere.draw_light(camera, PASSAGE_CENTER - 280, PASSAGE_FLOOR - 40,
-                                                   1420, 1030, strength=150)
+        for layer in ("terrain", "attached"):
             self.draw_layer(camera, screen_height, layer)
+
+    def draw_background(self, camera, screen_height):
+        if self.art.visible(camera, screen_height):
+            for layer in ("far", "middle"):
+                self.draw_layer(camera, screen_height, layer)
 
     def draw_foreground(self, camera, screen_height):
         if self.art.visible(camera, screen_height):

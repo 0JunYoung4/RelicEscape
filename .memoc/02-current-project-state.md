@@ -15,7 +15,9 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
-- 2026-11-26 [A파트 석벽 시안 v1](../assets/concepts/map1-route-a-wall-v1/README.md)을 제작했다. 전투방 화풍과 기존 A 배치, 가까운 젖은 석벽·균열빛·약한 황록 반딧불이를 결합했다. 본편 적용 여부는 사용자 검토 후 결정한다.
+- 2026-11-26 [A 석벽 통로](../assets/terrain/lower-route-a-wall-v1/README.md)를 별도 생성한 배경·중경·전경으로 본편 적용했다. 중앙·오른쪽 아치 회랑, 레일 고정구, 접촉 그림자, 지형에 막히는 광막과 표면 조명을 추가했다. 지형·장치 스냅샷 일치, SDL 779화면, 관련 테스트 47개 통과. [동일 구도 비교](../docs/a-passage-wall-comparison.jpg)
+
+- 2026-11-26 [A파트 석벽 시안 v1](../assets/concepts/map1-route-a-wall-v1/README.md)을 제작했다. 전투방 화풍과 기존 A 배치, 가까운 젖은 석벽·균열빛·약한 황록 반딧불이를 결합했다. 후속 사용자 승인에 따라 독립 레이어로 제작했다.
 
 - 2026-11-26 하단 동선 v2 미술을 전투방 하강로에서 C 전실 봉인문까지 본편에 적용했다. 원경 시차, 중경 비석·아치, 틈빛과 활성 석등 반사광을 추가했다. 지형 판정과 장치 좌표는 기존 그대로다. [본편 화면](../docs/map1-lower-route-runtime.jpg) · [미술 기준](../docs/map1-art-direction.md)
 

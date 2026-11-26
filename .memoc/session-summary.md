@@ -12,7 +12,7 @@ tags:
 # Session Summary
 Last: 2026-11-26 (Asia/Seoul)
 
-- A 석벽·균열빛·반딧불이 시안 `assets/concepts/map1-route-a-wall-v1/` 검토 대기.
+- A 석벽·두 아치 회랑·독립 전경 본편 적용. `lower_route_a_art.py`. SDL779·관련47개 통과.
 - 맵 1 하단 미술 v2 본편 적용. 하강~C 봉인문, 판정 유지.
 - B1 v4 수로 유적·포효 SDL 검수. 본편 미연결.
 - A 3초 발판 설치→아래→E 귀환→B. 사망 시 유지, R 초기화.
