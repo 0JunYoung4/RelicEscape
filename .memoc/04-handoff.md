@@ -17,7 +17,7 @@ Last synced: 2026-11-05T03:23:05
 
 - 2026-11-26 첫 전투방의 깊이와 조명은 `CombatScenery`가 원경→중경 유적→지형·식생→전투→근접 전경 순으로 합성한다. `combat_room_lighting.py`에서 두 광막·표면 반사광·전경 산란광을, `combat_vegetation.py`에서 월드 좌표와 식생 색을 조정한다. `tools/preview_combat_atmosphere.py --projectiles --prefix combat-room --output-dir .cache/applied-combat-room`으로 바닥 전투·상단·수정탄·틈빛·붕괴 후 하강로를 재현한다. 바닥 전투와 상단, 붕괴 후 하강 화면은 SDL에서 확인했다.
 
-- 2026-11-26 B1 포효 보스 단독 자산은 [roar-v3](../assets/concepts/b1-hermit-crab/roar-v3/README.md)가 최신이다. 셀 540 × 363, 바닥 기준점 (275, 329), 자세 20장과 가변 유지 시간 2초를 `boss-roar.json`에 기록했다. 효과는 v1에 있고 새 그림을 사용한 합성 및 본편 연결은 후속이다.
+- 2026-11-26 B1 포효 보스 단독 자산은 [roar-v4](../assets/concepts/b1-hermit-crab/roar-v4/README.md)가 최신이다. 셀 540 × 363, 바닥 기준점 (275, 329), 자세 19장과 가변 유지 시간 2초를 `boss-roar.json`에 기록했다. 0.72초 정점에 v1 효과를 맞춘 비교 시안을 확인했다. 본편 연결은 후속이다.
 
 - 2026-11-26 B1 본편 전투는 [페이즈·공격 판정 가안](../docs/b1-hermit-crab-combat-design.md)에서 이어간다. 도입 낙석과 은신 해제용 암석을 분리하고, 벽 근처 낙하 회피 폭·기본 베기 도달·은신 레일 실패 복구·바닥 복귀 대기·C 석등 재시작을 검증한다.
 

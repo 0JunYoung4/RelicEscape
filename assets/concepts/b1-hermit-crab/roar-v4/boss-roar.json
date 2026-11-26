@@ -1,0 +1,403 @@
+{
+  "sources": {
+    "v2": {
+      "path": "../roar-v2/source-atlas.png",
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    "lift": {
+      "path": "../roar-v3/source-lift-atlas.png",
+      "size": [
+        1536,
+        1024
+      ]
+    },
+    "release": {
+      "path": "source-recovery-atlas.png",
+      "size": [
+        1536,
+        1024
+      ]
+    }
+  },
+  "frame_size": [
+    540,
+    363
+  ],
+  "pivot": [
+    275,
+    329
+  ],
+  "columns": 5,
+  "rows": 4,
+  "frame_count": 19,
+  "duration_ms": 2000,
+  "frames": [
+    {
+      "source": "v2",
+      "source_crop": [
+        25,
+        0,
+        488,
+        314
+      ],
+      "art_offset": [
+        42,
+        38
+      ],
+      "column": 0,
+      "row": 0,
+      "duration_ms": 140,
+      "v3_key": "K1",
+      "label": "K1"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        64,
+        33,
+        460,
+        320
+      ],
+      "art_offset": [
+        76,
+        48
+      ],
+      "column": 1,
+      "row": 0,
+      "duration_ms": 70,
+      "v3_key": "A1",
+      "label": "A1"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        509,
+        19,
+        1024,
+        304
+      ],
+      "art_offset": [
+        15,
+        56
+      ],
+      "column": 2,
+      "row": 0,
+      "duration_ms": 80,
+      "v3_key": "K2",
+      "label": "K2"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        574,
+        51,
+        971,
+        321
+      ],
+      "art_offset": [
+        75,
+        65
+      ],
+      "column": 3,
+      "row": 0,
+      "duration_ms": 150,
+      "v3_key": "A2",
+      "label": "A2"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        1083,
+        40,
+        1477,
+        300
+      ],
+      "art_offset": [
+        77,
+        77
+      ],
+      "column": 4,
+      "row": 0,
+      "duration_ms": 110,
+      "v3_key": "K3",
+      "label": "K3"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        1088,
+        54,
+        1481,
+        320
+      ],
+      "art_offset": [
+        77,
+        69
+      ],
+      "column": 0,
+      "row": 1,
+      "duration_ms": 30,
+      "v3_key": "A3",
+      "label": "A3"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        63,
+        376,
+        458,
+        659
+      ],
+      "art_offset": [
+        67,
+        52
+      ],
+      "column": 1,
+      "row": 1,
+      "duration_ms": 40,
+      "v3_key": "A4",
+      "label": "A4"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        566,
+        367,
+        976,
+        658
+      ],
+      "art_offset": [
+        60,
+        44
+      ],
+      "column": 2,
+      "row": 1,
+      "duration_ms": 30,
+      "v3_key": "A5",
+      "label": "A5"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        1045,
+        368,
+        1495,
+        659
+      ],
+      "art_offset": [
+        32,
+        44
+      ],
+      "column": 3,
+      "row": 1,
+      "duration_ms": 20,
+      "v3_key": "A6",
+      "label": "A6"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        542,
+        703,
+        988,
+        1002
+      ],
+      "art_offset": [
+        39,
+        36
+      ],
+      "column": 4,
+      "row": 1,
+      "duration_ms": 20,
+      "v3_key": "A8",
+      "label": "A8"
+    },
+    {
+      "source": "lift",
+      "source_crop": [
+        1048,
+        702,
+        1501,
+        1002
+      ],
+      "art_offset": [
+        36,
+        35
+      ],
+      "column": 0,
+      "row": 2,
+      "duration_ms": 30,
+      "v3_key": "A9",
+      "label": "A9"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        513,
+        317,
+        1008,
+        641
+      ],
+      "art_offset": [
+        10,
+        10
+      ],
+      "column": 1,
+      "row": 2,
+      "duration_ms": 410,
+      "v3_key": "K5",
+      "label": "K5"
+    },
+    {
+      "source": "release",
+      "source_crop": [
+        543,
+        97,
+        997,
+        426
+      ],
+      "art_offset": [
+        41,
+        1
+      ],
+      "column": 2,
+      "row": 2,
+      "duration_ms": 70,
+      "label": "R2"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        29,
+        671,
+        504,
+        992
+      ],
+      "art_offset": [
+        33,
+        11
+      ],
+      "column": 3,
+      "row": 2,
+      "duration_ms": 100,
+      "v3_key": "K7",
+      "label": "K7"
+    },
+    {
+      "source": "release",
+      "source_crop": [
+        1042,
+        114,
+        1492,
+        429
+      ],
+      "art_offset": [
+        37,
+        19
+      ],
+      "column": 4,
+      "row": 2,
+      "duration_ms": 100,
+      "label": "R3"
+    },
+    {
+      "source": "release",
+      "source_crop": [
+        43,
+        605,
+        502,
+        919
+      ],
+      "art_offset": [
+        35,
+        20
+      ],
+      "column": 0,
+      "row": 3,
+      "duration_ms": 100,
+      "label": "R4"
+    },
+    {
+      "source": "release",
+      "source_crop": [
+        546,
+        614,
+        997,
+        919
+      ],
+      "art_offset": [
+        43,
+        29
+      ],
+      "column": 1,
+      "row": 3,
+      "duration_ms": 140,
+      "label": "R5"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        505,
+        681,
+        976,
+        1000
+      ],
+      "art_offset": [
+        7,
+        21
+      ],
+      "column": 2,
+      "row": 3,
+      "duration_ms": 150,
+      "v3_key": "K8",
+      "label": "K8"
+    },
+    {
+      "source": "v2",
+      "source_crop": [
+        1073,
+        681,
+        1502,
+        993
+      ],
+      "art_offset": [
+        64,
+        22
+      ],
+      "column": 3,
+      "row": 3,
+      "duration_ms": 210,
+      "v3_key": "K9",
+      "label": "K9"
+    }
+  ],
+  "beats_ms": {
+    "anticipation_hold": [
+      440,
+      550
+    ],
+    "lift": [
+      550,
+      720
+    ],
+    "roar_hold": [
+      720,
+      1130
+    ],
+    "right_claw_descends": [
+      1200,
+      1500
+    ],
+    "weight_catch": [
+      1500,
+      1640
+    ],
+    "settle": [
+      1640,
+      2000
+    ]
+  }
+}

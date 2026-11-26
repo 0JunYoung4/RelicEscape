@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 [B1 포효 v4](../assets/concepts/b1-hermit-crab/roar-v4/README.md)는 원작 보스 도입의 고정된 발과 비대칭 팔다리 타이밍을 참고해 준비·정점·복귀를 조정했다. 복귀 자세 4장은 새 원화다. 보스방 비교 시안과 투명 시트·2초 재생 시간을 확인했다.
+
 - 2026-11-26 승인한 이끼 전투방 시안을 본편에 적용했다. 원경 폐고리 앞에 비석과 부서진 아치를 두고, 두 개의 천장 빛줄기가 유적·바닥·발판·앞쪽 잎에 층별로 닿는다. 기존 발판과 충돌 판정을 유지한다. SDL에서 [바닥 전투](../docs/combat-room-lighting-gameplay.png)·[상단 시점](../docs/combat-room-lighting-ceiling.png)·붕괴 뒤 하강로를 확인했다.
 
 - 2026-11-26 [B1 포효 v3](../assets/concepts/b1-hermit-crab/roar-v3/README.md)에 새 중간 자세 11장을 넣어 보스 단독 시트를 20장으로 늘렸다. 원화 크기는 그대로이며 바닥·몸 중심만 맞췄다.
