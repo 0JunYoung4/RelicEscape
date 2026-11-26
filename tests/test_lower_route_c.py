@@ -1,6 +1,7 @@
 """Exercise the seamless B/C crossing and the antechamber checkpoint."""
 
 from ctypes import c_ubyte
+import gc
 from itertools import count
 import os
 from types import SimpleNamespace
@@ -37,6 +38,7 @@ class LowerRouteCTests(unittest.TestCase):
     def setUp(self):
         pico.open_canvas(main.SCREEN_WIDTH, main.SCREEN_HEIGHT)
         self.addCleanup(pico.close_canvas)
+        self.addCleanup(gc.collect)
 
     def test_entry_floor_and_sealed_boss_boundary(self):
         cave = SimpleNamespace(width=960, height=540, shaft=SimpleNamespace(w=4096))

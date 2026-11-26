@@ -49,6 +49,8 @@
 
 ## C 전실과 B1 봉인문
 
+2026-11-26 C 본편은 A·B와 같은 젖은 가까운 석벽으로 갱신했다. 별도 벽감·부조·근접 식생을 겹치고 기존 봉인문·석등·공벌레는 같은 위치에 둔다. B 연결부의 배경은 보행면보다 먼저 겹쳐 그린다. 아래 이미지는 이전 방향 시안이다. [현재 전후 비교](c-passage-wall-comparison.jpg) · [독립 레이어](../assets/terrain/lower-route-c-wall-v1/README.md)
+
 B에서 오른쪽으로 이어 들어오는 보행선의 돌 결을 왼쪽 봉인문까지 유지한다. 입구에서 들어온 약한 빛은 오른쪽 바닥과 이끼에 머물고, 깊어질수록 어두운 청회색 석재가 드러난다. 육각 재도전 석등의 청색은 발밑의 작은 돌과 잎에만 반사되게 한다. 왼쪽 봉인문은 가장 큰 실루엣으로 남기고 주변의 이끼와 유적은 밀도를 낮춘다. 평가 범위는 봉인문 앞까지다. [현재 전실 원화](../assets/terrain/lower-route-c/antechamber-v2-plate.png)
 
 ![C 전실과 B1 봉인문 시안](../assets/concepts/map1-route-art-v2/boss-antechamber.png)

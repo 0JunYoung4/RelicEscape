@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 [C 독립 석벽 전실](../assets/terrain/lower-route-c-wall-v1/README.md)을 본편에 적용했다. 새 배경·부조·전경과 국소 틈빛을 A·B 재질에 맞추고 B–C 배경을 지형 전에 이어 그린다. 문·석등·지형·공벌레 배치 기준값 일치, C SDL565·관련52개 검사 통과. [C 전후](../docs/c-passage-wall-comparison.jpg) · [왕복](../docs/c-passage-wall-connection.webp). 봉인문은 기존 닫힘 상태이며 C→B1은 미연결이다.
+
 - 2026-11-26 [B 석벽 레이어](../assets/terrain/lower-route-b-wall-v1/README.md)를 본편에 적용했다. A와 같은 재질의 별도 배경·중경·전경, 레일 받침과 접촉 그림자, 틈빛을 연결했다. A–B의 이전 푸른 원경을 정리하고 C 카메라 경계의 중경 팝을 제거했다. 지형·레일·가시·장치 스냅샷 일치, SDL1207·관련49개 검사 통과. [B 전후](../docs/b-passage-wall-comparison.jpg)
 
 - 2026-11-26 [A 석벽 통로](../assets/terrain/lower-route-a-wall-v1/README.md)를 별도 생성한 배경·중경·전경으로 본편 적용했다. 중앙·오른쪽 아치 회랑, 레일 고정구, 접촉 그림자, 지형에 막히는 광막과 표면 조명을 추가했다. 지형·장치 스냅샷 일치, SDL 779화면, 관련 테스트 47개 통과. [동일 구도 비교](../docs/a-passage-wall-comparison.jpg)

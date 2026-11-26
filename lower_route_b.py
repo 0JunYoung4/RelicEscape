@@ -200,10 +200,11 @@ class LowerRouteB:
             if hit is not None:
                 health.take_enemy_hit(hit, now, BASH_DAMAGE)
 
-    def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0], backdrop_right=WIDTH, draw_entry=True):
+    def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0], backdrop_right=WIDTH, draw_entry=True,
+             draw_depth=True):
         self.art.draw(camera, screen_height, passage_left=passage_left, secret_revealed=self.secret_revealed,
                       secret_relic_collected=self.secret_relic_collected, backdrop_right=backdrop_right,
-                      draw_entry=draw_entry)
+                      draw_entry=draw_entry, draw_depth=draw_depth)
         scale = RAIL_ART_SCALE * camera.zoom
         for piece in (self.rail, self.bend):
             pico.SDL_SetTextureColorMod(piece.texture, 214, 238, 241)

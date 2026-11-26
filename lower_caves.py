@@ -431,10 +431,16 @@ class LowerCaves:
         backdrop_right = A_ORIGIN[0] if self.route_connection is not None else B_ROUTE_WIDTH
         draw_b = route_b is not None and camera.x < backdrop_right
         draw_c = route_c is not None and camera.x < C_RIGHT
+        passage_left = C_LEFT if route_c is not None else C_RIGHT
+        # Both wall layers precede the shared walk line, enemies and devices.
         if draw_b:
-            route_b.draw(camera, self.cave.height, passage_left=C_LEFT if route_c is not None else C_RIGHT,
+            route_b.art.draw_depth(camera, self.cave.height, passage_left, backdrop_right)
+        if route_c is not None:
+            route_c.draw_background(camera)
+        if draw_b:
+            route_b.draw(camera, self.cave.height, passage_left=passage_left,
                          backdrop_right=backdrop_right,
-                         draw_entry=self.route_connection is None)
+                         draw_entry=self.route_connection is None, draw_depth=False)
         if route_c is not None:
             route_c.draw(camera, self.cave.height)
         if self.route_connection is not None:
@@ -520,6 +526,8 @@ class LowerCaves:
             self.route_a.update_shadow(player, dt)
         if self.in_lower_route and self.route_b is not None:
             self.route_b.art.scenery.time += dt
+        if self.in_lower_route and self.route_c is not None:
+            self.route_c.scenery.time += dt
         if self.room == "combat":
             self.wall_effects.update(self.entrance_progress, dt)
         else:
@@ -599,6 +607,8 @@ class LowerCaves:
         elif self.in_lower_route and self.route_a is not None:
             if self.route_b is not None:
                 self.route_b.art.draw_foreground(camera)
+            if self.route_c is not None:
+                self.route_c.draw_foreground(camera)
             self.route_a.draw_foreground(camera)
             if self.route_connection is not None:
                 self.route_connection.draw_foreground(camera, self.cave.height)

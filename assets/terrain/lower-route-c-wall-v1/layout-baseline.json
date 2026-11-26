@@ -1,0 +1,74 @@
+{
+  "LEFT": -1600,
+  "RIGHT": 0,
+  "FLOOR": 590,
+  "ENTRANCE_X": -1290,
+  "ENTRANCE_WIDTH": 220,
+  "CHECKPOINT": [
+    -710,
+    590,
+    0.0
+  ],
+  "CHECKPOINT_RADIUS": 115,
+  "FLOOR_BOUNDS": [
+    -1600,
+    -244,
+    0,
+    590
+  ],
+  "TERRAIN": [
+    [
+      -1600,
+      -244,
+      0,
+      590
+    ],
+    [
+      -1600,
+      590,
+      -1180.0,
+      1370
+    ],
+    [
+      -1600,
+      1270,
+      0,
+      1370
+    ]
+  ],
+  "connection": {
+    "C_PASSAGE": [
+      0,
+      500,
+      680,
+      590
+    ],
+    "C_PASSAGE_LEFT": -1600,
+    "C_APPROACH_LEDGE": [
+      680,
+      495,
+      1340,
+      590
+    ]
+  },
+  "enemies": [
+    {
+      "x": -384.0,
+      "floor_y": 590,
+      "support_edges": [
+        -527,
+        -302
+      ],
+      "hp": 30
+    },
+    {
+      "x": -114.0,
+      "floor_y": 590,
+      "support_edges": [
+        -260,
+        -32
+      ],
+      "hp": 30
+    }
+  ]
+}

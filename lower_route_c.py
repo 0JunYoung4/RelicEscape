@@ -7,6 +7,7 @@ from pico2d import pico2d as pico
 
 from lower_route_atmosphere import ROUTE_ART, load_image
 from lower_route_b_layout import C_PASSAGE, C_PASSAGE_LEFT, STONE_SURFACE, TOP
+from lower_route_c_scenery import LowerRouteCScenery
 from pillbug import Pillbug
 from player import ASSET_ROOT
 
@@ -43,6 +44,7 @@ def _subdivide(stops, max_span):
 
 class LowerRouteC:
     def __init__(self):
+        self.scenery = LowerRouteCScenery()
         self.plate = load_image(ROUTE_ART / "c-terrain.png")
         pico.SDL_SetTextureBlendMode(self.plate.texture, pico.SDL_BLENDMODE_BLEND)
         self.lamp_glow = pico.load_image(str(ASSET_ROOT / "sprites/relic/relic-blue-glow-v1.png"))
@@ -63,12 +65,19 @@ class LowerRouteC:
         if camera.x >= ART_BLEND_END or camera.x + camera.view_width <= ART_LEFT:
             return
         self.draw_plate(camera, screen_height)
+        self.scenery.draw_surfaces(camera, FLOOR)
         if self.checkpoint_reached:
             lamp_y = FLOOR + (ART_FLOOR_ROW - ART_LAMP_ROW) * ART_SCALE
             x, y = camera.world_to_screen(CHECKPOINT[0], lamp_y)
             floor_x, floor_y = camera.world_to_screen(CHECKPOINT[0], FLOOR)
             self.lamp_glow.draw(floor_x, floor_y + 4 * camera.zoom, 175 * camera.zoom, 44 * camera.zoom)
             self.lamp_glow.draw(x, y, 90 * camera.zoom, 90 * camera.zoom)
+
+    def draw_background(self, camera):
+        self.scenery.draw_background(camera)
+
+    def draw_foreground(self, camera):
+        self.scenery.draw_foreground(camera)
 
     def draw_plate(self, camera, screen_height):
         # The same walk line anchors both the painted rock and the existing passage into B.

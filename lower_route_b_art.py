@@ -6,7 +6,7 @@ from math import ceil
 
 from pico2d import pico2d as pico
 
-from lower_route_atmosphere import ROUTE_ART, RouteAtmosphere, draw_parallax, load_image
+from lower_route_atmosphere import ROUTE_ART, draw_parallax, load_image
 from lower_route_b_scenery import LowerRouteBScenery
 from lower_route_b_layout import (A_ENTRY, BOTTOM, C_APPROACH_LEDGE, C_PASSAGE,
                                   LEFT_WALL, PILLBUG_LEDGE, RIGHT_WALL, SECRET_FLOOR,
@@ -100,7 +100,6 @@ def draw_amber_light(camera, screen_height):
 class LowerRouteBArt:
     def __init__(self):
         self.background = load_image(ROUTE_ART / "bc-far.png")
-        self.atmosphere = RouteAtmosphere()
         self.scenery = LowerRouteBScenery()
         self.wall = pico.load_image(str(ASSET_ROOT / "terrain/green-cavern-wall-v1.png"))
         self.marker = pico.load_image(str(STRUCTURES / "lower-cave-safe-waymarker-v1.png"))
@@ -124,8 +123,9 @@ class LowerRouteBArt:
         pico.SDL_SetTextureColorMod(self.canopy.texture, 205, 221, 220)
 
     def draw(self, camera, screen_height, *, passage_left=C_PASSAGE[0], backdrop_right=WIDTH,
-             secret_revealed=False, secret_relic_collected=False, draw_entry=True):
-        self.draw_depth(camera, screen_height, passage_left, backdrop_right)
+             secret_revealed=False, secret_relic_collected=False, draw_entry=True, draw_depth=True):
+        if draw_depth:
+            self.draw_depth(camera, screen_height, passage_left, backdrop_right)
         wall = self.wall
         left, bottom, right, top = RIGHT_WALL
         draw_rock_wall(wall, camera, ((bottom - 16, left + 60, right - 58),
@@ -163,10 +163,6 @@ class LowerRouteBArt:
     def draw_depth(self, camera, screen_height, passage_left, backdrop_right):
         draw_parallax(self.background, camera, screen_height,
                       (passage_left, BOTTOM, backdrop_right, TOP + 240), (216, 218, 204))
-        if passage_left < C_PASSAGE[0]:
-            self.atmosphere.draw_ruin(camera, "stele", -650, 540, 400, 580)
-            self.atmosphere.draw_ruin(camera, "broken-arch", -30, 525, 790, 540)
-            self.atmosphere.draw_light(camera, -260, 550, 980, 790, strength=170)
         self.scenery.draw_background(camera)
 
     def draw_foreground(self, camera):

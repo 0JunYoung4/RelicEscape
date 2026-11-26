@@ -49,14 +49,14 @@ class LowerRouteBScenery:
         far_left = -2300 + focus_x * (1 - RECESS_PARALLAX[0])
         far_bottom = BOTTOM - 800 + focus_y * (1 - RECESS_PARALLAX[1])
         draw_layer(self.recess, camera, (far_left, far_bottom, far_left + 10300, far_bottom + 3800),
-                   tint=(192, 220, 223), fade_range=(0, 650))
+                   tint=(192, 220, 223))
         dx = focus_x * (1 - WALL_PARALLAX[0])
         dy = focus_y * (1 - WALL_PARALLAX[1])
         left, bottom = -1100 + dx, BOTTOM - 90 + dy
         draw_layer(self.background, camera, (left, bottom, left + 7230, bottom + 2410),
-                   tint=(186, 208, 209), fade_range=(0, 650))
+                   tint=(186, 208, 209))
         draw_layer(self.midground, camera, (400 + dx, 120 + dy, 4740 + dx, 1567 + dy),
-                   tint=(111, 144, 146), fade_range=(0, 650))
+                   tint=(111, 144, 146))
         for left, top, width, height, strength, surface in LIGHTS:
             draw_layer(self.light, camera, (left, top - height, left + width, top),
                        opacity=strength, clip_bottom=surface)
