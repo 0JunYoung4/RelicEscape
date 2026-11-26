@@ -1,0 +1,120 @@
+{
+  "room_art_size": [
+    2410,
+    790
+  ],
+  "ground_y": 703,
+  "far": {
+    "size": [
+      2690,
+      950
+    ],
+    "source_crop": [
+      0,
+      10,
+      2172,
+      714
+    ],
+    "placement": [
+      -140,
+      -80
+    ]
+  },
+  "midground": {
+    "size": [
+      2410,
+      790
+    ],
+    "resized_height": 803,
+    "placement": [
+      0,
+      -22
+    ]
+  },
+  "near_foreground": {
+    "size": [
+      2410,
+      790
+    ],
+    "groups": [
+      {
+        "name": "left curled fern",
+        "from": "source-near.png",
+        "cell": [
+          0,
+          0,
+          704,
+          724
+        ],
+        "placement": [
+          8,
+          547,
+          292,
+          238
+        ]
+      },
+      {
+        "name": "low roots",
+        "from": "source-near.png",
+        "cell": [
+          710,
+          0,
+          1448,
+          724
+        ],
+        "placement": [
+          515,
+          722,
+          228,
+          46
+        ]
+      },
+      {
+        "name": "right hooked fern",
+        "from": "source-near.png",
+        "cell": [
+          1452,
+          0,
+          2172,
+          724
+        ],
+        "placement": [
+          2212,
+          710,
+          194,
+          102
+        ]
+      },
+      {
+        "name": "shadow-low-moss-lobes.png",
+        "from": "assets/terrain/moss-grotto-floor-decor/shadow-low-moss-lobes.png",
+        "placement": [
+          1586,
+          750,
+          112,
+          28
+        ]
+      },
+      {
+        "name": "shadow-stoop-leaves.png",
+        "from": "assets/terrain/moss-grotto-floor-decor/shadow-stoop-leaves.png",
+        "placement": [
+          1698,
+          749,
+          118,
+          33
+        ]
+      },
+      {
+        "name": "near-shadow-rounded-leaves.png",
+        "from": "assets/terrain/moss-grotto-floor-decor/near-shadow-rounded-leaves.png",
+        "placement": [
+          345,
+          763,
+          73,
+          38
+        ]
+      }
+    ]
+  }
+}

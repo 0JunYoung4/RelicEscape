@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 [B1 보스방 레이어 미술](../assets/concepts/b1-hermit-crab/room-art-v3/README.md)을 게임 테스트에 연결했다. 원경·중경·전경 PNG, 천장 광막, 입구 반사광과 입구→전투 카메라 검수 영상을 저장했다.
+
 - 2026-11-26 [B1 포효 게임 테스트 장면](../assets/concepts/b1-hermit-crab/roar-v4/README.md)을 추가했다. `python -m tools.preview_b1_roar_game`은 게임의 SDL 렌더러와 플레이어로 낙석 직후의 포효를 보여 준다. C 전실과 본편 진행은 유지했다.
 
 - 2026-11-26 [B1 포효 v4](../assets/concepts/b1-hermit-crab/roar-v4/README.md)는 원작 보스 도입의 고정된 발과 비대칭 팔다리 타이밍을 참고해 준비·정점·복귀를 조정했다. 복귀 자세 4장은 새 원화다. 보스방 비교 시안과 투명 시트·2초 재생 시간을 확인했다.

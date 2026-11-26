@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-26 B1 게임 테스트의 방 미술은 [room-art-v3](../assets/concepts/b1-hermit-crab/room-art-v3/README.md)와 `tools/b1_room_art.py`에 있다. `tools.preview_b1_roar_game --camera-tour`로 입구→포효, `--stills`로 네 지점을 재현한다. 본편 B1 연결은 후속이다.
+
 - 2026-11-26 B1 포효 v4를 `tools.preview_b1_roar_game`에서 실제 SDL 텍스처·플레이어·카메라로 재생한다. 게임 화면을 저장하려면 `--capture <WebP 경로>`를 붙인다. [실행과 캡처](../assets/concepts/b1-hermit-crab/roar-v4/README.md). 본편의 C→B1 이동과 전투는 아직 연결하지 않았다.
 
 - 2026-11-26 첫 전투방의 깊이와 조명은 `CombatScenery`가 원경→중경 유적→지형·식생→전투→근접 전경 순으로 합성한다. `combat_room_lighting.py`에서 두 광막·표면 반사광·전경 산란광을, `combat_vegetation.py`에서 월드 좌표와 식생 색을 조정한다. `tools/preview_combat_atmosphere.py --projectiles --prefix combat-room --output-dir .cache/applied-combat-room`으로 바닥 전투·상단·수정탄·틈빛·붕괴 후 하강로를 재현한다. 바닥 전투와 상단, 붕괴 후 하강 화면은 SDL에서 확인했다.

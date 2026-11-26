@@ -32,12 +32,10 @@ def resize(image, size):
     return image.resize(size, Image.Resampling.LANCZOS)
 
 
-def stage():
-    """Build the room plate at the moment the boss wakes after the rock falls."""
-    back = rgba(ART / "background.png")
+def _lay_terrain(back, terrain):
     gate = rgba(ART / "right-passage-gate.png")
     back.alpha_composite(gate, (2055, GROUND - gate.height))
-    back.alpha_composite(rgba(ART / "terrain.png"))
+    back.alpha_composite(terrain)
 
     rails = ROOT / "assets/sprites/rail"
     track = rgba(rails / "relic-track-blue-v4.png").transpose(Image.Transpose.ROTATE_90)
@@ -55,6 +53,18 @@ def stage():
     scrap = scrap.crop(scrap.getbbox())
     back.alpha_composite(resize(scrap, (57, 26)), (686, 675))
     back.alpha_composite(ImageOps.mirror(resize(scrap, (47, 22))), (1480, 679))
+    return back
+
+
+def stage_terrain():
+    """Keep the tunnel, rock floor, ledges, rails and rubble on one plane."""
+    terrain = rgba(ART / "terrain.png")
+    return _lay_terrain(Image.new("RGBA", terrain.size), terrain)
+
+
+def stage():
+    """Build the original room plate for the first roar comparison."""
+    back = _lay_terrain(rgba(ART / "background.png"), rgba(ART / "terrain.png"))
     return back, rgba(ART / "foreground.png")
 
 

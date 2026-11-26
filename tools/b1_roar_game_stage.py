@@ -1,7 +1,6 @@
 """Draw the B1 intro's roar in the same SDL renderer as RelicEscape."""
 
 from bisect import bisect_right
-from ctypes import create_string_buffer
 from itertools import accumulate
 import json
 
@@ -10,32 +9,12 @@ from pico2d import pico2d as pico
 
 from main import Camera
 from player import Animation, CROUCH_DURATION, Player
+from tools.b1_room_art import B1RoomArt, ROOM_ART, ROOM_SIZE, WORLD_PER_ART_PIXEL, rgba_texture
 from tools.preview_b1_intro import ART, GROUND, SHELL_X, SIZE
-from tools.render_b1_roar_preview import FPS, PLAYER_X, RELEASE_FRAME, ROAR_ART, camera_box, stage
+from tools.render_b1_roar_preview import FPS, PLAYER_X, RELEASE_FRAME, ROAR_ART, camera_box
 
 
-WORLD_PER_ART_PIXEL = 2
 ROAR_V4 = ART.parent / "roar-v4"
-
-
-def _texture(image):
-    """Upload an RGBA plate or effect frame without a temporary image file."""
-    width, height = image.size
-    pixels = create_string_buffer(image.tobytes())
-    surface = pico.SDL_CreateRGBSurfaceWithFormatFrom(
-        pixels, width, height, 32, width * 4, pico.SDL_PIXELFORMAT_RGBA32,
-    )
-    if not surface:
-        raise RuntimeError(pico.SDL_GetError())
-    try:
-        texture = pico.SDL_CreateTextureFromSurface(pico.renderer, surface)
-    finally:
-        pico.SDL_FreeSurface(surface)
-    if not texture:
-        raise RuntimeError(pico.SDL_GetError())
-    pico.SDL_SetTextureBlendMode(texture, pico.SDL_BLENDMODE_BLEND)
-    pico.SDL_SetTextureScaleMode(texture, pico.SDL_ScaleModeLinear)
-    return pico.Image(texture)
 
 
 def _load_boss():
@@ -59,7 +38,7 @@ class _Effect:
             for index in range(source.n_frames):
                 source.seek(index)
                 frame = source.convert("RGBA")
-                frames.append(_texture(frame) if frame.getbbox() else None)
+                frames.append(rgba_texture(frame) if frame.getbbox() else None)
                 durations.append(source.info["duration"])
         self.frames = frames
         self.ends = tuple(accumulate(durations))
@@ -79,11 +58,9 @@ class _Effect:
 class B1RoarStage:
     """A deterministic, self-contained shot beginning after the boulder impact."""
 
-    def __init__(self):
-        background, foreground = stage()
-        self.background = _texture(background)
-        self.foreground = _texture(foreground)
-        world_width = background.width * WORLD_PER_ART_PIXEL
+    def __init__(self, *, art_dir=ROOM_ART):
+        self.room_art = B1RoomArt(art_dir)
+        world_width = ROOM_SIZE[0] * WORLD_PER_ART_PIXEL
         self.camera = Camera(SIZE[0], world_width)
         self.player = Player(PLAYER_X * WORLD_PER_ART_PIXEL, 0, world_width)
         self.player.facing = -1
@@ -98,24 +75,21 @@ class B1RoarStage:
         self.wave = _Effect("roar-wave")
         self.debris = _Effect("roar-debris")
 
-    def _set_camera(self, elapsed_ms):
-        phase = RELEASE_FRAME + (elapsed_ms - self.apex_ms) * FPS / 1000
-        left, _, right, bottom = camera_box(phase)
+    def _set_camera(self, elapsed_ms, camera_view):
+        if camera_view is None:
+            phase = RELEASE_FRAME + (elapsed_ms - self.apex_ms) * FPS / 1000
+            camera_view = camera_box(phase)
+        left, _, right, bottom = camera_view
         scale = WORLD_PER_ART_PIXEL
         self.camera.zoom = SIZE[0] / ((right - left) * scale)
         self.camera.x = left * scale
         self.camera.y = (GROUND - bottom) * scale
 
-    def _draw_plate(self, image):
-        scale = WORLD_PER_ART_PIXEL
-        center = self.camera.world_to_screen(image.w * scale / 2, (GROUND - image.h / 2) * scale)
-        image.draw(*center, image.w * scale * self.camera.zoom, image.h * scale * self.camera.zoom)
-
-    def draw(self, elapsed_ms):
+    def draw(self, elapsed_ms, *, camera_view=None):
         elapsed_ms = min(self.duration_ms, max(0, elapsed_ms))
-        self._set_camera(elapsed_ms)
+        self._set_camera(elapsed_ms, camera_view)
         pico.clear_canvas()
-        self._draw_plate(self.background)
+        self.room_art.draw_behind_actors(self.camera)
 
         since_release = (elapsed_ms - self.apex_ms) / 1000
         effect_elapsed = elapsed_ms - self.apex_ms + self.effect_in_point
@@ -129,8 +103,8 @@ class B1RoarStage:
         self.player.crouch_time = brace
         self.player.state = "crouch" if brace > 0 else "idle"
         self.player.draw(self.camera)
-        self._draw_plate(self.foreground)
+        self.room_art.draw_in_front(self.camera)
 
     def close(self):
         """Release pico2D images while the SDL renderer is still open."""
-        self.background = self.foreground = self.boss = self.player = self.wave = self.debris = None
+        self.room_art = self.boss = self.player = self.wave = self.debris = None
