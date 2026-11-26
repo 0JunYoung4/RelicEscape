@@ -12,7 +12,7 @@ tags:
 # Session Summary
 Last: 2026-11-26 (Asia/Seoul)
 
-- 전투방 원경 비석 추가. 틈빛을 바닥 이끼·앞쪽 잎까지 연결.
+- 맵 1 공통 미술은 전투방. 하강~B1 입구는 이미지 시안 범위.
 - B1 전투 가안 `docs/b1-hermit-crab-combat-design.md`.
 - B1 새 레이어·빛·카메라 SDL 검수. 본편 미연결.
 - A–B 절벽 접합·비석/식생 깊이 적용.
