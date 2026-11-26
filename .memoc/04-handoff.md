@@ -25,7 +25,7 @@ Last synced: 2026-11-05T03:23:05
 
 - 2026-11-26 [하단 동선 v2 미술](../docs/map1-art-direction.md)을 본편에 적용했다. `lower_route_atmosphere.py`는 원경 시차와 틈빛을, `tools.bake_lower_route_art`는 기존 A·C 원화에서 지형과 장치를 남기는 이미지 작업을 담당한다. [SDL 6장](../docs/map1-lower-route-runtime.jpg). 전체화면 수동 조작 체감과 장치별 렌더 성능은 미측정이다.
 
-- 2026-11-26 B1 게임 테스트의 방 미술 기준은 [room-art-v4](../assets/concepts/b1-hermit-crab/room-art-v4/README.md)다. 청록 원경과 시차·조명은 `tools/b1_room_art.py`, 기존 전투방 지형 이미지의 B1 배치는 `tools/b1_combat_terrain.py`에 있다. `tools.preview_b1_roar_game --camera-tour`로 입구→포효, `--stills`로 네 지점을 재현한다. 본편 B1 연결과 실제 전투 판정은 후속이다.
+- 2026-11-27 B1 게임 테스트의 방 미술 기준은 [room-art-v4](../assets/concepts/b1-hermit-crab/room-art-v4/README.md)다. `tools/b1_room_art.py`에서 청록 원경·시차·조명과 중앙 균열 암석을 그린다. 발판·레일 배치는 `tools/b1_combat_terrain.py`에 있다. `tools.preview_b1_roar_game --camera-tour`로 입구→포효, `--stills`로 네 지점, `--full-room <PNG>`로 전체 화면을 재현한다. 본편 B1 연결과 암석 타격·낙하를 포함한 실제 전투 판정은 후속이다.
 
 - 2026-11-26 B1 포효 v4를 `tools.preview_b1_roar_game`에서 실제 SDL 텍스처·플레이어·카메라로 재생한다. 게임 화면을 저장하려면 `--capture <WebP 경로>`를 붙인다. [실행과 캡처](../assets/concepts/b1-hermit-crab/roar-v4/README.md). 본편의 C→B1 이동과 전투는 아직 연결하지 않았다.
 

@@ -10,7 +10,7 @@ from pico2d import pico2d as pico
 from main import Camera
 from player import Animation, CROUCH_DURATION, Player
 from tools.b1_room_art import B1RoomArt, ROOM_ART, ROOM_SIZE, WORLD_PER_ART_PIXEL, rgba_texture
-from tools.preview_b1_intro import ART, GROUND, SHELL_X, SIZE
+from tools.preview_b1_intro import ART, GROUND, SHELL_X
 from tools.render_b1_roar_preview import FPS, PLAYER_X, RELEASE_FRAME, ROAR_ART, camera_box
 
 
@@ -56,12 +56,12 @@ class _Effect:
 
 
 class B1RoarStage:
-    """A deterministic, self-contained shot beginning after the boulder impact."""
+    """A deterministic, self-contained shot beginning after the intro rockfall."""
 
     def __init__(self, *, art_dir=ROOM_ART):
         self.room_art = B1RoomArt(art_dir)
         world_width = ROOM_SIZE[0] * WORLD_PER_ART_PIXEL
-        self.camera = Camera(SIZE[0], world_width)
+        self.camera = Camera(pico.get_canvas_width(), world_width)
         self.player = Player(PLAYER_X * WORLD_PER_ART_PIXEL, 0, world_width)
         self.player.facing = -1
 
@@ -81,7 +81,7 @@ class B1RoarStage:
             camera_view = camera_box(phase)
         left, _, right, bottom = camera_view
         scale = WORLD_PER_ART_PIXEL
-        self.camera.zoom = SIZE[0] / ((right - left) * scale)
+        self.camera.zoom = self.camera.screen_width / ((right - left) * scale)
         self.camera.x = left * scale
         self.camera.y = (GROUND - bottom) * scale
 

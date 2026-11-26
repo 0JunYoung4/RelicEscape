@@ -7,8 +7,8 @@ from PIL import Image, ImageChops, ImageOps
 from pico2d import pico2d as pico
 
 from tools.b1_combat_terrain import stage_terrain
-from tools.preview_b1_intro import ART, GROUND, SHELL_X, SIZE
-from tools.render_b1_roar_preview import PLAYER_X, rgba
+from tools.preview_b1_intro import ART, GROUND, SHELL_X
+from tools.render_b1_roar_preview import PLAYER_X, resize, rgba
 
 
 WORLD_PER_ART_PIXEL = 2
@@ -149,7 +149,8 @@ def _view_bounds(camera):
     scale = WORLD_PER_ART_PIXEL
     left = camera.x / scale
     bottom = GROUND - camera.y / scale
-    return left, bottom - SIZE[1] / (camera.zoom * scale), left + camera.view_width / scale, bottom
+    top = bottom - pico.get_canvas_height() / (camera.zoom * scale)
+    return left, top, left + camera.view_width / scale, bottom
 
 
 def _draw_plate(camera, image, left=0, top=0, *, size=None):
@@ -178,6 +179,9 @@ class B1RoomArt:
         middle = _green_grade(middle, (13, 28, 29), (119, 163, 124), .34)
         self.middle = rgba_texture(_air_mix(middle, (28, 55, 61), .18))
         self.terrain = rgba_texture(_lit_terrain())
+        boulder = rgba(ART.parent / "ceiling-rock-v2/ceiling-boulder.png")
+        boulder = resize(boulder.crop(boulder.getbbox()), (210, 219))
+        self.ceiling_boulder = rgba_texture(_green_grade(boulder, (6, 19, 13), (144, 184, 121), .22))
         self.vault = rgba_texture(_green_grade(_attached_vault(), (3, 10, 7), (101, 135, 81), .29))
         edge = _room_image(ROOM_ART / "attached-foreground.png", ROOM_SIZE)
         self.edge = rgba_texture(_light_floor_edges(edge))
@@ -211,6 +215,8 @@ class B1RoomArt:
         _draw_plate(camera, self.stele_shaft, 1368, 0)
         _draw_plate(camera, self.tunnel_glow, 1814, 493, size=(526, 268))
         _draw_plate(camera, self.terrain)
+        # The shell-breaking boulder stays above the boss after the intro rockfall.
+        _draw_plate(camera, self.ceiling_boulder, SHELL_X - 100, 42)
 
         _draw_plate(camera, self.foot_shadow, SHELL_X - 141, GROUND - 4, size=(282, 15))
         _draw_plate(camera, self.foot_shadow, PLAYER_X - 20, GROUND - 3, size=(40, 9))

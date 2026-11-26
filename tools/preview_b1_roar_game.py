@@ -38,11 +38,11 @@ def _draw_replay(stage, elapsed_ms, camera_tour):
         stage.draw(elapsed_ms)
 
 
-def _read_pixels(pico, pixels):
+def _read_pixels(pico, pixels, size=SIZE):
     if pico.SDL_RenderReadPixels(pico.renderer, None, pico.SDL_PIXELFORMAT_RGBA32,
-                                pixels, SIZE[0] * 4) != 0:
+                                pixels, size[0] * 4) != 0:
         raise RuntimeError(pico.SDL_GetError())
-    return Image.frombytes("RGBA", SIZE, bytes(pixels)).convert("RGB")
+    return Image.frombytes("RGBA", size, bytes(pixels)).convert("RGB")
 
 
 def capture(pico, stage, destination, *, camera_tour=False):
@@ -81,6 +81,14 @@ def capture_stills(pico, stage, destination):
     print(f"Captured B1 inspection views: {destination}")
 
 
+def capture_full_room(pico, stage, destination, size):
+    pixels = (c_ubyte * (size[0] * size[1] * 4))()
+    stage.draw(stage.apex_ms, camera_view=(0, 0, *size))
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    _read_pixels(pico, pixels, size).save(destination)
+    print(f"Captured the full B1 room: {destination}")
+
+
 def play(pico, stage, *, camera_tour=False):
     title = "RelicEscape · B1 포효 테스트 | E/R 다시 보기 · Esc 종료"
     pico.SDL_SetWindowTitle(pico.window, title.encode("utf-8"))
@@ -102,19 +110,24 @@ def main():
     output = parser.add_mutually_exclusive_group()
     output.add_argument("--capture", type=Path, metavar="WEBP", help="export the SDL scene without opening a window")
     output.add_argument("--stills", type=Path, metavar="DIR", help="export four fixed inspection views as PNGs")
+    output.add_argument("--full-room", type=Path, metavar="PNG", help="export the entire room at its native size")
     parser.add_argument("--camera-tour", action="store_true", help="pan from the passage into the arena before the roar")
     options = parser.parse_args()
     if options.capture is not None and options.capture.suffix.lower() != ".webp":
         parser.error("--capture requires a .webp filename")
-    if options.capture is not None or options.stills is not None:
+    if options.full_room is not None and options.full_room.suffix.lower() != ".png":
+        parser.error("--full-room requires a .png filename")
+    if any((options.capture, options.stills, options.full_room)):
         os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
         os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
         os.environ.setdefault("SDL_RENDER_DRIVER", "software")
 
     from pico2d import pico2d as pico
+    from tools.b1_room_art import ROOM_SIZE
     from tools.b1_roar_game_stage import B1RoarStage
 
-    pico.open_canvas(*SIZE)
+    canvas_size = ROOM_SIZE if options.full_room is not None else SIZE
+    pico.open_canvas(*canvas_size)
     stage = None
     try:
         stage = B1RoarStage()
@@ -122,6 +135,8 @@ def main():
             capture(pico, stage, options.capture, camera_tour=options.camera_tour)
         elif options.stills is not None:
             capture_stills(pico, stage, options.stills)
+        elif options.full_room is not None:
+            capture_full_room(pico, stage, options.full_room, canvas_size)
         else:
             play(pico, stage, camera_tour=options.camera_tour)
     finally:

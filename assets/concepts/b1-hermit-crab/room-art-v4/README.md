@@ -16,6 +16,8 @@
 | 바닥 앞 가장자리 | 판석 단면에 붙은 낮은 잎과 이끼, 뿌리. 지형과 같이 이동 |
 | 가까운 전경 | 가장자리의 어두운 뿌리와 잎. 1.10배 이동 |
 
+안쪽 발판 사이에는 기존 [균열 암석](../ceiling-rock-v2/ceiling-boulder.png)을 보스 바로 위 천장에 배치했다. 균열 암석은 은신 해제에 쓰이는 물체로, 도입의 낙석 이후 포효 장면에도 남는다. B1 테스트의 현재 적용 범위는 화면 배치다.
+
 중경 밑의 판석 잔해와 바닥 뒤쪽 이끼를 겹치고, 양옆 바닥 단면은 낮은 잎과 뿌리로 감쌌다. 중앙 전투 공간은 비워 뒀다. 천장 틈의 녹색 빛 두 줄기는 중앙과 오른쪽 비석 쪽으로 내려오고, 바닥 이끼와 앞쪽 잎이 같은 위치에서 반사광을 받는다. 빛은 각 자산의 실루엣 안에서 적용된다. [기존 가까운 전경](../room-art-v3/near-foreground.png)은 색을 맞춰 독립 레이어로 그린다. SDL에서 좌우 레일, 오른쪽 입구, 상단 발판, 포효와 입구에서 중앙으로 이동하는 시점을 확인했다. B1 테스트 장면에 적용했다.
 
 - [원경 PNG](far-background.png) · [원경 원화](source-far-ruined-hall.png) · [원경 프롬프트와 참고 ID](imagegen-far-prompt.txt)
@@ -26,4 +28,5 @@
 ```powershell
 .\.venv\Scripts\python.exe -m tools.preview_b1_roar_game --camera-tour
 .\.venv\Scripts\python.exe -m tools.preview_b1_roar_game --stills .cache/b1-room-inspection
+.\.venv\Scripts\python.exe -m tools.preview_b1_roar_game --full-room .cache/b1-room-inspection/full-room.png
 ```
