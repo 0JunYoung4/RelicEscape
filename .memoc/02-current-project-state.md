@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
+- 2026-11-26 B1 시작 포효 2초 시안과 투명 보스·공기 파동·돌먼지 시트를 제작했다. 바위 충돌 직후부터의 합성과 자산 기준점은 [B1 포효](../assets/concepts/b1-hermit-crab/roar-v1/README.md)에 있다. 본편 연결 전이다.
+
 - 2026-11-26 하단 A–B 중앙 비석과 식생을 원경·중경·부착 장식·근경으로 구성했다. 배치와 검증은 [비석과 공간 깊이](../docs/lower-route-ab-depth.md)에 있다.
 
 - 2026-11-26 하단 A–B 통로의 B 쪽 절벽에 중앙 원화와 같은 암반을 연결했다. 접합부 배치와 검증은 [하단 A–B 절벽 연결부](../docs/lower-route-ab-terrain-join.md)에 기록했다.

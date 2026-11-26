@@ -15,6 +15,8 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
+- 2026-11-26 B1 바위 충돌 이후의 포효 시안을 만들었다. `tools.render_b1_roar_pose`, `tools.render_b1_roar_effects`, `tools.render_b1_roar_preview`로 24fps 시트와 보스방 GIF를 재생성한다. C 전실에서 B1 입장·전투 상태 전환을 구현할 때 포효 레이어를 연결한다. 기획과 기준점은 [포효 자산 문서](../assets/concepts/b1-hermit-crab/roar-v1/README.md)에 있다.
+
 - 2026-11-26 [하단 A–B 비석의 레이어 구도](../docs/lower-route-ab-depth.md)를 적용했다. 게임 이동과 렌더러로 두 고정 구도·양방향 카메라·아래층 착지를 검사했다. 전체화면 수동 키 조작은 미확인이다.
 
 - 2026-11-26 하단 A–B 절벽의 몸체 알파와 보행선 `y=180`을 [접합부 문서](../docs/lower-route-ab-terrain-join.md)와 `tests/test_lower_route_a.py`에서 확인할 수 있다. SDL과 Direct3D 11에서 자동 이동과 카메라 비교를 실행했다. 전체화면 수동 조작은 미확인이다.

@@ -15,6 +15,8 @@ Durable project decisions live here. Keep entries short, dated, and useful to fu
 
 ## Decision Log
 
+- 2026-11-26 B1 시작은 바위 충돌로 눈을 뜬 소라게의 포효로 연출한다. 새 입을 그리지 않고 기존 얼굴로 고개를 젖히며 두 집게를 들어 벌린다. 공기 파동과 발밑 먼지·자갈은 각각 분리한다. [포효 시안](../assets/concepts/b1-hermit-crab/roar-v1/README.md)
+
 - 2026-11-26 A–B 비석의 식생은 원화 앵커를 지형과 같은 카메라 좌표로 옮긴다. 깊이는 색·크기·겹침으로 만들고, 통로의 낮은 전경 뒤에서도 게임 신호가 보이도록 그리기 우선순위를 둔다. [배치 기준](../docs/lower-route-ab-depth.md)
 
 - 2026-11-26 이어진 절벽을 만들 때 원화의 보행선과 월드 좌표를 맞추고, 하나의 불투명한 암반 표면과 외곽 알파를 사용한다. A–B의 배치와 재사용 기준은 [접합부 문서](../docs/lower-route-ab-terrain-join.md)에 기록했다.

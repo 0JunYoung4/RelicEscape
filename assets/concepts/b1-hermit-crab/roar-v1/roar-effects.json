@@ -1,0 +1,79 @@
+{
+  "frame_size": [
+    900,
+    440
+  ],
+  "pivot": [
+    450,
+    420
+  ],
+  "wave_origin": [
+    450,
+    254
+  ],
+  "columns": 8,
+  "frame_count": 48,
+  "fps": 24,
+  "frame_durations_ms": [
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42,
+    42,
+    41,
+    42
+  ],
+  "layers": [
+    {
+      "name": "roar-wave",
+      "first_visible_frame": 16,
+      "order": "behind_actors"
+    },
+    {
+      "name": "roar-debris",
+      "first_visible_frame": 17,
+      "order": "in_front_of_boss"
+    }
+  ]
+}
