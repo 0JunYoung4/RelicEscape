@@ -9,17 +9,17 @@ from tools.render_b1_roar_preview import resize, rgba
 
 
 TERRAIN_ART = ROOT / "assets/terrain"
-PLATFORM_ART = TERRAIN_ART / "ruin-platforms"
+PLATFORM_ART = ART.parent / "platforms-v1"
 DECOR = TERRAIN_ART / "moss-grotto-floor-decor"
 FLOOR_SOURCE = TERRAIN_ART / "ruins-floor-blue-fissures-v1.png"
 RAIL_CENTERS = (387, 1795)
 
 # Existing B1 art positions: left, walking surface, width, underside of the rock.
 LEDGES = (
-    ("root-wedge", 142, 252, 449, 323),
-    ("carved-buttress", 724, 179, 257, 227),
-    ("short-root-step", 1204, 183, 257, 236),
-    ("waterworn-sill", 1588, 239, 449, 307),
+    ("sluice-crown", 142, 252, 449, 323),
+    ("counterweight-step", 724, 179, 257, 227),
+    ("root-keystone", 1204, 183, 257, 236),
+    ("aqueduct-crown", 1588, 239, 449, 307),
 )
 
 # Low clumps on the walking surface leave clear stretches under the boss and player.
@@ -122,8 +122,10 @@ def _place_rails(canvas, platforms):
         canvas.alpha_composite(resize(source, (12, length)), (x - 6, anchor))
     for name, left, top, width, bottom in LEDGES:
         _place_ledge(canvas, platforms[name], left, top, width, bottom)
-    for x, ledge in zip(RAIL_CENTERS, (LEDGES[0], LEDGES[-1])):
-        canvas.alpha_composite(top_mount, (x - top_mount.width // 2, ledge[2] + 28))
+    # Mount the right bracket on the underside of the new arch pier.
+    mount_tops = (LEDGES[0][2] + 28, LEDGES[-1][4] - 24)
+    for x, top in zip(RAIL_CENTERS, mount_tops):
+        canvas.alpha_composite(top_mount, (x - top_mount.width // 2, top))
         canvas.alpha_composite(foot_mount, (x - foot_mount.width // 2, GROUND - 19))
         canvas.alpha_composite(carriage, (x - carriage.width // 2, 389))
 

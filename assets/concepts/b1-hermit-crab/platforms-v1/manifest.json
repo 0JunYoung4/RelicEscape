@@ -1,0 +1,27 @@
+{
+  "coordinate_system": "Source PNG pixels from the top left",
+  "crop_format": ["left", "top", "right", "bottom"],
+  "walk_surface_format": ["left", "y", "right"],
+  "platforms": {
+    "sluice-crown": {
+      "image": "sluice-crown.png",
+      "crop": [5, 122, 2167, 682],
+      "walk_surface": [20, 254, 2155]
+    },
+    "counterweight-step": {
+      "image": "counterweight-step.png",
+      "crop": [20, 236, 1754, 768],
+      "walk_surface": [36, 302, 1740]
+    },
+    "root-keystone": {
+      "image": "root-keystone.png",
+      "crop": [52, 181, 1733, 725],
+      "walk_surface": [59, 257, 1723]
+    },
+    "aqueduct-crown": {
+      "image": "aqueduct-crown.png",
+      "crop": [20, 185, 2003, 579],
+      "walk_surface": [28, 223, 1994]
+    }
+  }
+}
