@@ -1,7 +1,7 @@
 """Render the B1 defeat preview and its separate transparent flash."""
 
 from ctypes import c_ubyte
-from math import ceil, floor, hypot, sin
+from math import ceil, floor, hypot, pi, sin
 import os
 from random import Random
 
@@ -15,7 +15,7 @@ from tools.preview_b1_roar_game import SIZE, _read_pixels
 
 OUTPUT = ART.parent / "defeat-v1"
 CENTER, FLOOR = 480, 496
-HITSTOP, CLAW_FALL, STILL, BURST, REVEAL, SETTLED = 150, 440, 1450, 1600, 2000, 2500
+HITSTOP, CLAW_FALL, STILL, BURST, REVEAL = 150, 440, 1450, 1600, 2000
 BEAM_SWELL_END, BEAM_END, SHAKE_END, LIGHT_END = 1640, 1870, 1900, 2450
 ROOM_SPREAD_END = 1750
 WHITE_START, WHITE_PEAK, WHITE_RELEASE = 1670, 1710, 1770
@@ -35,8 +35,11 @@ BEAMS = (
 BEAM_START = BEAMS[0][0]
 BEAM_TRAVEL = 25
 BEAM_WIDTH_SCALE = 1.25
-HOLD = 1500
 SWAP_POSE = 1730
+WISP_START, WISP_RISE, WISP_HOVER, WISP_TURN, WISP_LAUNCH = 2500, 2680, 2980, 3160, 3280
+WISP_EXIT, WISP_END, PREVIEW_END = 3920, 3980, 4000
+WISP_ORIGIN = (579, 366)
+WISP_BLUE = (89, 181, 242)
 OVERSCAN = 12
 LANCZOS = Image.Resampling.LANCZOS
 GLOW_PROFILE = Image.radial_gradient("L").point(
@@ -209,6 +212,68 @@ def room_light(t, rays, emitters):
     return light
 
 
+def wisp_position(t):
+    rise = progress(t, WISP_RISE, WISP_HOVER)
+    lift = rise * rise * (3 - 2 * rise)
+    hover = progress(t, WISP_HOVER, WISP_LAUNCH)
+    flight = progress(t, WISP_LAUNCH, WISP_EXIT)
+    distance = flight ** 1.85
+    x, y = WISP_ORIGIN
+    return (x - 24 * lift + 7 * hover + 553 * distance,
+            y - 105 * lift + 4 * sin(2 * pi * hover) + 78 * distance + 8 * sin(pi * flight))
+
+
+def wisp_light(x, y, strength):
+    light = Image.new("RGBA", SIZE)
+    glow(light, x, y, 120, WISP_BLUE, 156 * strength)
+    floor_light = max(0, 1 - (FLOOR - y) / 240)
+    glow(light, x, FLOOR, 110, WISP_BLUE, 72 * floor_light * strength, aspect=.18)
+    return light
+
+
+def draw_wisp_trail(frame, t):
+    trail = Image.new("RGBA", SIZE)
+    for delay in range(128, 0, -8):
+        sample = t - delay
+        if sample < WISP_LAUNCH:
+            continue
+        x, y = wisp_position(sample)
+        remaining = 1 - delay / 136
+        speed = progress(sample, WISP_LAUNCH, WISP_EXIT) ** .85
+        glow(trail, x, y, 7 + 19 * remaining, WISP_BLUE,
+             100 * remaining ** 2 * speed, aspect=.32)
+
+    spark_interval = 42
+    latest = (t - WISP_LAUNCH) // spark_interval
+    for index in range(max(0, latest - 3), latest + 1):
+        birth = WISP_LAUNCH + index * spark_interval
+        age = (t - birth) / (4 * spark_interval)
+        x, y = wisp_position(birth)
+        y += 11 * sin(index * 2.4) - 16 * age
+        glow(trail, x, y, 5 - 2 * age, (116, 208, 255), 170 * (1 - age) ** 2)
+    frame.alpha_composite(trail)
+
+
+def draw_wisp(frame, t, sprite, x, y, strength):
+    if t >= WISP_LAUNCH:
+        draw_wisp_trail(frame, t)
+
+    turn = progress(t, WISP_TURN, WISP_LAUNCH)
+    flight = progress(t, WISP_LAUNCH, WISP_EXIT)
+    pulse = sin((t - WISP_START) * .030)
+    height = round(22 + strength * (41 + 4 * pulse) + 27 * flight)
+    width = round(height * sprite.width / sprite.height * (1 - .22 * flight) * (1 - .07 * pulse))
+    flame = sprite.resize((width, height), LANCZOS)
+    flame.putalpha(flame.getchannel("A").point([round(value * strength) for value in range(256)]))
+    # Rotate the upper flame into the wake while keeping its bright core on the path.
+    body = Image.new("RGBA", (208, 208))
+    pivot = body.width // 2
+    body.alpha_composite(flame, (pivot - round(width * .59), pivot - round(height * .85)))
+    body = body.rotate(7 * pulse + 76 * turn, Image.Resampling.BICUBIC)
+    glow(frame, x, y, 47, WISP_BLUE, 88 * strength)
+    frame.alpha_composite(body, (round(x) - pivot, round(y) - pivot))
+
+
 def draw_dust(frame, t, particles):
     layer = Image.new("RGBA", SIZE)
     ink = ImageDraw.Draw(layer)
@@ -242,11 +307,19 @@ def draw_dust(frame, t, particles):
     frame.alpha_composite(layer.filter(ImageFilter.GaussianBlur(.6)))
 
 
-def render(t, room, poses, particles, texture):
+def render(t, room, poses, particles, texture, wisp_sprite):
     bg, fg = room
     rays, emitters = beam_flash(t, texture)
+    illumination = None
+    wisp = None
     if BEAM_START < t < LIGHT_END:
         illumination = room_light(t, rays, emitters)
+    elif WISP_START < t < WISP_END:
+        x, y = wisp_position(t)
+        strength = progress(t, WISP_START, WISP_RISE)
+        wisp = x, y, strength
+        illumination = wisp_light(*wisp)
+    if illumination is not None:
         frame = apply_light(bg, illumination, .60)
         boss = Image.new("RGBA", SIZE)
         draw_pose(boss, t, *poses)
@@ -258,6 +331,8 @@ def render(t, room, poses, particles, texture):
     if BEAM_START < t < BEAM_END:
         frame.alpha_composite(rays)
     draw_dust(frame, t, particles)
+    if wisp is not None:
+        draw_wisp(frame, t, wisp_sprite, *wisp)
     frame.alpha_composite(fg)
     flash = progress(t, WHITE_START, WHITE_PEAK) * (1 - progress(t, WHITE_RELEASE, REVEAL))
     if flash:
@@ -294,6 +369,9 @@ def export_flash(beats, texture):
 def main():
     room = capture_room()
     poses = load_pose("before-flash.png"), load_pose("after-flash.png")
+    with Image.open(OUTPUT / "defeat-wisp.png") as source:
+        box = source.getchannel("A").point(lambda value: 255 if value > 8 else 0).getbbox()
+        wisp_sprite = source.crop(box)
     texture = beam_texture()
     texture.save(OUTPUT / "defeat-beam-source.png", optimize=True)
     rng = Random(405)
@@ -302,11 +380,13 @@ def main():
         for index in range(34)
     ]
     flash_beats = flash_beat_times()
-    beats = flash_beats | {HITSTOP, CLAW_FALL, SHAKE_END, REVEAL, LIGHT_END, SETTLED}
+    beats = flash_beats | {HITSTOP, CLAW_FALL, SHAKE_END, REVEAL, LIGHT_END, WISP_START,
+                          WISP_RISE, WISP_HOVER, WISP_TURN, WISP_LAUNCH, WISP_EXIT, WISP_END}
     beats.update(range(BEAM_START, REVEAL, 20))
-    times = sorted(beats | set(range(0, SETTLED, 40)))
-    frames = [render(t, room, poses, particles, texture) for t in times]
-    durations = [end - start for start, end in zip(times, times[1:])] + [HOLD]
+    beats.update(range(WISP_START, WISP_END, 20))
+    times = sorted(beats | set(range(0, WISP_START, 40)))
+    frames = [render(t, room, poses, particles, texture, wisp_sprite) for t in times]
+    durations = [end - start for start, end in zip(times, times[1:] + [PREVIEW_END])]
     destination = OUTPUT / "defeat-preview.webp"
     frames[0].save(destination, format="WEBP", save_all=True, append_images=frames[1:],
                    duration=durations, loop=0, quality=89, method=4)

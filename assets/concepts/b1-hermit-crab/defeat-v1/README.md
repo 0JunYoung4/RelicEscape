@@ -8,7 +8,7 @@ B1의 기존 직립 원본에서 내장 ImageGen으로 두 자세를 따로 만�
 
 ## 4초 애니메이션 미리보기
 
-실제 B1의 배경·지형·전경을 캡처해 자세, 떨림, 몸에서 뻗는 빛줄기와 섬광을 겹친 [점멸 전후 WebP](defeat-preview.webp)다. 막타 멈춤 0.15초와 폭발 전 정적 0.15초를 포함한다. 화면이 가장 밝을 때 자세를 바꾸고 빛이 걷히면 쓰러진 자세를 잠시 유지한다.
+실제 B1의 배경·지형·전경을 캡처해 자세, 떨림, 빛줄기와 섬광, 도깨비불을 겹친 [격파 애니메이션 WebP](defeat-preview.webp)다. 막타 멈춤 0.15초와 폭발 전 정적 0.15초를 포함한다. 화면이 가장 밝을 때 자세를 바꾸고 빛이 걷히면 쓰러진 자세를 잠시 유지한다.
 
 `.\.venv\Scripts\python.exe -m tools.render_b1_defeat_preview`로 다시 렌더링한다. [격파 연출 전체 계획](../../../../docs/b1-hermit-crab-combat-design.md#격파-연출과-다리-장벽-해제-계획)
 
@@ -22,6 +22,16 @@ B1의 기존 직립 원본에서 내장 ImageGen으로 두 자세를 따로 만�
 - [빛줄기 원본 PNG](defeat-beam-source.png)는 1024 × 184 RGBA다. 보스방 천장 틈빛의 부드러운 감쇠를 사용하고, 새어 나오는 빛은 한 단계 밝은 푸른색으로 잡았다. 미리보기를 렌더링할 때 원본도 함께 생성한다. [천장 틈빛 렌더러](../../../../tools/b1_room_art.py)
 - 점멸 전 소라게 이미지의 암석 접합부 여덟 곳을 기준점으로 잡았다. 각 프레임에서 보스의 떨림을 같이 따라가며, 원본 빛줄기를 방향에 맞춰 회전하고 화면 끝 바깥까지 늘린다. 섬광 직전에는 폭이 동시에 커진다.
 - 빛줄기와 균열에서 별도 조명 마스크를 만든다. 석재와 바닥, 전경에 닿는 빛의 강도를 달리하고, 바닥을 만나는 줄기는 접점에서 가로로 빛이 퍼진다. 가까운 잎과 암벽은 빛줄기보다 앞에서 그려 방의 깊이를 유지한다.
+
+## 푸른 도깨비불
+
+- [도깨비불 원본 PNG](defeat-wisp.png)는 내장 ImageGen으로 생성한 1070 × 1470 투명 RGBA 스프라이트다. 작은 청백색 심과 서로 다른 길이의 푸른 불꽃 끝으로 실루엣을 잡았다. 어두운 공간에서 밝은 심과 부드러운 외곽을 읽게 하는 조명 대비를 참고했다. [HK-RG-06](../../../../docs/references/hollow-knight-silksong/images/hk-rg-06.png)
+- 2.50초에 쓰러진 등딱지 오른쪽의 깨진 틈에서 불꽃이 피어난다. 2.68초부터 올라와 2.98초에 잠시 머물고, 3.16초에 불꽃 끝을 뒤로 기울여 3.28초부터 오른쪽으로 가속한다. 3.98초에 잔광이 모두 화면을 벗어난다.
+- 불꽃의 푸른빛은 등딱지와 인근 유적에 닿는다. 비행할 때는 늘어난 불꽃 끝과 짧은 잔광이 뒤를 따른다. [보스방 합성 미리보기](defeat-preview.webp)
+
+### 도깨비불 생성 프롬프트
+
+Use case: stylized-concept. Asset type: one original transparent 2D game sprite for RelicEscape, a dark teal hand-painted stone cavern side-scroller. Generate the small blue will-o'-wisp that escapes a fallen stone hermit crab. True RGBA cutout on empty alpha. One cohesive asymmetrical, living tongue of cold flame: bright small glacial-white inner teardrop near the LOWER MIDDLE, curling into two uneven translucent blue tips rising above it; the longer tip bends to the upper left like a loose brushstroke, and a shorter fine azure tip curls up the right. Make it read at only 35 x 52 pixels in the game. Clear flame contours, finely layered deep cerulean and bright cyan in the outer folds, very soft feathering at thin tips and a pale ivory-blue hot center, quiet eerie organic flow. Tight readable silhouette, roughly 2:3 upright subject centered on square canvas with clear transparent padding. The core is not a separate sphere. No character face, eyes, rings, hard aura disc, background, landscape, detached particles, lettering, sheet, frames, pedestal or cast shadow. Produce exactly one fully visible flame sprite with a few soft translucent edges integrated into the actual flame. Real transparent pixels around the entire silhouette. No checkerboard drawn into the image. Glow cast onto stone and flight trails will be composited separately.
 
 ## 점멸 직전 생성 프롬프트
 
