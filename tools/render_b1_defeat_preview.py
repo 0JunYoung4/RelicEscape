@@ -16,7 +16,8 @@ from tools.preview_b1_roar_game import SIZE, _read_pixels
 OUTPUT = ART.parent / "defeat-v1"
 CENTER, FLOOR = 480, 496
 HITSTOP, CLAW_FALL, STILL, BURST, REVEAL, SETTLED = 150, 440, 1450, 1600, 2000, 2500
-BEAM_SWELL_END, BEAM_END, SHAKE_END, LIGHT_END = 1660, 1870, 1900, 2450
+BEAM_SWELL_END, BEAM_END, SHAKE_END, LIGHT_END = 1640, 1870, 1900, 2450
+ROOM_SPREAD_END = 1750
 WHITE_START, WHITE_PEAK, WHITE_RELEASE = 1670, 1710, 1770
 FLASH_Y = 399
 BLUE_LIGHT = (145, 197, 226)
@@ -32,7 +33,8 @@ BEAMS = (
     (1390, (534, 436), (778, 596), 24),
 )
 BEAM_START = BEAMS[0][0]
-BEAM_TRAVEL = 45
+BEAM_TRAVEL = 25
+BEAM_WIDTH_SCALE = 1.25
 HOLD = 1500
 SWAP_POSE = 1730
 OVERSCAN = 12
@@ -181,7 +183,7 @@ def beam_flash(t, texture):
             continue
         x += shiver
         tip_x, tip_y = x + (far_x - x) * reach, y + (far_y - y) * reach
-        half_width = width * (.40 + .60 * reach) * (1 + 7 * swell)
+        half_width = width * BEAM_WIDTH_SCALE * (.40 + .60 * reach) * (1 + 7 * swell)
         intensity = (.43 + .45 * reach + .12 * swell) * remaining
         draw_beam(rays, texture, x, y, tip_x, tip_y, half_width, intensity)
         glow(rays, x, y, 9 + 12 * swell, (170, 215, 241), 76 * intensity)
@@ -191,19 +193,19 @@ def beam_flash(t, texture):
 
 def room_light(t, rays, emitters):
     # The wide falloff changes receiver color even beside the visible beam.
-    falloff = rays.getchannel("A").filter(ImageFilter.GaussianBlur(18))
+    falloff = rays.getchannel("A").filter(ImageFilter.GaussianBlur(23))
     light = Image.new("RGBA", SIZE, (*BLUE_LIGHT, 0))
     light.putalpha(falloff.point([min(255, round(value * 1.5)) for value in range(256)]))
     for x, y, tip_x, tip_y, intensity in emitters:
         glow(light, x, y, 63, (154, 203, 229), 112 * intensity)
         if y < FLOOR < tip_y:
             contact_x = x + (tip_x - x) * (FLOOR - y) / (tip_y - y)
-            glow(light, contact_x, FLOOR, 91, (165, 210, 233), 137 * intensity, aspect=.21)
+            glow(light, contact_x, FLOOR, 110, (165, 210, 233), 137 * intensity, aspect=.21)
     if BURST <= t < LIGHT_END:
-        expansion = progress(t, BURST, 1810)
+        expansion = progress(t, BURST, ROOM_SPREAD_END)
         fade = 1 - progress(t, SWAP_POSE, LIGHT_END)
-        glow(light, CENTER, FLASH_Y, 75 + 485 * expansion, (186, 223, 242), 145 * fade)
-        glow(light, CENTER, FLOOR, 230 + 180 * expansion, (178, 216, 239), 92 * fade, aspect=.20)
+        glow(light, CENTER, FLASH_Y, 75 + 560 * expansion, (186, 223, 242), 145 * fade)
+        glow(light, CENTER, FLOOR, 230 + 235 * expansion, (178, 216, 239), 92 * fade, aspect=.20)
     return light
 
 
