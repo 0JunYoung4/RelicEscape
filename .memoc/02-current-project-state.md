@@ -15,7 +15,7 @@ Last synced: 2026-11-05T03:23:05
 
 ## Current Status
 
-- 2026-11-27 `play-b1-encounter.cmd` B1 독립 테스트에 보스 체력96, 회복 중 베기, 50% 중앙 집게·은신, 양쪽 유물 레일, 천장 바위 파쇄와 재등장을 연결했다. [50% 구간 조작](../docs/b1-hermit-crab-combat-design.md#50-은신-구간-조작)
+- 2026-11-27 `play-b1-encounter.cmd` B1 독립 테스트에 내부 보스 체력 96, 회복 중 베기, 50% 중앙 집게·은신, 양쪽 유물 레일, 천장 바위 파쇄와 재등장을 연결했다. [50% 구간 조작](../docs/b1-hermit-crab-combat-design.md#50-은신-구간-조작)
 
 - 2026-11-27 `play-b1-encounter.cmd` 독립 조작 테스트에서 `E` 조사와 포효 뒤 집게·단발 낙하를 반복한다. [행동트리](../docs/b1-hermit-crab-combat-design.md#기본-교전-행동트리)는 두 공격을 먼저 보여 주고 거리와 두 번 연속 사용 여부로 다음 공격을 고른다. [실행과 검수 범위](../docs/b1-hermit-crab-combat-design.md#기본-교전-조작-테스트)
 

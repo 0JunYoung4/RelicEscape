@@ -129,18 +129,18 @@ def _labels():
     if malgun.is_file():
         font = ImageFont.truetype(str(malgun), 16)
         words = ("E  조사", "A/D 이동 · Shift 달리기 · Space 점프 · R 다시",
-                 "쓰러졌습니다 · R 재도전", "바위 소라게", "E 유물 장착",
+                 "쓰러졌습니다 · R 재도전", "E 유물 장착",
                  "X 레일 파츠 보내기", "E 상단으로 이동", "양옆 레일로 이동",
                  "Shift + Space로 안쪽 발판으로", "X 천장 바위 타격", "전투 바닥으로 돌아가기",
                  "바위 소라게 격파 · R 다시")
     else:
         font = ImageFont.load_default(size=16)
         words = ("E  Inspect", "A/D Move | Shift Run | Space Jump | R Reset",
-                 "Defeated | R Retry", "Rock Hermit Crab", "E Mount relic",
+                 "Defeated | R Retry", "E Mount relic",
                  "X Strike carriage", "E Travel up", "Use either rail",
                  "Shift + Space to the inner ledge", "X Strike ceiling rock", "Return to the floor",
                  "Boss defeated | R Replay")
-    names = ("inspect", "controls", "retry", "boss", "mount", "send", "travel", "rails",
+    names = ("inspect", "controls", "retry", "mount", "send", "travel", "rails",
              "inner", "boulder", "floor", "victory")
     return {name: _label(font, word) for name, word in zip(names, words)}
 
@@ -536,8 +536,6 @@ class B1EncounterStage(B1RoarStage):
         self.health.draw_hit(self.camera, self.time)
         self.room_art.draw_in_front(self.camera)
         self.health.draw_hud(SIZE[1], self.time)
-        if self.state not in ("waiting", "tremor"):
-            self._draw_boss_health()
         self._draw_ui()
 
     def _draw_shell(self):
@@ -562,19 +560,6 @@ class B1EncounterStage(B1RoarStage):
             self.boulder.draw_fall(self.camera, BOULDER_X, top)
         elif self.rock_hit_at is not None:
             self.boulder.draw_shatter(self.camera, BOULDER_X, BOULDER_IMPACT_Y, self.time - self.rock_hit_at)
-
-    def _draw_boss_health(self):
-        center = SIZE[0] // 2
-        self.labels["boss"].draw(center, SIZE[1] - 22)
-        left, right, y = center - 154, center + 154, SIZE[1] - 43
-        pico.draw_rectangle(left, y - 5, right, y + 5, 112, 105, 77, filled=True)
-        pico.draw_rectangle(left + 2, y - 3, right - 2, y + 3, 25, 33, 38, filled=True)
-        if self.boss_hp:
-            fill_end = left + 2 + round((right - left - 4) * self.boss_hp / BOSS_MAX_HP)
-            guarded = self.phase == "shell" and self.state != "face_open"
-            color = (101, 145, 154) if guarded else (199, 131, 64)
-            pico.draw_rectangle(left + 2, y - 3, fill_end, y + 3, *color, filled=True)
-        pico.draw_line(center, y - 5, center, y + 5, 228, 218, 181)
 
     def _draw_claw(self):
         center = self.claw_center / SCALE
