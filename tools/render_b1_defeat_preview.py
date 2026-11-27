@@ -1,9 +1,8 @@
-"""Render the two B1 defeat poses in the cave, without gameplay hooks."""
+"""Render the B1 defeat preview and its separate transparent flash."""
 
 from ctypes import c_ubyte
-from math import sin
+from math import cos, radians, sin
 import os
-from pathlib import Path
 from random import Random
 
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
@@ -16,10 +15,20 @@ from tools.preview_b1_roar_game import SIZE, _read_pixels
 OUTPUT = ART.parent / "defeat-v1"
 CENTER, FLOOR = 480, 496
 HITSTOP, CLAW_FALL, CONDENSE, BURST, REVEAL, SETTLED = 150, 440, 1450, 1600, 1900, 2500
+WHITE_START, WHITE_PEAK, WHITE_RELEASE = 1640, 1670, 1740
+FLASH_END = 2350
+FLASH_SIZE = (512, 512)
+FLASH_PIVOT = (256, 256)
+FLASH_Y = 399
+RAYS = ((-165, .80, 4), (-131, .50, 2), (-97, .73, 3), (-53, 1.00, 5),
+        (-19, .66, 3), (7, .95, 5), (38, .59, 2), (104, .56, 3), (152, 1.00, 4))
 HOLD = 1500
 SWAP_POSE = 1700
 OVERSCAN = 12
 LANCZOS = Image.Resampling.LANCZOS
+GLOW_PROFILE = Image.radial_gradient("L").point(
+    [round(255 * max(0, 1 - level / 175) ** 1.7) for level in range(256)]
+)
 
 
 def progress(t, start, end):
@@ -103,11 +112,10 @@ def glow(frame, x, y, radius, color, opacity):
         return
     radius = max(1, round(radius))
     size = radius * 2
-    alpha = Image.new("L", (size, size))
-    ImageDraw.Draw(alpha).ellipse((radius * .35, radius * .35, radius * 1.65, radius * 1.65),
-                                 fill=round(opacity))
+    alpha = GLOW_PROFILE.resize((size, size), Image.Resampling.BILINEAR)
+    alpha = alpha.point([round(level * opacity / 255) for level in range(256)])
     image = Image.new("RGBA", (size, size), (*color, 0))
-    image.putalpha(alpha.filter(ImageFilter.GaussianBlur(radius * .29)))
+    image.putalpha(alpha)
     frame.alpha_composite(image, (round(x - radius), round(y - radius)))
 
 
@@ -132,8 +140,63 @@ def energy(frame, t):
         ink.line(points, fill=(114, 224, 252, round((70 + 133 * charge) * (1 - collapse))), width=2)
     frame.alpha_composite(streaks.filter(ImageFilter.GaussianBlur(4)))
     frame.alpha_composite(streaks)
-    glow(frame, CENTER, 399, 48 - 21 * collapse, (174, 239, 255),
-         28 * charge + 136 * collapse)
+    glow(frame, CENTER, FLASH_Y, 48 - 21 * collapse, (174, 239, 255),
+         28 * charge * (1 - collapse))
+
+
+def local_flash(t):
+    """Draw the flash around a fixed origin, separate from room and screen light."""
+    frame = Image.new("RGBA", FLASH_SIZE)
+    if not CONDENSE < t < FLASH_END:
+        return frame
+
+    x, y = FLASH_PIVOT
+    marks = Image.new("RGBA", FLASH_SIZE)
+    ink = ImageDraw.Draw(marks)
+    if t < BURST:
+        charge = progress(t, CONDENSE, BURST)
+        distance = 102 * (1 - charge) ** 1.4 + 10
+        glow(frame, x, y, 22 + 10 * charge, (108, 200, 255), 172 * charge)
+        for angle, weight, width in RAYS:
+            angle = radians(angle)
+            dx, dy = cos(angle), sin(angle)
+            front = distance * weight
+            back = front + (8 + 18 * (1 - charge)) * weight
+            ink.line((x + dx * front, y + dy * front, x + dx * back, y + dy * back),
+                     fill=(125, 217, 255, round(155 * charge)), width=max(1, width // 2))
+        core = 1 + 5 * charge
+        ink.ellipse((x - core, y - core, x + core, y + core),
+                    fill=(221, 248, 255, round(225 * charge)))
+    else:
+        expansion = progress(t, BURST, 1810)
+        ray_strength = (1 - progress(t, BURST, 1880)) ** 1.2
+        glow_fade = 1 - progress(t, WHITE_RELEASE, FLASH_END)
+        glow(frame, x, y, 46 + 134 * expansion, (108, 195, 251), 203 * glow_fade)
+        glow(frame, x, y, 23 + 54 * expansion, (194, 238, 255), 240 * ray_strength)
+        for angle, weight, width in RAYS:
+            angle = radians(angle)
+            dx, dy = cos(angle), sin(angle)
+            length = (55 + 130 * expansion) * weight
+            base = length * .16
+            stroke = width * ray_strength
+            middle_x, middle_y = x + dx * base, y + dy * base
+            ink.polygon(((x, y), (middle_x - dy * stroke, middle_y + dx * stroke),
+                         (x + dx * length, y + dy * length),
+                         (middle_x + dy * stroke, middle_y - dx * stroke)),
+                        fill=(180, 231, 255, round(228 * ray_strength)))
+        ring_age = progress(t, BURST, 2130)
+        ring_radius = 24 + 176 * ring_age
+        ring_strength = (1 - ring_age) * min(1, ring_age * 7)
+        if ring_strength > 0:
+            ink.ellipse((x - ring_radius, y - ring_radius * .68,
+                         x + ring_radius, y + ring_radius * .68),
+                        outline=(169, 224, 250, round(132 * ring_strength)), width=2)
+        core = 6 + 19 * progress(t, BURST, WHITE_PEAK)
+        ink.ellipse((x - core, y - core * .72, x + core, y + core * .72),
+                    fill=(242, 252, 255, round(255 * ray_strength)))
+    frame.alpha_composite(marks.filter(ImageFilter.GaussianBlur(5)))
+    frame.alpha_composite(marks)
+    return frame
 
 
 def draw_dust(frame, t, particles):
@@ -173,18 +236,20 @@ def render(t, room, poses, particles):
     bg, fg = room
     frame = bg.copy()
     expansion = progress(t, BURST, 1810)
-    fade = 1 - progress(t, 1730, 2350)
+    fade = 1 - progress(t, 1730, FLASH_END)
     if t >= BURST:
-        glow(frame, CENTER, 399, 75 + 485 * expansion, (183, 226, 251), 192 * fade)
+        glow(frame, CENTER, FLASH_Y, 75 + 485 * expansion, (183, 226, 251), 192 * fade)
     draw_pose(frame, t, *poses)
     energy(frame, t)
     if t >= BURST:
         glow(frame, CENTER, 406, 47 + 270 * expansion, (216, 245, 255), 188 * fade)
+    if CONDENSE < t < FLASH_END:
+        frame.alpha_composite(local_flash(t), (CENTER - FLASH_PIVOT[0], FLASH_Y - FLASH_PIVOT[1]))
     draw_dust(frame, t, particles)
     frame.alpha_composite(fg)
     if t >= BURST:
         glow(frame, CENTER, FLOOR - 36, 65 + 385 * expansion, (178, 224, 244), 59 * fade)
-    flash = progress(t, 1640, 1670) * (1 - progress(t, 1740, REVEAL))
+    flash = progress(t, WHITE_START, WHITE_PEAK) * (1 - progress(t, WHITE_RELEASE, REVEAL))
     if flash:
         frame.alpha_composite(Image.new("RGBA", SIZE, (255, 255, 255, round(flash * 255))))
 
@@ -199,6 +264,16 @@ def render(t, room, poses, particles):
     return view.crop((center_x, center_y, center_x + SIZE[0], center_y + SIZE[1])).convert("RGB")
 
 
+def export_flash():
+    times = sorted(set(range(CONDENSE, FLASH_END, 20)) | {BURST, WHITE_PEAK, FLASH_END})
+    frames = [local_flash(t) for t in times]
+    durations = [end - start for start, end in zip(times, times[1:])] + [20]
+    destination = OUTPUT / "defeat-flash.webp"
+    frames[0].save(destination, format="WEBP", save_all=True, append_images=frames[1:],
+                   duration=durations, loop=0, lossless=True, method=4)
+    print(f"Captured {sum(durations)} ms of transparent flash into {destination}")
+
+
 def main():
     room = capture_room()
     poses = load_pose("before-flash.png"), load_pose("after-flash.png")
@@ -207,7 +282,9 @@ def main():
         (-1 if index % 2 == 0 else 1, rng.uniform(95, 410), rng.uniform(31, 82), rng.uniform(.7, 3.2))
         for index in range(34)
     ]
-    beats = {HITSTOP, CLAW_FALL, CONDENSE, BURST, SWAP_POSE, REVEAL, SETTLED, 1640, 1670, 1740}
+    beats = {HITSTOP, CLAW_FALL, CONDENSE, BURST, SWAP_POSE, REVEAL, SETTLED,
+             WHITE_START, WHITE_PEAK, WHITE_RELEASE}
+    beats.update(range(CONDENSE, REVEAL, 20))
     times = sorted(beats | set(range(0, SETTLED, 40)))
     frames = [render(t, room, poses, particles) for t in times]
     durations = [end - start for start, end in zip(times, times[1:])] + [HOLD]
@@ -215,6 +292,7 @@ def main():
     frames[0].save(destination, format="WEBP", save_all=True, append_images=frames[1:],
                    duration=durations, loop=0, quality=89, method=4)
     print(f"Captured {sum(durations)} ms into {destination}")
+    export_flash()
 
 
 if __name__ == "__main__":

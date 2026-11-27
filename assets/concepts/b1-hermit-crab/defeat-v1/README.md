@@ -12,6 +12,11 @@ B1의 기존 직립 원본에서 내장 ImageGen으로 두 자세를 따로 만�
 
 `.\.venv\Scripts\python.exe -m tools.render_b1_defeat_preview`로 다시 렌더링한다. [격파 연출 전체 계획](../../../../docs/b1-hermit-crab-combat-design.md#격파-연출과-다리-장벽-해제-계획)
 
+## 섬광 독립 레이어
+
+- [투명 섬광 WebP](defeat-flash.webp)는 512 × 512 RGBA, 기준점은 (256, 256)이다. 격파 타임라인의 1.45초에 시작하며, 0.15초 동안 푸른빛이 중심으로 모인 뒤 한 번 터진다. 청백색 광선과 파동이 퍼지고 잔광이 약해지며, 처음과 끝은 투명하다. 전체 재생 시간은 0.92초다.
+- 실제 보스방 미리보기에서는 중심을 등딱지 쪽에 맞췄다. 범위가 넓어지는 방 조명 위에 전체 화면의 짧은 백색 섬광을 겹친다. 밝기가 가장 높은 구간에서 쓰러진 자세로 바뀐다. [보스방 합성 미리보기](defeat-preview.webp)
+
 ## 점멸 직전 생성 프롬프트
 
 Pose edit of the attached original RelicEscape stone hermit crab. Make one transparent 2D game sprite of this EXACT creature a fraction of a second before its defeat flash, during its final faltering effort. Match the reference's fixed almost straight-on platformer camera, relative size, compact faceted dark slate-blue rock shell, original spiral stone plate near the top left, sparse yellow-olive moss across the same rock seams, same two chunky crescent rock pincers, stone face and segmented legs, and restrained hand-painted pixel-raster game-art edge style. Change ONLY its pose and expression: lower the body substantially, shift the heavy shell down and a little toward the viewer's left. The big pincer at the viewer's left plants firmly on the common floor line and supports its weight, claw half-open and visibly tense. The other pincer sits slightly higher but droops heavily toward the floor. Bent, trembling-looking legs still barely support its lowered body. Under the familiar shadowed brow the SAME two square amber eyes are very dim and small, still faintly alive. The face droops low, with a small gap below the belly. One recognizable heavy crab just before collapse, not a standing or fighting pose. Preserve the shell and claw mass and identity, keep the face readable. No energy trails, lighting burst, particles, loose debris, animation streaks, flames, shadows on background, props, lines, words or duplicate poses. One complete transparent png game sprite, centered with comfortable 8% clear margins, full silhouette including claws, feet and crown always in view. Wide landscape 3:2. Keep alpha truly transparent.
