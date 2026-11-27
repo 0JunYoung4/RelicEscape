@@ -13,6 +13,7 @@ PLATFORM_ART = ART.parent / "platforms-v1"
 DECOR = TERRAIN_ART / "moss-grotto-floor-decor"
 FLOOR_SOURCE = TERRAIN_ART / "ruins-floor-blue-fissures-v1.png"
 RAIL_CENTERS = (387, 1795)
+GATE_LEFT = 2055
 
 # Existing B1 art positions: left, walking surface, width, underside of the rock.
 LEDGES = (
@@ -142,14 +143,15 @@ def _place_decor(canvas, placements, tint, bottom):
         canvas.alpha_composite(color, (left, bottom - color.height))
 
 
-def stage_terrain():
+def stage_terrain(*, gate_closed=True):
     """Compose art over the B1 walk lines and retain the existing tunnel."""
     platforms = json.loads((PLATFORM_ART / "manifest.json").read_text(encoding="utf-8"))["platforms"]
     old_terrain = rgba(ART / "terrain.png")
     canvas = Image.new("RGBA", old_terrain.size)
 
-    gate = rgba(ART / "right-passage-gate.png")
-    canvas.alpha_composite(gate, (2055, GROUND - gate.height))
+    if gate_closed:
+        gate = rgba(ART / "right-passage-gate.png")
+        canvas.alpha_composite(gate, (GATE_LEFT, GROUND - gate.height))
     canvas.alpha_composite(old_terrain.crop((0, 0, old_terrain.width, 663)))
     _place_decor(canvas, REAR_BANK, (129, 166, 171), GROUND + 9)
     _place_floor(canvas)

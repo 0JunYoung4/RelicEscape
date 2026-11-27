@@ -85,8 +85,8 @@ class _Effect:
 class B1RoarStage:
     """A deterministic, self-contained shot beginning after the intro rockfall."""
 
-    def __init__(self, *, art_dir=ROOM_ART):
-        self.room_art = B1RoomArt(art_dir)
+    def __init__(self, *, art_dir=ROOM_ART, gate_closed=True):
+        self.room_art = B1RoomArt(art_dir, gate_closed=gate_closed)
         self.motes = B1Motes()
         world_width = ROOM_SIZE[0] * WORLD_PER_ART_PIXEL
         self.camera = Camera(pico.get_canvas_width(), world_width)
@@ -114,16 +114,14 @@ class B1RoarStage:
         self.camera.x = left * scale
         self.camera.y = (GROUND - bottom) * scale
 
-    def draw(self, elapsed_ms, *, camera_view=None, ambient_ms=None):
-        ambient_ms = elapsed_ms if ambient_ms is None else ambient_ms
-        elapsed_ms = min(self.duration_ms, max(0, elapsed_ms))
-        self._set_camera(elapsed_ms, camera_view)
+    def _draw_room(self, ambient_ms):
         pico.clear_canvas()
         self.room_art.draw_behind_actors(self.camera)
         self.motes.draw(self.camera, ambient_ms)
         self.room_art.draw_actor_shadows(self.camera, self.boss_x / WORLD_PER_ART_PIXEL,
                                          self.player.x / WORLD_PER_ART_PIXEL)
 
+    def _draw_roar(self, elapsed_ms):
         since_release = (elapsed_ms - self.apex_ms) / 1000
         effect_elapsed = elapsed_ms - self.apex_ms + self.effect_in_point
         if since_release >= 0:
@@ -132,9 +130,19 @@ class B1RoarStage:
         if since_release >= 0:
             self.debris.draw(self.camera, effect_elapsed, self.effect_pivot)
 
+    def _brace_player(self, elapsed_ms):
+        since_release = (elapsed_ms - self.apex_ms) / 1000
         brace = max(0, min(CROUCH_DURATION, since_release - .08, .6 - since_release))
         self.player.crouch_time = brace
         self.player.state = "crouch" if brace > 0 else "idle"
+
+    def draw(self, elapsed_ms, *, camera_view=None, ambient_ms=None):
+        ambient_ms = elapsed_ms if ambient_ms is None else ambient_ms
+        elapsed_ms = min(self.duration_ms, max(0, elapsed_ms))
+        self._set_camera(elapsed_ms, camera_view)
+        self._draw_room(ambient_ms)
+        self._draw_roar(elapsed_ms)
+        self._brace_player(elapsed_ms)
         self.player.draw(self.camera)
         self.room_art.draw_in_front(self.camera)
 

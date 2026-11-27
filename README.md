@@ -86,7 +86,7 @@ B파트에서는 오른쪽 출발대에서 `E`로 유물을 끼우고 왼쪽을 
 
 [녹색 거리 참고 이미지 갤러리 45장](docs/references/hollow-knight-greenpath/index.html) · [맵·텍스처·몬스터 분석](docs/hollow-knight-greenpath-study.md) · [전경·배경·그림자·조명 분석](docs/hollow-knight-layer-lighting-study.md)
 
-[할로우 나이트 전투 패턴 참고 자료](docs/hollow-knight-combat-pattern-study.md) · [B1 바위 소라게 전투 설계](docs/b1-hermit-crab-combat-design.md) · [B1 환경 그래픽과 실행 화면](assets/concepts/b1-hermit-crab/room-art-v5/README.md)
+[할로우 나이트 전투 패턴 참고 자료](docs/hollow-knight-combat-pattern-study.md) · [B1 바위 소라게 전투 설계](docs/b1-hermit-crab-combat-design.md) · [B1 첫 집게 조작 테스트](docs/b1-hermit-crab-combat-design.md#첫-집게-조작-테스트) · [B1 환경 그래픽과 실행 화면](assets/concepts/b1-hermit-crab/room-art-v5/README.md)
 
 [초기 기획서 v1.1](docs/INITIAL_DESIGN.md)
 

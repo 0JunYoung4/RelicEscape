@@ -186,8 +186,8 @@ def _light_floor_edges(image):
     return image
 
 
-def _lit_terrain():
-    terrain = _green_grade(stage_terrain(), (7, 17, 21), (150, 169, 151), .25)
+def _lit_terrain(gate_closed):
+    terrain = _green_grade(stage_terrain(gate_closed=gate_closed), (7, 17, 21), (150, 169, 151), .25)
     _light_floor_edges(terrain)
     _apply_surface_light(terrain, _pool_image((395, 170), (105, 156, 143), 66), 710, 112)
     _apply_surface_light(terrain, _pool_image((385, 180), (135, 162, 113), 48), 1857, 460)
@@ -263,7 +263,7 @@ def _parallax_origin(view, factor):
 
 
 class B1RoomArt:
-    def __init__(self, art_dir=ROOM_ART):
+    def __init__(self, art_dir=ROOM_ART, *, gate_closed=True):
         near_dir = BASE_ROOM_ART if art_dir == ROOM_ART else art_dir
         far = _room_image(art_dir / "far-background.png", FAR_SIZE, opaque=True)
         self.far = rgba_texture(_far_art(far))
@@ -274,7 +274,7 @@ class B1RoomArt:
         _apply_surface_light(middle, _pool_image((448, 450), (123, 159, 136), 78), 592, 276)
         _apply_surface_light(middle, _pool_image((282, 335), (77, 129, 122), 72), 1435, 402)
         self.middle = _trim_plate(middle)
-        terrain = _lit_terrain()
+        terrain = _lit_terrain(gate_closed)
         # Upload the middle rails and the floor as narrower strips for SDL's software path.
         bands = ((0, 340), (340, 652), (652, ROOM_SIZE[1]))
         self.terrain = tuple(_trim_plate(terrain.crop((0, top, ROOM_SIZE[0], bottom)), top)

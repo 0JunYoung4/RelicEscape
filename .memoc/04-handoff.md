@@ -15,7 +15,7 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
-- 2026-11-27 B1 구현은 [보스 AI 상태표](../docs/b1-hermit-crab-combat-design.md#보스-ai-상태표)에서 이어간다. 유효한 `E`를 조사에서 한 번 소비하고 진동→도입 낙석·입구 닫힘→포효 끝→첫 집게를 검수한다. 조사·포효는 별도 시안이며 본편 B1 코드는 아직 연결 전이다.
+- 2026-11-27 [B1 독립 조작 테스트](../docs/b1-hermit-crab-combat-design.md#첫-집게-조작-테스트)는 `play-b1-encounter.cmd`로 실행한다. `tools/b1_encounter_stage.py`가 실제 플레이어·카메라와 기존 포효·집게 원화로 조사→진동·낙석·닫힘→포효→첫 집게 1회를 연결한다. 피격25 또는 회피를 표시하고 `R`로 재시작한다. 다음 전투는 [보스 AI 상태표](../docs/b1-hermit-crab-combat-design.md#보스-ai-상태표)를 따르며 C→B1 본편 연결은 후속이다.
 
 - 2026-11-27 B 발판은 `lower_route_b_art.py`의 `lower-route-b-surfaces-v1`을 사용한다. 원래 공유 발판은 보존했다. `WAYMARKERS`는 x930/2660/3330, 높이190이며 렌즈와 바닥 조명은 동일 월드 변환이다. 카메라 조정은 `route_camera.py`, A/B 천장 위 노출 방지는 각 art 모듈이다. [비교·재현](../docs/b-passage-surfaces-camera.md). 전체229개 및 SDL B1207/A779/C565 검수, 전체화면 장시간 수동·추가 광원의 프레임 성능은 이번에 측정하지 않았다. 기존 잔랙 없음은 사용자의 직접 확인이다.
 
