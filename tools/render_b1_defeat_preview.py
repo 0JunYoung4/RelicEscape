@@ -8,7 +8,7 @@ from random import Random
 from PIL import Image, ImageChops, ImageDraw, ImageFilter
 
 from tools.b1_defeat_lighting import apply_light
-from tools.b1_room_art import ROOM_SIZE, WORLD_PER_ART_PIXEL, B1RoomArt
+from tools.b1_room_art import ROOM_SIZE, WORLD_PER_ART_PIXEL, B1RoomArt, shaft_image
 from tools.preview_b1_intro import ART, GROUND, SHELL_X
 from tools.preview_b1_roar_game import SIZE, _read_pixels
 
@@ -19,6 +19,7 @@ HITSTOP, CLAW_FALL, STILL, BURST, REVEAL, SETTLED = 150, 440, 1450, 1600, 1900, 
 BEAM_SWELL_END, BEAM_END, LIGHT_END = 1660, 1870, 2350
 WHITE_START, WHITE_PEAK, WHITE_RELEASE = 1670, 1710, 1770
 FLASH_Y = 399
+CAVE_LIGHT = (159, 209, 185)
 # Each onset is anchored to a dark stone join in the grounded pre-flash pose.
 BEAMS = (
     (550, (421, 391), (-56, 214), 24),
@@ -100,11 +101,10 @@ def load_pose(name):
     return pose, left
 
 
-def load_beam_texture():
-    with Image.open(OUTPUT / "defeat-beam-source.png") as source:
-        alpha = source.getchannel("A")
-        bounds = alpha.point(lambda value: 255 if value > 8 else 0).getbbox()
-        return source.crop(bounds).resize((1024, 148), LANCZOS)
+def beam_texture():
+    # The room's ceiling light uses the same feathered profile.
+    return shaft_image(184, 1024, 92, 92, 10, 73, CAVE_LIGHT, 128,
+                       entry_fade=.018).transpose(Image.Transpose.ROTATE_90)
 
 
 def shiver_offset(t):
@@ -182,28 +182,28 @@ def beam_flash(t, texture):
         x += shiver
         tip_x, tip_y = x + (far_x - x) * reach, y + (far_y - y) * reach
         half_width = width * (.40 + .60 * reach) * (1 + 7 * swell)
-        intensity = (.52 + .48 * reach) * remaining
+        intensity = (.43 + .45 * reach + .12 * swell) * remaining
         draw_beam(rays, texture, x, y, tip_x, tip_y, half_width, intensity)
-        glow(rays, x, y, 10 + 23 * swell, (205, 244, 255), 175 * intensity)
+        glow(rays, x, y, 9 + 12 * swell, (191, 225, 206), 54 * intensity)
         emitters.append((x, y, tip_x, tip_y, intensity))
     return rays, emitters
 
 
 def room_light(t, rays, emitters):
     # The wide falloff changes receiver color even beside the visible beam.
-    falloff = rays.getchannel("A").filter(ImageFilter.GaussianBlur(14))
-    light = Image.new("RGBA", SIZE, (131, 205, 251, 0))
-    light.putalpha(falloff.point([min(255, round(value * 1.65)) for value in range(256)]))
+    falloff = rays.getchannel("A").filter(ImageFilter.GaussianBlur(18))
+    light = Image.new("RGBA", SIZE, (*CAVE_LIGHT, 0))
+    light.putalpha(falloff.point([min(255, round(value * 1.5)) for value in range(256)]))
     for x, y, tip_x, tip_y, intensity in emitters:
-        glow(light, x, y, 63, (142, 216, 250), 191 * intensity)
+        glow(light, x, y, 63, (170, 218, 194), 96 * intensity)
         if y < FLOOR < tip_y:
             contact_x = x + (tip_x - x) * (FLOOR - y) / (tip_y - y)
-            glow(light, contact_x, FLOOR, 91, (154, 221, 252), 169 * intensity, aspect=.20)
+            glow(light, contact_x, FLOOR, 91, (172, 214, 193), 130 * intensity, aspect=.21)
     if BURST <= t < LIGHT_END:
         expansion = progress(t, BURST, 1810)
         fade = 1 - progress(t, SWAP_POSE, LIGHT_END)
-        glow(light, CENTER, FLASH_Y, 75 + 485 * expansion, (183, 226, 251), 192 * fade)
-        glow(light, CENTER, FLOOR, 230 + 180 * expansion, (178, 224, 244), 110 * fade, aspect=.20)
+        glow(light, CENTER, FLASH_Y, 75 + 485 * expansion, (191, 227, 208), 145 * fade)
+        glow(light, CENTER, FLOOR, 230 + 180 * expansion, (180, 218, 196), 92 * fade, aspect=.20)
     return light
 
 
@@ -227,7 +227,7 @@ def draw_dust(frame, t, particles):
     if 0 <= blast < .46:
         reach = 56 + blast * 530
         ink.ellipse((CENTER - reach, FLOOR - 9, CENTER + reach, FLOOR + 7),
-                    outline=(148, 225, 239, round(115 * (1 - blast / .46))), width=2)
+                    outline=(164, 195, 181, round(68 * (1 - blast / .46))), width=2)
     if .09 <= blast < .78:
         for index in range(11):
             age = blast - .09 - (index % 3) * .032
@@ -245,18 +245,18 @@ def render(t, room, poses, particles, texture):
     rays, emitters = beam_flash(t, texture)
     if BEAM_START < t < LIGHT_END:
         illumination = room_light(t, rays, emitters)
-        frame = apply_light(bg, illumination, .73)
+        frame = apply_light(bg, illumination, .60)
         boss = Image.new("RGBA", SIZE)
         draw_pose(boss, t, *poses)
-        frame.alpha_composite(apply_light(boss, illumination))
-        fg = apply_light(fg, illumination, .36)
+        frame.alpha_composite(apply_light(boss, illumination, .80))
+        fg = apply_light(fg, illumination, .30)
     else:
         frame = bg.copy()
         draw_pose(frame, t, *poses)
-    draw_dust(frame, t, particles)
-    frame.alpha_composite(fg)
     if BEAM_START < t < BEAM_END:
         frame.alpha_composite(rays)
+    draw_dust(frame, t, particles)
+    frame.alpha_composite(fg)
     flash = progress(t, WHITE_START, WHITE_PEAK) * (1 - progress(t, WHITE_RELEASE, REVEAL))
     if flash:
         frame.alpha_composite(Image.new("RGBA", SIZE, (255, 255, 255, round(flash * 255))))
@@ -292,7 +292,8 @@ def export_flash(beats, texture):
 def main():
     room = capture_room()
     poses = load_pose("before-flash.png"), load_pose("after-flash.png")
-    texture = load_beam_texture()
+    texture = beam_texture()
+    texture.save(OUTPUT / "defeat-beam-source.png", optimize=True)
     rng = Random(405)
     particles = [
         (-1 if index % 2 == 0 else 1, rng.uniform(95, 410), rng.uniform(31, 82), rng.uniform(.7, 3.2))

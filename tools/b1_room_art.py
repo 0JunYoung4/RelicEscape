@@ -195,7 +195,7 @@ def _lit_terrain(gate_closed, show_carriages):
     return terrain
 
 
-def _shaft(width, height, mouth, floor, narrow, wide, color, opacity):
+def shaft_image(width, height, mouth, floor, narrow, wide, color, opacity, *, entry_fade=.045):
     """Feathered light from a ceiling break, widening towards the arena."""
     size = (width, height)
     values = []
@@ -203,13 +203,17 @@ def _shaft(width, height, mouth, floor, narrow, wide, color, opacity):
         progress = y / (height - 1)
         center = mouth + (floor - mouth) * progress
         radius = narrow + (wide - narrow) * progress
-        falloff = min(1, progress / .045, (1 - progress) / .13) * (1 - .34 * progress)
+        falloff = min(1, progress / entry_fade, (1 - progress) / .13) * (1 - .34 * progress)
         for x in range(width):
             u = (x - center) / radius
             edge = max(0, 1 - (u / 1.25) ** 2)
             scatter = .74 * exp(-2.5 * u * u) + .26 * exp(-16 * (u + .22) ** 2)
             values.append(round(opacity * falloff * edge * scatter))
-    return rgba_texture(_tinted_image(size, color, values))
+    return _tinted_image(size, color, values)
+
+
+def _shaft(width, height, mouth, floor, narrow, wide, color, opacity):
+    return rgba_texture(shaft_image(width, height, mouth, floor, narrow, wide, color, opacity))
 
 
 def _foreground(source):

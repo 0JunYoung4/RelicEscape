@@ -19,13 +19,9 @@ B1의 기존 직립 원본에서 내장 ImageGen으로 두 자세를 따로 만�
 
 ## 빛줄기 원본과 조명
 
-- [빛줄기 원본 PNG](defeat-beam-source.png)는 내장 ImageGen으로 제작한 2172 × 724 RGBA 이미지다. HK-AY-05에서 광원 입구는 좁고 멀어질수록 광선이 넓어지는 관계를 참고했다. [참고 화면](../../../../docs/references/hollow-knight-silksong/images/hk-ay-05.png)
+- [빛줄기 원본 PNG](defeat-beam-source.png)는 1024 × 184 RGBA다. 보스방의 천장 틈빛과 같은 청록 팔레트와 광량 감쇠를 사용한다. 미리보기를 렌더링할 때 원본도 함께 생성한다. [천장 틈빛 렌더러](../../../../tools/b1_room_art.py)
 - 점멸 전 소라게 이미지의 암석 접합부 여덟 곳을 기준점으로 잡았다. 각 프레임에서 보스의 떨림을 같이 따라가며, 원본 빛줄기를 방향에 맞춰 회전하고 화면 끝 바깥까지 늘린다. 섬광 직전에는 폭이 동시에 커진다.
-- 빛줄기와 발광 시작점에서 별도 조명 마스크를 만든다. 보스 석재, 배경과 전경의 반사 강도를 달리하고, 바닥을 만나는 줄기의 접점에는 가로로 번지는 반사광을 더한다. 원래 레이어의 투명도와 석재 디테일을 유지한 채 조명이 올라왔다 가라앉는다.
-
-### 빛줄기 생성 프롬프트
-
-Create exactly one isolated transparent 2D game VFX sprite: a long, straight horizontal shaft of blue-white light leaking out of a narrow stone crack, but depict ONLY the light itself. The light points from left to right and its axis remains perfectly level at the vertical center. A small tight white-hot entry at the left widens gradually into a broad soft-edged ribbon with a pearly white center, cool icy cyan intermediate band, and feathered muted cobalt-blue outer spill. A few subtle longitudinal filaments within the beam convey luminous motion and avoid a flat solid triangle. Keep the beam bright along almost its entire length, with only a brief fade at the far-right end. The actual luminous shape should be about six times as long as its widest point. Maintain a clean alpha edge. This is an original directionless VFX texture to rotate and stretch in a hand-painted dark fantasy 2D game, so its shape should read at small game resolution and the background must be genuinely transparent. Wide landscape canvas, a little clean margin on every side. No rocks, no surface, no cast shadow, no text, no stars, no sparks, no dots detached from the light, no circle, no lens flare, no glow blob, no characters, no second beam, no panel, no sample composition, no visible black or colored backdrop.
+- 빛줄기와 균열에서 별도 조명 마스크를 만든다. 석재와 바닥, 전경에 닿는 빛의 강도를 달리하고, 바닥을 만나는 줄기는 접점에서 가로로 빛이 퍼진다. 가까운 잎과 암벽은 빛줄기보다 앞에서 그려 방의 깊이를 유지한다.
 
 ## 점멸 직전 생성 프롬프트
 
