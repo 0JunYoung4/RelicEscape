@@ -1,4 +1,4 @@
-"""Interactive B1 rehearsal from inspection through the first claw."""
+"""Interactive B1 rehearsal with a repeating claw and jump attack loop."""
 
 from bisect import bisect_right
 from itertools import accumulate
@@ -11,6 +11,7 @@ from pico2d import pico2d as pico
 
 from health import Health
 from player import Animation, WORLD_MARGIN
+from tools.b1_combat_tree import Attack, B1CombatTree, Status
 from tools.b1_combat_terrain import GATE_LEFT, LEDGES
 from tools.b1_roar_game_stage import B1RoarStage
 from tools.b1_room_art import ROOM_SIZE, WORLD_PER_ART_PIXEL, _draw_plate, _green_grade, rgba_texture
@@ -32,6 +33,12 @@ CLAW_HEIGHT = 116 * SCALE
 CLAW_DAMAGE = 25
 APPROACH_SPEED = 840
 APPROACH_MAX_TIME = .75
+JUMP_WAIT, JUMP_TELL, JUMP_RECOVERY = 1.4, .80, 1.10
+JUMP_HALF_WIDTH = 120 * SCALE
+JUMP_HEIGHT = 80 * SCALE
+JUMP_WALL_MARGIN = 60 * SCALE
+JUMP_DAMAGE = 25
+COMBAT_WIDTH = 1264
 
 
 class _Pose:
@@ -49,25 +56,42 @@ class _Pose:
                                   self.image.w * scale, self.image.h * scale)
 
 
-class _Claw:
-    def __init__(self):
+class _Motion:
+    def __init__(self, filename, anchor, hold_frame, hold_time):
         frames, durations = [], []
-        with Image.open(ART.parent / "claw-approach-slam-animation-v2.webp") as source:
+        with Image.open(ART.parent / filename) as source:
             for index in range(source.n_frames):
                 source.seek(index)
                 frame = source.convert("RGBA")
-                frames.append(_Pose(frame, (310, 505)))
+                frames.append(_Pose(frame, anchor) if frame.getbbox() else None)
                 durations.append(source.info["duration"] / 1000)
-        # The imported raised hold is 660ms. Use the 640ms game tell.
-        durations[22] = CLAW_HOLD
+        durations[hold_frame] = hold_time
         self.frames = frames
         self.ends = tuple(accumulate(durations))
-        self.tell = self.ends[21]
-        self.impact = self.ends[30]
 
     def draw(self, camera, x, facing, elapsed):
         index = min(bisect_right(self.ends, elapsed), len(self.frames) - 1)
-        self.frames[index].draw(camera, x, facing=facing)
+        frame = self.frames[index]
+        if frame is not None:
+            frame.draw(camera, x, facing=facing)
+
+
+class _Claw(_Motion):
+    def __init__(self):
+        # Frame 22 holds the raised claw; frame 31 is the first contact.
+        super().__init__("claw-approach-slam-animation-v2.webp", (310, 505), 22, CLAW_HOLD)
+        self.tell = self.ends[21]
+        self.impact = self.ends[30]
+
+
+class _Jump(_Motion):
+    def __init__(self):
+        # Hold the authored empty frame for the wait plus the ground warning.
+        super().__init__("boss-jump-animation-v4.webp", (296, 504), 47, JUMP_WAIT + JUMP_TELL)
+        self.offscreen = self.ends[46]
+        self.tell = self.offscreen + JUMP_WAIT
+        self.drop = self.ends[47]
+        self.impact = self.ends[70]
 
 
 def _scuttle():
@@ -94,20 +118,20 @@ def _labels():
     if malgun.is_file():
         font = ImageFont.truetype(str(malgun), 16)
         words = ("E  조사", "A/D 이동 · Shift 달리기 · Space 점프 · R 다시",
-                 "첫 집게 회피 · R 다시", "첫 집게 명중 · R 다시")
+                 "쓰러졌습니다 · R 재도전")
     else:
         font = ImageFont.load_default(size=16)
         words = ("E  Inspect", "A/D Move | Shift Run | Space Jump | R Reset",
-                 "Claw dodged | R Reset", "Claw hit | R Reset")
+                 "Defeated | R Retry")
     return tuple(_label(font, word) for word in words)
 
 
-def _claw_marker():
-    image = Image.new("RGBA", (2 * CLAW_HALF_WIDTH // SCALE, 19))
+def _attack_marker(half_width, height):
+    image = Image.new("RGBA", (2 * half_width // SCALE, height))
     pen = ImageDraw.Draw(image)
     bounds = (0, 0, image.width - 1, image.height - 1)
     pen.ellipse(bounds, fill=(121, 63, 38, 158), outline=(217, 151, 85, 239), width=2)
-    pen.line((image.width // 2 - 8, 9, image.width // 2 + 8, 9),
+    pen.line((image.width // 2 - 8, height // 2, image.width // 2 + 8, height // 2),
              fill=(239, 169, 100, 218), width=2)
     return rgba_texture(image)
 
@@ -134,9 +158,12 @@ class B1EncounterStage(B1RoarStage):
         self.dust = rgba_texture(dust_tile(17))
         self.particles = ceiling_particles()
         self.claw = _Claw()
+        self.jump = _Jump()
         self.scuttle = _scuttle()
-        self.marker = _claw_marker()
+        self.claw_marker = _attack_marker(CLAW_HALF_WIDTH, 19)
+        self.jump_marker = _attack_marker(JUMP_HALF_WIDTH, 27)
         self.labels = _labels()
+        self.combat = B1CombatTree()
         self.reset()
 
     def reset(self):
@@ -153,6 +180,8 @@ class B1EncounterStage(B1RoarStage):
         self.intro_camera = None
         self.combat_left = 0.0
         self.hit_landed = None
+        self.jump_target = None
+        self.combat.reset()
 
     @property
     def can_inspect(self):
@@ -162,6 +191,15 @@ class B1EncounterStage(B1RoarStage):
     @property
     def claw_center(self):
         return self.boss_x + CLAW_OFFSET * self.boss_facing
+
+    @property
+    def player_in_claw_range(self):
+        return (abs(self.player.x - self.boss_x) <= CLAW_OFFSET + CLAW_HALF_WIDTH
+                and self.player.y < CLAW_HEIGHT)
+
+    @property
+    def airborne(self):
+        return self.state == "jump" and self.jump.offscreen <= self.age < self.jump.impact
 
     def _enter(self, state):
         self.state = state
@@ -175,28 +213,42 @@ class B1EncounterStage(B1RoarStage):
             self.intro_camera = Preview(x=self.player.x / SCALE, elapsed=0.0)
             self._enter("tremor")
             return
-        if self.state not in ("tremor", "roar"):
+        if self.state not in ("tremor", "roar") and self.health.current > 0:
             self.player.update(direction, running, dt, jump_pressed, crouching,
                                attack_pressed=attack_pressed, jump_held=jump_held)
-        before = self.age
-        self.age += dt
         if self.state == "tremor":
+            self.age += dt
             self.gate_progress = clamp((self.age - ROCK_IMPACT) / GATE_DURATION, 0, 1)
             if self.age >= LAST_TREMOR:
                 self.intro_camera.elapsed = LAST_TREMOR
                 self.combat_left = camera_box(self.intro_camera)[0]
                 self._enter("roar")
         elif self.state == "roar":
+            self.age += dt
             if self.age * 1000 >= self.duration_ms:
                 self.player.recover_at(self.player.x, 0, 0)
                 self.player.world_left = 0
                 # The closed gate fills the opening, with solid rock above it.
                 gate_wall = (GATE_LEFT * SCALE, 0, (GATE_LEFT + self.gate.w) * SCALE, GROUND * SCALE)
                 self.player.terrain = (*self.ledges, gate_wall)
-                self._enter("approach")
+                self._enter("ready")
+                self.combat.tick(self, 0)
             else:
                 self._brace_player(self.age * 1000)
-        elif self.state == "approach":
+        elif self.state != "waiting":
+            self.combat.tick(self, dt)
+            self._track_combat(dt)
+
+    def start_attack(self, attack):
+        self.hit_landed = None
+        self.jump_target = None
+        self.boss_facing = 1 if self.player.x >= self.boss_x else -1
+        self._enter("approach" if attack is Attack.CLAW else "jump")
+
+    def advance_attack(self, dt):
+        before = self.age
+        self.age += dt
+        if self.state == "approach":
             distance = self.player.x - self.boss_x
             self.boss_facing = 1 if distance >= 0 else -1
             closing = max(0, abs(distance) - CLAW_OFFSET)
@@ -205,21 +257,46 @@ class B1EncounterStage(B1RoarStage):
                 self._enter("claw")
         elif self.state == "claw":
             if before < self.claw.impact <= self.age:
-                self._strike()
+                self._strike(self.claw_center - CLAW_HALF_WIDTH, self.claw_center + CLAW_HALF_WIDTH,
+                             CLAW_HEIGHT, CLAW_DAMAGE)
             if self.age >= self.claw.impact + CLAW_RECOVERY:
-                self._enter("done")
-        if self.state in ("approach", "claw", "done"):
-            target = (self.player.x + self.boss_x) / (2 * SCALE) - 615
-            self.combat_left = lerp(self.combat_left, target, min(1, 3 * dt))
+                self._enter("ready")
+                return Status.SUCCESS
+        elif self.state == "jump":
+            if before < self.jump.tell <= self.age:
+                self.jump_target = clamp(self.player.x, JUMP_WALL_MARGIN, GATE_LEFT * SCALE - JUMP_WALL_MARGIN)
+            if self.age >= self.jump.drop:
+                self.boss_x = self.jump_target
+            if before < self.jump.impact <= self.age:
+                self._strike(*self._jump_bounds(), JUMP_HEIGHT, JUMP_DAMAGE)
+            if self.age >= self.jump.impact + JUMP_RECOVERY:
+                self._enter("ready")
+                return Status.SUCCESS
+        return Status.RUNNING
 
-    def _strike(self):
+    def end_combat(self):
+        if self.state != "defeated":
+            self._enter("defeated")
+
+    def _track_combat(self, dt):
+        player_x = self.player.x / SCALE
+        if self.airborne:
+            focus = player_x if self.jump_target is None else (self.player.x + self.jump_target) / (2 * SCALE)
+        else:
+            focus = (self.player.x + self.boss_x) / (2 * SCALE)
+        left = lerp(self.combat_left, focus - 615, min(1, 3 * dt))
+        self.combat_left = clamp(left, player_x - COMBAT_WIDTH + 120, player_x - 120)
+
+    def _jump_bounds(self):
+        return (max(0, self.jump_target - JUMP_HALF_WIDTH),
+                min(GATE_LEFT * SCALE, self.jump_target + JUMP_HALF_WIDTH))
+
+    def _strike(self, strike_left, strike_right, height, damage):
         left, bottom, right, top = self.player.get_hitbox()
-        strike_left = self.claw_center - CLAW_HALF_WIDTH
-        strike_right = self.claw_center + CLAW_HALF_WIDTH
         self.hit_landed = False
-        if left < strike_right and right > strike_left and bottom < CLAW_HEIGHT and top > 0:
+        if left < strike_right and right > strike_left and bottom < height and top > 0:
             self.hit_landed = self.health.take_enemy_hit((self.player.x, (bottom + top) / 2),
-                                                        self.time, CLAW_DAMAGE)
+                                                        self.time, damage)
 
     def _view(self):
         if self.state == "waiting":
@@ -229,11 +306,13 @@ class B1EncounterStage(B1RoarStage):
             return _approach_view(self.intro_camera)
         if self.state == "roar":
             return camera_box(self.intro_camera)
-        width, top = 1264, 35
-        if self.state == "claw":
-            since_impact = self.age - self.claw.impact
+        width, top = COMBAT_WIDTH, 35
+        if self.state in ("claw", "jump"):
+            impact = self.claw.impact if self.state == "claw" else self.jump.impact
+            since_impact = self.age - impact
             if 0 <= since_impact < .20:
-                top += 4 * sin(since_impact * 110) * (1 - since_impact / .20)
+                strength = 4 if self.state == "claw" else 8
+                top += strength * sin(since_impact * 110) * (1 - since_impact / .20)
         left = clamp(self.combat_left, 0, ROOM_SIZE[0] - width)
         return left, top, left + width, top + width * SIZE[1] / SIZE[0]
 
@@ -287,7 +366,7 @@ class B1EncounterStage(B1RoarStage):
 
     def draw(self):
         self._set_camera(0, self._view())
-        self._draw_room(self.time * 1000)
+        self._draw_room(self.time * 1000, airborne=self.airborne)
         self._draw_gate()
         if self.state == "waiting":
             self.shell.draw(self.camera, self.boss_x)
@@ -303,8 +382,12 @@ class B1EncounterStage(B1RoarStage):
             # Both directions have their own frames in the scuttle atlas.
             index = int(self.age * 50) % 16 + (16 if self.boss_facing < 0 else 0)
             self.scuttle.draw(self.boss_x, 0, 1, 0, self.camera, frame_index=index)
-        else:
+        elif self.state == "claw":
             self._draw_claw()
+        elif self.state == "jump":
+            self._draw_jump()
+        else:
+            self.claw.draw(self.camera, self.boss_x, self.boss_facing, self.claw.ends[-1])
         self.player.draw(self.camera, tint=self.health.hit_tint(self.time))
         self.health.draw_hit(self.camera, self.time)
         self.room_art.draw_in_front(self.camera)
@@ -312,26 +395,42 @@ class B1EncounterStage(B1RoarStage):
         self._draw_ui()
 
     def _draw_claw(self):
-        elapsed = self.age if self.state == "claw" else self.claw.ends[-1]
         center = self.claw_center / SCALE
-        if self.claw.tell <= elapsed < self.claw.impact:
-            _draw_plate(self.camera, self.marker, center - self.marker.w / 2, GROUND - 9)
-        self.claw.draw(self.camera, self.boss_x, self.boss_facing, elapsed)
-        since_impact = elapsed - self.claw.impact
+        if self.claw.tell <= self.age < self.claw.impact:
+            _draw_plate(self.camera, self.claw_marker, center - self.claw_marker.w / 2, GROUND - 9)
+        self.claw.draw(self.camera, self.boss_x, self.boss_facing, self.age)
+        since_impact = self.age - self.claw.impact
         if 0 <= since_impact < .26:
             self._draw_dust(center, GROUND - 31, since_impact)
 
+    def _draw_jump(self):
+        if self.jump.tell <= self.age < self.jump.impact:
+            left, right = self._jump_bounds()
+            width = (right - left) / SCALE
+            _draw_plate(self.camera, self.jump_marker, left / SCALE, GROUND - 13, size=(width, 27))
+            age = self.age - self.jump.tell
+            for fraction, delay, size in ((.28, .10, 9), (.55, .27, 7), (.74, .42, 12)):
+                flight = (age - delay) / .34
+                if 0 <= flight < 1:
+                    x = left / SCALE + width * fraction
+                    y = GROUND - size - 105 * (1 - flight ** 2)
+                    _draw_plate(self.camera, self.rock, x, y, size=(size, size))
+        self.jump.draw(self.camera, self.boss_x, self.boss_facing, self.age)
+        since_impact = self.age - self.jump.impact
+        if 0 <= since_impact < .26:
+            self._draw_dust(self.boss_x / SCALE, GROUND - 32, since_impact)
+
     def _draw_ui(self):
-        prompt, controls, dodged, hit = self.labels
+        prompt, controls, retry = self.labels
         if self.state == "waiting":
             controls.draw(SIZE[0] / 2, 26)
             if self.can_inspect:
                 x, y = self.camera.world_to_screen(self.player.x, self.player.get_hitbox()[3] + 42)
                 prompt.draw(x, y)
-        elif self.state == "done":
-            outcome = hit if self.hit_landed else dodged
-            outcome.draw(SIZE[0] / 2, 26)
+        elif self.state == "defeated":
+            retry.draw(SIZE[0] / 2, 26)
 
     def close(self):
-        self.gate = self.shell = self.rock = self.dust = self.claw = self.scuttle = self.marker = self.labels = None
+        self.gate = self.shell = self.rock = self.dust = self.claw = self.jump = self.scuttle = None
+        self.claw_marker = self.jump_marker = self.labels = None
         super().close()

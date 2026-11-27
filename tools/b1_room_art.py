@@ -323,9 +323,10 @@ class B1RoomArt:
         _draw_plate(camera, self.ceiling_boulder, SHELL_X - 100, 42)
 
     def draw_actor_shadows(self, camera, boss_x, player_x):
-        _draw_plate(camera, self.shadow, boss_x - 185, GROUND - 7, size=(370, 25))
-        _draw_plate(camera, self.shadow, boss_x - 121, GROUND - 5, size=(87, 13))
-        _draw_plate(camera, self.shadow, boss_x + 34, GROUND - 5, size=(87, 13))
+        if boss_x is not None:
+            _draw_plate(camera, self.shadow, boss_x - 185, GROUND - 7, size=(370, 25))
+            _draw_plate(camera, self.shadow, boss_x - 121, GROUND - 5, size=(87, 13))
+            _draw_plate(camera, self.shadow, boss_x + 34, GROUND - 5, size=(87, 13))
         _draw_plate(camera, self.shadow, player_x - 25, GROUND - 4, size=(50, 12))
 
     def draw_in_front(self, camera):

@@ -114,12 +114,12 @@ class B1RoarStage:
         self.camera.x = left * scale
         self.camera.y = (GROUND - bottom) * scale
 
-    def _draw_room(self, ambient_ms):
+    def _draw_room(self, ambient_ms, *, airborne=False):
         pico.clear_canvas()
         self.room_art.draw_behind_actors(self.camera)
         self.motes.draw(self.camera, ambient_ms)
-        self.room_art.draw_actor_shadows(self.camera, self.boss_x / WORLD_PER_ART_PIXEL,
-                                         self.player.x / WORLD_PER_ART_PIXEL)
+        boss_x = None if airborne else self.boss_x / WORLD_PER_ART_PIXEL
+        self.room_art.draw_actor_shadows(self.camera, boss_x, self.player.x / WORLD_PER_ART_PIXEL)
 
     def _draw_roar(self, elapsed_ms):
         since_release = (elapsed_ms - self.apex_ms) / 1000

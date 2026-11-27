@@ -10,8 +10,10 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 from pico2d import pico2d as pico
 
 from health import MAX_HEALTH
+from tools.b1_combat_tree import Attack
 from tools.b1_combat_terrain import GATE_LEFT
-from tools.b1_encounter_stage import B1EncounterStage, CLAW_DAMAGE, CLAW_HOLD, SCALE, SPAWN
+from tools.b1_encounter_stage import (B1EncounterStage, CLAW_DAMAGE, CLAW_HOLD, JUMP_DAMAGE,
+                                     JUMP_RECOVERY, JUMP_TELL, JUMP_WAIT, JUMP_WALL_MARGIN, SCALE, SPAWN)
 from tools.preview_b1_intro import LAST_TREMOR, SIZE
 
 
@@ -43,6 +45,10 @@ class B1EncounterTests(unittest.TestCase):
     def start_claw(self):
         self.start_intro()
         self.advance_until(lambda: self.stage.state == "claw")
+
+    def finish_attack(self, **controls):
+        completed = self.stage.combat.completed
+        self.advance_until(lambda: self.stage.combat.completed == completed + 1, **controls)
 
     def test_only_grounded_inspection_starts_a_single_tremor_and_roar(self):
         stage = self.stage
@@ -82,18 +88,18 @@ class B1EncounterTests(unittest.TestCase):
         self.assertEqual(stage.health.current, MAX_HEALTH)
         self.advance_until(lambda: stage.hit_landed is not None)
         self.assertTrue(stage.hit_landed)
-        self.advance_until(lambda: stage.state == "done")
-        for _ in range(120):
-            stage.advance(DT, inspect_pressed=True)
+        self.finish_attack()
         self.assertEqual(stage.health.current, MAX_HEALTH - CLAW_DAMAGE)
-        self.assertEqual(stage.state, "done")
+        self.assertEqual(stage.state, "ready")
+        stage.advance(DT, inspect_pressed=True)
+        self.assertIs(stage.combat.attack, Attack.JUMP)
 
     def test_claw_target_stays_fixed_while_player_dodges_and_reset_reopens_gate(self):
         self.start_claw()
         stage = self.stage
         self.advance_until(lambda: stage.age >= stage.claw.tell)
         center, facing = stage.claw_center, stage.boss_facing
-        self.advance_until(lambda: stage.state == "done", direction=facing, running=True)
+        self.finish_attack(direction=facing, running=True)
         self.assertEqual(stage.claw_center, center)
         self.assertEqual(stage.boss_facing, facing)
         self.assertFalse(stage.hit_landed)
@@ -106,6 +112,8 @@ class B1EncounterTests(unittest.TestCase):
         self.assertEqual(stage.player.terrain, stage.ledges)
         self.assertIsNone(stage.hit_landed)
         self.assertFalse(stage.can_inspect)
+        self.assertEqual(stage.combat.completed, 0)
+        self.assertIsNone(stage.combat.attack)
 
     def test_closed_gate_blocks_repeated_wall_jumps(self):
         self.start_claw()
@@ -125,3 +133,80 @@ class B1EncounterTests(unittest.TestCase):
         self.assertLess(stage.claw_center, stage.boss_x)
         self.advance_until(lambda: stage.hit_landed is not None)
         self.assertTrue(stage.hit_landed)
+
+    def test_jump_target_locks_after_wait_and_player_can_walk_clear_at_the_gate(self):
+        self.start_claw()
+        self.finish_attack()
+        stage = self.stage
+        stage.advance(DT)
+        self.assertEqual(stage.state, "jump")
+        self.assertTrue(stage.player.recover_at(GATE_LEFT * SCALE - 22, 0, 0))
+        self.advance_until(lambda: stage.age >= stage.jump.offscreen)
+        self.assertIsNone(stage.jump_target)
+        self.assertTrue(stage.airborne)
+        self.advance_until(lambda: stage.jump_target is not None)
+        target = stage.jump_target
+        self.assertEqual(target, GATE_LEFT * SCALE - JUMP_WALL_MARGIN)
+        self.assertAlmostEqual(stage.jump.tell - stage.jump.offscreen, JUMP_WAIT)
+        self.assertAlmostEqual(stage.jump.drop - stage.jump.tell, JUMP_TELL)
+        health_before = stage.health.current
+        self.advance_until(lambda: stage.hit_landed is not None, direction=-1)
+        self.assertEqual(stage.jump_target, target)
+        self.assertEqual(stage.boss_x, target)
+        self.assertFalse(stage.hit_landed)
+        self.assertEqual(stage.health.current, health_before)
+
+    def test_jump_hits_once_and_finishes_its_full_recovery(self):
+        self.start_claw()
+        self.finish_attack()
+        stage = self.stage
+        stage.advance(DT)
+        health_before = stage.health.current
+        self.advance_until(lambda: stage.jump_target is not None)
+        self.assertIsNone(stage.hit_landed)
+        self.advance_until(lambda: stage.hit_landed is not None)
+        self.assertTrue(stage.hit_landed)
+        self.assertEqual(stage.health.current, health_before - JUMP_DAMAGE)
+        self.advance_until(lambda: stage.age >= stage.jump.impact + JUMP_RECOVERY - .04)
+        self.assertEqual(stage.combat.completed, 1)
+        self.finish_attack()
+        self.assertEqual(stage.combat.completed, 2)
+        self.assertEqual(stage.health.current, health_before - JUMP_DAMAGE)
+
+    def test_tree_uses_distance_after_opening_and_switches_after_two_repeats(self):
+        stage = self.stage
+        for position, expected in (
+            ("near", (Attack.CLAW, Attack.CLAW, Attack.JUMP)),
+            ("far", (Attack.JUMP, Attack.CLAW)),
+        ):
+            with self.subTest(position=position):
+                stage.reset()
+                self.start_claw()
+                self.assertIs(stage.combat.attack, Attack.CLAW)
+                self.finish_attack()
+                stage.advance(DT)
+                self.assertIs(stage.combat.attack, Attack.JUMP)
+                self.finish_attack()
+                for index, attack in enumerate(expected):
+                    x = stage.boss_x - 90 * SCALE if position == "near" else 120 * SCALE
+                    self.assertTrue(stage.player.recover_at(x, 0, 0))
+                    stage.advance(DT)
+                    self.assertIs(stage.combat.attack, attack)
+                    if index < len(expected) - 1:
+                        self.finish_attack()
+
+    def test_defeat_stops_selection_and_reset_restarts_opening(self):
+        self.start_claw()
+        stage = self.stage
+        stage.health.current = 1
+        self.advance_until(lambda: stage.state == "defeated")
+        self.assertEqual(stage.health.current, 0)
+        self.assertEqual(stage.combat.completed, 0)
+        for _ in range(360):
+            stage.advance(DT, direction=1, inspect_pressed=True)
+        self.assertEqual(stage.state, "defeated")
+        self.assertIsNone(stage.combat.attack)
+        stage.draw()
+        stage.reset()
+        self.start_claw()
+        self.assertIs(stage.combat.attack, Attack.CLAW)

@@ -1,4 +1,4 @@
-"""Play the RelicEscape B1 intro and first claw attack."""
+"""Play the RelicEscape B1 intro and adaptive attack loop."""
 
 from argparse import ArgumentParser
 from ctypes import c_ubyte
@@ -32,7 +32,9 @@ def capture_stills(pico, stage, destination):
         ("roar", stage.apex_ms / 1000 + .16, "roar"),
         ("claw", stage.claw.tell + .16, "first-claw-tell"),
         ("claw", stage.claw.impact + .07, "first-claw-hit"),
-        ("done", 0, "done"),
+        ("jump", stage.jump.tell + .27, "jump-tell"),
+        ("jump", stage.jump.impact + .09, "jump-impact"),
+        ("ready", 0, "jump-recovered"),
     ):
         for _ in range(360):
             if stage.state == state and stage.age >= elapsed:
@@ -41,14 +43,14 @@ def capture_stills(pico, stage, destination):
             stage.advance(dt)
         else:
             raise RuntimeError(f"The test did not reach {state} at {elapsed}s.")
-    print(f"Captured the B1 first encounter: {destination}")
+    print(f"Captured the B1 combat rehearsal: {destination}")
 
 
 def play(pico, stage):
     from input_events import poll_events
     from main import read_movement
 
-    title = "RelicEscape · B1 첫 공격 테스트 | E 조사 · R 다시 · Esc 종료"
+    title = "RelicEscape · B1 전투 AI 테스트 | E 조사 · R 다시 · Esc 종료"
     pico.SDL_SetWindowTitle(pico.window, title.encode("utf-8"))
     previous = perf_counter()
     while True:
