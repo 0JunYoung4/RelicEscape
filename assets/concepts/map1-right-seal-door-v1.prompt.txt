@@ -1,0 +1,16 @@
+# 맵 1 오른쪽 통로의 닫힌 석문
+
+내장 ImageGen으로 만든 독립 투명 스프라이트다. 오른쪽 통로에서 낮은 천장과 바닥 사이를 막는 문을 측면에서 본 형태다.
+
+- HK-GP02의 얇은 철문과 굵은 동굴 지형의 대비를 참고해 외곽을 좁고 선명하게 잡았다.
+- HK-RW-02의 어두운 문 윤곽과 청록색 후경의 대비를 참고해 밝은 면을 가장자리로 제한했다.
+- A 착지대 게임 화면을 재질 참고 이미지로 사용했다. 모서리는 청록 석재, 잠금 표시는 기존 유물과 같은 육각형 계열로 잡았다.
+- 최종 PNG는 727 × 2164 RGBA다. 알파 8 초과 영역은 왼쪽 128, 위 226, 오른쪽 605, 아래 1938이다. 좌표는 오른쪽과 아래를 포함하지 않는다.
+
+## 생성 프롬프트
+
+Generate one original finished transparent PNG environment sprite for RelicEscape, a 2D side-scrolling cave game. The supplied RelicEscape screenshot is only a palette and surface-painting reference. Show ONLY the single closed threshold barrier, seen nearly EDGE-ON in side elevation by a side-scroller camera. It is a compact, tall and visibly solid stone blade which fits from floor to ceiling across one low tunnel. Its silhouette is about 37% as wide as it is tall. Use a straight almost vertical left blocking edge, an uneven slightly bowed right edge, and very shallow clipped corners at the top. The top and bottom faces are nearly flat, with the bottom able to sit flush to the game floor. No receding floor or perspective. Show a narrow asymmetrical bevel of the slab (not a front-facing double door or arched facade). Use original chunky desaturated teal-gray ruin stone, dark inked outer contours, a few decisively shaped uneven chips, two partly embedded dull ancient bronze clamps, sparse tiny moss patches at the edges, and one small elongated cyan hexagon cut deeply into the stone near middle height. The engraving is very dim, no big glow. Dark blue-green shadows with cool slightly lighter side facets so the silhouette still reads on a dark backdrop. Draw in the project's hand-painted game-sprite style with restrained texture, strong base shadow colors, crisp silhouette and a readable shape at small game scale. Use the general side-scroller principle of a thin decisive blocked silhouette and sparse edge accents, with an original artifact specific to RelicEscape. Do not reproduce any existing game's door or decoration. Center this one sprite vertically and horizontally with generous completely transparent margins. Genuine transparent background. No ground scene, cave wall, arch frame, surrounding panels, legs, hinges in background, keys, characters, labels, texture sheet, mockups, text, or arrangement of multiple objects.
+
+## 비율 조정 프롬프트
+
+Refine this original RelicEscape stone barrier sprite with one layout change: make the ACTUAL STONE SILHOUETTE shorter and sturdier. It is for a low cave tunnel. The height of the object itself must be roughly 3 times the maximum width of the object itself, with a much thicker slate body. Do not just change white space or canvas aspect ratio. Keep the nearly edge-on view from a 2D side-view game, the dark teal-gray hand-painted stone facets, straight upright blocking edge, lightly chipped opposite edge, two subdued bronze bands, small engraved original hexagon, and sparse moss. Make both ends flush and flat so it slides against the ceiling and floor. One solid closed barrier, not a wide front-facing doorway. Center the object, fully visible with slight clear margin on all sides, genuine transparent background, single isolated sprite, no scene, no cast shadow outside silhouette, no framing, no text.
