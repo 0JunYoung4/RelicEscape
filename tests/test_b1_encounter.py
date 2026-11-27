@@ -10,6 +10,7 @@ os.environ["SDL_RENDER_DRIVER"] = "software"
 from pico2d import pico2d as pico
 
 from health import MAX_HEALTH
+from tools.b1_combat_terrain import GATE_LEFT
 from tools.b1_encounter_stage import B1EncounterStage, CLAW_DAMAGE, CLAW_HOLD, SCALE, SPAWN
 from tools.preview_b1_intro import LAST_TREMOR, SIZE
 
@@ -105,6 +106,13 @@ class B1EncounterTests(unittest.TestCase):
         self.assertEqual(stage.player.terrain, stage.ledges)
         self.assertIsNone(stage.hit_landed)
         self.assertFalse(stage.can_inspect)
+
+    def test_closed_gate_blocks_repeated_wall_jumps(self):
+        self.start_claw()
+        for index in range(900):
+            self.stage.advance(DT, direction=1, running=True, jump_pressed=index % 40 == 0,
+                               jump_held=True)
+            self.assertLessEqual(self.stage.player.get_hitbox()[2], GATE_LEFT * SCALE + 1e-6)
 
     def test_player_crossing_the_boss_locks_claw_onto_the_left(self):
         self.start_intro()

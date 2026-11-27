@@ -190,8 +190,9 @@ class B1EncounterStage(B1RoarStage):
             if self.age * 1000 >= self.duration_ms:
                 self.player.recover_at(self.player.x, 0, 0)
                 self.player.world_left = 0
-                self.player.terrain = (*self.ledges, (GATE_LEFT * SCALE, 0,
-                                       (GATE_LEFT + self.gate.w) * SCALE, self.gate.h * SCALE))
+                # The closed gate fills the opening, with solid rock above it.
+                gate_wall = (GATE_LEFT * SCALE, 0, (GATE_LEFT + self.gate.w) * SCALE, GROUND * SCALE)
+                self.player.terrain = (*self.ledges, gate_wall)
                 self._enter("approach")
             else:
                 self._brace_player(self.age * 1000)
