@@ -1,4 +1,4 @@
-"""Interactive B1 rehearsal through the shell puzzle and reappearance."""
+"""B1 boss encounter shared by the main game and standalone rehearsal."""
 
 from bisect import bisect_right
 from itertools import accumulate
@@ -27,6 +27,7 @@ from tools.render_b1_roar_preview import rgba
 
 SCALE = WORLD_PER_ART_PIXEL
 SPAWN = (2235 * SCALE, 0, 0)
+EXIT_X = 2350 * SCALE
 ROCK_RELEASE, ROCK_IMPACT = 2.15, 2.70
 GATE_DURATION = .44
 CLAW_HOLD = .64
@@ -136,16 +137,18 @@ def _labels():
                  "쓰러졌습니다 · R 재도전", "E 유물 장착",
                  "X 레일 파츠 보내기", "E 상단으로 이동", "양옆 레일로 이동",
                  "Shift + Space로 안쪽 발판으로", "X 천장 바위 타격", "전투 바닥으로 돌아가기",
-                 "바위 소라게 격파 · R 다시")
+                 "바위 소라게 격파 · R 다시", "바위 소라게 격파 · 오른쪽 출구",
+                 "전실 석등으로 돌아갑니다")
     else:
         font = ImageFont.load_default(size=16)
         words = ("E  Inspect", "A/D Move | Shift Run | Space Jump | R Reset",
                  "Defeated | R Retry", "E Mount relic",
                  "X Strike carriage", "E Travel up", "Use either rail",
                  "Shift + Space to the inner ledge", "X Strike ceiling rock", "Return to the floor",
-                 "Boss defeated | R Replay")
+                 "Boss defeated | R Replay", "Boss defeated | Exit right",
+                 "Returning to the antechamber checkpoint")
     names = ("inspect", "controls", "retry", "mount", "send", "travel", "rails",
-             "inner", "boulder", "floor", "victory")
+             "inner", "boulder", "floor", "victory", "exit", "return")
     return {name: _label(font, word) for name, word in zip(names, words)}
 
 
@@ -168,8 +171,8 @@ def _approach_view(preview):
 
 
 class B1EncounterStage(B1RoarStage):
-    def __init__(self):
-        super().__init__(gate_closed=False, show_carriages=False)
+    def __init__(self, *, player=None, health=None):
+        super().__init__(gate_closed=False, show_carriages=False, player=player)
         self.gate = rgba_texture(_green_grade(rgba(ART / "right-passage-gate.png"),
                                               (7, 17, 21), (150, 169, 151), .25))
         self.ledges = tuple((x * SCALE, (GROUND - bottom) * SCALE, (x + width) * SCALE,
@@ -191,19 +194,22 @@ class B1EncounterStage(B1RoarStage):
         self.jump_marker = _attack_marker(JUMP_HALF_WIDTH, 27)
         self.labels = _labels()
         self.combat = B1CombatTree()
-        self.reset()
+        self.main_game = player is not None
+        self.reset(health=health)
 
-    def reset(self):
+    def reset(self, *, health=None):
         self.state = "waiting"
-        self.age = self.time = 0.0
+        self.age = self.time = self.health_time = 0.0
         self.boss_x = SHELL_X * SCALE
         self.boss_facing = 1
         self.gate_progress = 0.0
+        self.player.ground_y = 0
+        self.player.world_width = ROOM_SIZE[0] * SCALE
         self.player.world_left = APPROACH_LIMIT * SCALE - WORLD_MARGIN
         self.player.terrain = self.ledges
         self.player.recover_at(*SPAWN)
         self.player.facing = -1
-        self.health = Health(SPAWN)
+        self.health = Health(SPAWN) if health is None else health
         self.intro_camera = None
         self.combat_left = 0.0
         self.hit_landed = None
@@ -217,6 +223,38 @@ class B1EncounterStage(B1RoarStage):
         self.rock_hit_at = None
         self.rails.reset()
         self.combat.reset()
+
+    def enter(self, player, health, *, defeated=False):
+        self.player = player
+        self.main_game = True
+        self.reset(health=health)
+        if defeated:
+            self.boss_hp = 0
+            self.rock_hit_at = -self.boulder.duration
+            self.combat_left = player.x / SCALE - 615
+            player.world_left = 0
+            self._enter("victory")
+
+    @property
+    def accepts_player_input(self):
+        return self.state not in ("tremor", "roar", "defeated")
+
+    @property
+    def _passage_open(self):
+        return self.state in ("waiting", "victory") and self.gate_progress == 0
+
+    @property
+    def can_leave(self):
+        return (self._passage_open and self.player.grounded and self.player.y == 0
+                and self.player.x >= EXIT_X)
+
+    def allows_relic_destination(self, destination):
+        if destination is None:
+            return True
+        x = destination[0]
+        return (self.accepts_player_input
+                and self.player.world_left + WORLD_MARGIN <= x <= self.player.world_width - WORLD_MARGIN
+                and (self._passage_open or x < GATE_LEFT * SCALE))
 
     @property
     def can_inspect(self):
@@ -248,21 +286,28 @@ class B1EncounterStage(B1RoarStage):
     def rails_enabled(self):
         return self.state in ("hidden", "boulder_fall")
 
+    @property
+    def can_use_rail(self):
+        return self.rails_enabled and self.rails.can_interact(self.player)
+
     def _enter(self, state):
         self.state = state
         self.age = 0.0
 
     def advance(self, dt, direction=0, *, running=False, crouching=False, jump_pressed=False,
-                jump_held=False, inspect_pressed=False, attack_pressed=False):
+                jump_held=False, inspect_pressed=False, attack_pressed=False, now=None,
+                teleported=False, teleport_rail=None):
         self.time += dt
+        self.health_time = self.time if now is None else now
         if inspect_pressed and self.can_inspect:
             self.player.recover_at(self.player.x, 0, 0)
             self.intro_camera = Preview(x=self.player.x / SCALE, elapsed=0.0)
             self._enter("tremor")
             return
         if inspect_pressed and self.rails_enabled:
-            self.rails.interact(self.player)
-        if self.state not in ("tremor", "roar") and self.health.current > 0:
+            arrived = self.rails.interact(self.player, teleport=teleport_rail)
+            teleported = teleported or (arrived and teleport_rail is not None)
+        if self.accepts_player_input and self.health.current > 0 and not teleported:
             self.player.update(direction, running, dt, jump_pressed, crouching,
                                attack_pressed=attack_pressed, jump_held=jump_held)
         if self.state == "tremor":
@@ -285,6 +330,10 @@ class B1EncounterStage(B1RoarStage):
             else:
                 self._brace_player(self.age * 1000)
         elif self.state != "waiting":
+            if self.main_game and self.state == "victory" and self.gate_progress > 0:
+                self.gate_progress = max(0, self.gate_progress - dt / GATE_DURATION)
+                if self.gate_progress == 0:
+                    self.player.terrain = self.ledges
             if self.rails_enabled:
                 self.rails.advance(self.player, dt)
             if self.sword_impact is not None:
@@ -438,7 +487,7 @@ class B1EncounterStage(B1RoarStage):
         self.hit_landed = False
         if left < strike_right and right > strike_left and bottom < height and top > 0:
             self.hit_landed = self.health.take_enemy_hit((self.player.x, (bottom + top) / 2),
-                                                        self.time, damage)
+                                                        self.health_time, damage)
 
     def _view(self):
         if self.state == "waiting":
@@ -512,8 +561,13 @@ class B1EncounterStage(B1RoarStage):
             y = top + 24 - rise * age + 225 * age ** 2
             _draw_plate(self.camera, self.rock, x, y, size=(size, size))
 
-    def draw(self):
+    def draw(self, *, now=None, draw_player=None, draw_world_effects=None, show_hitboxes=False,
+             show_hud=True, relic_focus=None):
+        now = self.health_time if now is None else now
         self._set_camera(0, self._view())
+        if relic_focus is not None and self.accepts_player_input:
+            self.camera.focus_relic(relic_focus, bottom=(GROUND - ROOM_SIZE[1]) * SCALE,
+                                    top=GROUND * SCALE)
         show_boulder = self.state != "boulder_fall" and self.rock_hit_at is None
         self._draw_room(self.time * 1000, airborne=self.airborne, show_boulder=show_boulder)
         self._draw_gate()
@@ -540,15 +594,23 @@ class B1EncounterStage(B1RoarStage):
             self._draw_shell()
         elif self.state == "face_open":
             self.jump.draw(self.camera, self.boss_x, self.boss_facing, self.jump.impact + .12)
+        elif self.state == "victory" and self.main_game:
+            self._draw_shell()
         else:
             self.claw.draw(self.camera, self.boss_x, self.boss_facing, self.claw.ends[-1])
         self._draw_boulder()
-        self.player.draw(self.camera, tint=self.health.hit_tint(self.time))
+        if draw_player is None or not draw_player(self.camera):
+            self.player.draw(self.camera, tint=self.health.hit_tint(now))
         if self.sword_impact is not None:
             self.sword_impact.draw(self.camera)
-        self.health.draw_hit(self.camera, self.time)
+        self.health.draw_hit(self.camera, now)
+        if draw_world_effects is not None:
+            draw_world_effects(self.camera)
         self.room_art.draw_in_front(self.camera)
-        self.health.draw_hud(SIZE[1], self.time)
+        if show_hitboxes:
+            self.player.draw_hitbox(self.camera)
+        if show_hud:
+            self.health.draw_hud(SIZE[1], now)
         self._draw_ui()
 
     def _draw_shell(self):
@@ -602,7 +664,8 @@ class B1EncounterStage(B1RoarStage):
 
     def _draw_ui(self):
         if self.state == "waiting":
-            self.labels["controls"].draw(SIZE[0] / 2, 26)
+            if not self.main_game:
+                self.labels["controls"].draw(SIZE[0] / 2, 26)
             if self.can_inspect:
                 self._draw_player_prompt("inspect")
         elif self.state == "hidden":
@@ -610,9 +673,9 @@ class B1EncounterStage(B1RoarStage):
         elif self.state == "wait_floor":
             self.labels["floor"].draw(SIZE[0] / 2, 26)
         elif self.state == "defeated":
-            self.labels["retry"].draw(SIZE[0] / 2, 26)
+            self.labels["return" if self.main_game else "retry"].draw(SIZE[0] / 2, 26)
         elif self.state == "victory":
-            self.labels["victory"].draw(SIZE[0] / 2, 26)
+            self.labels["exit" if self.main_game else "victory"].draw(SIZE[0] / 2, 26)
 
     def _draw_player_prompt(self, name):
         x, y = self.camera.world_to_screen(self.player.x, self.player.get_hitbox()[3] + 42)

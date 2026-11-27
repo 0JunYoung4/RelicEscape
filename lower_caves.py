@@ -1,4 +1,4 @@
-"""Playable landing chamber, moss gallery, combat chamber, and lower route."""
+"""Playable lower caves and the first boss passage."""
 
 import json
 from math import hypot
@@ -12,7 +12,7 @@ from hit_impact import IMPACT_DURATION, HitImpact
 from lower_route_a import LowerRouteA
 from lower_route_b import LowerRouteB
 from lower_route_b_layout import WIDTH as B_ROUTE_WIDTH
-from lower_route_c import CHECKPOINT as C_CHECKPOINT, LEFT as C_LEFT, RIGHT as C_RIGHT, LowerRouteC
+from lower_route_c import BOSS_RETURN, CHECKPOINT as C_CHECKPOINT, LEFT as C_LEFT, RIGHT as C_RIGHT, LowerRouteC
 from lower_route_connection import A_ORIGIN, PASSAGE_CENTER, LowerRouteConnection
 from opening_cave import SHAFT_FLOOR, SHAFT_SCALE, SHAFT_TOP
 from pillbug import Pillbug
@@ -93,6 +93,7 @@ class LowerCaves:
         self.passage_time = None
         self.pickup_time = None
         self.has_relic = False
+        self.b1_cleared = False
         self.pillbugs = [Pillbug(1120, 1450, 0.0), Pillbug.on_platform(AIR_PLATFORM)]
         left, bottom, right, top = COMBAT_PLATFORMS[1]
         self.golems = [CrystalGolem.on_platform((left, bottom, COMBAT_CENTER_X, top),
@@ -161,6 +162,8 @@ class LowerCaves:
 
     @property
     def restart_room(self):
+        if self.room == "b1":
+            return "route_c"
         if self.in_lower_route and self.route_c is not None and self.route_c.checkpoint_reached:
             return "route_c"
         return "route_b" if self.room == "route_c" else self.room
@@ -220,6 +223,17 @@ class LowerCaves:
     def update_relic_seal(self, player, now):
         if self.in_lower_route and self.route_a.update_seal(player, now):
             player.terrain = self.route_connection.terrain
+
+    def can_enter_b1(self, player):
+        return self.room == "route_c" and self.has_relic and self.route_c.at_boss_entrance(player)
+
+    def leave_b1(self, player, camera, *, retry=False):
+        self.room = "route_c"
+        self.enter(player, camera)
+        if not retry:
+            player.recover_at(*BOSS_RETURN)
+            player.facing = 1
+            self.follow_camera(player, camera)
 
     def enter(self, player, camera, *, from_right=False, shaft_offset=None, seal_open=False):
         self.shaft_visibility = 0.0

@@ -10,12 +10,15 @@ from lower_route_b_layout import C_PASSAGE, C_PASSAGE_LEFT, STONE_SURFACE, TOP
 from lower_route_c_scenery import LowerRouteCScenery
 from pillbug import Pillbug
 from player import ASSET_ROOT
+from render_mesh import grid_indices
 
 
 LEFT, RIGHT = C_PASSAGE_LEFT, C_PASSAGE[0]
 FLOOR = C_PASSAGE[3]
 ENTRANCE_X = -1290
 ENTRANCE_WIDTH = 220
+ENTRANCE_RIGHT = ENTRANCE_X + ENTRANCE_WIDTH / 2
+BOSS_RETURN = (-1065, FLOOR, 0.0)
 CHECKPOINT = (-710, FLOOR, 0.0)
 CHECKPOINT_RADIUS = 115
 FLOOR_BOUNDS = (LEFT, STONE_SURFACE, RIGHT, FLOOR)
@@ -26,9 +29,19 @@ ART_LAMP_ROW = 510
 ART_SCALE = (CHECKPOINT[0] - ENTRANCE_X) / (ART_CHECKPOINT_COLUMN - ART_DOOR_COLUMN)
 ART_LEFT = ENTRANCE_X - ART_DOOR_COLUMN * ART_SCALE
 ART_BLEND_END = RIGHT + 690
+# Follow the inner edge of the baked door frame and preserve its threshold.
+ENTRANCE_APERTURE = (
+    (349, 239, 265, (5, 12, 18)),
+    (353, 220, 285, (7, 16, 24)),
+    (367, 201, 302, (10, 22, 30)),
+    (387, 188, 315, (13, 28, 35)),
+    (413, 182, 320, (16, 34, 41)),
+    (503, 182, 320, (19, 42, 48)),
+    (569, 182, 319, (15, 33, 39)),
+)
 TERRAIN = (
     FLOOR_BOUNDS,
-    (LEFT, FLOOR, ENTRANCE_X + ENTRANCE_WIDTH / 2, TOP),
+    (LEFT, FLOOR, ENTRANCE_RIGHT, TOP),
     (LEFT, 1270, RIGHT, TOP),
 )
 
@@ -61,10 +74,16 @@ class LowerRouteC:
         if player.grounded and player.y == FLOOR and abs(player.x - CHECKPOINT[0]) <= CHECKPOINT_RADIUS:
             self.checkpoint_reached = True
 
+    def at_boss_entrance(self, player):
+        return (self.checkpoint_reached and player.grounded and player.y == FLOOR
+                and player.get_hitbox()[0] <= ENTRANCE_RIGHT + 1)
+
     def draw(self, camera, screen_height):
         if camera.x >= ART_BLEND_END or camera.x + camera.view_width <= ART_LEFT:
             return
         self.draw_plate(camera, screen_height)
+        if self.checkpoint_reached:
+            self.draw_boss_entrance(camera, screen_height)
         self.scenery.draw_surfaces(camera, FLOOR)
         if self.checkpoint_reached:
             lamp_y = FLOOR + (ART_FLOOR_ROW - ART_LAMP_ROW) * ART_SCALE
@@ -78,6 +97,20 @@ class LowerRouteC:
 
     def draw_foreground(self, camera):
         self.scenery.draw_foreground(camera)
+
+    def draw_boss_entrance(self, camera, screen_height):
+        if camera.x >= ENTRANCE_RIGHT + 20:
+            return
+        vertices = []
+        for row, left, right, center_color in ENTRANCE_APERTURE:
+            world_y = FLOOR + (ART_FLOOR_ROW - row) * ART_SCALE
+            for column, color in ((left, (5, 12, 17)), (ART_DOOR_COLUMN, center_color),
+                                  (right, (5, 12, 17))):
+                x, y = camera.world_to_screen(ART_LEFT + column * ART_SCALE, world_y)
+                vertices.append(pico.SDL_Vertex((x, screen_height - y), (*color, 255), (0, 0)))
+        geometry = (pico.SDL_Vertex * len(vertices))(*vertices)
+        triangles = grid_indices(2, len(ENTRANCE_APERTURE) - 1)
+        pico.SDL_RenderGeometry(pico.renderer, None, geometry, len(geometry), triangles, len(triangles))
 
     def draw_plate(self, camera, screen_height):
         # The same walk line anchors both the painted rock and the existing passage into B.

@@ -15,13 +15,15 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
-- 2026-11-27 [B1 독립 조작 테스트](../docs/b1-hermit-crab-combat-design.md#기본-교전-조작-테스트)는 `play-b1-encounter.cmd`로 실행한다. `tools/b1_combat_tree.py`가 50% 은신과 2페이즈 공격 순서를 관리하고, `tools/b1_encounter_stage.py`가 중앙 집게·바위 충돌·재등장과 연속 낙하를 진행한다. 바닥 복귀와 얼굴 노출 뒤 2연속 낙하로 교전을 연다. 두 번째 낙하는 새 위치를 예고하며 두 번째 착지에 반격 시간이 열린다. 양쪽 레일은 `tools/b1_puzzle_rails.py`, 바위 파쇄는 `tools/b1_boulder_fx.py`가 맡는다. C→B1 본편 연결은 후속이다.
+- 2026-11-27 본편의 C↔B1 이동은 `main.py`와 `LowerCaves`에서 처리한다. `lower_route_c.py`는 석등이 켜진 뒤 기존 아치에 열린 통로를 그리고, 바닥에서 문까지 걸어오면 입장 판정을 제공한다. 전투에서는 본편의 플레이어·체력·유물 조작을 사용한다. 사망 시 암전 뒤 C 석등에서 다시 시작하고 격파하면 오른쪽 석문을 열어 C로 돌아간다. 같은 플레이 동안 격파가 유지된다. 맵 2 진입 연결은 후속이다. [본편 진행과 재도전](../docs/b1-hermit-crab-combat-design.md#본편-진행과-재도전)
+
+- 2026-11-27 [B1 독립 조작 테스트](../docs/b1-hermit-crab-combat-design.md#기본-교전-조작-테스트)는 `play-b1-encounter.cmd`로 실행한다. `tools/b1_combat_tree.py`가 50% 은신과 2페이즈 공격 순서를 관리하고, `tools/b1_encounter_stage.py`가 중앙 집게·바위 충돌·재등장과 연속 낙하를 진행한다. 바닥 복귀와 얼굴 노출 뒤 2연속 낙하로 교전을 연다. 두 번째 낙하는 새 위치를 예고하며 두 번째 착지에 반격 시간이 열린다. 양쪽 레일은 `tools/b1_puzzle_rails.py`, 바위 파쇄는 `tools/b1_boulder_fx.py`가 맡는다.
 
 - 2026-11-27 B 발판은 `lower_route_b_art.py`의 `lower-route-b-surfaces-v1`을 사용한다. 원래 공유 발판은 보존했다. `WAYMARKERS`는 x930/2660/3330, 높이190이며 렌즈와 바닥 조명은 동일 월드 변환이다. 카메라 조정은 `route_camera.py`, A/B 천장 위 노출 방지는 각 art 모듈이다. [비교·재현](../docs/b-passage-surfaces-camera.md). 전체229개 및 SDL B1207/A779/C565 검수, 전체화면 장시간 수동·추가 광원의 프레임 성능은 이번에 측정하지 않았다. 기존 잔랙 없음은 사용자의 직접 확인이다.
 
 - 2026-11-27 성능 수정은 `input_events.py`, `render_mesh.py`, `lower_route_atmosphere.py`, `combat_scenery.py`와 `main`에 있다. 입력은 `poll_events`를 사용해 pico 내부 대기와 FPS 제목 갱신을 피하고 게임 루프가 프레임 대기를 담당한다. 고정 메시 정보는 캐시하되 카메라 정점은 매 호출 독립 생성한다. software의 얇은 클립 광원만 재사용 흰 텍셀 경로로 `width invalid`를 해결한다. [측정·재현](../docs/runtime-performance.md)과 [수치](../docs/runtime-performance-results.json). native10장 일치·전체측정1200화면 오류0. 소프트웨어 C 합성 병목 및 실제 전체화면 장시간 체감은 남은 확인 항목이다. 프로파일은 다른 테스트와 동시에 실행하지 않는다.
 
-- 2026-11-26 C 최신 미술은 `lower_route_c_scenery.py`와 [별도 석벽 레이어](../assets/terrain/lower-route-c-wall-v1/README.md)다. C 문·석등·지형은 기존 `c-terrain.png`와 좌표를 유지한다. B/C 배경은 B 지형 전에 그리고 C는 x0~690에서 사라진다. 옛 C 먼 비석·아치·광막을 다시 덮지 않는다. `python -m tools.preview_lower_route_c_wall`로 기준값·SDL565·왕복·점프·석등·재시작을 재현한다. 관련52개 통과. 봉인문 열림·C→B1은 미구현이며, 장시간 전체화면 수동 조작·기기별 성능은 미측정이다.
+- 2026-11-26 C 최신 미술은 `lower_route_c_scenery.py`와 [별도 석벽 레이어](../assets/terrain/lower-route-c-wall-v1/README.md)다. C 문·석등·지형은 기존 `c-terrain.png`와 좌표를 유지한다. B/C 배경은 B 지형 전에 그리고 C는 x0~690에서 사라진다. 옛 C 먼 비석·아치·광막을 다시 덮지 않는다. `python -m tools.preview_lower_route_c_wall`로 기준값·SDL565·왕복·점프·석등·재시작을 재현한다. 관련52개 통과. 장시간 전체화면 수동 조작·기기별 성능은 미측정이다.
 
 - 2026-11-26 B 최신 미술은 `lower_route_b_scenery.py`와 [별도 원화](../assets/terrain/lower-route-b-wall-v1/README.md)다. B 지형과 레일은 기존 렌더러로 그린다. `python -m tools.preview_lower_route_b_wall`가 추적한 geometry baseline과 SDL1207화면·두 레일·비밀방·양방향 연결을 재검수한다. A–B의 옛 far는 다시 덮지 않으며 C 배경은 새 C 렌더러가 담당한다. 장시간 전체화면 수동 조작과 기기별 성능은 미측정이다.
 
@@ -29,13 +31,13 @@ Last synced: 2026-11-05T03:23:05
 
 - 2026-11-26 [하단 동선 v2 미술](../docs/map1-art-direction.md)을 본편에 적용했다. `lower_route_atmosphere.py`는 원경 시차와 틈빛을, `tools.bake_lower_route_art`는 기존 A·C 원화에서 지형과 장치를 남기는 이미지 작업을 담당한다. [SDL 6장](../docs/map1-lower-route-runtime.jpg). 전체화면 수동 조작 체감과 장치별 렌더 성능은 미측정이다.
 
-- 2026-11-27 B1 게임 테스트의 방 미술 기준은 [room-art-v5](../assets/concepts/b1-hermit-crab/room-art-v5/README.md)다. `tools/b1_room_art.py`는 v4 원경·중경에 천장 광막, 중원경 계단과 반사광을 합성한다. `tools/b1_combat_terrain.py`는 [B1 전용 발판](../assets/concepts/b1-hermit-crab/platforms-v1/README.md) 네 개를 기존 착지 좌표에 맞춰 석판·레일과 그린다. 배우 윤곽광과 입자는 포효 테스트에서 검수했다. 본편 연결은 후속이다.
+- 2026-11-27 B1 방 미술 기준은 [room-art-v5](../assets/concepts/b1-hermit-crab/room-art-v5/README.md)다. `tools/b1_room_art.py`는 v4 원경·중경에 천장 광막, 중원경 계단과 반사광을 합성한다. `tools/b1_combat_terrain.py`는 [B1 전용 발판](../assets/concepts/b1-hermit-crab/platforms-v1/README.md) 네 개를 기존 착지 좌표에 맞춰 석판·레일과 그린다. 배우 윤곽광과 입자는 포효 테스트에서 검수했다.
 
-- 2026-11-26 B1 포효 v4를 `tools.preview_b1_roar_game`에서 실제 SDL 텍스처·플레이어·카메라로 재생한다. 게임 화면을 저장하려면 `--capture <WebP 경로>`를 붙인다. [실행과 캡처](../assets/concepts/b1-hermit-crab/roar-v4/README.md). 본편의 C→B1 이동과 전투는 아직 연결하지 않았다.
+- 2026-11-26 B1 포효 v4를 `tools.preview_b1_roar_game`에서 미리 본다. 게임 화면을 저장하려면 `--capture <WebP 경로>`를 붙인다. [실행과 캡처](../assets/concepts/b1-hermit-crab/roar-v4/README.md)
 
 - 2026-11-26 첫 전투방의 깊이와 조명은 `CombatScenery`가 원경→중경 유적→지형·식생→전투→근접 전경 순으로 합성한다. `combat_room_lighting.py`에서 두 광막·표면 반사광·전경 산란광을, `combat_vegetation.py`에서 월드 좌표와 식생 색을 조정한다. `tools/preview_combat_atmosphere.py --projectiles --prefix combat-room --output-dir .cache/applied-combat-room`으로 바닥 전투·상단·수정탄·틈빛·붕괴 후 하강로를 재현한다. 바닥 전투와 상단, 붕괴 후 하강 화면은 SDL에서 확인했다.
 
-- 2026-11-26 B1 포효 보스 단독 자산은 [roar-v4](../assets/concepts/b1-hermit-crab/roar-v4/README.md)가 최신이다. 셀 540 × 363, 바닥 기준점 (275, 329), 자세 19장과 가변 유지 시간 2초를 `boss-roar.json`에 기록했다. 0.72초 정점에 v1 효과를 맞춘 비교 시안을 확인했다. 본편 연결은 후속이다.
+- 2026-11-26 B1 포효 보스 단독 자산은 [roar-v4](../assets/concepts/b1-hermit-crab/roar-v4/README.md)가 최신이다. 셀 540 × 363, 바닥 기준점 (275, 329), 자세 19장과 가변 유지 시간 2초를 `boss-roar.json`에 기록했다. 0.72초 정점에 v1 효과를 맞춘 비교 시안을 확인했다.
 
 - 2026-11-26 B1 본편 전투는 [페이즈·공격 판정 가안](../docs/b1-hermit-crab-combat-design.md)에서 이어간다. 도입 낙석과 은신 해제용 암석을 분리하고, 벽 근처 낙하 회피 폭·기본 베기 도달·은신 레일 실패 복구·바닥 복귀 대기·C 석등 재시작을 검증한다.
 
@@ -53,7 +55,7 @@ Last synced: 2026-11-05T03:23:05
 
 - 2026-11-25 첫 전투방 순서는 `lower_caves.py`의 `combat_phase`와 `update_combat_encounter`에서 관리한다. 문이 닫히는 동안 적이 표시되거나 피해를 주지 않는다. 공벌레 사망 연출은 골렘 단계에서도 계속 재생된다. `tests/test_combat_trigger.py`와 `tests/test_combat_clear.py`에서 순서를 확인한다.
 
-- 2026-11-25 C 전실과 재도전 석등, B1 봉인문을 연결했다. B1 방 연결 시 `lower_route_c.py`의 왼쪽 입구 충돌을 실제 동선으로 교체한다.
+- 2026-11-25 C 전실과 재도전 석등, B1 봉인문 미술을 추가했다. `lower_route_c.py`에서 위치를 관리한다.
 
 - 2026-11-23 본편 A 구현. `LowerCaves`의 `route_a`가 전투방 하강 끝에서 낙하 속도를 이어받는다. `lower_route_a.py`의 이미지 좌표가 벽·레일 기준이며 미리보기도 같은 궤도를 사용한다. B는 왼쪽 출구에서 연결하면 된다. 전체 테스트는 `.\.venv\Scripts\python.exe -m unittest discover -s tests`.
 

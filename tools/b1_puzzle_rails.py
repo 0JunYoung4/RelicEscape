@@ -2,7 +2,6 @@
 
 from pico2d import pico2d as pico
 
-from main import RELIC_IMAGE, draw_relic
 from player import STANDING_HITBOX_HEIGHT
 from rail import RAIL_CARRIAGE_IMAGE, RAIL_MOUNT_RADIUS, RailCarriage, RailSegment
 from tools.b1_combat_terrain import LEDGES, RAIL_CENTERS
@@ -15,8 +14,11 @@ SCALE = WORLD_PER_ART_PIXEL
 
 class B1PuzzleRails:
     def __init__(self):
+        from main import RELIC_IMAGE, draw_relic
+
         self.mount = pico.load_image(str(RAIL_CARRIAGE_IMAGE))
         self.relic = pico.load_image(str(RELIC_IMAGE))
+        self.draw_relic = draw_relic
         outer_ledges = LEDGES[0], LEDGES[-1]
         top_bracket_y = outer_ledges[0][2] + 28, outer_ledges[-1][4] - 24
         self.landings = tuple((x * SCALE, (GROUND - ledge[2]) * SCALE)
@@ -44,6 +46,9 @@ class B1PuzzleRails:
         return next((i for i, (x, _) in enumerate(self.landings)
                      if abs(player.x - x) <= RAIL_MOUNT_RADIUS), None)
 
+    def can_interact(self, player):
+        return self._nearby_rail(player) is not None
+
     def prompt(self, player):
         index = self._nearby_rail(player)
         if index is None:
@@ -57,7 +62,8 @@ class B1PuzzleRails:
             return "send"
         return None
 
-    def interact(self, player):
+    def interact(self, player, *, teleport=None):
+        """Mount a nearby rail or report a successful ascent."""
         index = self._nearby_rail(player)
         if index is None:
             return False
@@ -66,11 +72,14 @@ class B1PuzzleRails:
             self.reset()
             carriage.relic_mounted = True
             self.active = carriage
-            return True
-        if carriage.distance == carriage.length and player.recover_at(*self.landings[index], 0):
+            return False
+        if carriage.distance != carriage.length:
+            return False
+        landing = (*self.landings[index], 0)
+        arrived = player.recover_at(*landing) if teleport is None else teleport(landing)
+        if arrived:
             self.reset()
-            return True
-        return False
+        return arrived
 
     def advance(self, player, dt):
         carriage = self.active
@@ -91,7 +100,7 @@ class B1PuzzleRails:
             self.mount.draw(*camera.world_to_screen(x, y), self.mount.w * scale,
                             self.mount.h * scale)
             if enabled and carriage.relic_mounted:
-                draw_relic(self.relic, camera, x, y, None)
+                self.draw_relic(self.relic, camera, x, y, None)
 
     def close(self):
         self.mount = self.relic = None

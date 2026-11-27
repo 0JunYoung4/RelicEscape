@@ -777,10 +777,70 @@ def run_game(fullscreen):
         sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
 
 
+def update_b1(stage, travel, dt, now, *, pressed_keys, direction, running, crouching, jump_held):
+    use = pico.SDLK_e in pressed_keys
+    inspect = teleported = False
+    if stage.accepts_player_input and not stage.health.recovering(now):
+        if use and stage.can_inspect:
+            travel.reset()
+            inspect = True
+        elif use and travel.anchor is None and stage.can_use_rail:
+            inspect = True
+        elif stage.rails.active is None:
+            destination = None
+            if use:
+                destination = travel.place_or_recall(stage.player, now)
+            elif pico.SDLK_q in pressed_keys:
+                destination = travel.return_pose(now)
+            if stage.allows_relic_destination(destination):
+                teleported = travel.teleport(stage.player, stage.camera, destination, now, reclaim=use)
+
+    def teleport_rail(destination):
+        return travel.teleport(stage.player, stage.camera, destination, now, reclaim=True)
+
+    stage.advance(dt, direction, running=running, crouching=crouching, jump_held=jump_held,
+                  jump_pressed=pico.SDLK_SPACE in pressed_keys, inspect_pressed=inspect,
+                  attack_pressed=pico.SDLK_x in pressed_keys, now=now, teleported=teleported,
+                  teleport_rail=teleport_rail)
+
+
+def draw_b1(stage, travel, relic_image, now, *, show_hitboxes, relic_view_held):
+    relic_center = None
+    mounted = stage.rails.active
+    relic_focus = mounted.position if mounted is not None else travel.anchor_position
+
+    def draw_player(camera):
+        return travel.effect.draw(stage.player, camera, now, None)
+
+    def draw_world_effects(camera):
+        nonlocal relic_center
+        if mounted is not None:
+            relic_center = camera.world_to_screen(*mounted.position)
+        if travel.anchor is not None:
+            anchor = travel.anchor
+            elapsed = now - anchor.placed_at
+            relic_center = relic_screen_center(camera, anchor.x, anchor.display_y, elapsed)
+            draw_relic(relic_image, camera, anchor.x, anchor.display_y, elapsed)
+        travel.draw_marks(stage.player, camera, relic_center, now)
+
+    stage.draw(now=now, draw_player=draw_player, draw_world_effects=draw_world_effects,
+               show_hitboxes=show_hitboxes, show_hud=False, relic_focus=relic_focus if relic_view_held else None)
+    return relic_center
+
+
+def present_cave_frame(health, relic_center, frame_start):
+    health.draw_hud(SCREEN_HEIGHT, frame_start)
+    draw_relic_indicator(relic_center)
+    health.draw_blackout(SCREEN_WIDTH, SCREEN_HEIGHT, frame_start)
+    pico.update_canvas()
+    sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
+
+
 def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
     cave = opening_cave.OpeningCave(SCREEN_WIDTH, SCREEN_HEIGHT)
     approach = SigilApproach()
     lower = None
+    b1_stage = None
     travel = RelicTravel()
     relic_image = pico.load_image(str(RELIC_IMAGE))
     player = Player(*opening_cave.SPAWN[:2], opening_cave.WORLD_WIDTH, terrain=opening_cave.TERRAIN)
@@ -842,23 +902,36 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
             direction, running, crouching = 0, False, False
             jump_held = False
         elif lower is not None and health.ready_to_restart(frame_start):
-            room = lower.restart_room
-            has_relic = lower.has_relic
-            seal_open = lower.in_lower_route and lower.route_a.seal_unlocked
-            lower = LowerCaves(cave)
-            lower.room = room
-            if room == "combat" or lower.in_lower_route:
-                lower.has_relic = has_relic
-            if after_relic and room == "gallery":
-                lower.start_after_relic(player, camera)
+            if lower.room == "b1":
+                lower.leave_b1(player, camera, retry=True)
             else:
-                lower.enter(player, camera, seal_open=seal_open)
+                room = lower.restart_room
+                has_relic = lower.has_relic
+                seal_open = lower.in_lower_route and lower.route_a.seal_unlocked
+                b1_cleared = lower.b1_cleared
+                lower = LowerCaves(cave)
+                lower.room = room
+                lower.b1_cleared = b1_cleared
+                if room == "combat" or lower.in_lower_route:
+                    lower.has_relic = has_relic
+                if after_relic and room == "gallery":
+                    lower.start_after_relic(player, camera)
+                else:
+                    lower.enter(player, camera, seal_open=seal_open)
             travel.reset()
             health = Health((player.x, player.y, player.crouch_time), returned_at=frame_start)
             pressed_keys.clear()
         if lower is None and pico.SDLK_e in pressed_keys:
             approach.start(player)
-        if lower is not None and not health.recovering(frame_start):
+        if lower is not None and lower.room == "b1":
+            update_b1(b1_stage, travel, delta_time, frame_start, pressed_keys=pressed_keys,
+                      direction=direction, running=running, crouching=crouching, jump_held=jump_held)
+            if b1_stage.state == "victory":
+                lower.b1_cleared = True
+            if direction > 0 and b1_stage.can_leave:
+                lower.leave_b1(player, camera)
+                travel.reset()
+        elif lower is not None and not health.recovering(frame_start):
             use = pico.SDLK_e in pressed_keys
             destination = None
             route = lower.route
@@ -886,7 +959,18 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
                 if lower.room != previous_room and not (was_on_lower_route and lower.in_lower_route):
                     travel.reset()
             lower.update_relic_seal(player, frame_start)
-            if lower.room == "route_b" and lower.route_b.check_spikes(player, health, frame_start):
+            if direction < 0 and lower.can_enter_b1(player):
+                if route is not None and route.mounted_carriage is not None:
+                    route.mounted_carriage.relic_mounted = False
+                travel.reset()
+                if b1_stage is None:
+                    from tools.b1_encounter_stage import B1EncounterStage
+
+                    b1_stage = B1EncounterStage(player=player, health=health)
+                else:
+                    b1_stage.enter(player, health, defeated=lower.b1_cleared)
+                lower.room = "b1"
+            elif lower.room == "route_b" and lower.route_b.check_spikes(player, health, frame_start):
                 travel.reset()
                 lower.projectiles.clear()
             else:
@@ -909,6 +993,11 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
                 jump_pressed=pico.SDLK_SPACE in pressed_keys, jump_held=jump_held,
                 crouch_held=crouching, attack_pressed=pico.SDLK_x in pressed_keys,
             )
+        if lower is not None and lower.room == "b1":
+            relic_center = draw_b1(b1_stage, travel, relic_image, frame_start,
+                                   show_hitboxes=show_hitboxes, relic_view_held=relic_view_held)
+            present_cave_frame(health, relic_center, frame_start)
+            continue
         shaft_cut = approach.phase in ("descent", "impact")
         relic_center = None
         render_origin = camera.x, camera.y
@@ -982,11 +1071,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
         if lower is not None:
             # Shake only the world render; keep tracking, collision and HUD stable.
             camera.x, camera.y = render_origin
-        health.draw_hud(SCREEN_HEIGHT, frame_start)
-        draw_relic_indicator(relic_center)
-        health.draw_blackout(SCREEN_WIDTH, SCREEN_HEIGHT, frame_start)
-        pico.update_canvas()
-        sleep(max(0, 1 / 60 - (perf_counter() - frame_start)))
+        present_cave_frame(health, relic_center, frame_start)
 
 
 def main(*, test_room=False, after_relic=False, opening=False):

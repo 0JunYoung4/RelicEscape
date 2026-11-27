@@ -7,7 +7,6 @@ import json
 from PIL import Image, ImageChops, ImageFilter
 from pico2d import pico2d as pico
 
-from main import Camera
 from player import Animation, CROUCH_DURATION, Player
 from tools.b1_room_art import B1RoomArt, ROOM_ART, ROOM_SIZE, WORLD_PER_ART_PIXEL, rgba_texture
 from tools.b1_room_atmosphere import B1Motes
@@ -85,14 +84,18 @@ class _Effect:
 class B1RoarStage:
     """A deterministic, self-contained shot beginning after the intro rockfall."""
 
-    def __init__(self, *, art_dir=ROOM_ART, gate_closed=True, show_carriages=True):
+    def __init__(self, *, art_dir=ROOM_ART, gate_closed=True, show_carriages=True, player=None):
+        from main import Camera
+
         self.room_art = B1RoomArt(art_dir, gate_closed=gate_closed, show_carriages=show_carriages)
         self.motes = B1Motes()
         world_width = ROOM_SIZE[0] * WORLD_PER_ART_PIXEL
         self.camera = Camera(pico.get_canvas_width(), world_width)
         self.boss_x = SHELL_X * WORLD_PER_ART_PIXEL
-        self.player = Player(PLAYER_X * WORLD_PER_ART_PIXEL, 0, world_width)
-        self.player.facing = -1
+        self.player = player
+        if self.player is None:
+            self.player = Player(PLAYER_X * WORLD_PER_ART_PIXEL, 0, world_width)
+            self.player.facing = -1
 
         self.boss, self.apex_ms = _load_boss()
         self.duration_ms = self.boss.frame_ends_ms[-1]
