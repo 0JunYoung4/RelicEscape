@@ -1,0 +1,10 @@
+# 맵 1 오른쪽 통로의 닫힌 철문
+
+내장 ImageGen으로 [석문 측면 시안](map1-right-seal-door-v1.png)을 편집했다. 좁은 측면 구도와 중앙의 육각 유물 문양을 바탕으로 어두운 철판, 보강 띠 두 개, 둥근 리벳과 옅은 녹을 표현했다.
+
+- HK-GP02의 좁고 선명한 철문 윤곽을 참고했다. HK-RW-02는 어두운 금속과 청록 배경의 대비 참고로 썼다.
+- 최종 PNG는 727 × 2163 RGBA다. 알파 8 초과 영역은 (128, 226, 595, 1957)이며 오른쪽과 아래 좌표는 영역에 포함하지 않는다.
+
+## 편집 프롬프트
+
+Edit the attached original RelicEscape closed door sprite. Change the main construction from cracked stone into a visibly forged iron sliding gate. Preserve the single tall narrow near-side view, the same approximate width-to-height proportion (about 0.28), tidy orthographic side-scroller framing, flat bottom, closed footprint, centered placement, and true transparent background. Replace the jagged stone shapes and masonry cracks with broad continuous dark iron plates with straight engineered edges, two horizontal forged iron reinforcing straps, and a modest number of round blacksmith rivets. Show a slim, darker edge on the left so the thickness is readable. Use restrained cool blue-gray metallic edges, a few readable elongated abrasion marks, a little dark reddish-brown oxidation near fasteners, and broad surfaces that read as iron even when the sprite is 100 pixels tall. Keep the original RelicEscape slender hexagonal emblem as a shallow stamped recess, with low contrast. Remove moss and chipped boulder facets. The silhouette must read as a solid closed metal shutter, with no large openings or bars, no surrounding frame. Hand-painted dark fantasy 2D game sprite style, dark charcoal iron with a clear but understated rim highlight. Exactly one isolated barrier fully visible on a genuinely transparent background. No scenery, floor, shadow on the background, people, text, variations, sheet or border.
