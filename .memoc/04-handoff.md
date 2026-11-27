@@ -15,7 +15,7 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
-- 2026-11-27 [B1 독립 조작 테스트](../docs/b1-hermit-crab-combat-design.md#기본-교전-조작-테스트)는 `play-b1-encounter.cmd`로 실행한다. `tools/b1_combat_tree.py`가 현재 공격 완료 뒤 50% 은신 가지를 열고, `tools/b1_encounter_stage.py`가 중앙 집게·바위 충돌·재등장을 진행한다. 양쪽 레일은 `tools/b1_puzzle_rails.py`, 바위 파쇄는 `tools/b1_boulder_fx.py`가 맡는다. 바닥 복귀 뒤 기본 교전을 재개한다. 이후 전용 패턴과 C→B1 본편 연결은 후속이다.
+- 2026-11-27 [B1 독립 조작 테스트](../docs/b1-hermit-crab-combat-design.md#기본-교전-조작-테스트)는 `play-b1-encounter.cmd`로 실행한다. `tools/b1_combat_tree.py`가 50% 은신과 2페이즈 공격 순서를 관리하고, `tools/b1_encounter_stage.py`가 중앙 집게·바위 충돌·재등장과 연속 낙하를 진행한다. 바닥 복귀와 얼굴 노출 뒤 2연속 낙하로 교전을 연다. 두 번째 낙하는 새 위치를 예고하며 두 번째 착지에 반격 시간이 열린다. 양쪽 레일은 `tools/b1_puzzle_rails.py`, 바위 파쇄는 `tools/b1_boulder_fx.py`가 맡는다. C→B1 본편 연결은 후속이다.
 
 - 2026-11-27 B 발판은 `lower_route_b_art.py`의 `lower-route-b-surfaces-v1`을 사용한다. 원래 공유 발판은 보존했다. `WAYMARKERS`는 x930/2660/3330, 높이190이며 렌즈와 바닥 조명은 동일 월드 변환이다. 카메라 조정은 `route_camera.py`, A/B 천장 위 노출 방지는 각 art 모듈이다. [비교·재현](../docs/b-passage-surfaces-camera.md). 전체229개 및 SDL B1207/A779/C565 검수, 전체화면 장시간 수동·추가 광원의 프레임 성능은 이번에 측정하지 않았다. 기존 잔랙 없음은 사용자의 직접 확인이다.
 

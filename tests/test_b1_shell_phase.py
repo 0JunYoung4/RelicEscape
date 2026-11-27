@@ -12,7 +12,9 @@ from pico2d import pico2d as pico
 
 from tools.b1_combat_terrain import LEDGES
 from tools.b1_combat_tree import Attack
-from tools.b1_encounter_stage import B1EncounterStage, BOSS_HALF_HP, BOSS_MAX_HP, REVEAL_RECOVERY, SCALE
+from tools.b1_encounter_stage import (B1EncounterStage, BOSS_HALF_HP, BOSS_MAX_HP,
+                                     DOUBLE_JUMP_RECOVERY, JUMP_DAMAGE, JUMP_RELAUNCH_DELAY,
+                                     REVEAL_RECOVERY, SCALE)
 from tools.preview_b1_intro import GROUND, SHELL_X, SIZE
 
 
@@ -53,6 +55,15 @@ class B1ShellPhaseTests(unittest.TestCase):
         swing_id = stage.player.swing_id
         stage.advance(DT, attack_pressed=True)
         self.wait_for(lambda: stage.player.swing_id != swing_id)
+
+    def start_second_phase(self):
+        stage = self.stage
+        stage.player.world_left = 0
+        self.assertTrue(stage.player.recover_at(SHELL_X * SCALE, 0, 0))
+        stage.phase = "shell"
+        stage.boss_hp = BOSS_HALF_HP
+        stage._enter("face_open")
+        self.wait_for(lambda: stage.phase == "second" and stage.combat.attack is not None)
 
     def test_only_recovery_sword_hit_damages_boss_once_per_swing(self):
         stage = self.stage
@@ -186,8 +197,9 @@ class B1ShellPhaseTests(unittest.TestCase):
                 self.wait_for(lambda: stage.age >= REVEAL_RECOVERY - 3 * DT)
                 self.assertEqual(stage.state, "face_open")
                 self.assertIsNone(stage.combat.attack)
-                self.wait_for(lambda: stage.phase == "resumed")
-                self.assertEqual(stage.combat.attack, Attack.CLAW)
+                self.wait_for(lambda: stage.phase == "second" and stage.combat.attack is not None)
+                self.assertIs(stage.combat.attack, Attack.DOUBLE_JUMP)
+                self.assertEqual(stage.state, "jump")
 
         stage.reset()
         self.assertEqual(stage.state, "waiting")
@@ -195,3 +207,56 @@ class B1ShellPhaseTests(unittest.TestCase):
         self.assertIsNone(stage.rock_hit_at)
         self.assertFalse(stage.rails_enabled)
         self.assertIsNone(stage.rails.active)
+
+    def test_double_jump_retargets_and_only_final_landing_opens_recovery(self):
+        self.start_second_phase()
+        stage = self.stage
+        starting_health = stage.health.current
+        first_x, second_x = 720 * SCALE, 1460 * SCALE
+
+        with patch.object(stage, "_strike", wraps=stage._strike) as strike:
+            self.assertTrue(stage.player.recover_at(first_x, 0, 0))
+            self.wait_for(lambda: stage.jump_target is not None)
+            self.assertEqual(stage.jump_target, first_x)
+            stage.draw()
+            self.wait_for(lambda: stage.hit_landed is not None)
+            self.assertTrue(stage.hit_landed)
+            self.assertEqual(stage.health.current, starting_health - JUMP_DAMAGE)
+            self.assertIsNone(stage._vulnerable_bounds())
+            first_impact = stage.time
+
+            self.assertTrue(stage.player.recover_at(second_x, 0, 0))
+            self.wait_for(lambda: stage.hit_landed is None)
+            self.assertAlmostEqual(stage.time - first_impact, JUMP_RELAUNCH_DELAY, delta=DT)
+            self.assertIsNone(stage.jump_target)
+            self.assertIs(stage.combat.attack, Attack.DOUBLE_JUMP)
+            self.assertEqual(stage.combat.completed, 0)
+            self.assertEqual(strike.call_count, 1)
+            self.wait_for(lambda: stage.jump_target is not None)
+            self.assertEqual(stage.jump_target, second_x)
+            stage.draw()
+            self.wait_for(lambda: stage.hit_landed is not None)
+            self.assertTrue(stage.hit_landed)
+            self.assertEqual(stage.health.current, starting_health - 2 * JUMP_DAMAGE)
+            second_impact = stage.time
+
+            self.swing()
+            self.assertEqual(stage.boss_hp, BOSS_HALF_HP - stage.player.attack_power)
+            self.wait_for(lambda: stage.combat.completed == 1)
+            self.assertAlmostEqual(stage.time - second_impact, DOUBLE_JUMP_RECOVERY, delta=DT)
+            self.assertEqual(strike.call_count, 2)
+
+    def test_second_phase_cycle_repeats_and_restarts_after_reset(self):
+        self.start_second_phase()
+        stage = self.stage
+        with patch.object(stage, "_strike"):
+            for attack in (Attack.DOUBLE_JUMP, Attack.CLAW, Attack.JUMP, Attack.CLAW):
+                self.assertIs(stage.combat.attack, attack)
+                self.wait_for(lambda: stage.combat.attack is None)
+                stage.advance(DT)
+            self.assertIs(stage.combat.attack, Attack.DOUBLE_JUMP)
+
+        stage.reset()
+        self.assertEqual(stage.phase, "first")
+        self.start_second_phase()
+        self.assertIs(stage.combat.attack, Attack.DOUBLE_JUMP)

@@ -38,6 +38,8 @@ CLAW_DAMAGE = 25
 APPROACH_SPEED = 840
 APPROACH_MAX_TIME = .75
 JUMP_WAIT, JUMP_TELL, JUMP_RECOVERY = 1.4, .80, 1.10
+JUMP_RELAUNCH_DELAY = .12
+DOUBLE_JUMP_RECOVERY = 1.25
 JUMP_HALF_WIDTH = 120 * SCALE
 JUMP_HEIGHT = 80 * SCALE
 JUMP_WALL_MARGIN = 60 * SCALE
@@ -103,6 +105,8 @@ class _Jump(_Motion):
         self.tell = self.offscreen + JUMP_WAIT
         self.drop = self.ends[47]
         self.impact = self.ends[70]
+        # Start the second takeoff from the crouch, after the idle lead-in.
+        self.relaunch = self.ends[23]
 
 
 def _scuttle():
@@ -204,6 +208,8 @@ class B1EncounterStage(B1RoarStage):
         self.combat_left = 0.0
         self.hit_landed = None
         self.jump_target = None
+        self.jump_relaunch = False
+        self.jump_recovery = JUMP_RECOVERY
         self.boss_hp = BOSS_MAX_HP
         self.phase = "first"
         self.last_player_swing = None
@@ -293,6 +299,8 @@ class B1EncounterStage(B1RoarStage):
     def start_attack(self, attack):
         self.hit_landed = None
         self.jump_target = None
+        self.jump_relaunch = attack is Attack.DOUBLE_JUMP
+        self.jump_recovery = DOUBLE_JUMP_RECOVERY if self.jump_relaunch else JUMP_RECOVERY
         self.boss_facing = 1 if self.player.x >= self.boss_x else -1
         self._enter("approach" if attack is Attack.CLAW else "jump")
 
@@ -320,7 +328,11 @@ class B1EncounterStage(B1RoarStage):
                 self.boss_x = self.jump_target
             if before < self.jump.impact <= self.age:
                 self._strike(*self._jump_bounds(), JUMP_HEIGHT, JUMP_DAMAGE)
-            if self.age >= self.jump.impact + JUMP_RECOVERY:
+            if self.jump_relaunch and self.age >= self.jump.impact + JUMP_RELAUNCH_DELAY:
+                self.jump_relaunch = False
+                self.hit_landed = self.jump_target = None
+                self.age = self.jump.relaunch
+            elif self.age >= self.jump.impact + self.jump_recovery:
                 self._enter("ready")
                 return Status.SUCCESS
         return Status.RUNNING
@@ -359,7 +371,7 @@ class B1EncounterStage(B1RoarStage):
         elif self.state == "wait_floor" and self.player.grounded and self.player.y == 0:
             self._enter("face_open")
         elif self.state == "face_open" and self.age >= REVEAL_RECOVERY:
-            self.phase = "resumed"
+            self.phase = "second"
             return Status.SUCCESS
         return Status.RUNNING
 
@@ -372,7 +384,8 @@ class B1EncounterStage(B1RoarStage):
         if self.state == "claw" and self.age >= self.claw.impact:
             return (self.claw_center - CLAW_HALF_WIDTH, 0,
                     self.claw_center + CLAW_HALF_WIDTH, CLAW_HEIGHT)
-        if self.state == "face_open" or (self.state == "jump" and self.age >= self.jump.impact):
+        if self.state == "face_open" or (self.state == "jump" and not self.jump_relaunch
+                                         and self.age >= self.jump.impact):
             half = 170 * SCALE
             return self.boss_x - half, 0, self.boss_x + half, 180 * SCALE
         return None

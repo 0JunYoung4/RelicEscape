@@ -12,9 +12,11 @@ class Status(Enum):
 class Attack(Enum):
     CLAW = auto()
     JUMP = auto()
+    DOUBLE_JUMP = auto()
 
 
 OPENING = (Attack.CLAW, Attack.JUMP)
+SECOND_PHASE = (Attack.DOUBLE_JUMP, Attack.CLAW, Attack.JUMP, Attack.CLAW)
 
 
 def _selector(*children):
@@ -42,6 +44,7 @@ class B1CombatTree:
             _guard(lambda stage: stage.shell_event_active, self._continue_shell_event),
             _guard(lambda stage: self.completed >= len(OPENING) and stage.half_health_reached,
                    self._start_shell_event),
+            _guard(lambda stage: stage.phase == "second", self._second_phase_attack),
             _selector(
                 _guard(lambda stage: self.completed < len(OPENING), self._opening_attack),
                 _guard(lambda stage: self.streak >= 2, self._switch_attack),
@@ -54,6 +57,7 @@ class B1CombatTree:
     def reset(self):
         self.attack = self.last_attack = None
         self.completed = self.streak = 0
+        self.second_attack_index = 0
 
     def tick(self, stage, dt):
         return self.root(stage, dt)
@@ -75,9 +79,7 @@ class B1CombatTree:
     def _continue_shell_event(self, stage, dt):
         result = stage.advance_shell_event(dt)
         if result is Status.SUCCESS:
-            self.last_attack = None
-            self.streak = 0
-            return self._start(stage, Attack.CLAW)
+            return self._second_phase_attack(stage, dt)
         return result
 
     def _continue_attack(self, stage, dt):
@@ -90,6 +92,11 @@ class B1CombatTree:
 
     def _opening_attack(self, stage, dt):
         return self._start(stage, OPENING[self.completed])
+
+    def _second_phase_attack(self, stage, dt):
+        attack = SECOND_PHASE[self.second_attack_index]
+        self.second_attack_index = (self.second_attack_index + 1) % len(SECOND_PHASE)
+        return self._start(stage, attack)
 
     def _switch_attack(self, stage, dt):
         return self._start(stage, Attack.JUMP if self.last_attack is Attack.CLAW else Attack.CLAW)
