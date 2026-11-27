@@ -70,6 +70,7 @@ class LowerRouteB:
         for carriage in self.carriages:
             self.reset_carriage(carriage)
         self.rail_attempt = None
+        self.return_docks_open = False
         self.safe_pose = SPAWN
         self.secret_revealed = False
         self.secret_relic_collected = False
@@ -125,6 +126,10 @@ class LowerRouteB:
             x, y = carriage.segments[-1].end
             if hypot(player.x - x, (bottom + top) / 2 - y) <= RAIL_MOUNT_RADIUS:
                 return carriage, carriage.length, (x, y)
+            if self.return_docks_open:
+                x, y = carriage.segments[0].start
+                if hypot(player.x - x, (bottom + top) / 2 - y) <= RAIL_MOUNT_RADIUS:
+                    return carriage, 0, (x, y)
         return None
 
     def use_relic(self, player, *, relic_placed):
@@ -147,6 +152,10 @@ class LowerRouteB:
             x, y = carriage.segments[-1].end
             if carriage.distance == carriage.length and abs(player.x - x) <= 160:
                 return (x, y), True
+            if self.return_docks_open and carriage.distance == 0:
+                x, y = carriage.segments[0].start
+                if abs(player.x - x) <= 160:
+                    return (x, y), True
             return (player.x, player.y + STANDING_HITBOX_HEIGHT), False
         dock = self.nearby_dock(player, relic_placed)
         if dock is not None:

@@ -16,6 +16,7 @@ from slash_effect import FORWARD_SLASH_REACH
 from tools.b1_boulder_fx import B1BoulderImpact
 from tools.b1_combat_tree import Attack, B1CombatTree, Status
 from tools.b1_combat_terrain import GATE_LEFT, LEDGES
+from tools.b1_defeat_sequence import B1DefeatSequence, DURATION as DEFEAT_DURATION, HITSTOP_SECONDS
 from tools.b1_puzzle_rails import B1PuzzleRails
 from tools.b1_roar_game_stage import B1RoarStage
 from tools.b1_room_art import ROOM_SIZE, WORLD_PER_ART_PIXEL, _draw_plate, _green_grade, rgba_texture
@@ -194,6 +195,7 @@ class B1EncounterStage(B1RoarStage):
         self.jump_marker = _attack_marker(JUMP_HALF_WIDTH, 27)
         self.labels = _labels()
         self.combat = B1CombatTree()
+        self.defeat = B1DefeatSequence()
         self.main_game = player is not None
         self.reset(health=health)
 
@@ -221,14 +223,17 @@ class B1EncounterStage(B1RoarStage):
         self.last_player_swing = None
         self.sword_impact = None
         self.rock_hit_at = None
+        self.defeat_view = None
         self.rails.reset()
         self.combat.reset()
 
     def enter(self, player, health, *, defeated=False):
+        boss_x, boss_facing = self.boss_x, self.boss_facing
         self.player = player
         self.main_game = True
         self.reset(health=health)
         if defeated:
+            self.boss_x, self.boss_facing = boss_x, boss_facing
             self.boss_hp = 0
             self.rock_hit_at = -self.boulder.duration
             self.combat_left = player.x / SCALE - 615
@@ -237,7 +242,7 @@ class B1EncounterStage(B1RoarStage):
 
     @property
     def accepts_player_input(self):
-        return self.state not in ("tremor", "roar", "defeated")
+        return self.state not in ("tremor", "roar", "dying", "defeated")
 
     @property
     def _passage_open(self):
@@ -299,6 +304,19 @@ class B1EncounterStage(B1RoarStage):
                 teleported=False, teleport_rail=None):
         self.time += dt
         self.health_time = self.time if now is None else now
+        if self.state == "dying":
+            before = self.age
+            self.age = min(DEFEAT_DURATION, self.age + dt)
+            if before < HITSTOP_SECONDS <= self.age:
+                self.player.attack_time = self.player.slash = None
+                self.sword_impact = None
+            settle_step = self.age - max(before, HITSTOP_SECONDS)
+            if settle_step > 0:
+                self.player.update(0, False, settle_step, jump_held=False)
+            if self.age >= DEFEAT_DURATION - 1e-9:
+                self.defeat.play_release()
+                self._enter("victory")
+            return
         if inspect_pressed and self.can_inspect:
             self.player.recover_at(self.player.x, 0, 0)
             self.intro_camera = Preview(x=self.player.x / SCALE, elapsed=0.0)
@@ -465,9 +483,19 @@ class B1EncounterStage(B1RoarStage):
             self.boss_hp = max(floor, self.boss_hp - self.player.attack_power)
 
     def end_combat(self, *, victory=False):
-        state = "victory" if victory else "defeated"
-        if self.state != state:
-            self._enter(state)
+        if not victory:
+            if self.state != "defeated":
+                self._enter("defeated")
+            return
+        if self.state in ("dying", "victory"):
+            return
+        self.defeat_view = self._view()
+        self.combat_left = self.defeat_view[0]
+        self.hit_landed = self.jump_target = None
+        self.rails.reset()
+        self.player.buffered_attack_down = None
+        self.player.jump_buffer_remaining = self.player.wall_jump_remaining = self.player.recoil_remaining = 0
+        self._enter("dying")
 
     def _track_combat(self, dt):
         player_x = self.player.x / SCALE
@@ -490,6 +518,13 @@ class B1EncounterStage(B1RoarStage):
                                                         self.health_time, damage)
 
     def _view(self):
+        if self.state == "dying":
+            left, top, right, bottom = self.defeat_view
+            dx, dy = self.defeat.shake(self.age)
+            width, height = right - left, bottom - top
+            left = clamp(left + dx, 0, ROOM_SIZE[0] - width)
+            top = max(0, top + dy)
+            return left, top, left + width, top + height
         if self.state == "waiting":
             return _approach_view(Preview(x=self.player.x / SCALE))
         if self.state == "tremor":
@@ -572,6 +607,8 @@ class B1EncounterStage(B1RoarStage):
         self._draw_room(self.time * 1000, airborne=self.airborne, show_boulder=show_boulder)
         self._draw_gate()
         self.rails.draw(self.camera, enabled=self.rails_enabled)
+        if self.state == "dying":
+            self.defeat.draw_lighting(self.camera, self.boss_x, self.boss_facing, self.age)
         if self.state == "waiting":
             self.shell.draw(self.camera, self.boss_x)
         elif self.state == "tremor":
@@ -594,8 +631,9 @@ class B1EncounterStage(B1RoarStage):
             self._draw_shell()
         elif self.state == "face_open":
             self.jump.draw(self.camera, self.boss_x, self.boss_facing, self.jump.impact + .12)
-        elif self.state == "victory" and self.main_game:
-            self._draw_shell()
+        elif self.state in ("dying", "victory"):
+            self.defeat.draw_boss(self.camera, self.boss_x, self.boss_facing,
+                                  self.age if self.state == "dying" else DEFEAT_DURATION)
         else:
             self.claw.draw(self.camera, self.boss_x, self.boss_facing, self.claw.ends[-1])
         self._draw_boulder()
@@ -606,7 +644,11 @@ class B1EncounterStage(B1RoarStage):
         self.health.draw_hit(self.camera, now)
         if draw_world_effects is not None:
             draw_world_effects(self.camera)
+        if self.state == "dying":
+            self.defeat.draw_energy(self.camera, self.boss_x, self.boss_facing, self.age)
         self.room_art.draw_in_front(self.camera)
+        if self.state == "dying":
+            self.defeat.draw_flash(self.age)
         if show_hitboxes:
             self.player.draw_hitbox(self.camera)
         if show_hud:

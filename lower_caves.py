@@ -4,12 +4,13 @@ import json
 from math import hypot
 
 from pico2d import pico2d as pico
+import right_bridge
 
 from combat_scenery import COMBAT_ART
 from crystal_golem import CrystalGolem
 from crystal_projectile import DAMAGE as CRYSTAL_DAMAGE
 from hit_impact import IMPACT_DURATION, HitImpact
-from lower_route_a import LowerRouteA
+from lower_route_a import ENTRY_LEDGE, LowerRouteA
 from lower_route_b import LowerRouteB
 from lower_route_b_layout import WIDTH as B_ROUTE_WIDTH
 from lower_route_c import BOSS_RETURN, CHECKPOINT as C_CHECKPOINT, LEFT as C_LEFT, RIGHT as C_RIGHT, LowerRouteC
@@ -20,7 +21,7 @@ from slash_effect import downward_slash_bounds, forward_slash_bounds
 from stone_wall_effects import StoneWallEffects
 from moss_art import MossCaveArt
 from relic_shrine import RelicShrine
-from player import ASSET_ROOT, STANDING_HITBOX_WIDTH, Animation
+from player import ASSET_ROOT, CONTACT_EPSILON, STANDING_HITBOX_WIDTH, WORLD_MARGIN, Animation
 
 
 GALLERY_SECTION_WIDTH = 3240
@@ -94,6 +95,11 @@ class LowerCaves:
         self.pickup_time = None
         self.has_relic = False
         self.b1_cleared = False
+        self.bridge = None
+        self.bridge_release_seen = False
+        self.bridge_release_age = None
+        self.bridge_contact_age = None
+        self.bridge_contact_y = 0
         self.pillbugs = [Pillbug(1120, 1450, 0.0), Pillbug.on_platform(AIR_PLATFORM)]
         left, bottom, right, top = COMBAT_PLATFORMS[1]
         self.golems = [CrystalGolem.on_platform((left, bottom, COMBAT_CENTER_X, top),
@@ -164,8 +170,10 @@ class LowerCaves:
     def restart_room(self):
         if self.room == "b1":
             return "route_c"
-        if self.in_lower_route and self.route_c is not None and self.route_c.checkpoint_reached:
+        if (self.in_lower_route or self.room == "right_bridge") and self.route_c is not None and self.route_c.checkpoint_reached:
             return "route_c"
+        if self.room == "right_bridge":
+            return "route_a"
         return "route_b" if self.room == "route_c" else self.room
 
     @property
@@ -217,6 +225,8 @@ class LowerCaves:
         return (*terrain, COMBAT_ENTRANCE_BARRIER) if self.entrance_locked else terrain
 
     def allows_relic_destination(self, destination):
+        if destination is not None and self.room == "right_bridge" and not self.b1_cleared:
+            return destination[0] + STANDING_HITBOX_WIDTH / 2 <= right_bridge.BARRIER[0] + CONTACT_EPSILON
         return (destination is None or self.room != "combat" or not self.entrance_locked
                 or destination[0] >= COMBAT_ENTRANCE_BARRIER[2])
 
@@ -244,11 +254,25 @@ class LowerCaves:
         for golem in self.golems:
             golem.attack_time = None
             golem.attack_target = None
+        if self.room == "right_bridge":
+            if self.bridge is None:
+                self.bridge = right_bridge.RightBridge(self.cave.height)
+            self.bridge_contact_age = None
+            player.world_left = 0
+            camera.world_left = right_bridge.CAMERA_LEFT
+            player.world_width = camera.world_width = right_bridge.WORLD_WIDTH
+            player.ground_y = 0
+            player.terrain = right_bridge.TERRAIN if self.b1_cleared else (*right_bridge.TERRAIN, right_bridge.BARRIER)
+            player.recover_at(*right_bridge.ENTRY_SPAWN)
+            player.facing = 1
+            self.follow_camera(player, camera)
+            return
         if self.in_lower_route:
             if self.route_a is None:
                 self.route_a = LowerRouteA(A_ORIGIN, seal_open=seal_open)
             if self.route_b is None:
                 self.route_b = LowerRouteB()
+            self.route_b.return_docks_open = self.b1_cleared
             if self.route_c is None:
                 self.route_c = LowerRouteC()
             if self.route_connection is None:
@@ -263,6 +287,9 @@ class LowerCaves:
             player.ground_y = self.route_connection.ground_y
             if self.room == "route_c":
                 player.recover_at(*C_CHECKPOINT)
+                player.facing = -1
+            elif self.room == "route_a" and from_right:
+                player.recover_at(self.route_a.world_width - 164, self.route_a.point(0, ENTRY_LEDGE[3])[1], 0)
                 player.facing = -1
             self.follow_camera(player, camera)
             return
@@ -285,6 +312,11 @@ class LowerCaves:
         self.follow_camera(player, camera)
 
     def follow_camera(self, player, camera, dt=None):
+        if self.room == "right_bridge":
+            camera.zoom = right_bridge.CAMERA_ZOOM
+            camera.y = right_bridge.CAMERA_Y
+            camera.follow(player.x)
+            return
         if self.in_lower_route and self.route_connection is not None:
             # The section name selects a checkpoint and hazard rules, not a room load.
             if player.x < C_RIGHT:
@@ -372,6 +404,23 @@ class LowerCaves:
               and direction < 0 and player.x <= ROOM_EDGE):
             self.room = "gallery"
             self.enter(player, camera, from_right=True)
+        elif (self.room == "route_a" and direction > 0 and player.grounded
+              and player.x >= self.route_a.world_width - WORLD_MARGIN
+              and abs(player.y - self.route_a.point(0, ENTRY_LEDGE[3])[1]) <= CONTACT_EPSILON):
+            self.room = "right_bridge"
+            self.enter(player, camera)
+        elif self.room == "right_bridge":
+            if direction < 0 and player.x <= right_bridge.LEFT_EXIT:
+                self.room = "route_a"
+                self.enter(player, camera, from_right=True)
+            elif not self.b1_cleared:
+                _, bottom, right, top = player.get_hitbox()
+                if (direction > 0 and self.bridge_contact_age is None
+                        and abs(right - right_bridge.BARRIER[0]) <= CONTACT_EPSILON
+                        and bottom < right_bridge.BARRIER[3]):
+                    self.bridge_contact_age = 0
+                    self.bridge_contact_y = (top + bottom) / 2
+                    player.recoil_from_hit(1, object())
         if self.in_lower_route:
             for route in (self.route_a, self.route_b):
                 if route is not None:
@@ -379,6 +428,11 @@ class LowerCaves:
         self.follow_camera(player, camera, dt)
 
     def draw(self, camera):
+        if self.room == "right_bridge":
+            self.bridge.draw(camera, sealed=not self.b1_cleared,
+                             contact_age=self.bridge_contact_age, contact_y=self.bridge_contact_y,
+                             release_age=self.bridge_release_age)
+            return
         if self.room == "landing":
             shaft = self.cave.shaft
             bottom = SHAFT_TOP - SHAFT_FLOOR - shaft.h * SHAFT_SCALE
@@ -519,6 +573,20 @@ class LowerCaves:
                 player.ground_y = COMBAT_SHAFT_FLOOR
 
     def update_effects(self, dt, player):
+        if self.bridge_release_age is not None:
+            self.bridge_release_age += dt
+            if self.bridge_release_age >= right_bridge.RELEASE_DURATION:
+                self.bridge_release_age = None
+        elif (self.room == "right_bridge" and self.b1_cleared and not self.bridge_release_seen
+              and player.x >= right_bridge.RELEASE_APPROACH_X):
+            self.bridge_release_age = 0
+            self.bridge_release_seen = True
+        if self.room == "right_bridge":
+            self.bridge.time += dt
+            if self.bridge_contact_age is not None:
+                self.bridge_contact_age += dt
+                if self.bridge_contact_age >= right_bridge.CONTACT_DURATION:
+                    self.bridge_contact_age = None
         for impact in self.hit_impacts:
             impact.age += dt
         self.hit_impacts[:] = [impact for impact in self.hit_impacts if impact.age < IMPACT_DURATION]
@@ -599,7 +667,9 @@ class LowerCaves:
                                     self.cave.width / 2, 38, self.attack_hints.w, height)
 
     def draw_foreground(self, camera):
-        if self.room == "combat":
+        if self.room == "right_bridge":
+            self.bridge.draw_foreground(camera)
+        elif self.room == "combat":
             self.art.combat_scenery().draw_foreground(camera, COMBAT_LEFT_WALL,
                                                      COMBAT_RIGHT_WALL, COMBAT_CEILING_Y)
         elif self.room == "gallery":

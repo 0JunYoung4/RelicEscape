@@ -189,6 +189,10 @@ class B1MainFlowTests(unittest.TestCase):
                 player.facing = 1
                 state.step = "open_gate"
                 return _press(pico.SDLK_x)
+            elif state.step == "open_gate" and stage.state == "dying":
+                self.assertFalse(room.b1_cleared)
+                self.assertFalse(stage.can_leave)
+                self.assertFalse(stage.accepts_player_input)
             elif state.step == "open_gate" and stage.state == "victory":
                 self.assertEqual(stage.boss_hp, 0)
                 self.assertTrue(room.b1_cleared)

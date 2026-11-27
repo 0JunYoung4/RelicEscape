@@ -907,11 +907,13 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
             else:
                 room = lower.restart_room
                 has_relic = lower.has_relic
-                seal_open = lower.in_lower_route and lower.route_a.seal_unlocked
+                seal_open = lower.route_a is not None and lower.route_a.seal_unlocked
                 b1_cleared = lower.b1_cleared
+                bridge_release_seen = lower.bridge_release_seen
                 lower = LowerCaves(cave)
                 lower.room = room
                 lower.b1_cleared = b1_cleared
+                lower.bridge_release_seen = bridge_release_seen
                 if room == "combat" or lower.in_lower_route:
                     lower.has_relic = has_relic
                 if after_relic and room == "gallery":
@@ -926,7 +928,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
         if lower is not None and lower.room == "b1":
             update_b1(b1_stage, travel, delta_time, frame_start, pressed_keys=pressed_keys,
                       direction=direction, running=running, crouching=crouching, jump_held=jump_held)
-            if b1_stage.state == "victory":
+            if b1_stage.state == "victory" and not lower.b1_cleared:
                 lower.b1_cleared = True
             if direction > 0 and b1_stage.can_leave:
                 lower.leave_b1(player, camera)
@@ -1005,7 +1007,7 @@ def run_opening_cave(fullscreen, *, after_relic=False, start_in_combat=False):
             route = lower.route
             carriage = route.mounted_carriage if route is not None else None
             mounted_position = carriage.position if carriage is not None else None
-            if relic_view_held and not health.recovering(frame_start):
+            if relic_view_held and lower.room != "right_bridge" and not health.recovering(frame_start):
                 target = mounted_position or travel.anchor_position
                 if target is not None:
                     if lower.in_lower_route:
