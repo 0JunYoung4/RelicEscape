@@ -15,11 +15,11 @@ from tools.preview_b1_roar_game import SIZE, _read_pixels
 
 OUTPUT = ART.parent / "defeat-v1"
 CENTER, FLOOR = 480, 496
-HITSTOP, CLAW_FALL, STILL, BURST, REVEAL, SETTLED = 150, 440, 1450, 1600, 1900, 2500
-BEAM_SWELL_END, BEAM_END, LIGHT_END = 1660, 1870, 2350
+HITSTOP, CLAW_FALL, STILL, BURST, REVEAL, SETTLED = 150, 440, 1450, 1600, 2000, 2500
+BEAM_SWELL_END, BEAM_END, SHAKE_END, LIGHT_END = 1660, 1870, 1900, 2450
 WHITE_START, WHITE_PEAK, WHITE_RELEASE = 1670, 1710, 1770
 FLASH_Y = 399
-CAVE_LIGHT = (159, 209, 185)
+BLUE_LIGHT = (145, 197, 226)
 # Each onset is anchored to a dark stone join in the grounded pre-flash pose.
 BEAMS = (
     (550, (421, 391), (-56, 214), 24),
@@ -103,7 +103,7 @@ def load_pose(name):
 
 def beam_texture():
     # The room's ceiling light uses the same feathered profile.
-    return shaft_image(184, 1024, 92, 92, 10, 73, CAVE_LIGHT, 128,
+    return shaft_image(184, 1024, 92, 92, 10, 73, BLUE_LIGHT, 178,
                        entry_fade=.018).transpose(Image.Transpose.ROTATE_90)
 
 
@@ -184,7 +184,7 @@ def beam_flash(t, texture):
         half_width = width * (.40 + .60 * reach) * (1 + 7 * swell)
         intensity = (.43 + .45 * reach + .12 * swell) * remaining
         draw_beam(rays, texture, x, y, tip_x, tip_y, half_width, intensity)
-        glow(rays, x, y, 9 + 12 * swell, (191, 225, 206), 54 * intensity)
+        glow(rays, x, y, 9 + 12 * swell, (170, 215, 241), 76 * intensity)
         emitters.append((x, y, tip_x, tip_y, intensity))
     return rays, emitters
 
@@ -192,18 +192,18 @@ def beam_flash(t, texture):
 def room_light(t, rays, emitters):
     # The wide falloff changes receiver color even beside the visible beam.
     falloff = rays.getchannel("A").filter(ImageFilter.GaussianBlur(18))
-    light = Image.new("RGBA", SIZE, (*CAVE_LIGHT, 0))
+    light = Image.new("RGBA", SIZE, (*BLUE_LIGHT, 0))
     light.putalpha(falloff.point([min(255, round(value * 1.5)) for value in range(256)]))
     for x, y, tip_x, tip_y, intensity in emitters:
-        glow(light, x, y, 63, (170, 218, 194), 96 * intensity)
+        glow(light, x, y, 63, (154, 203, 229), 112 * intensity)
         if y < FLOOR < tip_y:
             contact_x = x + (tip_x - x) * (FLOOR - y) / (tip_y - y)
-            glow(light, contact_x, FLOOR, 91, (172, 214, 193), 130 * intensity, aspect=.21)
+            glow(light, contact_x, FLOOR, 91, (165, 210, 233), 137 * intensity, aspect=.21)
     if BURST <= t < LIGHT_END:
         expansion = progress(t, BURST, 1810)
         fade = 1 - progress(t, SWAP_POSE, LIGHT_END)
-        glow(light, CENTER, FLASH_Y, 75 + 485 * expansion, (191, 227, 208), 145 * fade)
-        glow(light, CENTER, FLOOR, 230 + 180 * expansion, (180, 218, 196), 92 * fade, aspect=.20)
+        glow(light, CENTER, FLASH_Y, 75 + 485 * expansion, (186, 223, 242), 145 * fade)
+        glow(light, CENTER, FLOOR, 230 + 180 * expansion, (178, 216, 239), 92 * fade, aspect=.20)
     return light
 
 
@@ -264,8 +264,8 @@ def render(t, room, poses, particles, texture):
     shake = 0
     if HITSTOP <= t < STILL:
         shake = 1.1 + 2.6 * progress(t, HITSTOP, STILL)
-    elif BURST <= t < REVEAL:
-        shake = 6 * (1 - progress(t, BURST, REVEAL))
+    elif BURST <= t < SHAKE_END:
+        shake = 6 * (1 - progress(t, BURST, SHAKE_END))
     center_x = OVERSCAN // 2 + round(sin(t * .083) * shake)
     center_y = OVERSCAN // 2 + round(sin(t * .061) * shake * .46)
     view = frame.resize((SIZE[0] + OVERSCAN, SIZE[1] + OVERSCAN), LANCZOS)
@@ -300,7 +300,7 @@ def main():
         for index in range(34)
     ]
     flash_beats = flash_beat_times()
-    beats = flash_beats | {HITSTOP, CLAW_FALL, REVEAL, SETTLED}
+    beats = flash_beats | {HITSTOP, CLAW_FALL, SHAKE_END, REVEAL, LIGHT_END, SETTLED}
     beats.update(range(BEAM_START, REVEAL, 20))
     times = sorted(beats | set(range(0, SETTLED, 40)))
     frames = [render(t, room, poses, particles, texture) for t in times]
