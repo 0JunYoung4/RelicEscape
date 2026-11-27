@@ -1,4 +1,4 @@
-"""Priority behavior tree for B1's opening and repeating attacks."""
+"""Priority behavior tree for B1's attacks and shell transition."""
 
 from enum import Enum, auto
 
@@ -37,7 +37,11 @@ class B1CombatTree:
     def __init__(self):
         self.root = _selector(
             _guard(lambda stage: stage.health.current == 0, self._defeat),
+            _guard(lambda stage: stage.boss_hp == 0, self._victory),
             _guard(lambda stage: self.attack is not None, self._continue_attack),
+            _guard(lambda stage: stage.shell_event_active, self._continue_shell_event),
+            _guard(lambda stage: self.completed >= len(OPENING) and stage.half_health_reached,
+                   self._start_shell_event),
             _selector(
                 _guard(lambda stage: self.completed < len(OPENING), self._opening_attack),
                 _guard(lambda stage: self.streak >= 2, self._switch_attack),
@@ -58,6 +62,23 @@ class B1CombatTree:
         self.attack = None
         stage.end_combat()
         return Status.RUNNING
+
+    def _victory(self, stage, dt):
+        self.attack = None
+        stage.end_combat(victory=True)
+        return Status.RUNNING
+
+    def _start_shell_event(self, stage, dt):
+        stage.start_shell_event()
+        return Status.RUNNING
+
+    def _continue_shell_event(self, stage, dt):
+        result = stage.advance_shell_event(dt)
+        if result is Status.SUCCESS:
+            self.last_attack = None
+            self.streak = 0
+            return self._start(stage, Attack.CLAW)
+        return result
 
     def _continue_attack(self, stage, dt):
         result = stage.advance_attack(dt)

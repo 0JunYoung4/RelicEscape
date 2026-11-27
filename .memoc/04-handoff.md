@@ -15,7 +15,7 @@ Last synced: 2026-11-05T03:23:05
 
 ## What Changed
 
-- 2026-11-27 [B1 독립 조작 테스트](../docs/b1-hermit-crab-combat-design.md#기본-교전-조작-테스트)는 `play-b1-encounter.cmd`로 실행한다. 포효 뒤 `tools/b1_combat_tree.py`가 집게와 낙하를 반복 선택하고 `tools/b1_encounter_stage.py`가 전조·타격·회복을 실행한다. 패턴·연속 횟수는 `R`로 초기화한다. 보스 체력과 이후 페이즈, C→B1 본편 연결은 후속이다.
+- 2026-11-27 [B1 독립 조작 테스트](../docs/b1-hermit-crab-combat-design.md#기본-교전-조작-테스트)는 `play-b1-encounter.cmd`로 실행한다. `tools/b1_combat_tree.py`가 현재 공격 완료 뒤 50% 은신 가지를 열고, `tools/b1_encounter_stage.py`가 중앙 집게·바위 충돌·재등장을 진행한다. 양쪽 레일은 `tools/b1_puzzle_rails.py`, 바위 파쇄는 `tools/b1_boulder_fx.py`가 맡는다. 바닥 복귀 뒤 기본 교전을 재개한다. 이후 전용 패턴과 C→B1 본편 연결은 후속이다.
 
 - 2026-11-27 B 발판은 `lower_route_b_art.py`의 `lower-route-b-surfaces-v1`을 사용한다. 원래 공유 발판은 보존했다. `WAYMARKERS`는 x930/2660/3330, 높이190이며 렌즈와 바닥 조명은 동일 월드 변환이다. 카메라 조정은 `route_camera.py`, A/B 천장 위 노출 방지는 각 art 모듈이다. [비교·재현](../docs/b-passage-surfaces-camera.md). 전체229개 및 SDL B1207/A779/C565 검수, 전체화면 장시간 수동·추가 광원의 프레임 성능은 이번에 측정하지 않았다. 기존 잔랙 없음은 사용자의 직접 확인이다.
 
@@ -29,7 +29,7 @@ Last synced: 2026-11-05T03:23:05
 
 - 2026-11-26 [하단 동선 v2 미술](../docs/map1-art-direction.md)을 본편에 적용했다. `lower_route_atmosphere.py`는 원경 시차와 틈빛을, `tools.bake_lower_route_art`는 기존 A·C 원화에서 지형과 장치를 남기는 이미지 작업을 담당한다. [SDL 6장](../docs/map1-lower-route-runtime.jpg). 전체화면 수동 조작 체감과 장치별 렌더 성능은 미측정이다.
 
-- 2026-11-27 B1 게임 테스트의 방 미술 기준은 [room-art-v5](../assets/concepts/b1-hermit-crab/room-art-v5/README.md)다. `tools/b1_room_art.py`는 v4 원경·중경에 천장 광막, 중원경 계단과 반사광을 합성한다. `tools/b1_combat_terrain.py`는 [B1 전용 발판](../assets/concepts/b1-hermit-crab/platforms-v1/README.md) 네 개를 기존 착지 좌표에 맞춰 석판·레일과 그린다. 배우 윤곽광과 입자는 포효 테스트에서 검수했다. 본편 연결과 암석 타격·낙하를 포함한 실제 전투 판정은 후속이다.
+- 2026-11-27 B1 게임 테스트의 방 미술 기준은 [room-art-v5](../assets/concepts/b1-hermit-crab/room-art-v5/README.md)다. `tools/b1_room_art.py`는 v4 원경·중경에 천장 광막, 중원경 계단과 반사광을 합성한다. `tools/b1_combat_terrain.py`는 [B1 전용 발판](../assets/concepts/b1-hermit-crab/platforms-v1/README.md) 네 개를 기존 착지 좌표에 맞춰 석판·레일과 그린다. 배우 윤곽광과 입자는 포효 테스트에서 검수했다. 본편 연결은 후속이다.
 
 - 2026-11-26 B1 포효 v4를 `tools.preview_b1_roar_game`에서 실제 SDL 텍스처·플레이어·카메라로 재생한다. 게임 화면을 저장하려면 `--capture <WebP 경로>`를 붙인다. [실행과 캡처](../assets/concepts/b1-hermit-crab/roar-v4/README.md). 본편의 C→B1 이동과 전투는 아직 연결하지 않았다.
 

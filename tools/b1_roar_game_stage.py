@@ -85,8 +85,8 @@ class _Effect:
 class B1RoarStage:
     """A deterministic, self-contained shot beginning after the intro rockfall."""
 
-    def __init__(self, *, art_dir=ROOM_ART, gate_closed=True):
-        self.room_art = B1RoomArt(art_dir, gate_closed=gate_closed)
+    def __init__(self, *, art_dir=ROOM_ART, gate_closed=True, show_carriages=True):
+        self.room_art = B1RoomArt(art_dir, gate_closed=gate_closed, show_carriages=show_carriages)
         self.motes = B1Motes()
         world_width = ROOM_SIZE[0] * WORLD_PER_ART_PIXEL
         self.camera = Camera(pico.get_canvas_width(), world_width)
@@ -114,9 +114,9 @@ class B1RoarStage:
         self.camera.x = left * scale
         self.camera.y = (GROUND - bottom) * scale
 
-    def _draw_room(self, ambient_ms, *, airborne=False):
+    def _draw_room(self, ambient_ms, *, airborne=False, show_boulder=True):
         pico.clear_canvas()
-        self.room_art.draw_behind_actors(self.camera)
+        self.room_art.draw_behind_actors(self.camera, show_boulder=show_boulder)
         self.motes.draw(self.camera, ambient_ms)
         boss_x = None if airborne else self.boss_x / WORLD_PER_ART_PIXEL
         self.room_art.draw_actor_shadows(self.camera, boss_x, self.player.x / WORLD_PER_ART_PIXEL)

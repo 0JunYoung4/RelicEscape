@@ -104,10 +104,10 @@ def _place_floor(canvas):
     canvas.alpha_composite(shadow, (0, GROUND - 3))
 
 
-def _place_rails(canvas, platforms):
+def _place_rails(canvas, platforms, show_carriages):
     rails = ROOT / "assets/sprites/rail"
     source = rgba(rails / "relic-track-blue-v4.png").transpose(Image.Transpose.ROTATE_90)
-    carriage = rgba(rails / "relic-carriage-v2.png")
+    carriage = rgba(rails / "relic-carriage-v2.png") if show_carriages else None
     bracket = rgba(TERRAIN_ART / "lower-route-a-wall-v1/rail-bracket.png").crop((544, 26, 1620, 692))
     bracket = bracket.crop(bracket.getbbox())
     top_mount = resize(bracket, (58, 34))
@@ -128,7 +128,8 @@ def _place_rails(canvas, platforms):
     for x, top in zip(RAIL_CENTERS, mount_tops):
         canvas.alpha_composite(top_mount, (x - top_mount.width // 2, top))
         canvas.alpha_composite(foot_mount, (x - foot_mount.width // 2, GROUND - 19))
-        canvas.alpha_composite(carriage, (x - carriage.width // 2, 389))
+        if carriage is not None:
+            canvas.alpha_composite(carriage, (x - carriage.width // 2, 389))
 
 
 def _place_decor(canvas, placements, tint, bottom):
@@ -143,7 +144,7 @@ def _place_decor(canvas, placements, tint, bottom):
         canvas.alpha_composite(color, (left, bottom - color.height))
 
 
-def stage_terrain(*, gate_closed=True):
+def stage_terrain(*, gate_closed=True, show_carriages=True):
     """Compose art over the B1 walk lines and retain the existing tunnel."""
     platforms = json.loads((PLATFORM_ART / "manifest.json").read_text(encoding="utf-8"))["platforms"]
     old_terrain = rgba(ART / "terrain.png")
@@ -155,7 +156,7 @@ def stage_terrain(*, gate_closed=True):
     canvas.alpha_composite(old_terrain.crop((0, 0, old_terrain.width, 663)))
     _place_decor(canvas, REAR_BANK, (129, 166, 171), GROUND + 9)
     _place_floor(canvas)
-    _place_rails(canvas, platforms)
+    _place_rails(canvas, platforms, show_carriages)
     _place_decor(canvas, FLOOR_MOSS, (155, 198, 187), GROUND + 4)
     _place_decor(canvas, (("split-slate-scrap", 328, 57, False), ("moss-rock-chips", 471, 66, True),
                           ("split-slate-scrap", 1944, 60, True), ("weathered-marker-fragment", 2043, 43, False)),

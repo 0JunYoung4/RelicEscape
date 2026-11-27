@@ -1,4 +1,4 @@
-"""Interactive B1 rehearsal with a repeating claw and jump attack loop."""
+"""Interactive B1 rehearsal through the shell puzzle and reappearance."""
 
 from bisect import bisect_right
 from itertools import accumulate
@@ -10,9 +10,13 @@ from PIL import Image, ImageDraw, ImageFont
 from pico2d import pico2d as pico
 
 from health import Health
+from hit_impact import HitImpact, IMPACT_DURATION
 from player import Animation, WORLD_MARGIN
+from slash_effect import FORWARD_SLASH_REACH
+from tools.b1_boulder_fx import B1BoulderImpact
 from tools.b1_combat_tree import Attack, B1CombatTree, Status
 from tools.b1_combat_terrain import GATE_LEFT, LEDGES
+from tools.b1_puzzle_rails import B1PuzzleRails
 from tools.b1_roar_game_stage import B1RoarStage
 from tools.b1_room_art import ROOM_SIZE, WORLD_PER_ART_PIXEL, _draw_plate, _green_grade, rgba_texture
 from tools.preview_b1_intro import (APPROACH_LIMIT, ART, GROUND, INTERACT_DISTANCE, LAST_TREMOR,
@@ -39,6 +43,12 @@ JUMP_HEIGHT = 80 * SCALE
 JUMP_WALL_MARGIN = 60 * SCALE
 JUMP_DAMAGE = 25
 COMBAT_WIDTH = 1264
+BOSS_MAX_HP = 96
+BOSS_HALF_HP = BOSS_MAX_HP // 2
+CENTER_IMPACT_HOLD = .16
+BOULDER_X, BOULDER_TOP, BOULDER_IMPACT_Y = SHELL_X + 5, 42, 512
+BOULDER_FALL = .70
+REVEAL_RECOVERY = 1.20
 
 
 class _Pose:
@@ -57,23 +67,24 @@ class _Pose:
 
 
 class _Motion:
-    def __init__(self, filename, anchor, hold_frame, hold_time):
+    def __init__(self, filename, anchor, hold_frame=None, hold_time=0, *, limit=None):
         frames, durations = [], []
         with Image.open(ART.parent / filename) as source:
-            for index in range(source.n_frames):
+            for index in range(source.n_frames if limit is None else min(limit, source.n_frames)):
                 source.seek(index)
                 frame = source.convert("RGBA")
                 frames.append(_Pose(frame, anchor) if frame.getbbox() else None)
                 durations.append(source.info["duration"] / 1000)
-        durations[hold_frame] = hold_time
+        if hold_frame is not None:
+            durations[hold_frame] = hold_time
         self.frames = frames
         self.ends = tuple(accumulate(durations))
 
-    def draw(self, camera, x, facing, elapsed):
+    def draw(self, camera, x, facing, elapsed, *, y=0):
         index = min(bisect_right(self.ends, elapsed), len(self.frames) - 1)
         frame = self.frames[index]
         if frame is not None:
-            frame.draw(camera, x, facing=facing)
+            frame.draw(camera, x, y, facing=facing)
 
 
 class _Claw(_Motion):
@@ -118,12 +129,20 @@ def _labels():
     if malgun.is_file():
         font = ImageFont.truetype(str(malgun), 16)
         words = ("E  조사", "A/D 이동 · Shift 달리기 · Space 점프 · R 다시",
-                 "쓰러졌습니다 · R 재도전")
+                 "쓰러졌습니다 · R 재도전", "바위 소라게", "E 유물 장착",
+                 "X 레일 파츠 보내기", "E 상단으로 이동", "양옆 레일로 이동",
+                 "Shift + Space로 안쪽 발판으로", "X 천장 바위 타격", "전투 바닥으로 돌아가기",
+                 "바위 소라게 격파 · R 다시")
     else:
         font = ImageFont.load_default(size=16)
         words = ("E  Inspect", "A/D Move | Shift Run | Space Jump | R Reset",
-                 "Defeated | R Retry")
-    return tuple(_label(font, word) for word in words)
+                 "Defeated | R Retry", "Rock Hermit Crab", "E Mount relic",
+                 "X Strike carriage", "E Travel up", "Use either rail",
+                 "Shift + Space to the inner ledge", "X Strike ceiling rock", "Return to the floor",
+                 "Boss defeated | R Replay")
+    names = ("inspect", "controls", "retry", "boss", "mount", "send", "travel", "rails",
+             "inner", "boulder", "floor", "victory")
+    return {name: _label(font, word) for name, word in zip(names, words)}
 
 
 def _attack_marker(half_width, height):
@@ -146,7 +165,7 @@ def _approach_view(preview):
 
 class B1EncounterStage(B1RoarStage):
     def __init__(self):
-        super().__init__(gate_closed=False)
+        super().__init__(gate_closed=False, show_carriages=False)
         self.gate = rgba_texture(_green_grade(rgba(ART / "right-passage-gate.png"),
                                               (7, 17, 21), (150, 169, 151), .25))
         self.ledges = tuple((x * SCALE, (GROUND - bottom) * SCALE, (x + width) * SCALE,
@@ -159,6 +178,10 @@ class B1EncounterStage(B1RoarStage):
         self.particles = ceiling_particles()
         self.claw = _Claw()
         self.jump = _Jump()
+        # The next frame in the source starts revealing the old crystal weakpoint.
+        self.retract = _Motion("shell-reveal-animation-v3.webp", (310, 505), limit=26)
+        self.boulder = B1BoulderImpact(self.room_art.ceiling_boulder)
+        self.rails = B1PuzzleRails()
         self.scuttle = _scuttle()
         self.claw_marker = _attack_marker(CLAW_HALF_WIDTH, 19)
         self.jump_marker = _attack_marker(JUMP_HALF_WIDTH, 27)
@@ -181,6 +204,12 @@ class B1EncounterStage(B1RoarStage):
         self.combat_left = 0.0
         self.hit_landed = None
         self.jump_target = None
+        self.boss_hp = BOSS_MAX_HP
+        self.phase = "first"
+        self.last_player_swing = None
+        self.sword_impact = None
+        self.rock_hit_at = None
+        self.rails.reset()
         self.combat.reset()
 
     @property
@@ -201,6 +230,18 @@ class B1EncounterStage(B1RoarStage):
     def airborne(self):
         return self.state == "jump" and self.jump.offscreen <= self.age < self.jump.impact
 
+    @property
+    def half_health_reached(self):
+        return self.phase == "first" and self.boss_hp == BOSS_HALF_HP
+
+    @property
+    def shell_event_active(self):
+        return self.phase == "shell"
+
+    @property
+    def rails_enabled(self):
+        return self.state in ("hidden", "boulder_fall")
+
     def _enter(self, state):
         self.state = state
         self.age = 0.0
@@ -213,6 +254,8 @@ class B1EncounterStage(B1RoarStage):
             self.intro_camera = Preview(x=self.player.x / SCALE, elapsed=0.0)
             self._enter("tremor")
             return
+        if inspect_pressed and self.rails_enabled:
+            self.rails.interact(self.player)
         if self.state not in ("tremor", "roar") and self.health.current > 0:
             self.player.update(direction, running, dt, jump_pressed, crouching,
                                attack_pressed=attack_pressed, jump_held=jump_held)
@@ -236,6 +279,14 @@ class B1EncounterStage(B1RoarStage):
             else:
                 self._brace_player(self.age * 1000)
         elif self.state != "waiting":
+            if self.rails_enabled:
+                self.rails.advance(self.player, dt)
+            if self.sword_impact is not None:
+                self.sword_impact.age += dt
+                if self.sword_impact.age >= IMPACT_DURATION:
+                    self.sword_impact = None
+            if self.health.current > 0:
+                self._check_player_strike()
             self.combat.tick(self, dt)
             self._track_combat(dt)
 
@@ -274,9 +325,87 @@ class B1EncounterStage(B1RoarStage):
                 return Status.SUCCESS
         return Status.RUNNING
 
-    def end_combat(self):
-        if self.state != "defeated":
-            self._enter("defeated")
+    def start_shell_event(self):
+        self.phase = "shell"
+        self.hit_landed = None
+        self._enter("return_center")
+
+    def advance_shell_event(self, dt):
+        before = self.age
+        self.age += dt
+        if self.state == "return_center":
+            center = SHELL_X * SCALE
+            distance = center - self.boss_x
+            self.boss_facing = 1 if distance >= 0 else -1
+            self.boss_x += self.boss_facing * min(abs(distance), APPROACH_SPEED * dt)
+            if abs(distance) <= APPROACH_SPEED * dt:
+                self.boss_x = center
+                self.boss_facing = 1 if self.player.x >= center else -1
+                self._enter("center_claw")
+        elif self.state == "center_claw":
+            if before < self.claw.impact <= self.age:
+                self._strike(self.claw_center - CLAW_HALF_WIDTH, self.claw_center + CLAW_HALF_WIDTH,
+                             CLAW_HEIGHT, CLAW_DAMAGE)
+            if self.age >= self.claw.impact + CENTER_IMPACT_HOLD:
+                self._enter("withdraw")
+        elif self.state == "withdraw" and self.age >= self.retract.ends[-1]:
+            self._enter("hidden")
+        elif self.state == "boulder_fall" and self.age >= BOULDER_FALL:
+            self.rock_hit_at = self.time
+            self.rails.reset()
+            self._enter("reveal")
+        elif self.state == "reveal" and self.age >= self.retract.ends[-1]:
+            self._enter("wait_floor")
+        elif self.state == "wait_floor" and self.player.grounded and self.player.y == 0:
+            self._enter("face_open")
+        elif self.state == "face_open" and self.age >= REVEAL_RECOVERY:
+            self.phase = "resumed"
+            return Status.SUCCESS
+        return Status.RUNNING
+
+    def _boulder_bounds(self):
+        rock = self.room_art.ceiling_boulder
+        return ((BOULDER_X - rock.w / 2) * SCALE, (GROUND - BOULDER_TOP - rock.h) * SCALE,
+                (BOULDER_X + rock.w / 2) * SCALE, (GROUND - BOULDER_TOP) * SCALE)
+
+    def _vulnerable_bounds(self):
+        if self.state == "claw" and self.age >= self.claw.impact:
+            return (self.claw_center - CLAW_HALF_WIDTH, 0,
+                    self.claw_center + CLAW_HALF_WIDTH, CLAW_HEIGHT)
+        if self.state == "face_open" or (self.state == "jump" and self.age >= self.jump.impact):
+            half = 170 * SCALE
+            return self.boss_x - half, 0, self.boss_x + half, 180 * SCALE
+        return None
+
+    def _check_player_strike(self):
+        if self.player.slash is None or self.player.swing_id == self.last_player_swing:
+            return
+        strike = self.player.get_attack_hitbox()
+        if strike is None:
+            return
+        rock = self.state == "hidden"
+        bounds = self._boulder_bounds() if rock else self._vulnerable_bounds()
+        if bounds is None:
+            return
+        left, bottom, right, top = bounds
+        if strike[0] >= right or strike[2] <= left or strike[1] >= top or strike[3] <= bottom:
+            return
+
+        self.last_player_swing = self.player.swing_id
+        self.sword_impact = HitImpact.from_strike(
+            strike, ((left + right) / 2, bottom, right - left, top - bottom),
+            self.player.attack_facing, downward=False, heavy=rock,
+        )
+        if rock:
+            self._enter("boulder_fall")
+        else:
+            floor = BOSS_HALF_HP if self.phase == "first" else 0
+            self.boss_hp = max(floor, self.boss_hp - self.player.attack_power)
+
+    def end_combat(self, *, victory=False):
+        state = "victory" if victory else "defeated"
+        if self.state != state:
+            self._enter(state)
 
     def _track_combat(self, dt):
         player_x = self.player.x / SCALE
@@ -307,13 +436,19 @@ class B1EncounterStage(B1RoarStage):
         if self.state == "roar":
             return camera_box(self.intro_camera)
         width, top = COMBAT_WIDTH, 35
-        if self.state in ("claw", "jump"):
-            impact = self.claw.impact if self.state == "claw" else self.jump.impact
+        top = min(top, max(0, GROUND - (self.player.y + 250) / SCALE))
+        if self.state in ("claw", "center_claw", "jump"):
+            impact = self.jump.impact if self.state == "jump" else self.claw.impact
             since_impact = self.age - impact
             if 0 <= since_impact < .20:
-                strength = 4 if self.state == "claw" else 8
+                strength = 8 if self.state == "jump" else 4
                 top += strength * sin(since_impact * 110) * (1 - since_impact / .20)
+        if self.rock_hit_at is not None:
+            since_impact = self.time - self.rock_hit_at
+            if since_impact < .24:
+                top += 8 * sin(since_impact * 94) * (1 - since_impact / .24)
         left = clamp(self.combat_left, 0, ROOM_SIZE[0] - width)
+        top = max(0, top)
         return left, top, left + width, top + width * SIZE[1] / SIZE[0]
 
     def _draw_gate(self):
@@ -366,8 +501,10 @@ class B1EncounterStage(B1RoarStage):
 
     def draw(self):
         self._set_camera(0, self._view())
-        self._draw_room(self.time * 1000, airborne=self.airborne)
+        show_boulder = self.state != "boulder_fall" and self.rock_hit_at is None
+        self._draw_room(self.time * 1000, airborne=self.airborne, show_boulder=show_boulder)
         self._draw_gate()
+        self.rails.draw(self.camera, enabled=self.rails_enabled)
         if self.state == "waiting":
             self.shell.draw(self.camera, self.boss_x)
         elif self.state == "tremor":
@@ -378,21 +515,66 @@ class B1EncounterStage(B1RoarStage):
             self._draw_tremor()
         elif self.state == "roar":
             self._draw_roar(self.age * 1000)
-        elif self.state == "approach":
+        elif self.state in ("approach", "return_center"):
             # Both directions have their own frames in the scuttle atlas.
             index = int(self.age * 50) % 16 + (16 if self.boss_facing < 0 else 0)
             self.scuttle.draw(self.boss_x, 0, 1, 0, self.camera, frame_index=index)
-        elif self.state == "claw":
+        elif self.state in ("claw", "center_claw"):
             self._draw_claw()
         elif self.state == "jump":
             self._draw_jump()
+        elif self.state in ("withdraw", "hidden", "boulder_fall", "reveal", "wait_floor"):
+            self._draw_shell()
+        elif self.state == "face_open":
+            self.jump.draw(self.camera, self.boss_x, self.boss_facing, self.jump.impact + .12)
         else:
             self.claw.draw(self.camera, self.boss_x, self.boss_facing, self.claw.ends[-1])
+        self._draw_boulder()
         self.player.draw(self.camera, tint=self.health.hit_tint(self.time))
+        if self.sword_impact is not None:
+            self.sword_impact.draw(self.camera)
         self.health.draw_hit(self.camera, self.time)
         self.room_art.draw_in_front(self.camera)
         self.health.draw_hud(SIZE[1], self.time)
+        if self.state not in ("waiting", "tremor"):
+            self._draw_boss_health()
         self._draw_ui()
+
+    def _draw_shell(self):
+        duration = self.retract.ends[-1]
+        if self.state == "withdraw":
+            elapsed = self.age
+        elif self.state == "reveal":
+            elapsed = duration - self.age
+        elif self.state == "wait_floor":
+            elapsed = 0
+        else:
+            elapsed = duration
+        # The tucked asset's supporting edge is seven art pixels higher.
+        settle = -7 * SCALE * smoothstep(elapsed / duration)
+        self.retract.draw(self.camera, self.boss_x, self.boss_facing, max(0, elapsed), y=settle)
+
+    def _draw_boulder(self):
+        if self.state == "boulder_fall":
+            progress = min(1, self.age / BOULDER_FALL)
+            impact_top = BOULDER_IMPACT_Y - self.room_art.ceiling_boulder.h
+            top = lerp(BOULDER_TOP, impact_top, progress ** 2)
+            self.boulder.draw_fall(self.camera, BOULDER_X, top)
+        elif self.rock_hit_at is not None:
+            self.boulder.draw_shatter(self.camera, BOULDER_X, BOULDER_IMPACT_Y, self.time - self.rock_hit_at)
+
+    def _draw_boss_health(self):
+        center = SIZE[0] // 2
+        self.labels["boss"].draw(center, SIZE[1] - 22)
+        left, right, y = center - 154, center + 154, SIZE[1] - 43
+        pico.draw_rectangle(left, y - 5, right, y + 5, 112, 105, 77, filled=True)
+        pico.draw_rectangle(left + 2, y - 3, right - 2, y + 3, 25, 33, 38, filled=True)
+        if self.boss_hp:
+            fill_end = left + 2 + round((right - left - 4) * self.boss_hp / BOSS_MAX_HP)
+            guarded = self.phase == "shell" and self.state != "face_open"
+            color = (101, 145, 154) if guarded else (199, 131, 64)
+            pico.draw_rectangle(left + 2, y - 3, fill_end, y + 3, *color, filled=True)
+        pico.draw_line(center, y - 5, center, y + 5, 228, 218, 181)
 
     def _draw_claw(self):
         center = self.claw_center / SCALE
@@ -421,16 +603,40 @@ class B1EncounterStage(B1RoarStage):
             self._draw_dust(self.boss_x / SCALE, GROUND - 32, since_impact)
 
     def _draw_ui(self):
-        prompt, controls, retry = self.labels
         if self.state == "waiting":
-            controls.draw(SIZE[0] / 2, 26)
+            self.labels["controls"].draw(SIZE[0] / 2, 26)
             if self.can_inspect:
-                x, y = self.camera.world_to_screen(self.player.x, self.player.get_hitbox()[3] + 42)
-                prompt.draw(x, y)
+                self._draw_player_prompt("inspect")
+        elif self.state == "hidden":
+            self._draw_shell_prompt()
+        elif self.state == "wait_floor":
+            self.labels["floor"].draw(SIZE[0] / 2, 26)
         elif self.state == "defeated":
-            retry.draw(SIZE[0] / 2, 26)
+            self.labels["retry"].draw(SIZE[0] / 2, 26)
+        elif self.state == "victory":
+            self.labels["victory"].draw(SIZE[0] / 2, 26)
+
+    def _draw_player_prompt(self, name):
+        x, y = self.camera.world_to_screen(self.player.x, self.player.get_hitbox()[3] + 42)
+        self.labels[name].draw(x, min(y, SIZE[1] - 80))
+
+    def _draw_shell_prompt(self):
+        prompt = self.rails.prompt(self.player)
+        if prompt is not None:
+            self._draw_player_prompt(prompt)
+        elif self.player.y >= min(y for _, y in self.rails.landings):
+            left, _, right, _ = self._boulder_bounds()
+            near = left - FORWARD_SLASH_REACH < self.player.x < right + FORWARD_SLASH_REACH
+            if near:
+                self._draw_player_prompt("boulder")
+            else:
+                self.labels["inner"].draw(SIZE[0] / 2, 26)
+        else:
+            self.labels["rails"].draw(SIZE[0] / 2, 26)
 
     def close(self):
+        self.rails.close()
+        self.rails = self.boulder = self.retract = None
         self.gate = self.shell = self.rock = self.dust = self.claw = self.jump = self.scuttle = None
         self.claw_marker = self.jump_marker = self.labels = None
         super().close()
