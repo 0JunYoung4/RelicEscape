@@ -55,7 +55,7 @@ class RightBridge:
         self.bridge = load_image(ASSET_ROOT / "structures/map1-lower-route/lower-cave-stone-bridge-v1.png")
         self.arch = load_image(COMBAT_ART / "midground-broken-arch.png")
         self.light = load_image(ROUTE_ART / "mint-light.png")
-        self.orb = load_image(ASSET_ROOT / "concepts/b1-hermit-crab/defeat-orb-v2/energy-orb-sheet.png")
+        self.orb = load_image(ASSET_ROOT / "concepts/b1-hermit-crab/defeat-orb-v3/energy-orb-sheet.png")
         pico.SDL_SetTextureBlendMode(self.light.texture, pico.SDL_BLENDMODE_ADD)
         self.fern = load_image(_VEGETATION / "near-shadow-rounded-leaves.png")
         self.roots = load_image(_VEGETATION / "crooked-root-drop.png")

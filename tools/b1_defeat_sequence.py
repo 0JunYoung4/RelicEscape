@@ -12,7 +12,6 @@ from tools.render_b1_defeat_preview import (
     BEAMS, BEAM_END, BEAM_SWELL_END, BEAM_TRAVEL, BEAM_WIDTH_SCALE, BLUE_LIGHT,
     BURST, CLAW_FALL, FLOOR, HITSTOP, LIGHT_END, OUTPUT, REVEAL, ROOM_SPREAD_END, SHAKE_END, STILL,
     SWAP_POSE, WHITE_PEAK, WHITE_RELEASE, WHITE_START,
-    WISP_END, WISP_EXIT, WISP_HOVER, WISP_LAUNCH, WISP_RISE, WISP_START, WISP_TURN,
     glow, progress, shiver_offset,
 )
 
@@ -28,6 +27,9 @@ ORB_HALO_SIZE = 330
 ORB_HALO_ALPHA = .58
 ORB_TRAIL_MS = 144
 ORB_FLIGHT_EXPONENT = 1.85
+ORB_START, ORB_RISE_START, ORB_GATHER_END = 2500, 2580, 2720
+ORB_LAUNCH, ORB_EXIT, ORB_END = 3400, 3920, 3980
+ORB_RISE_HEIGHT = 210
 CORE_COLOR = (219, 247, 255)
 ENERGY_COLOR = (89, 181, 242)
 CRACK_X, CRACK_Y = (579 - 480) * PREVIEW_TO_WORLD, (FLOOR - 366) * PREVIEW_TO_WORLD
@@ -52,7 +54,7 @@ class B1DefeatSequence:
         self.before = _sprite(OUTPUT / "before-flash.png")
         self.after = _sprite(OUTPUT / "after-flash.png")
         self.ray = pico.load_image(str(OUTPUT / "defeat-beam-source.png"))
-        self.orb = pico.load_image(str(OUTPUT.with_name("defeat-orb-v2") / "energy-orb-sheet.png"))
+        self.orb = pico.load_image(str(OUTPUT.with_name("defeat-orb-v3") / "energy-orb-sheet.png"))
         self.halo = _light_texture(ENERGY_COLOR)
         self.burst = _light_texture(BLUE_LIGHT)
         self.spark = _light_texture(CORE_COLOR)
@@ -106,7 +108,7 @@ class B1DefeatSequence:
             self._draw_light(self.burst, camera, boss_x, 252, 340 + 2350 * expand, .83 * fade)
             self._draw_light(self.burst, camera, boss_x, 22, 850 + 490 * expand,
                              .49 * fade, aspect=.21)
-        if WISP_START < t < WISP_END:
+        if ORB_START < t < ORB_END:
             x, y, strength = self._orb_pose(camera, boss_x, facing, t)
             self._draw_light(self.halo, camera, x, y, ORB_HALO_SIZE, ORB_HALO_ALPHA * strength)
             spill = max(0, 1 - y / 700)
@@ -139,38 +141,36 @@ class B1DefeatSequence:
     @staticmethod
     def _orb_pose(camera, boss_x, facing, t):
         origin_x = boss_x + facing * CRACK_X
-        rise = progress(t, WISP_RISE, WISP_HOVER)
+        rise = progress(t, ORB_RISE_START, ORB_LAUNCH)
         lift = rise * rise * (3 - 2 * rise)
-        hover = progress(t, WISP_HOVER, WISP_LAUNCH)
-        turn = progress(t, WISP_TURN, WISP_LAUNCH)
-        flight = progress(t, WISP_LAUNCH, WISP_EXIT)
+        flight = progress(t, ORB_LAUNCH, ORB_EXIT)
         distance = flight ** ORB_FLIGHT_EXPONENT
-        from_x = origin_x - facing * 54 * lift + 28 * turn
         end_x = camera.x + camera.view_width + ORB_SIZE
-        y = CRACK_Y + 210 * lift + 10 * sin(hover * tau) - 130 * distance
-        return from_x + (end_x - from_x) * distance, y, progress(t, WISP_START, WISP_RISE)
+        return (origin_x + (end_x - origin_x) * distance, CRACK_Y + ORB_RISE_HEIGHT * lift,
+                progress(t, ORB_START, ORB_GATHER_END))
 
     def _draw_orb(self, camera, boss_x, facing, t):
         x, y, strength = self._orb_pose(camera, boss_x, facing, t)
-        if t < WISP_RISE:
+        if t < ORB_GATHER_END:
             radius = 102 * (1 - strength)
             for index in range(5):
                 angle = tau * (index / 5 + .20 * strength)
                 self._draw_light(self.spark, camera, x + radius * cos(angle),
                                  y + radius * sin(angle) * .72, 15,
                                  .70 * sin(strength * tau / 2))
+        trail_fade = 1 - progress(t, ORB_EXIT, ORB_END)
         for delay in range(ORB_TRAIL_MS, 0, -24):
             sample = t - delay
-            if sample <= WISP_LAUNCH:
+            if sample <= ORB_LAUNCH:
                 continue
             tail_x, tail_y, _ = self._orb_pose(camera, boss_x, facing, sample)
             remaining = 1 - delay / (ORB_TRAIL_MS + 24)
-            speed = progress(sample, WISP_LAUNCH, WISP_EXIT) ** .85
+            speed = progress(sample, ORB_LAUNCH, ORB_EXIT) ** .85
             self._draw_light(self.halo, camera, tail_x, tail_y, 48 + 32 * remaining,
-                             .58 * speed * remaining, aspect=.48)
+                             .58 * speed * remaining * trail_fade, aspect=.48)
             self._draw_light(self.spark, camera, tail_x, tail_y + 17 * sin(sample * .074),
-                             7 + 12 * remaining, .64 * speed * remaining)
-        current = int((t - WISP_START) / ORB_FRAME_MS) % 16
+                             7 + 12 * remaining, .64 * speed * remaining * trail_fade)
+        current = int((t - ORB_START) / ORB_FRAME_MS) % 16
         row, col = divmod(current, 4)
         size = ORB_SIZE * camera.zoom * (.43 + .57 * strength)
         self.orb.opacify(strength)
@@ -190,7 +190,7 @@ class B1DefeatSequence:
                     self._draw_light(self.dust, camera, boss_x + side * (220 + spread * distance),
                                      13 + 34 * distance, 180 + 310 * distance,
                                      .70 * (1 - distance), aspect=.25)
-        if WISP_START < t < WISP_END:
+        if ORB_START < t < ORB_END:
             self._draw_orb(camera, boss_x, facing, t)
 
     @staticmethod

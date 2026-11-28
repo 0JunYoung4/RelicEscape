@@ -15,7 +15,7 @@ from main import RelicTravel, update_b1
 from player import Player
 from tools.b1_combat_terrain import GATE_LEFT
 from tools.b1_combat_tree import Attack
-from tools.b1_defeat_sequence import DURATION
+from tools.b1_defeat_sequence import DURATION, ORB_EXIT, ORB_LAUNCH, ORB_RISE_START
 from tools.b1_encounter_stage import B1EncounterStage, EXIT_X, GATE_DURATION, SCALE, SIZE
 from tools.preview_b1_intro import GROUND, SHELL_X
 
@@ -149,3 +149,21 @@ class B1DefeatSequenceTests(unittest.TestCase):
         self.assertEqual(stage.state, "defeated")
         self.assertFalse(stage.can_leave)
         self.assertEqual(stage.gate_progress, 1)
+
+    def test_orb_keeps_the_crack_x_until_it_finishes_rising(self):
+        stage = self.stage
+        self.prepare_last_hit()
+        stage.end_combat(victory=True)
+        stage._set_camera(0, stage._view())
+        camera = stage.camera
+        for facing in (-1, 1):
+            with self.subTest(facing=facing):
+                ascent = [stage.defeat._orb_pose(camera, stage.boss_x, facing, t)
+                          for t in (ORB_RISE_START, 2800, 3030, 3250, ORB_LAUNCH)]
+                self.assertEqual(len({x for x, _, _ in ascent}), 1)
+                self.assertTrue(all(first[1] < second[1] for first, second in zip(ascent, ascent[1:])))
+                flight = [stage.defeat._orb_pose(camera, stage.boss_x, facing, t)
+                          for t in (ORB_LAUNCH, 3600, 3750, ORB_EXIT)]
+                self.assertEqual(len({y for _, y, _ in flight}), 1)
+                self.assertTrue(all(first[0] < second[0] for first, second in zip(flight, flight[1:])))
+                self.assertGreater(flight[-1][0], camera.x + camera.view_width)
