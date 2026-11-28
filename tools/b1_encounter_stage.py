@@ -47,6 +47,8 @@ JUMP_HEIGHT = 80 * SCALE
 JUMP_WALL_MARGIN = 60 * SCALE
 JUMP_DAMAGE = 25
 COMBAT_WIDTH = 1264
+DEFEAT_VIEW_WIDTH = 1040
+DEFEAT_CAMERA_RETURN = .30
 BOSS_MAX_HP = 96
 BOSS_HALF_HP = BOSS_MAX_HP // 2
 CENTER_IMPACT_HOLD = .16
@@ -348,6 +350,10 @@ class B1EncounterStage(B1RoarStage):
             else:
                 self._brace_player(self.age * 1000)
         elif self.state != "waiting":
+            if self.state == "victory" and self.defeat_view is not None:
+                self.age += dt
+                if self.age >= DEFEAT_CAMERA_RETURN:
+                    self.defeat_view = None
             if self.main_game and self.state == "victory" and self.gate_progress > 0:
                 self.gate_progress = max(0, self.gate_progress - dt / GATE_DURATION)
                 if self.gate_progress == 0:
@@ -489,8 +495,11 @@ class B1EncounterStage(B1RoarStage):
             return
         if self.state in ("dying", "victory"):
             return
-        self.defeat_view = self._view()
-        self.combat_left = self.defeat_view[0]
+        width = DEFEAT_VIEW_WIDTH
+        left = clamp(self.boss_x / SCALE - width / 2, 0, ROOM_SIZE[0] - width)
+        bottom = ROOM_SIZE[1] - 4
+        self.defeat_view = left, bottom - width * SIZE[1] / SIZE[0], left + width, bottom
+        self.combat_left = self.boss_x / SCALE - COMBAT_WIDTH / 2
         self.hit_landed = self.jump_target = None
         self.rails.reset()
         self.player.buffered_attack_down = None
@@ -546,7 +555,11 @@ class B1EncounterStage(B1RoarStage):
                 top += 8 * sin(since_impact * 94) * (1 - since_impact / .24)
         left = clamp(self.combat_left, 0, ROOM_SIZE[0] - width)
         top = max(0, top)
-        return left, top, left + width, top + width * SIZE[1] / SIZE[0]
+        view = left, top, left + width, top + width * SIZE[1] / SIZE[0]
+        if self.state == "victory" and self.defeat_view is not None:
+            blend = smoothstep(self.age / DEFEAT_CAMERA_RETURN)
+            return tuple(lerp(start, end, blend) for start, end in zip(self.defeat_view, view))
+        return view
 
     def _draw_gate(self):
         height = round(self.gate.h * smoothstep(self.gate_progress))

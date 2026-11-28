@@ -1,13 +1,14 @@
 """World-space defeat effects shared by the playable B1 encounter."""
 
 from ctypes import byref
-from math import atan2, cos, hypot, sin, tau
+from math import atan2, hypot, sin, tau
 
 from PIL import Image
 from pico2d import pico2d as pico
 
 from player import ASSET_ROOT
 from tools.b1_room_art import rgba_texture
+from tools.preview_b1_intro import smoothstep
 from tools.render_b1_defeat_preview import (
     BEAMS, BEAM_END, BEAM_SWELL_END, BEAM_TRAVEL, BEAM_WIDTH_SCALE, BLUE_LIGHT,
     BURST, CLAW_FALL, FLOOR, HITSTOP, LIGHT_END, OUTPUT, REVEAL, ROOM_SPREAD_END, SHAKE_END, STILL,
@@ -20,16 +21,16 @@ DURATION = 4.0
 HITSTOP_SECONDS = HITSTOP / 1000
 PREVIEW_TO_WORLD = 2 * 1264 / 960
 POSE_SCALE = (387 / 1459) * PREVIEW_TO_WORLD
-ORB_SIZE = 171
+ORB_SIZE = 174
 ORB_CELL = 128
 ORB_FRAME_MS = 75
 ORB_HALO_SIZE = 330
-ORB_HALO_ALPHA = .58
-ORB_TRAIL_MS = 144
-ORB_FLIGHT_EXPONENT = 1.85
-ORB_START, ORB_RISE_START, ORB_GATHER_END = 2500, 2580, 2720
-ORB_LAUNCH, ORB_EXIT, ORB_END = 3400, 3920, 3980
-ORB_RISE_HEIGHT = 210
+ORB_HALO_ALPHA = .45
+ORB_TRAIL_MS, ORB_TRAIL_STEP = 72, 18
+ORB_FLIGHT_EXPONENT = 2.20
+ORB_START, ORB_RISE_START, ORB_GATHER_END = 2500, 2520, 2710
+ORB_RISE_END, ORB_LAUNCH, ORB_EXIT, ORB_END = 3210, 3480, 3740, 3820
+ORB_RISE_HEIGHT = 208
 CORE_COLOR = (219, 247, 255)
 ENERGY_COLOR = (89, 181, 242)
 CRACK_X, CRACK_Y = (579 - 480) * PREVIEW_TO_WORLD, (FLOOR - 366) * PREVIEW_TO_WORLD
@@ -54,7 +55,8 @@ class B1DefeatSequence:
         self.before = _sprite(OUTPUT / "before-flash.png")
         self.after = _sprite(OUTPUT / "after-flash.png")
         self.ray = pico.load_image(str(OUTPUT / "defeat-beam-source.png"))
-        self.orb = pico.load_image(str(OUTPUT.with_name("defeat-orb-v3") / "energy-orb-sheet.png"))
+        self.orb = pico.load_image(str(OUTPUT.with_name("defeat-orb-v4") / "energy-orb-sheet.png"))
+        pico.SDL_SetTextureScaleMode(self.orb.texture, pico.SDL_ScaleModeLinear)
         self.halo = _light_texture(ENERGY_COLOR)
         self.burst = _light_texture(BLUE_LIGHT)
         self.spark = _light_texture(CORE_COLOR)
@@ -140,39 +142,35 @@ class B1DefeatSequence:
 
     @staticmethod
     def _orb_pose(camera, boss_x, facing, t):
-        origin_x = boss_x + facing * CRACK_X
-        rise = progress(t, ORB_RISE_START, ORB_LAUNCH)
-        lift = rise * rise * (3 - 2 * rise)
+        # Hold the last floating offset through takeoff so the dart begins on the same path.
+        elapsed = (min(t, ORB_LAUNCH) - ORB_RISE_START) / 1000
+        sway = smoothstep(progress(t, ORB_RISE_START, ORB_RISE_START + 175))
+        drift = sway * (22 * sin(tau * 1.24 * elapsed) + 5 * sin(tau * 2.65 * elapsed - .3))
+        bob = sway * 14 * sin(tau * 2.05 * elapsed)
+        x = boss_x + facing * CRACK_X + drift
+        y = CRACK_Y + ORB_RISE_HEIGHT * smoothstep(progress(t, ORB_RISE_START, ORB_RISE_END)) + bob
         flight = progress(t, ORB_LAUNCH, ORB_EXIT)
-        distance = flight ** ORB_FLIGHT_EXPONENT
-        end_x = camera.x + camera.view_width + ORB_SIZE
-        return (origin_x + (end_x - origin_x) * distance, CRACK_Y + ORB_RISE_HEIGHT * lift,
-                progress(t, ORB_START, ORB_GATHER_END))
+        end_x = camera.x + camera.view_width + ORB_SIZE / 2
+        strength = smoothstep(progress(t, ORB_START, ORB_GATHER_END))
+        return x + (end_x - x) * flight ** ORB_FLIGHT_EXPONENT, y, strength
 
     def _draw_orb(self, camera, boss_x, facing, t):
         x, y, strength = self._orb_pose(camera, boss_x, facing, t)
-        if t < ORB_GATHER_END:
-            radius = 102 * (1 - strength)
-            for index in range(5):
-                angle = tau * (index / 5 + .20 * strength)
-                self._draw_light(self.spark, camera, x + radius * cos(angle),
-                                 y + radius * sin(angle) * .72, 15,
-                                 .70 * sin(strength * tau / 2))
         trail_fade = 1 - progress(t, ORB_EXIT, ORB_END)
-        for delay in range(ORB_TRAIL_MS, 0, -24):
+        for delay in range(ORB_TRAIL_MS, 0, -ORB_TRAIL_STEP):
             sample = t - delay
             if sample <= ORB_LAUNCH:
                 continue
             tail_x, tail_y, _ = self._orb_pose(camera, boss_x, facing, sample)
-            remaining = 1 - delay / (ORB_TRAIL_MS + 24)
-            speed = progress(sample, ORB_LAUNCH, ORB_EXIT) ** .85
-            self._draw_light(self.halo, camera, tail_x, tail_y, 48 + 32 * remaining,
-                             .58 * speed * remaining * trail_fade, aspect=.48)
-            self._draw_light(self.spark, camera, tail_x, tail_y + 17 * sin(sample * .074),
-                             7 + 12 * remaining, .64 * speed * remaining * trail_fade)
+            remaining = 1 - delay / (ORB_TRAIL_MS + ORB_TRAIL_STEP)
+            speed = progress(sample, ORB_LAUNCH, ORB_EXIT) ** .80
+            tail = remaining * speed * trail_fade
+            self._draw_light(self.halo, camera, tail_x, tail_y, 76, .65 * tail, aspect=.52)
+            self._draw_light(self.spark, camera, tail_x, tail_y + 9 * sin(sample * .079),
+                             22, .75 * tail)
         current = int((t - ORB_START) / ORB_FRAME_MS) % 16
         row, col = divmod(current, 4)
-        size = ORB_SIZE * camera.zoom * (.43 + .57 * strength)
+        size = ORB_SIZE * camera.zoom * (.62 + .38 * strength)
         self.orb.opacify(strength)
         self.orb.clip_draw(col * ORB_CELL, (3 - row) * ORB_CELL, ORB_CELL, ORB_CELL,
                            *camera.world_to_screen(x, y), size, size)

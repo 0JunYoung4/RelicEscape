@@ -15,8 +15,11 @@ from main import RelicTravel, update_b1
 from player import Player
 from tools.b1_combat_terrain import GATE_LEFT
 from tools.b1_combat_tree import Attack
-from tools.b1_defeat_sequence import DURATION, ORB_EXIT, ORB_LAUNCH, ORB_RISE_START
-from tools.b1_encounter_stage import B1EncounterStage, EXIT_X, GATE_DURATION, SCALE, SIZE
+from tools.b1_defeat_sequence import (DURATION, ORB_END, ORB_EXIT, ORB_LAUNCH,
+                                      ORB_RISE_END, ORB_RISE_START, ORB_START)
+from tools.b1_encounter_stage import (B1EncounterStage, COMBAT_WIDTH, EXIT_X,
+                                      GATE_DURATION, SCALE, SIZE)
+from tools.b1_room_art import ROOM_SIZE
 from tools.preview_b1_intro import GROUND, SHELL_X
 
 
@@ -150,20 +153,68 @@ class B1DefeatSequenceTests(unittest.TestCase):
         self.assertFalse(stage.can_leave)
         self.assertEqual(stage.gate_progress, 1)
 
-    def test_orb_keeps_the_crack_x_until_it_finishes_rising(self):
+    def test_orb_rises_hovers_and_launches_right_without_a_position_jump(self):
         stage = self.stage
         self.prepare_last_hit()
         stage.end_combat(victory=True)
         stage._set_camera(0, stage._view())
         camera = stage.camera
+        self.assertEqual((ORB_START, ORB_RISE_START, ORB_RISE_END, ORB_LAUNCH, ORB_EXIT, ORB_END),
+                         (2500, 2520, 3210, 3480, 3740, 3820))
         for facing in (-1, 1):
             with self.subTest(facing=facing):
-                ascent = [stage.defeat._orb_pose(camera, stage.boss_x, facing, t)
-                          for t in (ORB_RISE_START, 2800, 3030, 3250, ORB_LAUNCH)]
-                self.assertEqual(len({x for x, _, _ in ascent}), 1)
+                def position(time):
+                    x, y, _ = stage.defeat._orb_pose(camera, stage.boss_x, facing, time)
+                    return camera.world_to_screen(x, y)
+
+                ascent = [position(t) for t in (ORB_RISE_START, 2700, 2930, 3100, ORB_RISE_END)]
                 self.assertTrue(all(first[1] < second[1] for first, second in zip(ascent, ascent[1:])))
-                flight = [stage.defeat._orb_pose(camera, stage.boss_x, facing, t)
-                          for t in (ORB_LAUNCH, 3600, 3750, ORB_EXIT)]
-                self.assertEqual(len({y for _, y, _ in flight}), 1)
+                hover = [position(t) for t in (ORB_RISE_END, 3350, ORB_LAUNCH)]
+                self.assertLess(hover[1][1], min(hover[0][1], hover[2][1]))
+                drift = [x for x, _ in [*ascent, *hover]]
+                self.assertGreater(max(drift) - min(drift), 4)
+                self.assertLess(max(drift) - min(drift), 30)
+
+                before_launch, after_launch = position(ORB_LAUNCH - 1), position(ORB_LAUNCH + 1)
+                for before, after in zip(before_launch, after_launch):
+                    self.assertAlmostEqual(before, after, delta=8)
+                flight = [position(t) for t in (ORB_LAUNCH, 3550, 3650, 3700, ORB_EXIT)]
                 self.assertTrue(all(first[0] < second[0] for first, second in zip(flight, flight[1:])))
-                self.assertGreater(flight[-1][0], camera.x + camera.view_width)
+                self.assertGreater(flight[-1][0], SIZE[0])
+
+    def test_defeat_camera_frames_boss_then_returns_to_combat_tracking(self):
+        stage, player = self.stage, self.player
+        shot_width = 1040
+        bottom = ROOM_SIZE[1] - 4
+        for boss_x, player_x in ((150, 1400), (1220, 450), (ROOM_SIZE[0] - 150, 800)):
+            with self.subTest(boss_x=boss_x):
+                self.reset_combat()
+                self.prepare_last_hit()
+                self.assertTrue(player.recover_at(player_x * SCALE, 0, 0))
+                stage.boss_x, stage.boss_hp = boss_x * SCALE, 0
+                stage.end_combat(victory=True)
+                left = min(max(0, boss_x - shot_width / 2), ROOM_SIZE[0] - shot_width)
+                view = left, bottom - shot_width * SIZE[1] / SIZE[0], left + shot_width, bottom
+                self.assertEqual(stage._view(), view)
+                stage.age = 1.72
+                self.assertNotEqual(stage._view(), view)
+                stage.age = 1.9
+                self.assertEqual(stage._view(), view)
+                stage.age = DURATION - .1
+                self.assertEqual(stage._view(), view)
+
+                stage.advance(.1)
+                self.assertEqual(stage.state, "victory")
+                self.assertEqual(stage._view(), view)
+                x_before = player.x
+                stage.advance(1 / 60, direction=1, running=True)
+                self.assertGreater(player.x, x_before)
+                blending_left, _, blending_right, _ = stage._view()
+                self.assertLess(shot_width, blending_right - blending_left)
+                self.assertLess(blending_right - blending_left, COMBAT_WIDTH)
+                for _ in range(17):
+                    stage.advance(1 / 60, direction=1, running=True)
+                follow_left, _, follow_right, _ = stage._view()
+                self.assertAlmostEqual(follow_right - follow_left, COMBAT_WIDTH)
+                self.assertLess(follow_left, player.x / SCALE)
+                self.assertGreater(follow_right, player.x / SCALE)
